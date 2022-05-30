@@ -233,7 +233,7 @@ export default {
 				
 				var title_x= 'UMAP 1'
 				var title_y = 'UMAP 2'
-				if(iftsne = 'true'){
+				if(iftsne === true){
 					// alert('yes')
 					title_x = 'tSNE 1'
 					title_y = 'tSNE 2'
@@ -493,7 +493,7 @@ export default {
 							}
 				}) 
 				//series,source,col,if3D,VisualM)
-				this.getTsneChart(this.series,data[0].source_g,'phase','2D','tSNE')
+				this.getTsneChart(this.series,data[0].source_g,'celltype','2D','UMAP')
 				this.getFeaturePlot(this.series,datas[0].source_g,'needFind')
            })
 		}

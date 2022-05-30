@@ -115,6 +115,22 @@ export const getSCDiffPageDataset = (table_name,currentPage,pageSize,contrastsGr
 	})
 }
 
+// getSCDiffPageDatasetByGene
+export const getSCDiffPageDatasetByGene = (gene,table_name,currentPage,pageSize,contrastsGroup) => {
+	return axios.request({
+	  url: 'public/getSCDiffPageDatasetByGene',
+	  data: { 
+		'gene':gene,
+		'table_name':table_name,
+		'pageIndex': currentPage,
+		'pageSize': pageSize,	
+		'contrastsGroup':contrastsGroup
+	},
+	  method: 'post',
+	})
+}
+
+
 // getDatasetTypeSourceByCell( cell_name,_this.currentPageTypeSource,_this.pageSizeTypeSource )
 export const getDatasetTypeSourceByCell = (cell_name,currentPage,pageSize) => {
 	return axios.request({

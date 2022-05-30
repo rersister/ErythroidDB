@@ -100,6 +100,7 @@ export default {
 		return{
             series:this.$store.state.app.CurrentPageToken,
             spinShow1:'true',
+            search_placeholder:'Please input gene symbol',
             Dsource:'',
             Dgrowth_mode:'',
             spinShowTypeSource:true,
@@ -246,11 +247,19 @@ export default {
         },  
 
         searchDiffDataSetByKeyName($event){
-            	var _this = this;      
+            var _this = this;      
+
+            if( "" == $event ){
+				this.$Message.info('Please input gene symbol', 10);
+				return 
+            } 
+
             _this.spinShowTypeSource = true, 
             // alert("==")
             // alert(contrastsGroup)
-			getDiffPageDatasetByGene(gene_name,table_name,currentPage,pageSize,contrastsGroup).then( res=>{
+
+            
+			getDiffPageDatasetByGene($event,this.series,this.currentPage,this.pageSize,this.contrastsGroup).then( res=>{
 
 				_this.spinShowTypeSource = false                    
 				let datas = res.data
@@ -345,7 +354,7 @@ export default {
             
             this.getdiff_chart(this.series,diffgroup)
             this.contrastsGroup = diffgroup
-            //alert(diffgroup)
+            // alert(diffgroup)
             this.mockTableData(this.series,this.currentPage,this.pageSize,diffgroup)
             
         },

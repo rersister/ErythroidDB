@@ -29,6 +29,16 @@
 		
 		</Row>
 		</Br>
+
+		<Row>
+			<i-form :label-width="120">
+				<i-col span="12">
+					<Form-item label="Input Gene: ">                                                  
+						 <Input search enter-button="Search"    @on-search="searchSCDiffDataSetByKeyName($event)" :placeholder="search_placeholder"/>                         
+					</Form-item>
+				</i-col>
+			</i-form>
+		</Row>
 		<Row>
 			<!-- <filter-table 
                 
@@ -37,6 +47,7 @@
                   :columns="diffCols">
             </filter-table> -->
 			
+
 			<Table :columns="diffCols" :data="diffData" size="small" ref="table"></Table>
 			<div style="margin: 10px;overflow: hidden">               
                   <div style="float: right;">
@@ -107,7 +118,7 @@
 import FilterTable from '../compnents/FilterTable';
 import VuePlotly from '@statnett/vue-plotly'
 import {getdiffGroup,getTsneGroup,getSCClusterDiff,getSCEnrichContrastGroup,getSCDiffContrastGroup,getScDiffEnrich} from '@/api/erythdataservice'
-import {getDatasetTypeSource,getSCDiffPageDataset} from '@/api/erythdataset'
+import {getDatasetTypeSource,getSCDiffPageDatasetByGene,getSCDiffPageDataset} from '@/api/erythdataset'
 
 const  P_Value_range = {
     0: {
@@ -130,6 +141,7 @@ export default {
 	data(){
 		return{
 			enrichGroup:'',
+			search_placeholder:'Please input gene symbol',
 			goTypeList:[
                     {
                         name:'GO-CC',
@@ -600,7 +612,35 @@ export default {
 				}
 				
 			})
-		}, 
+		},
+		
+		searchSCDiffDataSetByKeyName($event){
+			//  table_name  含有 source 信息
+			// alert(table_name)
+			if( "" == $event ){
+				this.$Message.info('Please input gene symbol', 10);
+				return 
+            } 
+			var _this = this;      
+            _this.spinShowTypeSource = true, 
+            // alert("==")
+		
+			getSCDiffPageDatasetByGene($event,this.series,this.currentPage,this.pageSize,this.group).then( res=>{
+
+				_this.spinShowTypeSource = false                    
+				let datas = res.data
+                console.log(datas)
+				if (datas.signal == 1){
+
+					console.info(datas.list)
+					_this.diffData = datas.list                  
+					_this.totalRow = datas.total;
+				}else{
+
+				}
+				
+			})
+		},
 		handleSizeChange(val){
 			console.log(`每页 ${val} 条`);
 			this.pageSize = val;

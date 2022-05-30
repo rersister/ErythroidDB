@@ -1,6 +1,6 @@
 <template>
 <div class="lay_out">
-	<h1 class="my_h1">Differential analysis ({{orga_name}})</h1>
+	<h1 class="my_h1">Differential analysis({{orga_name}})</h1>
 	</Br>
 	<div>
 		<Row>
@@ -349,7 +349,7 @@ export default {
 			let _this = this  
 			// alert(this.table_name)
 			this.getdiff_chart(this.table_name,diffgroup)
-
+			alert(diffgroup)
 			this.mockTableData(this.table_name,this.currentPage,this.pageSize,diffgroup)
             
 		},

@@ -202,8 +202,9 @@ export const getTsneData = (series,source,col,if3D,VisualM) => {
 		},
 		method:'post',
 	})
-
 }
+
+
 // getTraData
 export const getTraData = (series,source,col) => {
 	return axios.request({
@@ -242,7 +243,6 @@ export const getPseudoData = (series,source) => {
 		data:{
 			series: series,
 			source:source,
-		
 		},
 		method:'post',
 	})
