@@ -1,11 +1,13 @@
 <template>
     <div>
-        <h1 class='h1_title'>Expression Profile</h1>
+        <br/>
+        <h1 >Expression Profile</h1>
 		<div style="margin-top: 10px;">                             
             <div style="margin-top: 10px;">
-                <Row  >
+                <Row>
                         <Col span="12">
                             <!-- 数据查询分子名 -->
+                            <span>Input Gene Symbol:</span>
                             <Input search enter-button="Search"  @on-search="searchItemByName($event)" :placeholder="search_placeholder"/>                         
                         </Col>                                                                                                                                                       
                 </Row>       

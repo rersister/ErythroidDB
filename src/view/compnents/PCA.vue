@@ -5,6 +5,7 @@
 
 	<!-- 
 		Principal component analysis -->
+    <br/>
 	<h1>Principal Component Analysis(PCA)</h1>
 	<Row>
 		<!-- 相似性分析 MDS 聚类图-->

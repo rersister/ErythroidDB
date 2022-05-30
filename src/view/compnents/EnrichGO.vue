@@ -4,21 +4,43 @@
 
     <div>      <!-- enrichGO analysis -->  
 
+        <br>
+        <h1 >Enrichment Analysis</h1> 
+        <br>
+        <Row>
+        	<i-form :label-width="120">
+				<i-col span="8">
+					<Form-item label="Contrasts Group: ">                                                  
+						<i-select  clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup">        
+							<i-option v-for="(group,index) in contrasts_group" :key='index' :value="group.name">{{ group.name }}</i-option>
+						</i-select>
+					</Form-item>
+				</i-col>
+                &nbsp;&nbsp;
+                <i-col span="12">
+					<Form-item label="Type: ">                                                  
+						<i-select :model.sync="enrichGroup" clearable  placeholder="Pleace select GO Type" @on-change="changeGoType">                    
+                            <i-option v-for="(goType,index) in goTypeList" :key='index' :value="goType.value">{{ goType.name }}</i-option>
+                        </i-select>
+                    
+                        <!-- <i-button class='button_style' icon="ios-search" shape="circle" @click="getenrich_chart"></i-button>  -->
+					</Form-item>
+				</i-col>
 
-        <h1 class='h3_title'>Enrichment Analysis</h1> 
-        <br>     
+			</i-form>
+        </Row> 	     
         <Row>
             <!-- <i-form :model="GOformItem" :label-width="120">--> 
                 
-                <Col span="4">
+                <!-- <Col span="4">
                     <p class='detail_title'>Contrasts Group: </p>                                             
                 </Col>
                 <Col span="4">
                     <i-select :model.sync="enrichGroup" clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroupOfEnrich">        
                                 <i-option class='h3_title' v-for="(group,index) in contrasts_group" :key='index' :value="group.name">{{ group.name }}</i-option>
                     </i-select>
-                </Col>
-                &nbsp;&nbsp;
+                </Col> -->
+                
                 <!-- <Col span="3" offset="1">
                     <p class='detail_title'>Enrich group:</p>                                             
                 </Col> -->
@@ -28,7 +50,7 @@
                         <i-option v-for="(enrichGroup,index) in enrichGroupList" :key='index' :value="enrichGroup.name">{{ enrichGroup.name }}</i-option>
                     </i-select>
                 </Col> -->
-                <Col span="2" offset="1">
+                <!-- <Col span="2" offset="1">
                     <p class='detail_title' >Type:</p>                                             
                 </Col>
                 <Col span="4">
@@ -38,7 +60,7 @@
                 </Col>
                  
                 <i-button class='button_style' icon="ios-search" shape="circle" @click="getenrich_chart"></i-button> 
-                
+                 -->
             <!--</i-form>-->
         </Row>     
         <Row> 
@@ -232,6 +254,7 @@ export default {
         changeGoType(goType){
             let _this = this
             this.goType = goType
+            this.getenrich_chart()
         },
         changenrichType(enrichGroup){
             let _this = this

@@ -1,6 +1,7 @@
 <template>
 <div>
-	<h1 class='h3_title'>Differential Analysis</h1>
+    <br/>
+	<h1 >Differential Analysis</h1>
     <br>
 	<div>
 		<Row>
@@ -23,19 +24,13 @@
 
 
         <Row>
-                            <!-- 数据查询分子名 -->
-            <i-form :label-width="120">
-				<i-col span="12">
-					<Form-item label="Input Gene: ">                                                  
-						 <Input search enter-button="Search"    @on-search="searchDiffDataSetByKeyName($event)" :placeholder="search_placeholder"/>                         
-        
-					</Form-item>
-				</i-col>
-			</i-form>
-             
-                   
+            <Col span="12">
+                <!-- 数据查询分子名 -->
+                <span>Input Gene Symbol:</span>
+                <Input search enter-button="Search"  @on-search="searchDiffDataSetByKeyName($event)" :placeholder="search_placeholder"/>                         
+            </Col>                                                                                                                                                       
         </Row>
-
+        <br/>
         <Row>
 
 			<!-- <filter-table 
