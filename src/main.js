@@ -10,7 +10,7 @@ import i18n from '@/locale'
 import 'iview/dist/styles/iview.css';
 // import $ from 'jquery'
 import config from '@/config'
-import echarts from "echarts"
+import * as echarts from 'echarts'
 import * as Highcharts from 'highcharts';
 import * as highchartsSankey from 'highcharts/modules/sankey';
 highchartsSankey(Highcharts);
@@ -20,6 +20,7 @@ import drilldown from 'highcharts/modules/drilldown'
 import mapInit from 'highcharts/modules/map'
 import exportingInit from 'highcharts/modules/exporting'
 import loadHighchartsMore from 'highcharts/highcharts-more';
+
 
 
 

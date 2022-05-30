@@ -9,9 +9,10 @@ Vue.use(Router)
 
 // 路由的加载模式的问题，因为vue-router的模式不同,history ---> hash
 const router = new Router({
-    routes,
-    mode: 'hash',
-    base:'ErythroidDB'
+   
+    mode: 'history',
+    base:process.env.BASE_URL,
+    routes
 
 })
 

@@ -3,11 +3,12 @@
 	
 	<div>
 		<h1>Pseudotime Trajectory</h1>
+		<br>
 		<Row :gutter="16">
         	<i-form :label-width="120">
 				
 				<i-col span="8">
-					<Form-item label="Data source: ">                                                  
+					<Form-item label="Group: ">                                                  
 						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup2">        
 							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 						</i-select>
@@ -26,17 +27,18 @@
 	
 	<div>
 		<h1>Differentiation Trajectory</h1>
+		<br>
 		<Row>
         	<i-form :label-width="120">
 				<i-col span="8">
-					<Form-item label="Data source: ">                                                  
+					<Form-item label="Group: ">                                                  
 						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup">        
 							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
 				<i-col span="8">
-					<Form-item label="Show by: ">                                                  
+					<Form-item label="Color by: ">                                                  
 						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedTraChart">        
 							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
@@ -50,13 +52,7 @@
 			<vue-plotly :data="Tra_data" :layout="Tra_layout" :options="Tra_options"/>
 		</Row>
 	</div>
-	<router-link to="/Dataset_service">
-            <div style="text-align:right;font-size:calc((30/1920) * 100vw);">
-               
-			   <h3>Back To Dataset Service</h3>
-                
-            </div> 
-	</router-link>
+
 
 
 </div>
@@ -190,9 +186,7 @@ export default {
 				
                 let datas = res.data  
 				console.log(datas)
-				 var data =   datas           
-              
-
+				var data =   datas           
                 this.pseudo_data = data
                     
                 var pseudo_layout={ 
@@ -206,7 +200,7 @@ export default {
 						// range: [0, 8],
                        title:'Component 2'
 					},
-					 legend: {
+					legend: {
 						y: 0.5,
 						yref: 'paper',
 						font: {
@@ -249,17 +243,24 @@ export default {
                 let datas = res.data  
 				console.log(datas)
 				var data =   datas 
-				       
-				datas.forEach(key => this.data_source_list.push({
-                    name:key
-				})) 
-				this.source = datas[0]
-				this.source2 = datas[0]
-				// this.getTraCol(this.series,data[0])
-				// console.log("===")
+				
+				
 				// console.log(_this.colnames[0]) 
-				this.getPseudoPlot(this.series,datas[0])
-				this.getTraChart(this.series,data[0],'new_cluster_name')
+				this.source = data[0].source_g
+				this.source2 = data[0].source_g     
+				datas.forEach(function (group) {
+					
+					console.log(group.source_g)
+
+					_this.data_source_list.push({
+						name:group.source_g
+					})
+					
+				}) 
+
+				this.getPseudoPlot(this.series,data[0].source_g)
+
+				this.getTraChart(this.series,data[0].source_g,'celltype')
 				
              
            })

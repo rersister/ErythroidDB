@@ -1,0 +1,1343 @@
+<template>
+  <div class="my_out">
+    <Header>
+      <Col span="12">
+                            <!-- 数据查询分子名 -->
+                    </br>
+                    </br>
+                    </br>
+                    </br>
+                    Input gene/tissue/dataset id/organism name:
+                    <Input search enter-button="Search"  @on-search="searchDataSetByKeyName($event)" :placeholder="search_placeholder"/>                         
+      </Col> 
+    </Header>
+    <body class="my_body">
+      
+      <div class="my_Row">
+
+        <div  class="my_col">
+
+
+            <Br/>
+            <!-- <div>
+              <h4>Input gene/tissue/dataset id/organism name:</h4>
+              <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>  
+              <Input search enter-button="Search"  @on-search="searchDataSetByKeyName($event)" :placeholder="search_placeholder"/>
+
+            </div> -->
+
+            <div>
+              <h4>Choose Cell Type:</h4>
+              <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
+              <i-select  clearable placeholder="Pleace select cell type"  @on-change="changedCellType">        
+                <i-option v-for="(celltype,index) in celltype_list" :key='index' :value="celltype.name">{{ celltype.full_name }}</i-option>
+              </i-select>
+            </div>
+            <Br/>
+            <div>
+              <h4>Choose Reported Gene:</h4>
+              <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
+              <i-select  clearable placeholder="Pleace select reported gene"  @on-change="changedReportedGene">        
+                <i-option v-for="(reportedGene,index) in reportedGene_list" :key='index' :value="reportedGene.name">{{ reportedGene.name }}</i-option>
+              </i-select>
+            </div>
+            <Br/>
+            <div>
+              <h4>Choose Compound Type:</h4>
+              <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
+              <i-select  clearable placeholder="Pleace select compound type"  @on-change="changedComppoundType">        
+                <i-option v-for="(compound,index) in compound_list" :key='index' :value="compound.name">{{ compound.name }}</i-option>
+              </i-select>
+            </div>
+            <Br/>
+            <div>
+              <h4>Choose Disease Type:</h4>
+              <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
+              <i-select  clearable placeholder="Pleace select disease type"  @on-change="changedDiseaseType">        
+                <i-option v-for="(disease,index) in disease_list" :key='index' :value="disease.name">{{ disease.name }}</i-option>
+              </i-select>
+            </div>
+            <Br/>
+            <div>
+              <h4>Choose Species:</h4>
+              <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
+              <i-select  clearable placeholder="Pleace select species"  @on-change="changedSpecies">        
+                <i-option v-for="(species,index) in species_list" :key='index' :value="species.name">{{ species.name }}</i-option>
+              </i-select>
+            </div>
+            <Br/>
+            <div>
+              <h4>Choose Tissue:</h4>
+              <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
+              <i-select  clearable placeholder="Pleace select tissue"  @on-change="changedTissue">        
+                <i-option v-for="(tissue,index) in tissue_list" :key='index' :value="tissue.value">{{ tissue.name }}</i-option>
+              </i-select>
+            </div>
+            <Br/>
+            <div>
+              <h4>Choose Growth Mode:</h4>
+              <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
+              <i-select  clearable placeholder="Pleace select growth mode"  @on-change="changedGrowthMode">        
+                <i-option v-for="(growth_mode,index) in growth_mode_list" :key='index' :value="growth_mode.name">{{growth_mode.name }}</i-option>
+              </i-select>
+            </div>
+            <Br/>
+            <div>
+              <h4>Choose Development Type:</h4>
+              <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
+              <i-select  clearable placeholder="Pleace select development type"  @on-change="changedDevelopmentType">        
+                <i-option v-for="(development,index) in development_list" :key='index' :value="development.name">{{ development.name }}</i-option>
+              </i-select>
+            </div>
+            <Br/>
+            <div>
+              <h4>Choose Sequence Type:</h4>
+              <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
+              <i-select  clearable placeholder="Pleace select sequence type"  @on-change="changedSequenceType">        
+                <i-option v-for="(sequence,index) in sequenceType_list" :key='index' :value="sequence.name">{{ sequence.name }}</i-option>
+              </i-select>
+            </div>
+
+        </div>
+
+        <div class="my_colRight">
+            <div> 
+            <!-- dataset 展示页 FilterTableForAllDateSet -->
+              
+              <Table stripe
+                    @on-row-click="intoDataSet"
+                    :data="datasetsTypeSource"
+                    :columns="tAdatasetTypeSourceColumns">
+
+              </Table>
+              <!-- <Spin size="large" fix v-if="spinShowTypeSource"></Spin> -->
+                 
+              <div style="margin: 10px;overflow: hidden">               
+                    <div style="float: right;">
+                        <Page :total="totalTypeSource"  
+                        :current="currentPageTypeSource" 
+                        :page-size="pageSizeTypeSource" 
+                        show-elevator 
+                        show-total
+                        show-sizer
+                        @on-change="handleCurrentChangeTypeSource" 
+                        @on-page-size-change="handleSizeChangeTypeSource">
+                        </Page>                   
+                    </div>
+              </div>
+          </div> 
+        </div>
+      </div>
+
+    </body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="footer_style">
+      <span class="my_footer">
+                Copyright ©2018-2019 Guangmin Zheng.&copy;<a
+                  href="http://sourcedb.big.cas.cn/zw/zjrc/yjy/201311/t20131116_3979427.html"
+                  target="_blank"
+                  title="北京基因组研究所方向东"
+                  >Fang's Lab.</a>
+                All Rights Reserved.</span>
+    </div>
+    <!-- <footer class="bigd-footer" style="font-family: Arial">
+      <div class="bigd-container">
+        <div class="bigd-panel bigd-panel-default">
+          <div class="bigd-panel-body">
+            <div class="bigd-row">
+              <div class="bigd-col-md-2">
+                <a href="https://bigd.big.ac.cn/"
+                  ><img
+                    src="https://bigd.big.ac.cn/cdn/image/CNCB-NGDC.png"
+                    class="bigd-img-responsive"
+                    style="margin-top: calc((15/1920) * 100vw);"
+                /></a>
+                <ul class="bigd-list-unstyled">
+                  <li><a href="https://bigd.big.ac.cn/about">About NGDC</a></li>
+                  <li><a href="https://bigd.big.ac.cn/people">People</a></li>
+                  <li><a href="https://bigd.big.ac.cn/mission">Mission</a></li>
+                  <li>
+                    <a href="https://bigd.big.ac.cn/board">Advisory Board</a>
+                  </li>
+                  <li>
+                    <a href="https://bigd.big.ac.cn/structure"
+                      >Organizational Structure</a
+                    >
+                  </li>
+                  <li><a href="https://bigd.big.ac.cn/history">History</a></li>
+                  <li>
+                    <a href="https://bigd.big.ac.cn/annual-report"
+                      >Annual Reports</a
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="bigd-col-md-2">
+                <h3>Research & Resources</h3>
+                <ul class="bigd-list-unstyled">
+                  <li>
+                    <a href="https://bigd.big.ac.cn/databases">Databases</a>
+                  </li>
+                  <li><a href="https://bigd.big.ac.cn/tools">Tools</a></li>
+                  <li>
+                    <a href="https://bigd.big.ac.cn/standards">Standards</a>
+                  </li>
+                  <li>
+                    <a href="https://bigd.big.ac.cn/research"
+                      >Topics & Projects</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://bigd.big.ac.cn/publications"
+                      >Publications</a
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="bigd-col-md-2">
+                <h3>Featured</h3>
+                <ul class="bigd-list-unstyled">
+                  <li>
+                    <a
+                      href="https://bigd.big.ac.cn/databasecommons"
+                      target="_blank"
+                      >Database Commons</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://bigd.big.ac.cn/ewas" target="_blank"
+                      >EWAS Atlas</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://bigd.big.ac.cn/gsa"
+                      target="_blank"
+                      title="Genome Sequence Archive"
+                      >GSA</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://bigd.big.ac.cn/gvm"
+                      target="_blank"
+                      title="Genome Variation Map"
+                      >GVM</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="http://ic4r.org"
+                      target="_blank"
+                      title="Information Commons for Rice"
+                      >IC4R</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://bigd.big.ac.cn/idog" target="_blank"
+                      >iDog</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://bigd.big.ac.cn/methbank"
+                      target="_blank"
+                      title="Methylation DataBank"
+                      >MethBank</a
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="bigd-col-md-2">
+                <h3>Conferences & Education</h3>
+                <ul class="bigd-list-unstyled">
+                  <li>
+                    <a href="https://bigd.big.ac.cn/conference">Conferences</a>
+                  </li>
+                  <li>
+                    <a href="https://bigd.big.ac.cn/education">Education</a>
+                  </li>
+                  <li>
+                    <a href="https://bigd.big.ac.cn/training">Training</a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="bigd-col-md-2">
+                <h3>Alliance & Collaboration</h3>
+                <ul class="bigd-list-unstyled">
+                  <li>
+                    <a href="https://bigd.big.ac.cn/bhbd-alliance">BHBD</a>
+                  </li>
+                  <li>
+                    <a href="https://bigd.big.ac.cn/partners">Partners</a>
+                  </li>
+                  <li>
+                    <a href="https://bigd.big.ac.cn/collaborations"
+                      >Collaborations</a
+                    >
+                  </li>
+                  <li><a href="https://bigd.big.ac.cn/funding">Funding</a></li>
+                  <li>
+                    <a href="https://bigd.big.ac.cn/contact">Contact Us</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <hr class="footer-hr" />
+            <div class="bigd-row">
+              <div class="bigd-col-md-7">
+                <p class="bigd-text-muted">
+                  &copy; year National Genomics Data Center,
+                  <span
+                    ><a href="http://english.big.cas.cn" target="_blank"
+                      >China National Center for Bioinformation / Beijing
+                      Institute of Genomics</a
+                    ></span
+                  >,
+                  <span
+                    ><a href="http://english.cas.cn" target="_blank"
+                      >Chinese Academy of Sciences</a
+                    ></span
+                  ><br />
+                  No.1 Beichen West Road, Chaoyang District, Beijing 100101,
+                  China<br />
+                  <span
+                    ><a href="bigd_sitepolicies"
+                      >Policies and Disclaimers</a
+                    ></span
+                  >
+                </p>
+                <p class="bigd-text-muted">
+                  <span
+                    ><a
+                      rel="license"
+                      target="_blank"
+                      href="http://creativecommons.org/licenses/by/3.0/cn/"
+                    >
+                      <img
+                        alt="Creative Commons License"
+                        style="border-width:0;height: calc((15/1920) * 100vw)"
+                        src="https://bigd.big.ac.cn/static/image/cc.png"/></a
+                  ></span>
+                  This work is licensed under a
+                  <span
+                    ><a
+                      rel="license"
+                      href="http://creativecommons.org/licenses/by/3.0/cn/"
+                      target="_blank"
+                      >Creative Commons Attribution 3.0 China Mainland
+                      License</a
+                    ><br /><a
+                      href="http://www.beian.miit.gov.cn"
+                      target="_blank"
+                      >京ICP备10050270号</a
+                    ></span
+                  >
+                </p>
+              </div>
+              <div class="bigd-col-md-5">
+                <div class="pull-right">
+                  <ul class="bigd-list-inline">
+                    <li>
+                      <a href="http://english.big.cas.cn" target="_blank"
+                        ><img
+                          src="https://bigd.big.ac.cn/static/image/big_logo.png"
+                          style="width: calc((32/1920) * 100vw)"
+                      /></a>
+                    </li>
+                    <li>
+                      <a href="http://www.picb.ac.cn/picb" target="_blank"
+                        ><img
+                          src="https://bigd.big.ac.cn/static/image/picb.png"
+                          style="height: calc((32/1920) * 100vw);"
+                      /></a>
+                    </li>
+                    <li>
+                      <a href="http://english.ibp.cas.cn/" target="_blank"
+                        ><img
+                          src="https://bigd.big.ac.cn/static/image/ibp.png"
+                          style="height: calc((32/1920) * 100vw);"
+                      /></a>
+                    </li>
+                    <li>
+                      <a href="http://english.cas.cn/" target="_blank"
+                        ><img
+                          src="https://bigd.big.ac.cn/static/image/cas.png"
+                          style="height: calc((32/1920) * 100vw);"
+                      /></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer> -->
+  </div>
+</template>
+<script>
+import router from '@/router'
+import routers from '@/router/routers'
+import { mapMutations } from 'vuex'
+import HeaderBar from '../components/header-bar'
+import Language from '../components/language'
+import Header from '../components/Header'
+import FilterTableForAllDateSet from '@/view/compnents/FilterTableForAllDateSet'
+import { getDatasetTypeSource,getDatasetDataByKeyParam,getDatasetGene,getDatasetDataByMultiInput } from '@/api/erythdataset'
+
+
+// import {prependHeaderSection,appendFooterSection} from '@/libs/headerfooter.js'
+
+
+const sample_numbers = {
+    0: {
+      value: "1-10",
+      name: '1-10'
+    },
+    1: {
+      value: "10-20",
+      name: '10-20',
+      // color: 'red'
+    },
+    2: {
+      value: "20-30",
+      name: '20-30',
+      // color: 'green'
+    },
+    3: {
+      value: "30-50",
+      name: '30-50',
+      // color: 'green'
+    },
+    4: {
+      value: ">50",
+      name: '>50',
+      // color: 'green'
+    },
+    5: {
+      value: "all",
+      name: 'All',
+      // color: 'green'
+    },
+
+  };
+
+
+const species_type = {
+    0: {
+      value: "Homo",
+      name: 'Homo sapiens'
+    },
+    1: {
+      value: "Mus",
+      name: 'Mus musculus',
+      // color: 'red'
+    },
+    2: {
+      value: "Danio",
+      name: 'Danio rerio',
+      // color: 'green'
+    },
+    3: {
+      value: "all",
+      name: 'All',
+      // color: 'green'
+    },
+    
+  }
+
+
+const source_type = {
+    0: {
+      value: "Marrow",
+      name: 'Bone Marrow(BM)'
+    },
+    1: {
+      value: "Cord",
+      name: 'Cord Blood(CB)',
+      // color: 'red'
+    },
+    2: {
+      value: "Peripheral",
+      name: 'Peripheral Blood(PB)',
+      // color: 'green'
+    },
+    3: {
+      value: "Spleen",
+      name: 'Spleen(SP)',
+      // color: 'green'
+    },
+    4: {
+      value: "Cardiac",
+      name: 'Cardiac Puncture(CP)',
+      // color: 'green'
+    },
+    5: {
+      value: "Line",
+      name: 'Cell Line',
+      // color: 'green'
+    },
+    
+    6: {
+      value: "Fetal",
+      name: 'Fetal Liver(FL)',
+      // color: 'green'
+    },
+    
+    7:{
+      value:'Embryonic',
+      name:'Embryonic Stem Cells(ESC)'
+    },
+    8:{
+
+      value:'Yolk',
+      name:'Yolk Sac(YS)'
+    },
+
+    9:{
+      value:'Pluripotent',
+      name:'Induced Pluripotent Stem Cells(iPSC)'
+    },
+   
+    10: {
+      value: "all",
+      name: 'All',
+      // color: 'green'
+    },
+
+  }
+
+
+const growth_type ={
+   0: {
+      value: "vitro",
+      name: 'vitro'
+    },
+    1: {
+      value: "vivo",
+      name: 'vivo',
+      // color: 'red'
+    },
+    3: {
+      value: "all",
+      name: 'All',
+      // color: 'green'
+    },
+}
+
+const development_type ={
+    0: {
+        value: "BM_vitro",
+        name: 'BM_vitro'
+      },
+    1: {
+      value: "CL_vitro",
+      name: 'CL_vitro'
+    },
+    2: {
+      value: "FL_vitro",
+      name: 'FL_vitro'
+    },
+    
+    3: {
+      value: "PB_vitro",
+      name: 'PB_vitro'
+    },
+    4:{
+      value:'ESC_vitro',
+      name:'ESC_vitro'
+    },
+    
+    5:{
+          value:'CB_vitro',
+          name:'CB_vitro'
+    },
+
+    6:{
+      value:'SP_vitro',
+      name:'SP_vitro'
+    },
+
+    7:{
+      value:'CL_vitro',
+      name:'CL_vitro'
+    },
+    8:{
+      value:'iPSC_vitro',
+      name:'iPSC_vitro',
+    },
+
+
+    9: {
+      value: "BM_vivo",
+      name: 'BM_vivo',
+      // color: 'red'
+    },
+    10:{
+      value:'CB_vivo',
+      name:'CB_vivo',
+    },
+    
+    11:{
+      value:'PB_vivo',
+      name:'PB_vivo',
+    },
+
+    12:{
+      value:'CP_vivo',
+      name:'CP_vivo',
+    },
+    13:{
+      value:'FL_vivo',
+      name:'FL_vivo'
+    },
+    14:{
+      value:'ESC_vivo',
+      name:'ESC_vivo',
+    },
+
+    15:{
+      value:'SP_vivo',
+      name:'SP_vivo',
+    },
+
+    16:{
+      value:'YS_vivo',
+      name:'YS_vivo'
+    },
+
+    17: {
+      value: "all",
+      name: 'All',
+      // color: 'green'
+    },
+  
+}
+
+const experiment_type = {
+  0:{
+    name:'Expression profiling by high throughput sequencing',
+    value:'Expression'
+  },
+  1:{
+    name:'All',
+    value:'all'
+  }
+}
+
+const sequence_type ={
+  0:{
+
+    name:'Bulk',
+    value:'Bulk'
+  },
+  1:{
+    name:'Single Cell',
+    value:'Single'
+  },
+  2: {
+      value: "all",
+      name: 'All',
+      // color: 'green'
+    },
+  
+}
+
+export default {
+  name: 'App',
+  components: {
+    HeaderBar,
+    Language,
+    Header,
+    FilterTableForAllDateSet,
+  },
+  data() {
+    return {
+      values: [
+        { id: 1, name: 'Home', link: '/', type: 'ios-home' },
+        { id: 0, name: 'Search', link: '/Search', type: 'ios-search' },
+        {
+          id: 2,
+          name: 'Erythroid Atlas',
+          link: '/Erythroid Atlas',
+          type: 'ios-analytics',
+        },
+        { id: 3, name: 'Help', link: '/help', type: 'ios-paper' },
+        { id: 4, name: 'About', link: '/about', type: 'ios-navigate' },
+      ],
+      search:'',
+      table_name:'all_dataset_source_type',
+      pageSizeTypeSource:10,
+      totalTypeSource:400,
+      currentPage: 1,
+      currentPageTypeSource:1,
+      current_index: -1,
+      search_placeholder:'',
+      datasetsTypeSource:[],
+      tAdatasetTypeSourceColumns:[
+          {
+            title: 'Dataset',
+            key: 'dataset_id',
+            width:'135px',
+            // fixed: 'left',
+            // render: (h, params) => {            
+            //   if (params.row.dataset_id.indexOf("GSE") > -1){
+            //       return h('div', [
+            //       h('a', {                               
+            //             attrs:{                              
+            //               href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id
+
+            //             },    
+            //         },params.row.dataset_id)
+            //       ])
+            //   }else{
+            //     return h('div',params.row.dataset_id)
+              
+            //   }     
+
+            //   // return h('div', [
+            //   //   h('a', {                               
+            //   //         attrs:{                              
+            //   //           href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id
+
+            //   //         },    
+            //   //     },params.row.dataset_id)
+            //   //   ])
+
+            // }
+          },
+          //organism
+          {
+            title: 'Species',
+            
+            
+            key: 'organism',
+            width:'130px',
+
+          },
+          {
+              title: 'Tissue',//来源 dataset 里的source
+              key: 'source',
+              // "sortable": true,
+              width:'150px',
+              
+          },
+
+          {
+              title: 'Growth Mode',
+              key: 'growth_mode',
+              width:'85px',
+          },
+          {
+              title: 'Development Type',
+              key: 'development_type',
+              width:'160px',
+          },
+        
+          {
+            title: 'Title',
+            key: 'title',
+            width:'200px',
+           
+
+          },
+          {
+            title: 'Omics Data Type',
+            key: 'experiment_type',
+            width:'125px',
+           
+          },
+          {
+            title: 'Sequence Type',
+            key: 'sequence_type',
+            width:'110px',
+        
+          
+          },
+          {
+            title: 'Sample Number',
+            key: 'sample_number',
+            width:'90px',
+           
+          },
+
+
+        ],
+      cell_type:'',
+      celltype_list:[
+
+          {name:'ESC',
+            full_name:'Embryonic Stem Cells',
+            'cell_ano':'Embryonic stem cells are pluripotent cells isolated from the inner cell mass of a blastocyst, the early mammalian embryo that implants into the uterus. Embryonic stem cells self-renew by dividing and can differentiate into any specialised cell of the body, but not extra-embryonic tissues such as the placenta.'},
+          {name:'HSC',
+            full_name:'Hematopoietic Stem cells',
+            'cell_ano':'Hematopoietic stem cells (HSCs) are a rare population of cells residing in the bone marrow (BM) and continuously replenish all mature blood cells throughout the life span.'},
+          {name:'MPP',
+            full_name:'Multipotent Progenitor Cell',
+            'cell_ano':'Multipotent adult progenitor cells (MAPC) are an attractive choice for cytotherapy because they have a large proliferative potential, the ability to differentiate into different cell types and produce a variety of cytokines and growth factors important to wound healing. '},
+          {name:'CMP',
+          full_name:'Common Myeloid Progenitor',
+          'cell_ano':'Common myeloid progenitors give rise to either megakaryocyte/erythrocyte or granulocyte/macrophage progenitors. Purified progenitors were used to provide a first-pass expression profile of various haematopoiesis-related genes.'},
+          
+          {name:'MEP',
+          'full_name':'Megakaryocyte-Erythroid Progenitor',
+          'cell_ano':'Megakaryocyte/erythroid progenitors (MEPs) are bipotent cells that undergo a fate decision to become either megakaryocytes (Mk) or erythroid (E) cells. Detailed mechanistic knowledge of the human MEP fate decision is not only critical for our understanding of normal and perturbed hematopoiesis, but also has important therapeutic implications.'},
+          {name:'BFU-E',
+          full_name:'Burst-Forming Unit -Erythroid',
+          'cell_ano':'BFU-E Burst forming unit-erythroid, the earliest known erythroid precursor cell that eventually differentiates into erythrocytes. Produces a colony containing greater than 200 erythroblasts in a hematopoietic colony assay.'},
+          {name:'CFU-E',
+          full_name:'Colony-Forming Unit – Erythroid',
+          'cell_ano':'A CFU-E cell, which has a lesser proliferative capacity than a BFU-E cell, requires the presence of erythropoietin as a stimulatory factor. '},
+
+          {name:'ProE',
+          full_name:'The Proerythroblast Stage',
+          'cell_ano':'The proerythroblast is a large cell with deep blue cytoplasm, high N:C ratio, and prominent nucleoli. Subsequent to proerythroblasts, nucleoli are no longer seen. '},
+          {name:'BasoE',
+          full_name:'Basophilic Erythroblast',
+          'cell_ano':'Basophilic erythroblast a nucleated precursor in the erythrocytic series, preceding the polychromatophilic erythroblast and following the proerythroblast; the cytoplasm is basophilic, the nucleus is large with clumped chromatin, and the nucleoli have disappeared. Called also basophilic normoblast.'},
+          {name:'PolyE',
+          full_name:'Polychromatophilic Erythroblast',
+          'cell_ano':'The nucleus is intensely heterochromatic, and the cytoplasm is now a characteristic lilac color. The basophilia is due to the cytoplasmic ribosomes, and the acidophilia is due to the increase in the amount of hemoglobin being synthesized by the ribosomes. This is the last stage during which cell division occurs.'},
+          {name:'OrthoE',
+          full_name:'Orthochromatic Erythroblast',
+          'cell_ano':'In an orthochromatic erythroblast, the nucleus has shrunk and become darker and the growing concentration of hemoglobin turns the cytoplasm pink. '},
+          {name:'Retic',
+          full_name:'Reticulocyte',
+          'cell_ano':'Reticulocytes are immature red blood cells that detect if your bone marrow is forming enough red blood cells'},
+          {name:'RBC',
+          full_name:'Red Blood Cell',
+          'cell_ano':'Red blood cell, also called erythrocyte, cellular component of blood, millions of which in the circulation of vertebrates give the blood its characteristic colour and carry oxygen from the lungs to the tissues. The mature human red blood cell is small, round, and biconcave; it appears dumbbell-shaped in profile. '}
+        ],
+      reported_gene:'',
+      reportedGene_list:[],
+      compound_n:'',
+      compound_list:[
+
+              {name:'TRβ agonists',
+                full_name:'Thyroid hormone receptor(TRβ)  agonists',
+                'cell_ano':''},
+              {name:'ERBB inhibitors',
+                full_name:'Epidermal growth factor receptor inhibitors',
+                'cell_ano':''},
+              {name:'iron',
+                full_name:'Iron',
+                'cell_ano':' '},
+              {name:'IDH2 inhibitor',
+              full_name:'Isocitrate dehydrogenase 2(IDH2) mutant-specific inhibitor',
+              'cell_ano':''},
+              
+              {name:'PPAR-α agonists',
+              full_name:'Peroxisome proliferator-activated receptor α(PPAR-α) agonists',
+              'cell_ano':''},
+              {name:'HbF inducers',
+              full_name:'Heterogeneity of fetal hemoglobin (HbF) activation',
+              'cell_ano':''},
+              
+              {name:'erythropoietin',
+              full_name:'Erythropoietin',
+              'cell_ano':''},
+
+              {name:'corticosteroids',
+              full_name:'Corticosteroids',
+              'cell_ano':''},
+
+
+             
+      ],    
+      disease_n:'',
+      disease_list:[
+              {name:'Haemolysis',
+                'full_name':'Haemolysis',
+                'cell_ano':''},
+              {name:'Diamond-Blackfan anaemia',
+                'full_name':'Diamond-Blackfan anaemia',
+                'cell_ano':''},
+              {name:'Epo-resistant anaemias',
+                'full_name':'Epo-resistant anaemias',
+                'cell_ano':' '},
+              {name:'Hemoglobinopathies',
+              'full_name':'Hemoglobinopathies',
+              'cell_ano':''},
+
+      ],
+      species:'',
+      species_list:[
+        {
+          value: "Homo",
+          name: 'Homo sapiens'
+        },
+        {
+          value: "Mus",
+          name: 'Mus musculus',
+          // color: 'red'
+        },
+        {
+          value: "Danio",
+          name: 'Danio rerio',
+          // color: 'green'
+        }
+      ],
+      tissue:'',
+      tissue_list:[ 
+          {
+              value: "Marrow",
+              name: 'Bone Marrow(BM)'
+            },
+          {
+            value: "Cord",
+            name: 'Cord Blood(CB)',
+            // color: 'red'
+          },
+        {
+            value: "Peripheral",
+            name: 'Peripheral Blood(PB)',
+            // color: 'green'
+          },
+        {
+            value: "Spleen",
+            name: 'Spleen(SP)',
+            // color: 'green'
+          },
+        {
+          value: "Cardiac",
+          name: 'Cardiac Puncture(CP)',
+          // color: 'green'
+        },
+          {
+            value: "Line",
+            name: 'Cell Line',
+            // color: 'green'
+          },
+      
+        {
+          value: "Fetal",
+          name: 'Embryonic Fetal Liver(EMFL)',
+          // color: 'green'
+        },
+    
+        {
+          value:'Embryo',
+          name:'Embryo(EM)'
+        },
+        {
+
+          value:'Yolk',
+          name:'Embryonic Yolk Sac(EMYS)'
+        },
+        {
+
+          value:'Caudal',
+          name:'Embryonic Caudal Half(EMCH)'
+        },
+
+        {
+          value:'Pluripotent',
+          name:'Induced Pluripotent Stem Cells(iPSC)'
+        }, 
+      ],
+
+      growth_mode:'',
+      growth_mode_list:[
+            {
+              value: "vitro",
+              name: 'vitro'
+            },
+            {
+              value: "vivo",
+              name: 'vivo',
+              // color: 'red'
+            },
+      ],
+      development:'',
+      development_list:[
+          {
+            value: "BM_vitro",
+            name: 'BM_vitro'
+          },
+          {
+            value: "CL_vitro",
+            name: 'CL_vitro'
+          },
+          {
+            value: "EMFL_vitro",
+            name: 'EMFL_vitro'
+          },
+          
+          {
+            value: "PB_vitro",
+            name: 'PB_vitro'
+          },
+          {
+            value:'EM_vitro',
+            name:'EM_vitro'
+          },
+          
+          {
+                value:'CB_vitro',
+                name:'CB_vitro'
+          },
+
+          {
+            value:'SP_vitro',
+            name:'SP_vitro'
+          },
+          {
+            value:'iPSC_vitro',
+            name:'iPSC_vitro',
+          },
+
+
+
+          {
+            value: "BM_vivo",
+            name: 'BM_vivo',
+            // color: 'red'
+          },
+          {
+            value:'CB_vivo',
+            name:'CB_vivo',
+          },
+          
+          {
+            value:'PB_vivo',
+            name:'PB_vivo',
+          },
+
+          {
+            value:'CP_vivo',
+            name:'CP_vivo',
+          },
+          {
+            value:'EMFL_vivo',
+            name:'EMFL_vivo'
+          },
+          {
+            value:'EM_vivo',
+            name:'EM_vivo',
+          },
+
+          {
+            value:'SP_vivo',
+            name:'SP_vivo',
+          },
+
+          {
+            value:'EMYS_vivo',
+            name:'EMYS_vivo'
+          },
+          {
+            value:'EMCH_vivo',
+            name:'EMCH_vivo'
+          },
+      ],
+      sequence:'',
+      sequenceType_list:[
+            {
+
+              name:'Bulk',
+              value:'Bulk'
+            },
+            {
+              name:'Single Cell',
+              value:'Single'
+            },
+      ],
+  
+    }
+  },
+  computed: {
+   
+  },
+
+  // 当前位置的item
+  methods: {
+    ...mapMutations(['setCurrentPageToken']),
+    handleCurrentChangeTypeSource(val){
+          // console.log(`当前页: ${val}`);
+          this.currentPage = val;
+          this.mockTableDataTypeSource()
+    },
+    handleSizeChangeTypeSource(val){
+        // console.log(`每页 ${val} 条`);
+        this.pageSizeTypeSource = val;
+        this.mockTableDataTypeSource
+    },  
+
+    intoDataSet(data, index, event) {
+      // alert(data.dataset);
+      if(this.type) return;
+      this.setCurrentPageToken(data.dataset_id)
+      router.push({
+        name: 'Dataset_detail',
+        params: {
+          dataset: data.dataset_id,
+        },
+      })
+    },
+    searchItemByName(){
+      
+    },
+    onSearch_datasetTypeSource(searchTypeSource){
+
+        var _this = this
+        // alert('jinlai')
+        // alert(Object.keys(searchTypeSource))
+        // var keys = Object.keys(searchTypeSource)
+        // alert(typeof(keys))
+        // alert(searchTypeSource)
+        // if ( keys.replace(/\s*/g,'').length.length === 0 === 0 ){
+        //     // alert('yes')  输入了空值
+        //     this.$Message.info('Please check your input of  ' + key,15);
+        //     return;
+        // }
+        for (let key in searchTypeSource){
+          // alert(key)
+          // alert(searchTypeSource[key])
+          var value = searchTypeSource[key]
+          // alert(typeof(value))
+          if ( typeof(value) === 'object'){
+            // alert('yes')  输入了空值  HSPC  
+            this.$Message.info('Please check your input   ');
+            return;
+          }else{
+            // alert('no')  不输入空
+            // alert(value.replace(/\s*/g,'').length) + key,15
+            if (value.replace(/\s*/g,'').length.length === 0){
+                this.$Message.info('Please check your input of  ' );
+                this.load();
+                return;
+            }else{
+              continue;
+            }
+           
+          }
+        }
+        searchDatasetTypeSource(searchTypeSource, _this.currentPageTypeSource,_this.pageSizeTypeSource,_this.cell_name).then( res=>{
+            
+            _this.spinShowTypeSource = false                    
+            let datas = res.data
+            if (datas.signal === 0){
+              // 0 表示无相关数据
+              this.$Message.info('No related datasets',15);
+
+            }else{
+              _this.datasetsTypeSource = datas.list                  
+              _this.totalTypeSource = datas.total;
+            }
+            
+        })
+
+
+    },
+
+    mockTableDataTypeSource(){
+
+        var _this = this;      
+        // _this.spinShowTypeSource = true, 
+        getDatasetTypeSource(_this.table_name,_this.currentPageTypeSource,_this.pageSizeTypeSource ).then( res=>{
+           
+            // _this.spinShowTypeSource = false                    
+            let datas = res.data
+            // console.info(datas.list)
+            _this.datasetsTypeSource = datas.list                  
+            _this.totalTypeSource = datas.total;
+        })
+       
+
+    },
+
+    mockTableDataByKeyParam(keyParam){
+
+       var _this = this;
+       getDatasetDataByKeyParam(_this.table_name,_this.currentPageTypeSource,_this.pageSizeTypeSource,keyParam).then(res =>{
+
+          // _this.spinShowTypeSource = false                    
+            let datas = res.data
+            // console.info(datas.list)
+            _this.datasetsTypeSource = datas.list                  
+            _this.totalTypeSource = datas.total;
+
+       })
+
+    },
+    getDatasetByMultiInput(){
+      var _this = this;
+      var select = []
+      select.push({ 
+        cell_type:this.cell_type,
+        gene:this.reported_gene,
+        molecules_type:this.compound_n,
+        disease:this.disease_n,
+        organism:this.species,
+        source:this.tissue,
+        growth_mode:this.growth_mode,
+        development_type:this.development,
+        sequence_type:this.sequence
+      })
+      // alert(select)
+      getDatasetDataByMultiInput(_this.table_name,_this.currentPageTypeSource,_this.pageSizeTypeSource,select).then(res =>{
+
+          // _this.spinShowTypeSource = false                    
+            let datas = res.data
+            // console.info(datas.list)
+            _this.datasetsTypeSource = datas.list                  
+            _this.totalTypeSource = datas.total;
+
+       })
+
+    },
+
+    changedCellType(cell_type){
+      let _this = this
+      _this.cell_type = cell_type
+      this.getDatasetByMultiInput()
+    },
+    changedReportedGene(reported_gene){
+      let _this = this
+      _this.reported_gene = reported_gene
+      this.getDatasetByMultiInput()
+
+    },
+    changedComppoundType(compound_n){
+      let _this = this
+      _this.compound_n = compound_n
+      this.getDatasetByMultiInput()
+
+    },
+    changedDiseaseType(disease){
+      let _this = this
+      _this.disease_n = disease
+      this.getDatasetByMultiInput()
+    },
+    changedSpecies(species){
+      let _this = this
+      _this.species = species
+      this.getDatasetByMultiInput()
+    },
+    changedTissue(tissue){
+      // alert(tissue)
+      let _this = this
+      _this.tissue = tissue
+      this.getDatasetByMultiInput()
+    },
+    changedGrowthMode(growth_mode){
+      let _this = this
+      _this.growth_mode = growth_mode
+      this.getDatasetByMultiInput()
+    },
+    changedDevelopmentType(development){
+       let _this = this
+      _this.development = development
+      this.getDatasetByMultiInput()
+    },
+    changedSequenceType(sequence){
+      let _this = this
+      _this.sequence = sequence
+      this.getDatasetByMultiInput()
+    },
+    getReportedGeneList(){
+
+      getDatasetGene().then(res=>{
+          
+              
+              let _this = this
+              var data = res.data
+              var gData = data.gData
+              _this.reportedGene_list = gData
+        })
+
+    }
+      
+  },
+
+  watch: {
+    $route(newRoute) {
+      this.setBreadCrumb(newRoute)
+    },
+  },
+  created() {
+      // this.mockTableData();
+      this.mockTableDataTypeSource()
+      this.getReportedGeneList()
+
+
+  },
+  mounted() {
+    console.log('==============')
+    
+     if ( this.$route.params.KeyName != undefined){
+      //  alert(this.$route.params.KeyName)
+        this.mockTableDataByKeyParam(this.$route.params.KeyName)
+
+     }
+  },
+
+}
+</script>
+
+<style lang="less">
+@import '../../../css/page.min.css';
+
+  .my_out{
+    min-width: 1400px;
+    margin-top:50px;
+  }
+
+  .my_body{
+    height:100%;
+    width:100%;
+    padding:100px 20px 100px;
+  }
+
+  .my_Row{
+    width: 100%;
+    height: 100%;
+
+  }
+
+  ::v-deep .ivu-table-wrapper{
+    border: none !important;
+
+  }
+
+
+  .my_col{
+    border: 1px solid gainsboro;
+    padding: 5px;
+    width: 300px;
+    float: left;
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+
+  .my_colRight{
+
+    width: calc(100% - 340px);
+    float: left;
+
+  }
+
+.my_footer {
+  font-size: calc((20 / 1920) * 100vw);
+
+}
+
+.footer_style{
+  text-align: center;
+  clear: both;
+}
+
+</style>

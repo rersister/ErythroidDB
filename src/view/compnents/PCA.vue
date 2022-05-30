@@ -5,20 +5,14 @@
 
 	<!-- 
 		Principal component analysis -->
-	<h1>Principal Component Analysis</h1>
+	<h1>Principal Component Analysis(PCA)</h1>
 	<Row>
 		<!-- 相似性分析 MDS 聚类图-->
 		<Spin size="large" fix v-if="spinShow3"></Spin>
 		<vue-plotly :data="sim_data" :layout="sim_layout" :options="sim_options"/>
 
 	</Row>
-	<router-link to="/Dataset_service">
-            <div style="text-align:right;font-size:calc((30/1920) * 100vw);">
-                <!-- <img width="20%" height="10%" src="@/assets/img/red_sys.jpg"> -->
-                <h3>Back To Dataset Service</h3>
-                
-            </div> 
-	</router-link>  
+ 
 
 </div>
     
@@ -27,7 +21,7 @@
 
 <script>
 import VuePlotly from '@statnett/vue-plotly'
-import {getsimData,getDatasetGroup} from '@/api/erythdataservice'
+import {getsimData,getDatasetSourceInfoData} from '@/api/erythdataservice'
 export default {
 	name:"PCA",
 	components:{
@@ -44,7 +38,8 @@ export default {
                 responsive: true,
             },
             source:'',
-
+            Dsource:'',
+            Dgrowth_mode:''
 		}
 	},
 	methods:{
@@ -80,15 +75,15 @@ export default {
                 this.sim_data = datas.data                    
                 var layout={ 
                    
-                    title:'Similarity analysis('+this.series+'('+ this.source+')'+')',
+                    title:'PCA of '+this.series+'( Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
 
                     
 
                     xaxis: {
-                        title:'Leading logFC dim 1',
+                        title:'Dim 1',
                     },
                      yaxis: {
-                       title:'Leading logFC dim 2'
+                       title:'Dim 2'
                     },
 
                 }           
@@ -98,26 +93,13 @@ export default {
            })
 
         },
-        getDatasetSampleGroup(){
+        getDatasetSourceInfo(series){
              let _this = this
-             getDatasetGroup(this.$store.state.app.CurrentPageToken).then(res =>{
+             getDatasetSourceInfoData(this.series).then(res =>{
                 let datas =res.data
                 console.log(datas)
-                let samples_data = datas.sample
-                let datasetsource = datas.source
-                _this.source = datasetsource
-                // let gse = datas.gse
-                // let group = datas.group               
-                // var samples_string = 'gid   ' + 'sample ' + 'group' +"<br/>"
-                // if (samples_data != null){
-                //     for (var i=0;i<samples_data.length;i++){ 
-                //         samples_string = samples_string + "<a href=https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=" + gse[i] +">"+ gse[i] +"</a>"+' ' +samples_data[i]+'    '+group[i]+"<br/>"
-                        
-                //     }
-
-
-                // }
-                // _this.samples = samples_string
+                _this.Dsource = datas.source
+                _this.Dgrowth_mode = datas.growth_mode
                 
             })
         }
@@ -125,7 +107,8 @@ export default {
 	
 	mounted (){
         //alert(this.series)
-        this.getDatasetSampleGroup();
+        // this.getDatasetSampleGroup();
+        this.getDatasetSourceInfo(this.series)
 		this.getsim_chart(this.series);
 
 

@@ -15,13 +15,7 @@
       <p>Above is a clustergram/heatmap visualization of your input matrix. The rows and columns have been hierarchically clustered, using the Scipy library in Python, using cosine distance and average linkage. Red/blue cells in the matrix represent positive/negative values in your matrix. The visualization interactive (zoomable, reorderable, filterable) and shareable - the current URL is permanent and shareable.</p>
     </div>
 
-    <router-link to="/Dataset_service">
-            <div style="text-align:right;font-size:calc((30/1920) * 100vw);">
-                <!-- <img width="20%" height="10%" src="@/assets/img/red_sys.jpg"> -->
-                <h3>Back To Dataset Service</h3>
-                
-            </div> 
-	  </router-link>  
+
 
     <!-- <div class='row viz_title' id='col_sim_title'>
       Column Similarity Matrix

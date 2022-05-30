@@ -1,18 +1,19 @@
 <template>
 <div class="lay_out">
 	<h1 class="my_h1">Single Cell Cluster's Differential  Analysis</h1>
+	<br>
 	<div>
 		<Row>
 			<i-form :label-width="120">
-				<i-col span="10">
+				<!-- <i-col span="10">
 					<Form-item label="Data source: ">                                                  
 						<i-select  clearable placeholder="Pleace select cell source"  @on-change="changedDataSource">        
 							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 						</i-select>
 					</Form-item>
-				</i-col>
+				</i-col> -->
                 <i-col span="10">
-					<Form-item label="Contrast group: ">                                                  
+					<Form-item label="Contrast Cluster: ">                                                  
 						<i-select  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart">        
 							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
@@ -29,12 +30,14 @@
 		</Row>
 		</Br>
 		<Row>
-			<filter-table 
+			<!-- <filter-table 
                 
                   @on-search="onSearch_diff"
                   :data="diffData"
                   :columns="diffCols">
-            </filter-table>
+            </filter-table> -->
+			
+			<Table :columns="diffCols" :data="diffData" size="small" ref="table"></Table>
 			<div style="margin: 10px;overflow: hidden">               
                   <div style="float: right;">
                       <Page :total="totalRow"  
@@ -50,25 +53,36 @@
             </div>
 		</Row>
 	</div>
-	
+	<br>
 	<div>
 		<h1 class="my_h1">Single Cell Cluster's Enrichment Analysis</h1>
+		<br>
 		<Row>
 			<i-form :label-width="120">
-				<i-col span="10">
+				<!-- <i-col span="8">
 					<Form-item label="Data source: ">                                                  
 						<i-select  clearable placeholder="Pleace select cell source"  @on-change="changedDataSource2">        
 							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 						</i-select>
 					</Form-item>
-				</i-col>
-                <i-col span="10">
-					<Form-item label="Contrast group: ">                                                  
+				</i-col> -->
+                <i-col span="8">
+					<Form-item label="Contrast Cluster: ">                                                  
 						<i-select  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart2">        
 							<i-option v-for="(group,index) in group_type_list2" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
+				<i-col span="8">
+                                            
+                
+					<Form-item label="Enrich type: ">
+						<i-select :model.sync="enrichGroup" clearable  placeholder="Pleace select Enrich Type" @on-change="changeEnrichType">                    
+							<i-option v-for="(goType,index) in goTypeList" :key='index' :value="goType.value">{{ goType.name }}</i-option>
+						</i-select>
+					</Form-item>
+                </i-col>
+
 			</i-form>
 			
         </Row>
@@ -82,15 +96,6 @@
 		</Row>
 	</div>
 
-	<router-link to="/Dataset_service">
-		<div style="text-align:right;font-size:calc((30/1920) * 100vw);">
-			<!-- <img width="20%" height="10%" src="@/assets/img/red_sys.jpg"> -->
-			<h3>Back To Dataset Service</h3>
-			<!-- <p>Sample: 
-				<count-to :end="68" count-class="count-style"/>                                                              
-			</p> -->
-		</div> 
-	</router-link>
 
 
 </div>
@@ -101,7 +106,7 @@
 <script>
 import FilterTable from '../compnents/FilterTable';
 import VuePlotly from '@statnett/vue-plotly'
-import {getdiffGroup,getTsneGroup,getSCClusterDiff,getClusterContrastGroup,getScDiffEnrich} from '@/api/erythdataservice'
+import {getdiffGroup,getTsneGroup,getSCClusterDiff,getSCEnrichContrastGroup,getSCDiffContrastGroup,getScDiffEnrich} from '@/api/erythdataservice'
 import {getDatasetTypeSource,getSCDiffPageDataset} from '@/api/erythdataset'
 
 const  P_Value_range = {
@@ -124,6 +129,26 @@ export default {
 	},
 	data(){
 		return{
+			enrichGroup:'',
+			goTypeList:[
+                    {
+                        name:'GO-CC',
+                        value:'CC'
+                    },
+                    {
+                        name:"GO-MF",
+                        value:'MF'
+                    },
+                    {
+                        name:"GO-BP",
+                        value:'BP'
+                    },
+                    {
+                        name:"KEGG",
+                        value:'KEGG'
+                    },
+
+                ],
 			series:this.$store.state.app.CurrentPageToken,
 			ifResize:true,
 			spinShow1:'true',
@@ -148,6 +173,7 @@ export default {
 			{
 				title: 'Symbol',
 				key: 'symbol',
+				"sortable": true,
 				filter: {
 				type: 'Input'
 				},
@@ -166,6 +192,7 @@ export default {
 			{
 				title: 'p_val',
 				key: 'p_val',
+				"sortable": true,
 				filter: {
 				type: 'Input'
 				}
@@ -174,6 +201,7 @@ export default {
 			{
 				title: 'avg_logFC',
 				key: 'avg_logFC',
+				"sortable": true,
 				filter: {
 				type: 'Input'
 				}
@@ -182,6 +210,7 @@ export default {
 			{
 				title: 'pct.1',
 				key: 'pct.1',
+				"sortable": true,
 				filter: {
 				type: 'Input'
 				}
@@ -190,6 +219,7 @@ export default {
 			{
 				title: 'pct.2',
 				key: 'pct.2',
+				"sortable": true,
 				filter: {
 				type: 'Input'
 				},
@@ -197,6 +227,7 @@ export default {
 			{
 				title: 'p_val_adj',
 				key: 'p_val_adj',
+				"sortable": true,
 				filter: {
 					type: 'Select',
 					option: P_Value_range
@@ -208,6 +239,7 @@ export default {
 			group:'',
 			gorup2:'',
 			enrichGO_data:[],
+			enrichType:'CC',
 			enrichGO_options:{
 				responsive: true,
 			},
@@ -221,16 +253,22 @@ export default {
 
 				let _this = this
                 let datas = res.data  
-				console.log(datas)
 				var data =   datas 
-				this.source = datas[1]
-				this.source2 = datas[1]       
-				datas.forEach(key => this.data_source_list.push({
-                    name:key
-				})) 
+				this.source = data[0].source_g
+				this.source2 = data[0].source_g     
+				datas.forEach(function (group) {
+					
+								console.log(group.source_g)
 
-				this.getContrastGroup(this.series,datas[1])
-				this.getContrastGroup2(this.series,datas[1])
+								_this.data_source_list.push({
+									name:group.source_g
+								})
+					
+				}) 
+
+				// alert(datas[1])
+				this.getContrastGroup(this.series,data[0].source_g)
+				this.getContrastGroup2(this.series,data[0].source_g)
 				// alert(datas[1])
 				// this.getMarkerChart(this.series,datas[1])
              
@@ -253,7 +291,7 @@ export default {
 
 				this.group = group
 				this.getdiff_chart(this.series,this.source,group)
-				var table_name = this.series + "_" + this.source
+				var table_name = this.series 
 				this.mockTableData(table_name,this.currentPage,this.pageSize,group)
 			}
 
@@ -266,11 +304,17 @@ export default {
 			this.group2 = group
 			// alert(this.series)
 			// alert(this.source)
-			// alert(this.group)
+			// alert(this.enrichType)
 			// this.getdiff_chart(this.series,this.source,group)
-			this.getdiffEnrich_chart(this.series,this.source2,group)
+			this.getdiffEnrich_chart(this.series,group,this.enrichType)
 
 		},
+		changeEnrichType(enrichType){
+            let _this = this
+            this.enrichType = enrichType
+			this.getdiffEnrich_chart(this.series,this.group2,enrichType)
+        },
+
 		changedDataSource(source){
 			let _this = this  
 			this.source = source
@@ -286,11 +330,14 @@ export default {
             
 		},
 
-		getdiffEnrich_chart(series,source2,group2){
+		getdiffEnrich_chart(series,group2,enrichType){
 			let _this = this
 			_this.spinShow2 = true
-            getScDiffEnrich(series,source2,group2).then(res =>{
+			// alert(enrichType)
+            getScDiffEnrich(series,group2,enrichType).then(res =>{
                 	let datas = res.data 
+					console.log("enrich data ")
+					console.log(datas)
 					var xData = datas.xData  // list 里面装list
 					var yData =datas.yData   
 					var nData = datas.nData
@@ -309,7 +356,7 @@ export default {
 					};
 
 					var layout = {
-						title:'the GO('+ source2+ ') enrichment of ' + group2,
+						title: 'Enrichment('+this.enrichType +')' +' of ' + group2 ,
                        
                         xaxis: {
 							title:'-log10(p.adjust)',
@@ -318,7 +365,7 @@ export default {
 						yaxis: {
 							// showgrid: TRUE,
                             title:{
-                                    text: 'GO Term [-log10(p.adjust)]',
+                                    text: ' Term [-log10(p.adjust)]',
                                     position:'top',
                                     standoff: 40,
                                     yanchor:'top',
@@ -343,30 +390,35 @@ export default {
                         
                         },
                         margin: {
-                            l:650
+                            l:300
                         },
                        
                        
 					}
 				this.enrichGO_layout = layout
                 _this.spinShow2 = false
-           })   
-		},
-		getContrastGroup(series,source){
+           }) 
 
-			getClusterContrastGroup(series,source).then(res =>{
+		},
+
+		getDiffContrastGroup(series){
+
+			getSCDiffContrastGroup(series).then(res =>{
 
 				let _this = this
                 let datas = res.data  
 				console.log(datas)
 				var data =   datas 
 				
-				this.group = datas[0]
-				this.group_type_list = []
-				datas.forEach(key => this.group_type_list.push({
+				_this.group = datas[0]
+				_this.group_type_list = []
+				datas.forEach(key => _this.group_type_list.push({
                     name:key
 				})) 
-				var table_name = series + "_" + source
+				// + "_" + source
+				var table_name = series   // 传过去的table_name 包含 series
+				// var table_name = series
+				// alert(table_name)
 				this.getdiff_chart(this.series,this.source,datas[0])
 				this.mockTableData(table_name,this.currentPage,this.pageSize,datas[0]) 
              
@@ -374,9 +426,9 @@ export default {
 		},
 
 
-		getContrastGroup2(){
+		getEnrichContrastGroup2(){
 
-			getClusterContrastGroup(this.series,this.source2).then(res =>{
+			getSCEnrichContrastGroup(this.series,this.source2).then(res =>{
 				
 				let _this = this
                 let datas = res.data  
@@ -387,7 +439,7 @@ export default {
                     name:key
 				})) 
 				this.group2 = datas[0]
-				this.getdiffEnrich_chart(this.series,this.source2,datas[0])
+				this.getdiffEnrich_chart(this.series,datas[0],this.enrichType)
              
            })
 
@@ -459,7 +511,7 @@ export default {
 
 			let _this = this
 			_this.spinShow1 = true
-            getSCClusterDiff(this.series,this.source,this.group).then(res =>{
+            getSCClusterDiff(this.series,this.group).then(res =>{
                 let datas = res.data  
                 console.log(datas)             
                 var data = [
@@ -488,7 +540,7 @@ export default {
                     
                 var diff_layout={ 
                    
-                    title:'Differential analysis ' + this.group + '(' + this.source +')',
+                    title:'Differential Analysis ' + this.group ,
 					subtitle: {
                             text: 'Data Souce:' + this.series
                     },
@@ -509,7 +561,9 @@ export default {
 			let _this = this  
 			// alert(this.table_name)
 			this.getdiff_chart(this.series,diffgroup)
-			var table_name = this.series + "_"+this.source
+			// var table_name = this.series + "_"+this.source
+			var table_name = this.series
+			// alert(table_name)
 			this.mockTableData(table_name,this.currentPage,this.pageSize,diffgroup) 
 			
             
@@ -525,7 +579,8 @@ export default {
 
 	
 		mockTableData(table_name,currentPage,pageSize,group){
-
+			//  table_name  含有 source 信息
+			// alert(table_name)
 			var _this = this;      
             _this.spinShowTypeSource = true, 
             // alert("==")
@@ -550,20 +605,24 @@ export default {
 			console.log(`每页 ${val} 条`);
 			this.pageSize = val;
 			// mockTableData(table_name,currentPage,pageSize)
-			this.mockTableData(this.table_name,this.currentPage,this.pageSize)
-			var table_name = this.series + "_" + this.source
+			// this.mockTableData(this.table_name,this.currentPage,this.pageSize,this.source)
+			var table_name = this.series 
 			this.mockTableData(table_name,this.currentPage,this.pageSize,this.group)
 		},
 		handleCurrentChange(val){
           console.log(`当前页: ${val}`);
           this.currentPage = val;
-          var table_name = this.series + "_" + this.source
+          var table_name = this.series
 		  this.mockTableData(table_name,this.currentPage,this.pageSize,this.group)
       },
 
 	},
 	mounted(){
-		this.getDataSourceList(this.series)
+		// this.getDataSourceList(this.series)
+
+		this.getDiffContrastGroup(this.series)
+		this.getEnrichContrastGroup2(this.series)
+
 		// var table_name = 'all_rna_dev_bulk_vivo'
 		// this.getdiff_group(table_name);
 		

@@ -27,6 +27,21 @@ export const getDatasetTypeSource = (table_name,currentPage,pageSize) => {
 	})
 }
 
+
+
+//getDataTypeInfo
+export const getDataTypeInfo = (type_name) => {
+	return axios.request({
+	  url: 'public/getDataTypeInfo',
+	  data: { 
+		'type_name':type_name
+	},
+	  method: 'post',
+	})
+}
+
+
+
 // getDiffPageDataset(table_name,currentPage,pageSize,this.contrastsGroup)
 export const getDiffPageDataset = (table_name,currentPage,pageSize,contrastsGroup) => {
 	return axios.request({
@@ -40,6 +55,52 @@ export const getDiffPageDataset = (table_name,currentPage,pageSize,contrastsGrou
 	  method: 'post',
 	})
 }
+
+// getDiffPageDatasetByGene
+export const getDiffPageDatasetByGene = (gene,table_name,currentPage,pageSize,contrastsGroup) => {
+	return axios.request({
+	  url: 'public/getDiffPageDatasetByGene',
+	  data: { 
+		'table_name':table_name,
+		'pageIndex': currentPage,
+		'pageSize': pageSize,	
+		'contrastsGroup':contrastsGroup,
+		'gene':gene,
+	},
+	  method: 'post',
+	})
+}
+
+
+// getAllSampleNumber
+export const getAllSampleCellNumber = () => {
+	return axios.request({
+	  url: 'public/getAllSampleCellNumber',
+	  data: { 
+		
+		
+	},
+	  method: 'post',
+	})
+}
+
+
+// getSampleGroupPageDataset
+export const getSampleGroupPageDataset = (series,currentPage,pageSize) => {
+	return axios.request({
+	  url: 'public/getSampleGroupPageDataset',
+	  data: { 
+		'series':series,
+		'pageIndex': currentPage,
+		'pageSize': pageSize,	
+		
+	},
+	  method: 'post',
+	})
+}
+
+
+
 // getSCDiffPageDataset
 export const getSCDiffPageDataset = (table_name,currentPage,pageSize,contrastsGroup) => {
 	return axios.request({
@@ -67,6 +128,56 @@ export const getDatasetTypeSourceByCell = (cell_name,currentPage,pageSize) => {
 	})
   }
 
+//getDatasetTypeSourceByCompundsType
+export const getDatasetTypeSourceByCompundsType = (compunds_type,currentPage,pageSize) => {
+	return axios.request({
+	  url: 'public/getDatasetTypeSourceByCompundsType',
+	  data: { 
+		'compunds_type': compunds_type,
+		'pageIndex': currentPage,
+		'pageSize': pageSize	
+	},
+	  method: 'post',
+	})
+  }
+
+//getDatasetTypeSourceByCompundsType
+export const getDatasetTypeSourceByDiseaseType = (compunds_type,currentPage,pageSize) => {
+	return axios.request({
+	  url: 'public/getDatasetTypeSourceByDiseaseType',
+	  data: { 
+		'disease_type': compunds_type,
+		'pageIndex': currentPage,
+		'pageSize': pageSize	
+	},
+	  method: 'post',
+	})
+  }
+
+
+// getDatasetTypeSourceByGene
+export const getDatasetTypeSourceByGene = (compunds_type,currentPage,pageSize) => {
+	return axios.request({
+	  url: 'public/getDatasetTypeSourceByGene',
+	  data: { 
+		'gene': compunds_type,
+		'pageIndex': currentPage,
+		'pageSize': pageSize	
+	},
+	  method: 'post',
+	})
+  }
+
+
+//getDatasetGene
+export const getDatasetGene = () => {
+	return axios.request({
+	  url: 'public/getDatasetGene',
+	  data: { 
+	},
+	  method: 'post',
+	})
+  }
 export const searchDataset = (datasetName,search,pageIndex,pageSize)=>{
 	return axios.request({
 		url: 'public/getPageDataSetsByParms',
@@ -93,6 +204,35 @@ export const searchDatasetTypeSource = (searchTypeSource,currentPageTypeSource,p
 		method: 'post',
 	  })
 }
+
+export const getDatasetDataByMultiInput=(table_name,currentPageTypeSource,pageSizeTypeSource,select)=>{
+	return axios.request({
+		url: 'public/getDatasetDataByMultiInput',
+		data: { 
+		  'table_name':table_name,
+		  'pageIndex': currentPageTypeSource,
+		  'pageSize': pageSizeTypeSource,
+		  'select':select
+	  },
+		method: 'post',
+	  })
+}
+
+// getDatasetDataByKeyParam
+export const getDatasetDataByKeyParam = (table_name,currentPage,pageSize,keyParam) => {
+	return axios.request({
+	  url: 'public/getPageDataSetByKeyParam',
+	  data: { 
+		'table_name':table_name,
+		'pageIndex': currentPage,
+		'pageSize': pageSize,
+		'keyParam':keyParam
+	},
+	  method: 'post',
+	})
+}
+
+
 
 // searchDiffDatasetByParms(searchKeyVal, _this.currentPage,_this.pageSize,this.contrastsGroup)
 export const searchDiffDatasetByParms = (series,searchTypeSource, currentPageTypeSource,pageSizeTypeSource,contrastsGroup)=>{

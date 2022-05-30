@@ -62,7 +62,7 @@
 
 <script>
 import {getdiffGroup} from '@/api/erythdataservice'
-import {getLRPlotData,getNetViewData,getCellSourceData}  from '@/api/erythroidAtlas'
+import {getNetViewData,getCellSourceData}  from '@/api/erythroidAtlas'
 import VuePlotly from '@statnett/vue-plotly'
 export default {
 	name:"LRPlot",
@@ -231,14 +231,14 @@ export default {
 					myChart.setOption(option);
 					})
 		},
-        getLRPlot_chart(dataset_name,comm_type){
+        getLRPlot_chart(dataset_name,source,comm_type){
 
 			let myChart = this.$echarts.init(document.getElementById("LRPlot_view"));
             myChart.showLoading();
 			// this.spinShow2 = true
 			var dataset_name = 'erthy'
 			var comm_type = 'all'
-			getLRPlotData(dataset_name,comm_type).then(res =>{ 
+			getNetViewData(dataset_name,source,comm_type).then(res =>{ 
 					myChart.hideLoading();
 					let datas = res.data 
 					console.log(datas)
@@ -367,7 +367,7 @@ export default {
 				this.contrasts_group = contrasts_group_type_list
 				this.contrastsGroup = datas[0]
 				// alert(this.contrastsGroup)
-				this.getLRPlot_chart(this.table_name,this.contrastsGroup)
+				this.getLRPlot_chart(this.table_name,this.source,this.contrastsGroup)
 				
                 // enrichGroup = datas[0].split('-')[0]
                 // goType = 'CC'

@@ -27,15 +27,6 @@
             </div>             
         </Row> 
 
-        <router-link to="/Dataset_service">
-            <div style="text-align:right">
-                <!-- <img width="20%" height="10%" src="@/assets/img/red_sys.jpg"> -->
-                <h3 class='h3_title'>Back To Dataset Service</h3>
-                <!-- <p>Sample: 
-                    <count-to :end="68" count-class="count-style"/>                                                              
-                </p> -->
-            </div> 
-	    </router-link>
 
     </div>  
     

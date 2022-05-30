@@ -20,9 +20,17 @@
                         <Col span="4"><strong>Organism:</strong></Col>
                         <Col span="20">{{organism}}</Col> 
                     </Row>
+                    <Row>
+                        <Col span="4"><strong>Tissue:</strong></Col>
+                        <Col span="20">{{tissue}}</Col> 
+                    </Row>
+                    <Row>
+                        <Col span="4"><strong>Growth Type:</strong></Col>
+                        <Col span="20">{{growth_type}}</Col> 
+                    </Row>
                      <Row>
                         <Col span="4"><strong>Development Type:</strong></Col>
-                        <Col span="20">{{source}}</Col> 
+                        <Col span="20">{{development_type}}</Col> 
                     </Row>
 
                     <Row>
@@ -72,17 +80,49 @@
                         <Col span="20"  v-html='platforms'></Col>
                     </Row> 
                     <Row>                     
-                        <Col span="4"><strong>Citation(s)</strong></Col>                   
+                        <Col span="4"><strong>Citation(s):</strong></Col>                   
                         <Col span="20" v-html='citations'></Col>
                     </Row> 
-
+                     <Row>                     
+                        <Col span="6"><strong> Samples({{samples_count}}) And Group:</strong></Col>                   
+                        <Col span="24">
+                            <Table :columns="sampleCols" :data="sampleData" size="small" ref="table"></Table>
+                            <!-- <Spin size="large" fix v-if="spinShowSampleSource"></Spin> -->
+                            <div style="margin: 10px;overflow: hidden">               
+                                <div style="float: right;">
+                                    <Page :total="totalRow"  
+                                    :current="currentPage" 
+                                    :page-size="pageSize" 
+                                    show-elevator 
+                                    show-total
+                                    show-sizer
+                                    @on-change="handleCurrentChange" 
+                                    @on-page-size-change="handleSizeChange">
+                                    </Page>                   
+                                </div>
+                            </div>
+                        
+                        
+                        </Col>
+                    </Row> 
                     <Row> 
-                        <Collapse>                                                                       
+                        <Collapse>
+                            <Panel name="0">
+                                Data processing
+                                <p slot="content">{{data_processing}}</p>
+
+                            </Panel>  
+                            <Panel name="_0">
+                                Normalization method
+                                <p slot="content">{{normalization_method}}</p>
+
+                            </Panel> 
                             <Panel name="1">
                                 Overall design
                                 <p slot="content">{{overall_design}}</p>
 
                             </Panel>
+
                             <Panel name="2">
                                 Contributor(s)
                                 <p slot="content"  v-html='contributors'></p>
@@ -123,11 +163,11 @@
                                 <p slot="content" v-html='subseries'></p>
                                 
                             </Panel>
-                            <Panel name="10">
+                            <!-- <Panel name="10">
                                 Samples({{samples_count}}) And Group
                                 <p slot="content"  v-html='samples'></p>
                                 
-                            </Panel>
+                            </Panel> -->
                             <!-- <Panel name="11">
                                 Samples Group ({{samples_count}})
                                 <p slot="content"  v-html='samples'></p>
@@ -158,8 +198,9 @@
         <Content>
             <Card>                            
                 <div>                              
-                    <router-view/>                              
-                    
+                     <!-- <router-view/>-->                        
+                    <DatasetService />
+                    <All />
                 </div>
             </Card> 
         </Content> 
@@ -171,30 +212,158 @@
 
 <script>
 
-import axios from 'axios'
-import { connect } from 'net';
-import router from '@/router'
-import pdf from 'vue-pdf'
-import biovisexpressionbar from 'bio-vis-expression-bar'
 
+import router from '@/router'
+import * as echarts from 'echarts'
 // 示例封装好的axios
 import { getDataset,getAllExpreStack,getDatasetGroup,
 getSequenceEchartByTabletype,
-getPageExpressionTableData,getExpreRange,} from '@/api/erythdataservice'
+getExpreRange,} from '@/api/erythdataservice'
 
-
+import {getSampleGroupPageDataset,} from '@/api/erythdataset'
+import DatasetService from "@/view/compnents/DatasetService.vue"
 
 export default {
     name:"DatasetDetail",
     components:{   
-       
+       DatasetService,
         //  ColumnChart,
         //  ScatterChart,
         //  pdf,
         //  ColumnPerchart
      },
     data () {
-            return {              
+            return {  
+                sampleCols:[
+                            {
+                                title: 'Sample ID',
+                                key: 'gid',
+                                "sortable": true,
+                                filter: {
+                                type: 'Input'
+                                },
+                                fixed: 'left',
+                                render: (h, params) => {  
+                                    if (params.row.gid.indexOf("GSM") > -1){
+                                        return h('div', [
+                                        h('a', {                               
+                                                attrs:{                              
+                                                href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.gid
+
+                                                },    
+                                            },params.row.gid)
+                                        ])
+                                    }if(params.row.gid.indexOf("EGAD") > -1){
+                                        return h('div', [
+                                        h('a', {                               
+                                                attrs:{                              
+                                                href:'https://web2.ega-archive.org/datasets/'+params.row.gid.split('_')[0]
+
+                                                },    
+                                            },params.row.gid)
+                                        ])
+
+                                    } else{
+                                        return h('div',params.row.gid)
+                                
+                                    }  
+                                }   
+
+                                
+                            },
+                            {
+                                title: 'Sample Name',
+                                key: 'sample',
+                                "sortable": true,
+                                filter: {
+                                type: 'Input'
+                                }
+
+                            },
+                            {
+                                title: 'Organism',
+                                key: 'organism',
+                                "sortable": true,
+                                filter: {
+                                type: 'Input'
+                                }
+
+                            },
+                            {
+                                title: 'Tissue',  //和dataset 里的source 一致
+                                key: 'tissue',
+                                "sortable": true,
+                                filter: {
+                                type: 'Input'
+                                },
+                            },
+                            // {
+                            //     title: 'Sorted',
+                            //     key: 'strain',
+                            //     "sortable": true,
+                            //     // filter: {
+                            //     //     type: 'Select',
+                            //     //     option: P_Value_range
+                            //     // },
+                            // },
+                            {
+                                title: 'Cell Type',
+                                key: 'cell_type',
+                                "sortable": true,
+                                // filter: {
+                                //     type: 'Select',
+                                //     option: P_Value_range
+                                // },
+                            },
+                            {
+                                title: 'Source', // 细胞来源时间，分选等信息
+                                key: 'source',
+                                "sortable": true,
+                                width:200,
+                                // filter: {
+                                //     type: 'Select',
+                                //     option: P_Value_range
+                                // },
+                            },
+
+                            {
+                                title: 'Growth Mode',
+                                key: 'growth_mode',
+                                filter: {
+                                    type: 'Input',
+                                },
+                                // filter: {
+                                //     type: 'Select',
+                                //     option: P_Value_range
+                                // },
+                            },
+                            {
+                                title: 'Development Type',
+                                key: 'development_type',
+                                filter: {
+                                    type: 'Input',
+                                },
+                                // filter: {
+                                //     type: 'Select',
+                                //     option: P_Value_range
+                                // },
+                            },
+                            {
+                                title: 'Group',
+                                key: 'group',
+                                "sortable": true,
+                                // filter: {
+                                //     type: 'Select',
+                                //     option: P_Value_range
+                                // },
+                            },
+                ],   
+                sampleData:[], 
+                source:'', 
+                spinShowSampleSource:true,  
+                totalRow: 40,
+                currentPage: 1,
+                pageSize: 10,     
                 enrich_data:[],
                 enrich_layout:{},
                 enrich_options:{},          
@@ -204,7 +373,9 @@ export default {
                 // value1: '1',           
                 series:'',
                 organism:'',
-                source:'',
+                tissue:'',
+                growth_type:'',
+                development_type:'',
                 sample_numbers:'',
                 organization_name:'',
                 country:'',
@@ -221,6 +392,8 @@ export default {
                 platforms:'',
                 citations:'',
                 contributors:'',
+                data_processing:'',
+                normalization_method:'',
                 overall_design:'',
                 submission_date:'',
                 contact_name:'',
@@ -235,14 +408,14 @@ export default {
                 // dataset:this.$route.params.dataset,
                 dataset:this.$store.state.app.CurrentPageToken,
                 dataset_title:'',
-                currentPage1: 0,
-			    pageCount1: 0,
-                currentPage: 1,
-                diff_currentPage:1,
-                pageSize: 10,
-                diff_pageSize:10,
-                total: 400,
-                diff_total:400,
+                // currentPage1: 0,
+			    // pageCount1: 0,
+                // currentPage: 1,
+                // diff_currentPage:1,
+                // pageSize: 10,
+                // diff_pageSize:10,
+                // total: 400,
+                // diff_total:400,
                 // spinShow: true,
                 search_placeholder:'',
                 
@@ -278,7 +451,7 @@ export default {
      },
      
 
-     methods: {
+    methods: {
 
       
 
@@ -295,7 +468,29 @@ export default {
           });
         },
 
-      
+        mockTableData(series,currentPage,pageSize){
+
+			var _this = this;      
+            _this.spinShowTypeSource = true, 
+            // alert("==")
+            // alert(contrastsGroup)
+			getSampleGroupPageDataset(series,currentPage,pageSize).then( res=>{
+
+				_this.spinShowTypeSource = false                    
+				let datas = res.data
+                console.log('getSampleGroupPageDataset')
+                console.log(datas)
+				if (datas.signal == 1){
+
+					// console.info(datas.list)
+					_this.sampleData = datas.list                  
+					_this.totalRow = datas.total;
+				}else{
+				}
+			})
+
+
+		}, 
 
 
 
@@ -316,18 +511,28 @@ export default {
        },
        getSeriHref(){
             
-            return 'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+ this.dataset
+            
+            if (this.dataset.indexOf("GSE") > -1){
+                  return 'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+ this.dataset
+            }else{
+                
+                return  '#'
+              
+            }    
        },
        getDatasetDetail(){
             let _this = this
             // alert(this.$store.state.app.CurrentPageToken)
             getDataset(this.$store.state.app.CurrentPageToken).then(res => {                              
                 let datas =res.data
-                console.log(datas)
-                console.log(datas.series)
+                // console.log(datas)
+                // console.log(datas.series)
                 _this.series = datas.series
                 _this.organism = datas.organism
+                _this.growth_type = datas.growth_type
+                _this.tissue = datas.tissue
                 _this.dataset_title = datas.title
+                _this.development_type = datas.development_type
                 _this.sample_numbers = datas.sample_numbers
                 _this.organization_name = datas.organization_name
                 _this.country = datas.country
@@ -355,6 +560,8 @@ export default {
 
                 }
                 _this.samples = samples_string
+                _this.data_processing = datas.data_processing
+                _this.normalization_method = datas.normalization_method
                 _this.overall_design = datas.overall_design
                 _this.samples_count = datas.samples_count
                 _this.submission_date = datas.submission_date
@@ -437,9 +644,9 @@ export default {
                         // console.info(samples_arry)
                         for (var i=0;i<contributors_arry.length;i++){
                             // https://www.ncbi.nlm.nih.gov/pubmed/?term=Diaz-Blanco E[Author]
-                            console.log(contributors_arry[i])                       
+                            // console.log(contributors_arry[i])                       
                             contributors_string =  contributors_string + "<a href=\"https://www.ncbi.nlm.nih.gov/pubmed/?term=" + contributors_arry[i] + "[Author]\">"+contributors_arry[i]+"</a>&nbsp;&nbsp;"
-                            console.log(contributors_string)
+                            // console.log(contributors_string)
                         }
                     }else{
                         let contributor_arry = contributors_data
@@ -483,69 +690,37 @@ export default {
 
                 }
 
-                //     //特定搜索，指定表达柱状图，没分配时默认
-                // _this.getSpecifExpreOptionsByName(datas.series,_this.tableType)
-
-                    
-                //     //查询提示语默认加载 和 datataype加载
-                //     _this.setsearch_placeholder (_this.sequencing_type.split(',')[0])
-
-                //     _this.search_datatype= _this.sequencing_type.split(',')[0].split('-')[0]
-
-               
-
-                //     _this.setOthersearchItems(_this.sequencing_type.split(',')[0])
-
-                //     // //  表格数据加载
-                //     // _this.mockExpressionTableData( _this.sequencing_type.split(',')[0])
-
-
-                //     //差异分析表格数据加载
-                //     // _this.(_this.sequencing_type.split(',')[0])
-
-
-                //     // 表达count数折线图按类型变化
-                //     _this.drawSequenceEchartByTabletype(_this.sequencing_type.split(',')[0])
-
-                //     //表达水平数据加载
-                //     _this.getChartExpreRange(_this.sequencing_type.split(',')[0])
-                                                                                       
-                //     _this.sequencing_type.split(',').forEach(key => sequencing_type_list.push({
-                //         name:key
-                //     }))
-
-                  
-
-
-                //     //
-                //     _this.searchItemInfoBydataname(_this.sequencing_type.split(',')[0])
-
-                // }
-                // // 所有类型列出的数据列表
-                // _this.tableTypes = sequencing_type_list
-         
-
-                // // 根据dataset 信息过去突变 ex_sample数据
-                // _this.getchartOptionsAllStack();
+             
 
             })
  
             getDatasetGroup(this.$store.state.app.CurrentPageToken).then(res =>{
                 let datas =res.data
-                console.log(datas)
+                // console.log(datas)
                 let samples_data = datas.sample
                 let datasetsource = datas.source
                 _this.source = datasetsource
                 let gse = datas.gse
                 let group = datas.group               
-                var samples_string = 'gid   ' + 'sample ' + 'group' +"<br/>"
+                var samples_string = 'sid   ' + 'sample ' + 'group' +"<br/>"
                 if (samples_data != null){
                     for (var i=0;i<samples_data.length;i++){ 
-                        samples_string = samples_string + "<a href=https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=" + gse[i] +">"+ gse[i] +"</a>"+' ' +samples_data[i]+'    '+group[i]+"<br/>"
-                        
+                        // console.log('===')
+                        // console.log(gse[i].indexOf('GSM'))
+                        if (gse[i].indexOf('SAMC')>-1){
+                            // https://bigd.big.ac.cn/gsa/s/sample/SAMC112490/brFIwkBd
+                            samples_string = samples_string + "<a href=https://bigd.big.ac.cn/gsa/s/sample/" + gse[i] +"/brFIwkBd >"+ gse[i] +"</a>"+' ' +samples_data[i]+'    '+group[i]+"<br/>"
+                        }else{
+
+                            if (gse[i].indexOf('GSM')>-1){
+                                samples_string = samples_string + "<a href=https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=" + gse[i] +">"+ gse[i] +"</a>"+' ' +samples_data[i]+'    '+group[i]+"<br/>"
+                            }else{
+                                samples_string = samples_string + "<a"  +">"+ gse[i] +"</a>"+' ' +samples_data[i]+'    '+group[i]+"<br/>"
+                            }
+
+                            
+                        }   
                     }
-
-
                 }
                 _this.samples = samples_string
                 
@@ -556,44 +731,44 @@ export default {
 
         // 后期考虑排除此功能
         // sample各个时期的详细表达
-        mockExpressionTableData(tableType){          
-            var _this = this;          
-            getPageExpressionTableData( _this.dataset,tableType,_this.standardized_mode,_this.currentPage,_this.pageSize).then( res => {
-                let datas = res.data
-                // console.info(datas.list)
-                // console.info(datas.total)           
-                // console.log(datas.list[0])
+        // mockExpressionTableData(tableType){          
+        //     var _this = this;          
+        //     getPageExpressionTableData( _this.dataset,tableType,_this.standardized_mode,_this.currentPage,_this.pageSize).then( res => {
+        //         let datas = res.data
+        //         // console.info(datas.list)
+        //         // console.info(datas.total)           
+        //         // console.log(datas.list[0])
                 
-                let tableColumnsChecked_data = []
-                let tableColumnsData_data = []
+        //         let tableColumnsChecked_data = []
+        //         let tableColumnsData_data = []
 
-                // console.log("====================")
-                // console.log(datas.list[0])
-                // console.log(datas.list)
-                for(var key in datas.list[0]){
+        //         // console.log("====================")
+        //         // console.log(datas.list[0])
+        //         // console.log(datas.list)
+        //         for(var key in datas.list[0]){
 
-                    // console.log(key,datas.list[0][key])
+        //             // console.log(key,datas.list[0][key])
                     
-                    tableColumnsChecked_data.push(key)
-                    tableColumnsData_data.push(
-                            {
-                                name:key
-                            }
-                    )    
+        //             tableColumnsChecked_data.push(key)
+        //             tableColumnsData_data.push(
+        //                     {
+        //                         name:key
+        //                     }
+        //             )    
                     
                     
-                }
-                // console.log(tableColumnsChecked_data)
+        //         }
+        //         // console.log(tableColumnsChecked_data)
                 
-                _this.tableColumnsChecked = tableColumnsChecked_data                    
-                _this.tableColumnsData =  tableColumnsData_data
-                _this.changeTableColumns()
-                // console.log(_this.tableColumnsData)
-                _this.all_sample_tableData = datas.list               
-                _this.total = datas.total;
+        //         _this.tableColumnsChecked = tableColumnsChecked_data                    
+        //         _this.tableColumnsData =  tableColumnsData_data
+        //         _this.changeTableColumns()
+        //         // console.log(_this.tableColumnsData)
+        //         _this.all_sample_tableData = datas.list               
+        //         _this.total = datas.total;
 
-            })
-        },
+        //     })
+        // },
         
 
 
@@ -964,45 +1139,40 @@ export default {
             _this.all_sample_tableColumns = _this.getTable2Columns();
         },
 
-        changetableType(tabletype) {
-             let _this = this  
-             this.setsearch_placeholder(tabletype) 
-             this.setOthersearchItems(tabletype)    
-            //  this.mockExpressionTableData(tabletype)
-
-        },
+       
 
       
 
         handleCurrentChange(val,tableType) {
             let _this = this 
-            console.log(`当前页: ${val}`);
+            // console.log(`当前页: ${val}`);
             this.currentPage = val;           
-            // _this.mockExpressionTableData(_this.tableType);
+          
+            _this.mockTableData(this.dataset,this.currentPage,this.pageSize)
 
         },
 
-        diff_handleCurrentChange(val){
-            // 直接获取变量获取 this.无值,  事件改变 _this.
-            let _this = this     
-            this.diff_currentPage = val;   
-            // _this.http();
-        },
+        // diff_handleCurrentChange(val){
+        //     // 直接获取变量获取 this.无值,  事件改变 _this.
+        //     let _this = this     
+        //     this.diff_currentPage = val;   
+        //     // _this.http();
+        // },
 
 
         handleSizeChange(val,tableType){
             let _this = this
             // console.log(`每页 ${val} 条`);
             this.pageSize = val;
-            // _this.mockExpressionTableData(_this.tableType)
+            _this.mockTableData(this.dataset,this.currentPage,this.pageSize)
 
         },
-        diff_handleSizeChange(val){
+        // diff_handleSizeChange(val){
            
-            // console.log(`每页 ${val} 条`);
-            this.diff_pageSize = val;
-            // _this.http()
-        },
+        //     // console.log(`每页 ${val} 条`);
+        //     this.diff_pageSize = val;
+        //     // _this.http()
+        // },
 
        
     //    changedataType_squenceEchart(tabletype){
@@ -1037,7 +1207,7 @@ export default {
     mounted () {   
      
         this.getDatasetDetail(); 
-    
+        this.mockTableData(this.dataset,this.currentPage,this.pageSize)
         // this.getdiff_chart();
         
         // // 示例封装好的axios  mounted 中的使用形式

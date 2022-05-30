@@ -1,25 +1,26 @@
 import axios from '@/libs/api.request'
 
 // getAllDevExpreBulkData this.vitro_source,this.searchVivoGene
-export const getAllDevExpreBulkData = (source,gene_symbol) => {
+export const getAllDevExpreBulkData = (source,gene_symbol,cell_source) => {
 	return axios.request({
 	  url: 'public/getAllDevExpreBulkData',
 	  data: { 
 		source:source,
 		gene_symbol:gene_symbol,
+		cell_source:cell_source
 	},
 	  method: 'post',
 	})
   }
 
 // getClusterDataAll
-export const getClusterDataAll = (table_name,group_by) => {
+export const getClusterDataAll = (selectList,group_by) => {
 	return axios.request({
 
 		// url:'public/getClusterDataAllDev',
 		url:'public/getClusterDataAllDev',
 		data:{
-			table_name: table_name,
+			selectList: selectList,
 			group_by:group_by,
 			// cell_type:cell_type
 		
@@ -39,6 +40,19 @@ export const getallDevSampleGroup = (table_name,currentPage,pageSize) => {
 	},
 	  method: 'post',
 	})
+}
+
+// getAllDevType
+export const getAllDevType = (table_name) => {
+	return axios.request({
+
+		url:'public/getAllDevType',
+		data:{
+			table_name: table_name,
+		},
+		method:'post',
+	})
+
 }
 
 // getAlldiffGroup
@@ -71,25 +85,27 @@ export const getAllEnrichData = (table_name,contrastsGroup) => {
 }
 
 // getLRPlotData(dataset_name,comm_type)
-export const getLRPlotData = (dataset_name,comm_type) => {
-	return axios.request({
+// export const getLRPlotData = (dataset_name,source,comm_type) => {
+// 	return axios.request({
 
-		url:'public/getLRPlotData',
-		data:{
-			dataset_name:dataset_name,
-			comm_type:comm_type,
-		},
-		method:'post',
-	})
-}
+// 		url:'public/getLRPlotData',
+// 		data:{
+// 			dataset_name:dataset_name,
+// 			source:source,
+// 			comm_type:comm_type,
+// 		},
+// 		method:'post',
+// 	})
+// }
 
 // getNetViewData
-export const getNetViewData = (dataset_name,comm_type) => {
+export const getNetViewData = (dataset_name,source,comm_type) => {
 	return axios.request({
 
 		url:'public/getLRPlotData',
 		data:{
 			dataset_name:dataset_name,
+			source:source,
 			comm_type:comm_type,
 		},
 		method:'post',
@@ -108,11 +124,12 @@ export const getCellSourceData = () => {
 	})
 }
 // getCellChatSigData(dev_type,sig_pattern)
-export const getCellChatSigData =(dev_type,sig_pattern) => {
+export const getCellChatSigData =(series,dev_type,sig_pattern) => {
 	return axios.request({
 
 		url:'public/getCellChatSigData',
 		data:{
+			series:series,
 			dev_type:dev_type,
 			sig_pattern:sig_pattern
 			

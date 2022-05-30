@@ -14,10 +14,7 @@ const resolve = dir => {
 // iview-admin线上演示打包路径： https://file.iviewui.com/admin-dist/
 // 相对路径可任意部署  ./
 // 本地
-const BASE_URL = process.env.NODE_ENV === 'production'
-  ? '/'
-  : '/'
-
+const BASE_URL = process.env.NODE_ENV === 'production' ? '/EryDB/' : '/'
 
 const LessPluginFunctions = require('less-plugin-functions'); 
 
@@ -42,6 +39,7 @@ module.exports = {
   // https://www.foobar.com/my-app/
   // then change this to '/my-app/'
   publicPath: BASE_URL,
+  outputDir:'EryDB',
   // tweak internal webpack configuration.
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
   // 如果你不需要使用eslint，把lintOnSave设为false即可
@@ -61,7 +59,7 @@ module.exports = {
   assetsDir: './',
   // 解决跨越问题
   devServer: {
-		port: 8081,
+		port: 8080,
 		
 		host: "localhost",
 		
@@ -71,26 +69,21 @@ module.exports = {
 		
     open: false,
     
-		proxy: {
+		// proxy: {  不用代理
 
-			"/api": {
+		// 	"/EryDB/api": {
 
-          target: "http://localhost:8090", //设置调用的接口域名和端口
-          changeOrigin: true, //是否跨域
-          ws:true,
-          pathRewrite: {
-            "^/api": ""
+    //      target: "http://localhost:8090", //设置调用的接口域名和端口
+		//   // target: "https://ngdc.cncb.ac.cn/",
+    //       changeOrigin: true, //是否跨域
+    //       ws:true,
+    //       pathRewrite: {
+    //         "^/EryDB/api": ""
 
-				}
-			}
-		}
+		// 		}
+		// 	}
+		// }
+
   },
-  
 
-  
- 
-  
-
-  
-  
 }

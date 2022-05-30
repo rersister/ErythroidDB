@@ -13,6 +13,7 @@ const addErrorLog = errorInfo => {
   }
   if (!responseURL.includes('save_error_logger')) store.dispatch('addErrorLog', info)
 }
+
 //请求实例
 class HttpRequest {
 

@@ -2,7 +2,7 @@ export default {
     /**
      * @description 配置显示在浏览器标签的title
      */
-    title: 'ErythroidDB',
+    title: 'EryDB',
     /**
      * @description token在Cookie中存储的天数，默认1天
      */
@@ -18,8 +18,12 @@ export default {
      * @description api请求基础路径
      */
     baseUrl: {
-        dev: '/api',
-        pro: '/api'
+
+        // dev: '/EryDB/api',
+        // pro: '/EryDB/api',
+        dev: 'http://localhost:8090/EryDB/api',
+        pro: 'https://ngdc.cncb.ac.cn/EryDB/api'
+
     },
     /**
      * @description 默认打开的首页的路由name值，默认为home

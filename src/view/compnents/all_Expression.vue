@@ -1,19 +1,23 @@
 <template>
     <div class="lay_out">
         <div>
-            <h1 class="my_h1">Expression profiling(vivo)</h1>
+         
+            <h1 class="my_h1">Expression Profile ({{orga_name}})</h1>
+            <!-- <h1 class="my_h1">Expression Profiling ({{selectList[0]}})</h1> -->
+            </Br>
             <Row>
                 <Col span="12">
-                    <i-select placeholder="Please choose cell source" clearable style="width:80%" @on-change='changeVivoCellSource($event)'>
-                        <i-option v-for="item in vivoSourceList" :value="item.value" >{{ item.label }}</i-option>
+                    <i-select placeholder="Please choose cell source" clearable style="width:80%" @on-change='changeCellSource($event)'>
+                        <i-option v-for="item in SourceList" :value="item.value" >{{ item.label }}</i-option>
                     </i-select>
                 </Col>
                 <Col span="12">
                     <!-- 数据查询分子名 -->
-                    <Input search enter-button="Search" @on-search="searchVivoBygene($event)" placeholder="Please input gene symbol"/>                         
+                    <Input search enter-button="Search" @on-search="searchBygene($event)" placeholder="Please input gene symbol"/>                         
                 </Col>
 
             </Row>
+            </Br>
             <div>
                 <Row>					
                     <!-- tsne 图 -->			
@@ -22,25 +26,25 @@
                 </Row>
             </div>
         </div>
-        <div>
-            <h1 class="my_h1">Expression profiling(vitro)</h1>
-            <Row>
-                <Col span="12">
+        <div v-show="ifShow">
+            <!-- <h1 class="my_h1" v-show="ifShow" >Expression profiling ({{selectList[1]}})</h1> -->
+            <Row v-show="ifShow">
+                <!-- <Col span="12">
                     <i-select placeholder="Please choose cell source" clearable style="width:80%" @on-change='changeVivtroCellSource($event)($event)'>
                         <i-option v-for="item in vitroSourceList" :value="item.value" >{{ item.label }}</i-option>
                     </i-select>
-                </Col>
-                <Col span="12">
+                </Col> -->
+                <Col span="12" v-show="ifShow">
                     <!-- 数据查询分子名 -->
                     <Input search enter-button="Search" @on-search="searchVivtroBygene($event)" placeholder="Please input gene symbol"/>                         
                 </Col>
 
             </Row>
-            <div class="plotly_chat">
+            <div v-show="ifShow">
                 <!-- <Row>					 -->
                     <!-- tsne 图 -->			
                     <!-- <Spin size="large" fix v-if="spinShow1"></Spin> class = "plo_my"-->
-                    <vue-plotly :watchShallow="ifResize" :autoResize="ifResize"  :data="vitro_data" :layout="vitro_layout" :options="vitro_options"/>
+                    <vue-plotly v-show="ifShow" :autoResize="ifResize2"  :data="vitro_data" :layout="vitro_layout" :options="vitro_options"/>
                 <!-- </Row> -->
             </div>
         </div>
@@ -52,17 +56,27 @@
 
 <script>
 // getAllDevExpreBulkData
-import {getAllDevExpreBulkData,} from '@/api/erythroidAtlas'
+import {getAllDevExpreBulkData,getAllDevType} from '@/api/erythroidAtlas'
 import VuePlotly from '@statnett/vue-plotly'
 export default {
-    name:"all_Expression",
+    name:"AllExpression",
     components:{
 		VuePlotly, 
 
 	},
+    props:{
+        selectList:{
+            type:Array,
+            default:() =>[]
+        },
+       
+    },
     data(){
         return{
+           orga_name:'',
+           ifShow: false,
            ifResize:true,
+           ifResize2:true,
            vitro_data:[],
            vivo_data:[],
            vivo_layout:{},
@@ -73,67 +87,107 @@ export default {
            vitro_options:{
                 responsive: true,
            },
-           vivoSourceList:[
-                {
-                    value: 'PB', // 传入后台的查询值
-                    label: 'PB'
-                },
-                {
-                    value: 'CB',
-                    label: 'CB'
-                },
-                {
-                    value: 'BM',
-                    label: 'BM'
-                },
-                {
-                    value: 'vivo',
-                    label: 'All(vivo)'
-                }
+           SourceList:[
            ],
            vitroSourceList:[
                 {
                     value: 'BM_vitro', // 传入后台的查询值
-                    label: 'BM(vitro)'
+                    label: 'BM (in vitro)'
                 },
                 {
                     value: 'CB_vitro',
-                    label: 'CB(vitro)'
+                    label: 'CB (in vitro)'
                 },
                 {
                     value: 'FL_vitro',
-                    label: 'FL(vitro)'
+                    label: 'FL (in vitro)'
                 },
                 {
                     value: 'ESC_vitro',
-                    label: 'ESC(vitro)'
+                    label: 'ESC (in vitro)'
                 },
                 {
                     value: 'PB_vitro',
-                    label: 'PB(vitro)'
+                    label: 'PB (in vitro)'
                 },
                 {
                     value: 'vitro',
-                    label: 'All(vitro)'
+                    label: 'All (in vitro)'
                 }
            ],
-           vivo_source:'vivo',
+           cell_source:'',
            vitro_source:'vitro',
-           searchVivoGene: 'AATK',
+           searchGene: 'AATK',
            searchVitroGene:'AATK'
         }
     },
-	methods:{
-         getVitroExpreChart(){
+    watch:{
+        selectList: {
+            handler(val){
+                console.log(val)
+                var table_name =
+                    'all_' +
+                    val[0].orga +
+                    '_ep_' +
+                    val[0].sequnceType 
+                this.table_name = table_name
+                this.getAllDevType(table_name)
+              
+                if (val[0].orga == 'hs'){
+                    this.orga_name = 'Homo sapiens'
 
-            
-           
+                }
+                if(val[0].orga == 'mm'){
+                    this.orga_name = 'Mus musculus'
+                }
+
+                // if (val.length > 1) {
+                //     alert(val)
+                    // this.ifShow = true
+                    // this.searchSelect1(val[0],this.searchGene)
+                    // this.searchSelect2(val[1],this.searchGene)
+                // }else{
+                    // alert(this.selectList[0])
+                    // this.ifShow = false
+                    // this.searchSelect1(val[0],this.searchGene)
+                // }
+                
+            },
+            immediate:true
+        },
+      
+        
+    },
+	methods:{
+
+        getAllDevType(table_name){
+            let dev_group_type_list = []
+            // this.table_name = 'all_hs_ep_bulk'
+            // var table_name = selectDict
+			// alert(table_name)
+            getAllDevType(table_name).then(res =>{
+                let datas = res.data 
+                //console.log(datas)  
+                datas.forEach(key => dev_group_type_list.push({
+                    value:key,
+                    label:key
+                }))
+                 this.SourceList =dev_group_type_list
+				//this.getdiff_chart(table_name,datas[0])
+                this.cell_source = datas[0]
+                this.searchGene = "GATA1"
+                this.searchBygene("GATA1")
+               
+            })
 
 
         },
-        getVivoExpreChart(vivo_source,searchVivoGene){
+
+        getVitroExpreChart(){
+        },
+        getVivoExpreChart(cell_source,searchGene){
             let _this = this
-            // alert(vivo_source)
+            // alert(cell_source)
 
             
 
@@ -151,7 +205,7 @@ export default {
                 return
             } 
             
-            getAllDevExpreBulkData(this.vitro_source,this.searchVitroGene).then( res =>{
+            getAllDevExpreBulkData(this.selectList[1],this.searchVitroGene).then( res =>{
                 let datas = res.data
                 console.log(res.data)
                 if (datas.signal == 0){
@@ -183,10 +237,11 @@ export default {
                         };
                         // alert(this.vivo_data)
                         this.vitro_data.push(result);
-                    };
-                    let layout = {
-                        title:  this.searchVitroGene +' expression level in  erythroid differentiation('+ this.vitro_source+')',
-                        autosize:true,
+                    }
+
+                    let layout1 = {
+                        title:  this.searchVitroGene +' expression level in  erythroid differentiation ('+ this.cell_source+')',
+                        // autosize:true,
                         yaxis: {
                             
                             autorange: true,
@@ -212,26 +267,52 @@ export default {
                         
 
                     };
-                    
+                    let layout = {
+                        title:  this.searchGene +' expression level in  erythroid differentiation ('+ this.selectList[1]+')',
+                        bargap: 0.25,
+                        yaxis: {
+                            
+                            autorange: true,
+                            rangemode :"normal",
+                            // range: list(0,20), 
+                            showgrid: true,
+                            zeroline: true,
+                            // dtick: 5,
+                            gridcolor: 'rgb(255, 255, 255)',
+                            gridwidth: 1,
+                            zerolinecolor: 'rgb(255, 255, 255)',
+                            zerolinewidth: 2
+                        },
+                        margin: {
+                                l: 40,
+                                r: 30,
+                                b: 80,
+                                t: 100
+                            },
+                            paper_bgcolor: 'rgb(243, 243, 243)',
+                            plot_bgcolor: 'rgb(243, 243, 243)',
+                            showlegend: false
+                    };
                     this.vitro_layout = layout
                 }
 
             })
         },
-        searchVivoBygene($event){
-            // alert(this.vivo_source)
+        searchBygene($event){
+            //alert(this.cell_source)
             // alert($event)
-            this.searchVivoGene= $event
-            if( "" == this.vivo_source ){
+            this.searchGene= $event
+            if( "" == this.cell_source ){
                 this.$Message.info('please select cell source', 10);
+                return
             } 
             if( "" ==  $event ){
                 this.$Message.info('please input gene symbol', 10);
             } 
             // alert('进来')
-            // this.$options.methods.getVivoExpreChart(this.vivo_source,this.searchVivoGene)
-            // alert(this.searchVivoGene)
-            getAllDevExpreBulkData(this.vivo_source,this.searchVivoGene).then( res =>{
+            // this.$options.methods.getVivoExpreChart(this.cell_source,this.searchGene)
+            // alert(this.searchGene)
+            getAllDevExpreBulkData(this.selectList[0],this.searchGene,this.cell_source).then( res =>{
                 let datas = res.data
                 console.log(res.data)
                 if (datas.signal == 0){
@@ -263,32 +344,32 @@ export default {
                         };
                         // alert(this.vivo_data)
                         this.vivo_data.push(result);
-                    };
+                    }
                     let layout = {
-                    title:  this.searchVivoGene +' expression level in  erythroid differentiation('+ this.vivo_source+')',
-                    bargap: 0.25,
-                    yaxis: {
-                        
-                        autorange: true,
-                        rangemode :"normal",
-                        // range: list(0,20), 
-                        showgrid: true,
-                        zeroline: true,
-                        // dtick: 5,
-                        gridcolor: 'rgb(255, 255, 255)',
-                        gridwidth: 1,
-                        zerolinecolor: 'rgb(255, 255, 255)',
-                        zerolinewidth: 2
-                    },
-                    margin: {
-                            l: 40,
-                            r: 30,
-                            b: 80,
-                            t: 100
+                        title:  this.searchGene +' expression level in  erythroid differentiation ('+ this.cell_source+')',
+                        bargap: 0.25,
+                        yaxis: {
+                            
+                            autorange: true,
+                            rangemode :"normal",
+                            // range: list(0,20), 
+                            showgrid: true,
+                            zeroline: true,
+                            // dtick: 5,
+                            gridcolor: 'rgb(255, 255, 255)',
+                            gridwidth: 1,
+                            zerolinecolor: 'rgb(255, 255, 255)',
+                            zerolinewidth: 2
                         },
-                        paper_bgcolor: 'rgb(243, 243, 243)',
-                        plot_bgcolor: 'rgb(243, 243, 243)',
-                        showlegend: false
+                        margin: {
+                                l: 40,
+                                r: 30,
+                                b: 80,
+                                t: 100
+                            },
+                            paper_bgcolor: 'rgb(243, 243, 243)',
+                            plot_bgcolor: 'rgb(243, 243, 243)',
+                            showlegend: false
                     };
                     this.vivo_layout = layout
                 }
@@ -297,9 +378,170 @@ export default {
         
         },
        
-        changeVivoCellSource($event){
+        searchSelect1(val,searchGene){
+
+            getAllDevExpreBulkData(val,searchGene).then( res =>{
+                    let datas = res.data
+                    console.log(res.data)
+                    if (datas.signal == 0){
+                        // alert(datas.message)
+                        this.$Message.info("Please check your input(no such gene)", 10);
+                        this.spinShow4 = false
+                        
+                    }else{
+                        // alert(datas.xData)
+                        // alert(datas.yData)
+                        this.vivo_data = []
+                        var xData = datas.xData
+                        var yData =datas.yData
+                        for ( var i = 0; i < xData.length; i ++ ) {
+                            var result = {
+                                type: 'box',
+                                y: yData[i],
+                                name: xData[i],
+                                boxpoints: 'all',
+                                jitter: 0.5,
+                                whiskerwidth: 0.2,
+                                fillcolor: 'cls',
+                                marker: {
+                                    size: 2
+                                },
+                                line: {
+                                    width: 1
+                                }
+                            };
+                            // alert(this.vivo_data)
+                            this.vivo_data.push(result);
+                        }
+                        let layout = {
+                            title:  this.searchGene +' expression level in  erythroid differentiation ('+ this.selectList[0]+')',
+                            bargap: 0.25,
+                            yaxis: {
+                                
+                                autorange: true,
+                                rangemode :"normal",
+                                // range: list(0,20), 
+                                showgrid: true,
+                                zeroline: true,
+                                // dtick: 5,
+                                gridcolor: 'rgb(255, 255, 255)',
+                                gridwidth: 1,
+                                zerolinecolor: 'rgb(255, 255, 255)',
+                                zerolinewidth: 2
+                            },
+                            margin: {
+                                    l: 40,
+                                    r: 30,
+                                    b: 80,
+                                    t: 100
+                                },
+                                paper_bgcolor: 'rgb(243, 243, 243)',
+                                plot_bgcolor: 'rgb(243, 243, 243)',
+                                showlegend: false
+                        };
+                        this.vivo_layout = layout
+                    }
+
+                })
+
+        },
+        searchSelect2(val,searchGene){
+            getAllDevExpreBulkData(val,searchGene).then( res =>{
+                let datas = res.data
+                console.log(res.data)
+                if (datas.signal == 0){
+                    // alert(datas.message)
+                    this.$Message.info("Please check your input(no such gene)", 10);
+                    this.spinShow4 = false
+                    
+                }else{
+                    // alert(datas.xData)
+                    // alert(datas.yData)
+                    this.vitro_data = []
+                    var xData = datas.xData
+                    var yData =datas.yData
+                    for ( var i = 0; i < xData.length; i ++ ) {
+                        var result = {
+                            type: 'box',
+                            y: yData[i],
+                            name: xData[i],
+                            boxpoints: 'all',
+                            jitter: 0.5,
+                            whiskerwidth: 0.2,
+                            fillcolor: 'cls',
+                            marker: {
+                                size: 2
+                            },
+                            line: {
+                                width: 1
+                            }
+                        };
+                        // alert(this.vivo_data)
+                        this.vitro_data.push(result);
+                    }
+
+                    let layout1 = {
+                        title:  this.searchVitroGene +' expression level in  erythroid differentiation ('+ this.vitro_source+')',
+                        // autosize:true,
+                        yaxis: {
+                            
+                            autorange: true,
+                            rangemode :"normal",
+                            // range: list(0,20), 
+                            showgrid: true,
+                            zeroline: true,
+                            // dtick: 5,
+                            gridcolor: 'rgb(255, 255, 255)',
+                            gridwidth: 1,
+                            zerolinecolor: 'rgb(255, 255, 255)',
+                            zerolinewidth: 2
+                        },
+                        margin: {
+                                l: 40,
+                                r: 30,
+                                b: 80,
+                                t: 100
+                            },
+                        paper_bgcolor: 'rgb(243, 243, 243)',
+                        plot_bgcolor: 'rgb(243, 243, 243)',
+                        showlegend: false,
+                        
+
+                    };
+                    let layout = {
+                        title:  this.searchGene +' expression level in  erythroid differentiation ('+ this.selectList[1]+')',
+                        bargap: 0.25,
+                        yaxis: {
+                            
+                            autorange: true,
+                            rangemode :"normal",
+                            // range: list(0,20), 
+                            showgrid: true,
+                            zeroline: true,
+                            // dtick: 5,
+                            gridcolor: 'rgb(255, 255, 255)',
+                            gridwidth: 1,
+                            zerolinecolor: 'rgb(255, 255, 255)',
+                            zerolinewidth: 2
+                        },
+                        margin: {
+                                l: 40,
+                                r: 30,
+                                b: 80,
+                                t: 100
+                            },
+                            paper_bgcolor: 'rgb(243, 243, 243)',
+                            plot_bgcolor: 'rgb(243, 243, 243)',
+                            showlegend: false
+                    };
+                    this.vitro_layout = layout
+                }
+
+            })
+        },
+        changeCellSource($event){
             // alert($event)
-            this.vivo_source = $event
+            this.cell_source = $event
         },
         changeVivtroCellSource($event){
            this.vitro_source = $event
@@ -353,10 +595,10 @@ export default {
                     }
                 };
                 this.tpmE_data.push(result);
-            };
+            }
 
             let layout = {
-                title: 'AAGAB expression level in  erythroid differentiation(CB)',
+                title: 'AAGAB expression level in  erythroid differentiation (CB)',
                 yaxis: {
                     autorange: true,
                     showgrid: true,
@@ -382,25 +624,23 @@ export default {
            
 
 
-        }
+        },
 
       
-           
+         
 
        
     },
+    
     mounted(){
-      
-        // this.gettpmE_chart()  
-        this.searchVivoBygene(this.searchVivoGene)
-        this.searchVivtroBygene(this.searchVitroGene)
-
-        window.onresize = ()=>{
-    　　　　
-         
-        }
-    }
-
+        // alert(this.selectList)
+       
+    },
+    created(){
+        
+    },
+    
+    
 
 }
 </script>

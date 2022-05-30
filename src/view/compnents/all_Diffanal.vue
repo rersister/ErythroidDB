@@ -1,13 +1,22 @@
 <template>
 <div class="lay_out">
-	<h1 class="my_h1">Differential analysis</h1>
+	<h1 class="my_h1">Differential analysis ({{orga_name}})</h1>
+	</Br>
 	<div>
 		<Row>
-			<Col span="12">
+			<!-- <Col span="12">
 				<i-select placeholder="Pleace select cell's development type" clearable style="width:80%" @on-change='changedSourceGroup'>
 					<i-option v-for="(source,index) in source_group" :key='index' :value="source.name">{{ source.name }}</i-option>
 				</i-select>
-			</Col>
+			</Col> -->
+			<!-- <i-form >
+				<i-col span="8">
+					<Form-item label="Contrasts group: ">
+						                                                  
+						
+					</Form-item>
+				</i-col>
+			</i-form> -->
 			<Col span="12">
 				<!-- 数据查询分子名 -->
 				<i-select :model.sync="contrastsGroup" clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup">        
@@ -15,35 +24,19 @@
 				</i-select>
 			</Col>
         </Row>
-		<Row >
-        	<i-form >
-				<!-- <i-col span="8">
-					<Form-item label="Cell source: ">
-						                                                  
-						<i-select  class="my_select" :model.sync="sourceGroup" clearable placeholder="Pleace select cell source"  @on-change="changedSourceGroup">        
-							<i-option v-for="(source,index) in source_group" :key='index' :value="source.name">{{ source.name }}</i-option>
-						</i-select>
-					</Form-item>
-				</i-col> -->
-				<i-col span="8">
-					<Form-item label="Contrasts group: ">
-						                                                  
-						
-					</Form-item>
-				</i-col>
-			</i-form>
-        </Row> 		
+		</Br>
 		<Row>					
 			<!-- 差异表达 -->			
+		
 			<Spin size="large" fix v-if="spinShow1"></Spin>
 			<vue-plotly :autoResize="ifResize" :data="diff_data" :layout="diff_layout" :options="diff_options"/>
 		
 		</Row>
 		</Br>
 		<Row>
-
+			
+			<Spin size="large" fix v-if="spinShowTypeSource"></Spin>
 			<filter-table 
-                
                   @on-search="onSearch_diff"
                   :data="diffData"
                   :columns="diffCols">
@@ -96,8 +89,18 @@ export default {
 		VuePlotly,  
 		FilterTable,
 	},
+	props:{
+        selectList:{
+            type:Array,
+            default:() =>[]
+        },
+       
+    },
 	data(){
 		return{
+
+			orga_name:'',
+			spinShowTypeSource:'true',
 			ifResize:true,
 			spinShow1:'true',
 			diff_data: [], 
@@ -133,8 +136,9 @@ export default {
 			{
 				title: 'Symbol',
 				key: 'SYMBOL',
+				"sortable": true,
 				filter: {
-				type: 'Input'
+					type: 'Input'
 				},
 				fixed: 'left',
 				// render: (h, params) => {                        
@@ -151,29 +155,33 @@ export default {
 			{
 				title: 'logFC',
 				key: 'logFC',
+				"sortable": true,
 				filter: {
 				type: 'Input'
 				}
 
 			},
 			{
-				title: 'unshrunk.logFC',
-				key: 'unshrunk.logFC',
-				filter: {
-				type: 'Input'
-				}
-
-			},
-			{
-				title: 'logCPM',
+				title: 'AveExpr',
 				key: 'logCPM',
+				"sortable": true,
+				filter: {
+				type: 'Input'
+				}
+
+			},
+			{
+				title: 'P.Value',
+				key: 'FDR',
+				"sortable": true,
 				filter: {
 				type: 'Input'
 				},
 			},
 			{
-				title: 'P.Value',
-				key: 'P.Value',
+				title: 'adj.P.Val',
+				key: 'PValue',
+				"sortable": true,
 				filter: {
 					type: 'Select',
 					option: P_Value_range
@@ -184,6 +192,46 @@ export default {
             sequ_type:this.$route.params.sequ_type,
 		}
 	},
+	watch:{
+        selectList: {
+            handler(val){
+                //console.log(val)
+                
+                var table_name =
+                    'all_' +
+                    val[0].orga +
+                    '_ep_' +
+                    val[0].sequnceType 
+                this.table_name = table_name
+
+				this.getdiff_group(table_name);
+
+				if (val[0].orga == 'hs'){
+                    this.orga_name = 'Homo sapiens'
+
+                }
+                if(val[0].orga == 'mm'){
+                    this.orga_name = 'Mus musculus'
+                }
+
+                // if (val.length > 1) {
+                //     alert(val)
+                    // this.ifShow = true
+                    // this.searchSelect1(val[0],this.searchGene)
+                    // this.searchSelect2(val[1],this.searchGene)
+                // }else{
+                    // alert(this.selectList[0])
+                    // this.ifShow = false
+                    // this.searchSelect1(val[0],this.searchGene)
+                // }
+                
+            },
+            immediate:true
+        },
+      
+        
+    },
+
 	methods:{
         onSearch_diff(searchKeyVal){
         	var _this = this
@@ -237,7 +285,7 @@ export default {
 			// alert(table_name)
             getdiffGroup(table_name).then(res =>{
                 let datas = res.data 
-                console.log(datas)  
+                //console.log(datas)  
                 datas.forEach(key => contrasts_group_type_list.push({
                     name:key
                 }))
@@ -284,7 +332,7 @@ export default {
                     
                 var diff_layout={ 
                    
-                    title:'Differential analysis ' + diffgroup + '(' + this.sourceGroup +')',
+                    title:'Differential analysis ' + diffgroup,
                     xaxis: {
                         title:'Log2(FC)',
                     },
@@ -314,8 +362,8 @@ export default {
               }
 
          	})
-			var table_name = 'all_'+this.orga +'rna'+'_dev_'+this.sourceGroup+'_'+this.sequ_type
-			this.table_name = table_name
+			//var table_name = 'all_'+this.orga +'rna'+'_dev_'+this.sourceGroup+'_'+this.sequ_type
+			
 			// this.sourceGroup = sourceGroup
 			// alert(this.table_name)
 			this.getdiff_group(table_name)
@@ -327,6 +375,7 @@ export default {
 
 			var _this = this;      
 			_this.spinShowTypeSource = true, 
+			console.log("start_table_mode")
 			getDiffPageDataset(table_name,currentPage,pageSize,contrastsGroup).then( res=>{
 
 				_this.spinShowTypeSource = false                    
@@ -360,11 +409,11 @@ export default {
 	},
 	mounted(){
 		// all_hsrna_dev_diff
-		this.sequ_type = this.$route.params.sequ_type;
-    	this.orga = this.$route.params.orga;
-      	var table_name = 'all_'+this.orga +'rna'+'_dev_'+this.sourceGroup+this.sequ_type
-		var table_name = 'all_rna_dev_bulk_vivo'
-		this.getdiff_group(table_name);
+		// this.sequ_type = this.$route.params.sequ_type;
+    	// this.orga = this.$route.params.orga;
+      	// var table_name = 'all_'+this.orga +'rna'+'_dev_'+this.sourceGroup+this.sequ_type
+		// var table_name = 'all_hs_ep_bulk'
+		
 		// this.mockTableData(table_name,this.currentPage,this.pageSize)
 
 

@@ -1,7 +1,11 @@
 <template>
-    <div>
+    <div class="lay_out">
+        
+          <h1 class="my_h1">Principal Components Analysis({{orga_name}})</h1>
+          <!-- <h1 class="my_h1">Expression profiling ({{selectList[0]}})</h1> -->
+        </Br>     
         <Row>
-            <h1 class="my_h1">Unsupervised Clustering</h1>
+          
             <i-form :label-width="100">
 				<i-col span="8">
 					<Form-item label="Color by: ">                                                  
@@ -56,8 +60,16 @@ export default {
 		VuePlotly,  
 
 	},
+    props:{
+        selectList:{
+            type:Array,
+            default:() =>[]
+        },
+       
+    },
     data(){
         return{
+            orga_name:'',
             ifResize:true,
           	series:this.$store.state.app.CurrentPageToken,
             spinShow3:'true',
@@ -85,8 +97,8 @@ export default {
             group_type_list : [ 
 				{
 					id:"0",
-                    name:"dev type ",
-                    value:'if_vivo'
+                    name:"development type ",
+                    value:'development_type'
 				},
 				{
 					id:'1',
@@ -95,13 +107,44 @@ export default {
                 },
                 {
                     id:'2',
-                    name:"dev and cell  " ,
-                    value:'source_cell'
+                    name:"development and cell type " ,
+                    value:'group'
                 }
         
 				
 				],
         }
+    },
+    watch:{
+        selectList: {
+            handler(val){
+                // console.log(val)
+                
+                if (val[0].orga == 'hs'){
+                    this.orga_name = 'Homo sapiens'
+
+                }
+                if(val[0].orga == 'mm'){
+                    this.orga_name = 'Mus musculus'
+                }
+
+
+                // if (val.length > 1) {
+                //     alert(val)
+                    // this.ifShow = true
+                    // this.searchSelect1(val[0],this.searchGene)
+                    // this.searchSelect2(val[1],this.searchGene)
+                // }else{
+                    // alert(this.selectList[0])
+                    // this.ifShow = false
+                    // this.searchSelect1(val[0],this.searchGene)
+                // }
+                
+            },
+            immediate:true
+        },
+      
+        
     },
 	methods:{
 	  changedClustChart(value){
@@ -116,15 +159,15 @@ export default {
         //   alert(_this.colorby)
         var table_name = 'all_'+this.orga +'rna'+'_dev_'+this.sequ_type+'cluster'
         var colorby = _this.colorby  //source / group / order 
-        this.getCluster_chart3(table_name,colorby)
+        this.getCluster_chart3(this.selectList,colorby)
 
       },
-	  getCluster_chart3(table_name,colorby){
+	  getCluster_chart3(selectList,colorby){
         //   redcell.all_hsrnadev_bulkcluster
             // var table_name = 'all_'+this.orga +'rna'+'dev_'+this.sequ_type+'cluster'
             // var colorby = this.colorby  //source / group / order 
             var _this = this
-            getClusterDataAll(table_name,colorby).then(res =>{
+            getClusterDataAll(selectList[0],colorby).then(res =>{
                 let datas = res.data  
                 console.log(datas)             
                 var xData = datas.xData  // list 里面装list
@@ -148,7 +191,7 @@ export default {
                                 
                 var layout={ 
                    
-                    title:'Similarity analysis(plotMDS)',
+                    title:'',
                     xaxis: {
                         title:'Leading logFC dim 1',
                     },
@@ -203,7 +246,7 @@ export default {
                                 
                 var layout={ 
                    
-                    title:'Similarity analysis(plotMDS)',
+                    title:'Principal Components Analysis(in {{selectList[0].deve}})',
                     xaxis: {
                         title:'Leading logFC dim 1',
                     },
@@ -246,7 +289,7 @@ export default {
                                 
                 var layout={ 
                    
-                    title:'Similarity analysis(plotMDS)',
+                    title:'Principal Components Analysis(in {{selectList[0].deve}})',
                     xaxis: {
                         title:'Leading logFC dim 1',
                     },
@@ -277,7 +320,7 @@ export default {
        this.orga = this.$route.params.orga;
        var table_name = 'all_'+this.orga +'rna'+'_dev_'+this.sequ_type+'cluster'
        var colorby = 'cell_type'  //source / group / order 
-       this.getCluster_chart3(table_name,colorby)
+       this.getCluster_chart3(this.selectList,colorby)
     //    this.getCluster_chart3('all_rna_dev');
     //    this.getCluster_chart2('all_rna_dev');
     //    this.getCluster_chart1('all_rna_dev');
@@ -293,6 +336,10 @@ export default {
     .my_h1{
         font-size: calc((40/1920) * 100vw);
         text-align: center;
+    }
+
+    .lay_out{
+        margin: 2% 2%  2% 2%;
     }
 
 

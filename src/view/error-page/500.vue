@@ -1,5 +1,5 @@
 <template>
-  <error-content code="500" desc="Oh~~服务器正在维护升级中~" :src="src"/>
+  <error-content code="500" desc="Oh~~The server is under maintenance and upgrade~" :src="src"/>
 </template>
 
 <script>

@@ -28,12 +28,12 @@
                             </Panel>                                       
                         </Collapse>                                                                 
                     </Col> -->
-                    <Col span="12">
+                    <!-- <Col span="12"> -->
                         <!-- 相关推荐介绍 -->
                         <Collapse simple v-model='value1' class='h3_title'>                                      
                                 <Panel name="2">
-                                Look up this {{search_datatype}} in:
-       
+                                <!-- Look up this {{search_datatype}} in: -->
+                                Search Gene Symbol in:
                                 <p slot="content">
                                     <Button class='button_style' v-for="(search_item,index) in othersearch_items" :key='index' :label='search_item.name' type="primary" icon="ios-search">
                                     <a :href='search_item.link' style="color:white">    
@@ -42,17 +42,20 @@
                                     </Button>                                               
                                 </p>
                             </Panel> 
+                            
                         </Collapse>
-                    </Col>
+                    <!-- </Col> -->
 
                 </Row> 
                 <br>
                 <Row justify="center" class="code-row-bg">
                     <!-- 表达柱图 EL 根据指定的RNA/INcRNA/miRNA出柱状图-->
-                    <Col span="8">
+                    <!-- <Col span="8"> -->
                         <Spin size="large" fix v-if="spinShow4"></Spin>
-                        <highcharts class="chart" :options='SpecifExpreOptionsByName'></highcharts>
-                    </Col>
+                        <!-- <highcharts class="chart" :options='SpecifExpreOptionsByName'></highcharts> -->
+                         <vue-plotly  :autoResize="ifResize" :data="expreProfile_data" :layout="expreProfile_layout" :options="expreProfile_options"/>
+
+                    <!-- </Col> -->
                 </Row>
 
 
@@ -61,16 +64,7 @@
 			
 			
         </div>      
-       
-        <router-link to="/Dataset_service">
-            <div style="text-align:right;font-size:calc((30/1920) * 100vw);">
-                <!-- <img width="20%" height="10%" src="@/assets/img/red_sys.jpg"> -->
-                <h3>Back To Dataset Service</h3>
-                <!-- <p>Sample: 
-                    <count-to :end="68" count-class="count-style"/>                                                              
-                </p> -->
-            </div> 
-		</router-link>  
+
        
 	</div>
    
@@ -81,14 +75,25 @@
 <script>
 import { getDatasetExperiType,  } from '@/api/datasetService'
 import {getSpecifExpreOptionsByName,getMicroInfo } from '@/api/erythdataservice'
+import VuePlotly from '@statnett/vue-plotly'
+
 export default {
-    name:"RNA_Expression",
+    name:"RnaExpression",
+    components:{
+		VuePlotly, 
+
+	},
     data(){
         return{
             search_placeholder:'',
             series:this.$store.state.app.CurrentPageToken,
             SpecifExpreOptionsByName:{},
-
+            ifResize:true,
+            expreProfile_data:[],
+            expreProfile_layout:{},
+            expreProfile_options:{
+                responsive: true,
+            },
             spinShow4:'true',
             othersearch_items:[],
             search_datatype:'',
@@ -155,8 +160,8 @@ export default {
             // 根据查询名给数据库里相关介绍信息
            this.searchItemInfoBydataname(this.dataType,micvalue)
            this.setOthersearchItems(this.dataType)
-
         },
+
 
         getSpecifExpreOptionsByName(series,dataType,specif_name){
             var _this = this;
@@ -175,7 +180,7 @@ export default {
             getSpecifExpreOptionsByName(series,tableType,specif_name).then( res =>{
                 let datas = res.data    
                 
-                // alert(datas.series)
+                // alert(datas)
               
                 if (datas.signal == 0){
                     // alert(datas.message)
@@ -185,54 +190,111 @@ export default {
                     
                 }else{
 
-                     _this.SpecifExpreOptionsByName= {
-                        chart: {
-                            type: 'column'
-                        },           
-                        title: {
-                            text: "  " + specif_name + " expression levels(" +this.series+")" 
-                        },
-                        subtitle: {
-                            text: 'Data Souce:' + this.series +"(" + datas.source + ")"
-                        },
-                        loading: {
-                            hideDuration: 1000,
-                            showDuration: 1000
-                        },
-                        xAxis: {
-                            categories: datas.categories,
-                            crosshair: true
-                        },
-                        yAxis: {
-                            min: 0,
-                            title: {
-                                text: datas.value_type
-                            }
-                        },
-                        tooltip: {
-                            // head + 每个 point + footer 拼接成完整的 table
-                            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-                            footerFormat: '</table>',
-                            shared: true,
-                            useHTML: true
-                        },
-                        credits: { enabled:false},
+                    //  _this.SpecifExpreOptionsByName= {
+                    //     chart: {
+                    //         type: 'column'
+                    //     },           
+                    //     title: {
+                    //         text: "  " + specif_name + " expression levels(" +this.series+")" 
+                    //     },
+                    //     subtitle: {
+                    //         text: 'Data Souce:' + this.series +"(" + datas.source + ")"
+                    //     },
+                    //     loading: {
+                    //         hideDuration: 1000,
+                    //         showDuration: 1000
+                    //     },
+                    //     xAxis: {
+                    //         categories: datas.categories,
+                    //         crosshair: true
+                    //     },
+                    //     yAxis: {
+                    //         min: 0,
+                    //         title: {
+                    //             text: datas.value_type
+                    //         }
+                    //     },
+                    //     tooltip: {
+                    //         // head + 每个 point + footer 拼接成完整的 table
+                    //         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    //         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    //         '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                    //         footerFormat: '</table>',
+                    //         shared: true,
+                    //         useHTML: true
+                    //     },
+                    //     credits: { enabled:false},
                     
-                        plotOptions: {
-                            column: {
-                                borderWidth: 0
+                    //     plotOptions: {
+                    //         column: {
+                    //             borderWidth: 0
+                    //         }
+                    //     },
+                    //     series: datas.series,
+                    //     //[{name: 'AATF', data: [9.0031863, 9.02721225, 8.865415624, 8.776098422, 8.75715593, 8.472251825, 8.75715593, 7.855944704, 8.059018553, 7.806333457]}],
+
+
+                    //     exporting: {  
+
+                    //     }
+                    // }
+                    
+                    this.expreProfile_data = []
+                    var xData = datas.xData
+                    var yData =datas.yData
+                    console.log("===")
+                    console.log(yData)
+                    for ( var i = 0; i < xData.length; i ++ ) {
+                        var result = {
+                            type: 'box',
+                            y: yData[i],
+                            name: xData[i],
+                            boxpoints: 'all',
+                            jitter: 0.5,
+                            whiskerwidth: 0.2,
+                            fillcolor: 'cls',
+                            marker: {
+                                size: 2
+                            },
+                            line: {
+                                width: 1
                             }
+                        };
+                        // alert(this.vivo_data)
+                        this.expreProfile_data.push(result);
+                    };
+                    let layout = {
+                        title:  specif_name+' Expression level in '+ this.series + '( Source:' +datas.source + ";Growth Mode:"+ datas.growth_mode +')',
+                        // bargap: 0.25,
+                        yaxis: {
+                            
+                            autorange: true,
+                            rangemode :"normal",
+                            // range: list(0,20), 
+                            showgrid: true,
+                            zeroline: true,
+                            // dtick: 5,
+                            gridcolor: 'rgb(255, 255, 255)',
+                            gridwidth: 1,
+                            zerolinecolor: 'rgb(255, 255, 255)',
+                            zerolinewidth: 2,
+                            title:"Normalized Value"
                         },
-                        series: datas.series,
-                        //[{name: 'AATF', data: [9.0031863, 9.02721225, 8.865415624, 8.776098422, 8.75715593, 8.472251825, 8.75715593, 7.855944704, 8.059018553, 7.806333457]}],
+                        xaxis:{
+                            title:"Group"
+                        },
+                        margin: {
+                                l: 40,
+                                r: 30,
+                                b: 80,
+                                t: 100
+                            },
+                            paper_bgcolor: 'rgb(243, 243, 243)',
+                            plot_bgcolor: 'rgb(243, 243, 243)',
+                            showlegend: false
+                    };
+                    this.expreProfile_layout = layout
 
-
-                        exporting: {  
-
-                        }
-                    }
                     this.spinShow4 = false
                 }
                  // alert("Don't get any results, may you check your input");
@@ -443,15 +505,51 @@ export default {
 }
 
 .button_style{
-    font-size:calc((20/1920) * 100vw);
-    margin-right: calc((10/1920) * 100vw);;
-    margin-bottom:calc((10/1920) * 100vw);
+    font-size:calc((4/1920) * 100vw);
+    margin-right: calc((5/1920) * 100vw);;
+    margin-bottom:calc((5/1920) * 100vw);
+    /* width:calc((50/1920) * 100vw); 
+    height: calc((20/1920) * 100vw); */
   }
 .chart{
     text-align: center;
     width:calc((1600/1920) * 100vw); 
     height: calc((600/1920) * 100vw);;
 }
+/* .ivu-btn-primary {
+  color: #fff;
+  background-color: #e4b7b6;
+  border-color: #efc6c7;
+}
 
+.ivu-input-search {
+    cursor: pointer;
+    padding: 0 16px!important;
+    background: #a94442!important;
+    color: #fff!important;
+    border-color: #515a6e!important;
+    transition: all .2s ease-in-out;
+    position: relative;
+    z-index: 2;
+} */
+    .ivu-input-search {
+    
+        background: #a85557!important;
+        color: #fff!important;
+        border-color: #a85557!important;
+    
+    }
+
+    .ivu-input-search:hover{
+        background: #e6b9b8 !important;
+        color: #fff !important;
+        border-color: #ea898c !important;
+    }
+
+    .ivu-btn-primary {
+        background: #a85557!important;
+        color: #fff!important;
+        border-color: #a85557!important;
+    }
 </style>
 

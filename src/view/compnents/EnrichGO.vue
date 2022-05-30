@@ -4,12 +4,14 @@
 
     <div>      <!-- enrichGO analysis -->  
 
-        <h1 class='h3_title'>Enrichment Analysis</h1>      
+
+        <h1 class='h3_title'>Enrichment Analysis</h1> 
+        <br>     
         <Row>
             <!-- <i-form :model="GOformItem" :label-width="120">--> 
                 
-                <Col span="3">
-                    <p class='detail_title'>Contrasts group: </p>                                             
+                <Col span="4">
+                    <p class='detail_title'>Contrasts Group: </p>                                             
                 </Col>
                 <Col span="4">
                     <i-select :model.sync="enrichGroup" clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroupOfEnrich">        
@@ -27,15 +29,15 @@
                     </i-select>
                 </Col> -->
                 <Col span="2" offset="1">
-                    <p class='detail_title' >GO Type:</p>                                             
+                    <p class='detail_title' >Type:</p>                                             
                 </Col>
                 <Col span="4">
                     <i-select :model.sync="enrichGroup" clearable  placeholder="Pleace select GO Type" @on-change="changeGoType">                    
-                        <i-option v-for="(goType,index) in goTypeList" :key='index' :value="goType.name">{{ goType.name }}</i-option>
+                        <i-option v-for="(goType,index) in goTypeList" :key='index' :value="goType.value">{{ goType.name }}</i-option>
                     </i-select>
                 </Col>
                  
-                <i-button class='button_style' type="primary" icon="ios-search" shape="circle" @click="getenrich_chart"></i-button> 
+                <i-button class='button_style' icon="ios-search" shape="circle" @click="getenrich_chart"></i-button> 
                 
             <!--</i-form>-->
         </Row>     
@@ -51,13 +53,6 @@
 				
 		
 
-        <router-link to="/Dataset_service">
-            <div style="text-align:right;font-size:calc((30/1920) * 100vw);">
-                <!-- <img width="20%" height="10%" src="@/assets/img/red_sys.jpg"> -->
-                <h3>Back To Dataset Service</h3>
-
-            </div> 
-	    </router-link>
 
     </div>  
     
@@ -87,14 +82,22 @@ export default {
                 ],
                 goTypeList:[
                     {
-                        name:'CC'
+                        name:'GO-CC',
+                        value:'CC'
                     },
                     {
-                        name:"MF"
+                        name:"GO-MF",
+                        value:'MF'
                     },
                     {
-                        name:"BP"
+                        name:"GO-BP",
+                        value:'BP'
                     },
+                    {
+                        name:"KEGG",
+                        value:'KEGG'
+                    },
+
                 ],
                 ifResize:true,
                 enrichGO_data:[],
@@ -144,158 +147,72 @@ export default {
             } 
          
             this.spinShow2 = true
-        //     getEnrichData(this.series,this.contrGroupOfEnrich,this.enrichGroup,this.goType).then(res =>{ 
-        //         // alert(res.datas)
-        //         let datas = res.data 
-        //         this.spinShow2 = false
-        //         console.log(datas.log_p_adjust)
-        //         // alert(datas.Description.length)
-        //         if(datas.Description.length == 0 ){
-        //               let mess = 'there no the GO enrichment of ' + this.enrichGroup  
-        //               this.$Message.info(mess, 10);
-        //         }
-                
-        //         var option = {
-        //             title: {
-        //                 text: 'the GO('+ this.goType+ ') enrichment of ' + this.enrichGroup
-                       
-        //             },
-        //             color: ['#8EC9EB'],
-        //             // legend: {
-        //             //     data:['GO Term and -log10(p.adjust)'],
-        //             //     nameLocation:'left',
-        //             // },
-        //             tooltip: {
-        //                 trigger: 'axis',
-        //                 formatter: "GO Term : {b} <br/> -log10(p.adjust) : {c}"
-        //             },
-        //             grid: {
-        //                 left: '3%',
-        //                 right: '4%',
-        //                 bottom: '3%',
-        //                 containLabel: true
-        //             },
-        //             xAxis: {
-        //                 name:"-log10(p.adjust)",
-        //                 nameLocation:'center',
-        //                 type: 'value',
-        //                 splitLine: {
-        //                     show: false
-        //                 },
-        //                 axisLabel: {
-        //                     formatter: '{value}'
-        //                 }
-        //             },
-        //             yAxis: {
-        //                 name:"GO Term [-log10(p.adjust)]",
-                       
-        //                 type: 'category',
-        //                 axisLine: {onZero: false},
-        //                 axisLabel: {
-        //                     // 文件超出长度范围解决
-        //                     // show:true,
-        //                     fontFamily:'Times New Roman',
-        //                     fontSize:'9',
-        //                     interval:0,
-        //                     size:4,
-        //                     formatter: function (params){
-        //                         if( params.length > 30)
-        //                             return params.substring(0,30) + '...';
-        //                         else
-        //                             return params;
-        //                     }
-        //                 },
-                        
-        //                 boundaryGap: true,
-        //                 data: datas.Description
-        //             },
-        //             graphic: [
-                        
-        //             ],
-                    
-        //             series: [
-        //                 {
-        //                     name: 'GO Term and -log10(p.adjust)',
-        //                     type: 'bar',
-        //                     smooth: true,
-        //                     barCategoryGap: 2,
-        //                     lineStyle: {
-        //                         width: 1,
-        //                         shadowColor: 'rgba(0,0,0,0.4)',
-        //                         shadowBlur: 2,
-        //                         shadowOffsetY: 2
-        //                     },
-        //                     data:datas.log_p_adjust
-        //                     }
-        //             ]
-        //         }
-        //      var enrichChart = this.$echarts.init(document.getElementById("enrichGO_echart"));
-        //      enrichChart.setOption(option); 
-           
-            
-        //    })
-        getEnrichData(this.series,this.contrGroupOfEnrich,this.goType).then(res =>{ 
-					let datas = res.data 
-					var xData = datas.xData  // list 里面装list
-					var yData =datas.yData   
-					var nData = datas.nData
-					var tData = datas.tData
-					this.enrichGO_data = []
-					for ( var i = 0; i < xData.length; i ++ ) {
-						// alert(nData[i])
-						var result = {
-							x: xData[i],
-							y: yData[i],
-							name: nData[i],
-							type: 'bar',
-							orientation :'h',
-						};
-						this.enrichGO_data.push(result)   
-					};
 
-					var layout = {
-						title:'The GO('+ this.goType + ') enrichment of ' + this.contrGroupOfEnrich + "("+this.series+'('+ this.source+')'+')',
-                        bargap: 0.25,
-                        xaxis: {
-							title:'-log10(p.adjust)',
-							// showgrid : TRUE,
-						},
-						yaxis: {
-							// showgrid: TRUE,
-                            title:{
-                                    text: 'GO Term [-log10(p.adjust)]',
-                                    position:'top',
-                                    standoff: 40,
-                                    yanchor:'top',
-                                },
-                            // yanchor:'top',
-                            // position:'top',
-                            automargin: true,
+            getEnrichData(this.series,this.contrGroupOfEnrich,this.goType).then(res =>{ 
+                        let datas = res.data 
+                        var xData = datas.xData  // list 里面装list
+                        var yData =datas.yData   
+                        var nData = datas.nData
+                        var tData = datas.tData
+                        this.enrichGO_data = []
+                        for ( var i = 0; i < xData.length; i ++ ) {
+                            // alert(nData[i])
+                            var result = {
+                                x: xData[i],
+                                y: yData[i],
+                                name: nData[i],
+                                type: 'bar',
+                                orientation :'h',
+                            };
+                            this.enrichGO_data.push(result)   
+                        };
+
+                        var layout = {
+                            // "("+this.series+'('+ this.source+')'+')',  没有副标题，把标题设置简短
+                            title:'GO ('+ this.goType + ') enrichment of ' + this.contrGroupOfEnrich,
                             
-                            rangemode: "normal",
-                            dtick: 1,
-							// axisLabel: {
-                            // // 文件超出长度范围解决
-                            // // show:true,
-							// interval:0,
-							
-                            exponentformat: function (params){
-                                if( params.length > 30)
-                                    return params.substring(0,30) + '...';
-                                else
-                                    return params;
-                            }
+                            
+                            bargap: 0.25,
+                            xaxis: {
+                                title:'-log10(p.adjust)',
+                                // showgrid : TRUE,
+                            },
+                            yaxis: {
+                                // showgrid: TRUE,
+                                title:{
+                                        text: 'GO Term [-log10(p.adjust)]',
+                                        position:'top',
+                                        standoff: 40,
+                                        yanchor:'top',
+                                    },
+                                // yanchor:'top',
+                                // position:'top',
+                                automargin: true,
+                                
+                                rangemode: "normal",
+                                dtick: 1,
+                                // axisLabel: {
+                                // // 文件超出长度范围解决
+                                // // show:true,
+                                // interval:0,
+                                
+                                exponentformat: function (params){
+                                    if( params.length > 30)
+                                        return params.substring(0,30) + '...';
+                                    else
+                                        return params;
+                                }
+                            
+                            },
+                            margin: {
+                                l:500
+                            },
                         
-                        },
-                        margin: {
-                            l:500
-                        },
-                       
-                       
-					}
-					this.enrichGO_layout = layout
-           })
-        
+                        
+                        }
+                        this.enrichGO_layout = layout
+            })
+            
         
         
         },

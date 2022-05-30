@@ -3,24 +3,31 @@
     <div class="lay_out">
             <Row>
 				<!--<i-col span="12"> -->
-					<h1 class="my_h1">Single Cell Interraction Atlas</h1> 
-					<Col span="10">
-						<i-select placeholder="Select cell source" clearable style="width:80%" @on-change='changedSourceGroup'>
-							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
-						</i-select>
-					</Col>
-					<Col span="10">
-						<!-- 数据查询分子名 -->
-						<i-select placeholder="Select comm type"  clearable @on-change="changedCommType">        
-							<i-option v-for="(group,index) in comm_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
-						</i-select>
-					</Col>
+					<h1 class="my_h1">Single Cell ii   Interraction Atlas</h1> 
+					</br>
+					<i-form :label-width="120">
+						<i-col span="10">
+							<Form-item label="Group: "> 	
+								<i-select placeholder="Select cell source" clearable style="width:80%" @on-change='changedSourceGroup'>
+									<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
+								</i-select>
+							</Form-item>
+						</i-col>
+					
+						<i-col span="10">
+							<!-- 数据查询分子名 -->
+							<Form-item label="Communication type: "> 
+								<i-select placeholder="Select communication type"  clearable @on-change="changedCommType">        
+									<i-option v-for="(group,index) in comm_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
+								</i-select>
+							</Form-item>
+						</i-col>
+					</i-form>
+					</br>
 					</br>
 					<!-- <Spin size="large" fix v-if="spinShow2"></Spin>              -->
 					<!-- <vue-plotly :autoResize="ifResize" :data="enrichGO_data" :layout="enrichGO_layout" :options="enrichGO_options"/> -->
-					<div>
-						<div id="Net_view" style="width: 100%;height:400%; text-aglign:center"></div>
-					</div>
+				
 				<!-- </i-col> -->
 				<!-- <i-col span="12">
 					
@@ -46,24 +53,20 @@
 
 				</i-col>-->
             </Row>
-             
+			</br>
+
+            <Row>
+					<div>
+						<div id="Net_view" style="width: 100%;height:400%; text-aglign:center"></div>
+					</div>
+			</Row>
         
 		
 			
 		
 		</br>
 		</br>
-		<Row>
-			<router-link to="/Dataset_service">
-				<div style="text-align:right;font-size:calc((30/1920) * 100vw);">
-					<!-- <img width="20%" height="10%" src="@/assets/img/red_sys.jpg"> -->
-					<h3>Back To Dataset Service</h3>
-					<!-- <p>Sample: 
-						<count-to :end="68" count-class="count-style"/>                                                              
-					</p> -->
-				</div> 
-			</router-link>
-		</Row>
+		
 	</div>  
   
 </template>
@@ -71,8 +74,9 @@
 
 <script>
 import {getdiffGroup,getTsneGroup} from '@/api/erythdataservice'
-import {getLRPlotData,getNetViewData,getCellSourceData}  from '@/api/erythroidAtlas'
+import {getNetViewData,getCellSourceData}  from '@/api/erythroidAtlas'
 // import {getTsneGroup} from '@/api/erythdataservice'
+import * as echarts from 'echarts'
 
 import VuePlotly from '@statnett/vue-plotly'
 export default {
@@ -140,15 +144,25 @@ export default {
                 let datas = res.data  
 				console.log(datas)
 				var data =   datas 
-				this.source =  data[1]    
-				datas.forEach(key => this.data_source_list.push({
-                    name:key
-				})) 
-				datas.forEach(key => this.data_source_list2.push({
-                    name:key
-				})) 
-				var dataset_name = this.series +"_"+ data[1]
-				this.getNetView(dataset_name,'all')
+				
+				this.source = data[0].source_g
+				datas.forEach(function (group) {
+					// if (group.if_anal === 'yes'){
+								console.log(group.source_g)
+
+								_this.data_source_list.push({
+									name:group.source_g
+								})
+								_this.data_source_list2.push({
+									name:group.source_g
+								})
+							// }
+				}) 
+
+
+				// var dataset_name = this.series +"_"+ data[0].source_g
+				var dataset_name = this.series 
+				this.getNetView(dataset_name,this.source,'all')
 
            })
 		},
@@ -166,13 +180,13 @@ export default {
 			})
 
 		},
-        getNetView(dataset_name,comm_type){
+        getNetView(dataset_name,source,comm_type){
 			let myChart = this.$echarts.init(document.getElementById("Net_view"));
             myChart.showLoading();
 			// this.spinShow2 = true
 			// var dataset_name = 'erthy'
 			// var comm_type = 'all'
-			getNetViewData(dataset_name,comm_type).then(res =>{ 
+			getNetViewData(dataset_name,source,comm_type).then(res =>{ 
 					myChart.hideLoading();
 					let datas = res.data 
 					console.log(datas)
@@ -261,14 +275,15 @@ export default {
 					myChart.setOption(option);
 					})
 		},
-        getLRPlot_chart(dataset_name,comm_type){
+        getLRPlot_chart(dataset_name,source,comm_type){
 
 			let myChart = this.$echarts.init(document.getElementById("LRPlot_view"));
             myChart.showLoading();
 			// this.spinShow2 = true
 			// var dataset_name = 'erthy'
 			// var comm_type = 'all'
-			getLRPlotData(dataset_name,comm_type).then(res =>{ 
+			alert(source)
+			getNetViewData(dataset_name,source,comm_type).then(res =>{ 
 					myChart.hideLoading();
 					let datas = res.data 
 					console.log(datas)
@@ -388,16 +403,18 @@ export default {
 			let _this = this  
 			// alert(this.table_name)
 			this.comm_type = comm_type
-			var dataset_name = this.series +"_"+ this.source
-			this.getNetView(dataset_name,comm_type)
+			// var dataset_name = this.series +"_"+ this.source
+			var dataset_name = this.series 
+			this.getNetView(dataset_name,this.source,comm_type)
 
 		},
 		changedCommType2(comm_type){
 			let _this = this  
 			// alert(this.table_name)
 			this.comm_type2 = comm_type
-			var dataset_name = this.series +"_"+ this.source2
-			this.getLRPlot_chart(dataset_name,comm_type)
+			// var dataset_name = this.series +"_"+ this.source2
+			var dataset_name = this.series
+			this.getLRPlot_chart(dataset_name,this.source,comm_type)
 
 		},
 		changedSourceGroup(source){

@@ -32,15 +32,7 @@
 		</Br>
 		
 	</div>
-	<router-link to="/Dataset_service">
-		<div style="text-align:right">
-			<!-- <img width="20%" height="10%" src="@/assets/img/red_sys.jpg"> -->
-			<h3 class='h3_title'>Back To Dataset Service</h3>
-			<!-- <p>Sample: 
-				<count-to :end="68" count-class="count-style"/>                                                              
-			</p> -->
-		</div> 
-	</router-link>
+
 
 
 </div>
@@ -164,11 +156,17 @@ export default {
                 let datas = res.data  
 				console.log(datas)
 				var data =   datas 
-				this.source = datas[1]       
-				datas.forEach(key => this.data_source_list.push({
-                    name:key
-				})) 
-				// alert(datas[1])
+				this.source = data[0].source_g  
+				datas.forEach(function (group) {
+					
+						console.log(group.source_g)
+
+						_this.data_source_list.push({
+							name:group.source_g
+						})
+			
+				}) 
+				alert(_this.data_source_list)
 				// this.getMarkerChart(this.series,datas[1])
              
            })

@@ -1,11 +1,12 @@
 <template>
 <div>
 	<h1 class='h3_title'>Differential Analysis</h1>
+    <br>
 	<div>
 		<Row>
         	<i-form :label-width="120">
 				<i-col span="8">
-					<Form-item label="Contrasts group: ">                                                  
+					<Form-item label="Contrasts Group: ">                                                  
 						<i-select  clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup">        
 							<i-option v-for="(group,index) in contrasts_group" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
@@ -20,13 +21,31 @@
 		
 		</Row>
 
+
+        <Row>
+                            <!-- 数据查询分子名 -->
+            <i-form :label-width="120">
+				<i-col span="12">
+					<Form-item label="Input Gene: ">                                                  
+						 <Input search enter-button="Search"    @on-search="searchDiffDataSetByKeyName($event)" :placeholder="search_placeholder"/>                         
+        
+					</Form-item>
+				</i-col>
+			</i-form>
+             
+                   
+        </Row>
+
         <Row>
 
-			<filter-table 
+			<!-- <filter-table 
                   @on-search="onSearch_diff"
                   :data="diffData"
                   :columns="diffCols">
-            </filter-table>
+            </filter-table> -->
+             
+        
+            <Table :columns="diffCols" :data="diffData" size="small" ref="table"></Table>
             <Spin size="large" fix v-if="spinShowTypeSource"></Spin>
 			<div style="margin: 10px;overflow: hidden">               
                   <div style="float: right;">
@@ -44,14 +63,7 @@
 
 		</Row>
 	</div>
-	<router-link to="/Dataset_service">
-            <div style="text-align:right;font-size:calc((30/1920) * 100vw);">
-                <!-- <img width="20%" height="10%" src="@/assets/img/red_sys.jpg"> -->
-                <h3 class='h3_title'>Back To Dataset Service</h3>
-                <!-- <p>Sample: 
-                    <count-to :end="68" count-class="count-style"/>                                                                              </p> -->
-            </div> 
-	</router-link>
+
 
 
 </div>
@@ -62,8 +74,8 @@
 <script>
 import FilterTable from '../compnents/FilterTable';
 import VuePlotly from '@statnett/vue-plotly'
-import {getdiffGroup,getDiffData} from '@/api/erythdataservice'
-import {getDatasetTypeSource,getDiffPageDataset,searchDiffDatasetByParms} from '@/api/erythdataset'
+import {getdiffGroup,getDiffData,getDatasetSourceInfoData} from '@/api/erythdataservice'
+import {getDatasetTypeSource,getDiffPageDataset,getDiffPageDatasetByGene,searchDiffDatasetByParms} from '@/api/erythdataset'
 
 const  P_Value_range = {
     0: {
@@ -88,6 +100,8 @@ export default {
 		return{
             series:this.$store.state.app.CurrentPageToken,
             spinShow1:'true',
+            Dsource:'',
+            Dgrowth_mode:'',
             spinShowTypeSource:true,
 			diff_data: [], 
 			diff_layout: {},              
@@ -105,6 +119,7 @@ export default {
 			{
 				title: 'Symbol',
 				key: 'SYMBOL',
+                "sortable": true,
 				filter: {
 				type: 'Input'
 				},
@@ -114,14 +129,7 @@ export default {
 			{
 				title: 'logFC',
 				key: 'logFC',
-				filter: {
-				type: 'Input'
-				}
-
-			},
-			{
-				title: 'unshrunk.logFC',
-				key: 'unshrunk.logFC',
+                "sortable": true,
 				filter: {
 				type: 'Input'
 				}
@@ -130,13 +138,24 @@ export default {
 			{
 				title: 'logCPM',
 				key: 'logCPM',
+                "sortable": true,
+				filter: {
+				type: 'Input'
+				}
+
+			},
+			{
+				title: 'FDR',
+				key: 'FDR',
+                "sortable": true,
 				filter: {
 				type: 'Input'
 				},
 			},
 			{
-				title: 'P.Value',
-				key: 'P.Value',
+				title: 'PValue',
+				key: 'PValue',
+                "sortable": true,
 				filter: {
 					type: 'Select',
 					option: P_Value_range
@@ -175,7 +194,7 @@ export default {
             
 				_this.spinShowTypeSource = false                    
                 let datas = res.data
-                console.log(datas)
+                // console.log(datas)
 				if (datas.signal === 1){
                     // 有值
                     // alert("有值")
@@ -191,13 +210,13 @@ export default {
         },
 
         handleCurrentChange(val){
-          console.log(`当前页: ${val}`);
+        //   console.log(`当前页: ${val}`);
           this.currentPage = val;
           this.mockTableData(this.series,this.currentPage,this.pageSize,this.contrastsGroup)
         },
 
         handleSizeChange(val){
-			console.log(`每页 ${val} 条`);
+			// console.log(`每页 ${val} 条`);
 			this.pageSize = val;
 			// mockTableData(table_name,currentPage,pageSize)
 			this.mockTableData(this.series,this.currentPage,this.pageSize,this.contrastsGroup)
@@ -212,10 +231,10 @@ export default {
 
 				_this.spinShowTypeSource = false                    
 				let datas = res.data
-                console.log(datas)
+                // console.log(datas)
 				if (datas.signal == 1){
 
-					console.info(datas.list)
+					// console.info(datas.list)
 					_this.diffData = datas.list                  
 					_this.totalRow = datas.total;
 				}else{
@@ -223,7 +242,32 @@ export default {
 				}
 				
 			})
-		},  
+		
+        },  
+
+        searchDiffDataSetByKeyName($event){
+            	var _this = this;      
+            _this.spinShowTypeSource = true, 
+            // alert("==")
+            // alert(contrastsGroup)
+			getDiffPageDatasetByGene(gene_name,table_name,currentPage,pageSize,contrastsGroup).then( res=>{
+
+				_this.spinShowTypeSource = false                    
+				let datas = res.data
+                // console.log(datas)
+				if (datas.signal == 1){
+
+					// console.info(datas.list)
+					_this.diffData = datas.list                  
+					_this.totalRow = datas.total;
+				}else{
+                   
+				}
+				
+			})
+		
+
+        },
 		getdiff_group(series){
             let contrasts_group_type_list = []
             let enrich_group_list = []
@@ -231,7 +275,7 @@ export default {
             // alert(_this.series)
             getdiffGroup(series).then(res =>{
                 let datas = res.data 
-                console.log(datas)  
+                // console.log(datas)  
 
                
                 // alert(datas[0])
@@ -251,7 +295,7 @@ export default {
 			_this.spinShow1 = true
             getDiffData(this.series,diffgroup).then(res =>{
                 let datas = res.data  
-                console.log(datas)             
+                // console.log(datas)             
                 var data = [
                          {
                             x: datas.no_signifcant.logFC,
@@ -278,11 +322,11 @@ export default {
                     
                 var diff_layout={ 
                    
-                    title:'Differential analysis ' + diffgroup,
+                    title:'Differential analysis of ' + diffgroup + " in "+this.series+'( Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
 
-                   subtitle: {
-                            text: 'Data Souce:' + this.series
-                    },
+                //    subtitle: {
+                //             text: 'Data Souce:' + this.series
+                //     },
                     xaxis: {
                         title:'Log2(FC)',
                     },
@@ -306,10 +350,21 @@ export default {
             
         },
 
+        getDatasetSourceInfo(series){
+             let _this = this
+             getDatasetSourceInfoData(this.series).then(res =>{
+                let datas =res.data
+                console.log(datas)
+                _this.Dsource = datas.source
+                _this.Dgrowth_mode = datas.growth_mode
+                
+            })
+        }
 	},
 	mounted(){
         var table_name = 'all_rna_dev_bulk_vivo';
         // alert(this.series);
+        this.getDatasetSourceInfo(this.series)
         this.getdiff_group(this.series);
         // alert(this.contrastsGroup)
         

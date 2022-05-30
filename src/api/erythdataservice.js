@@ -19,6 +19,8 @@ export const getDatasetGroup  = dataset => {
 }
 
 
+
+
 export const getAllExpreStack = (dataset,tableTypes) => {
 	return axios.request({
 		url:'public/getAllExpreStack',
@@ -149,6 +151,7 @@ export const getTsneDataCol = (series,group) => {
 		data:{
 			series: series,
 			group:group
+			
 		},
 		method:'post',
 	})
@@ -186,14 +189,16 @@ export const getTraDataCol = (series,group) => {
 
 
 // getTsneData
-export const getTsneData = (series,source,col) => {
+export const getTsneData = (series,source,col,if3D,VisualM) => {
 	return axios.request({
 
 		url:'public/getTsneData',
 		data:{
 			series: series,
 			source:source,
-			col:col
+			col:col,
+			if3D:if3D,
+			VisualM:VisualM
 		},
 		method:'post',
 	})
@@ -244,6 +249,20 @@ export const getPseudoData = (series,source) => {
 
 }
 
+// addFeatureByName
+export const getFeatureBygroup = (series,source,feature_name)=>{
+	return axios.request({
+
+		url:'public/getFeatureBygroup',
+		data:{
+			series: series,
+			source:source,
+			feature_name:feature_name,
+		},
+		method:'post',
+	})
+}
+
 
 // getClusterMarker(this.series,this.source)
 export const getClusterMarker = (series,source)=>{
@@ -253,6 +272,7 @@ export const getClusterMarker = (series,source)=>{
 		data:{
 			series: series,
 			source:source,
+			// group_col:group_col
 			
 		},
 		method:'post',
@@ -276,7 +296,7 @@ export const getClusterEncihGroup = (series,source)=>{
 
 // getClusterEnrichData(this.series,this.source,this.group)
 
-export const getClusterEnrichData = (series,source,group)=>{
+export const getClusterEnrichData = (series,source,group,enrichType)=>{
 	return axios.request({
 
 		url:'public/getClusterEnrich',
@@ -284,6 +304,7 @@ export const getClusterEnrichData = (series,source,group)=>{
 			series: series,
 			source:source,
 			group:group,
+			enrichType:enrichType,
 			
 		},
 		method:'post',
@@ -291,25 +312,38 @@ export const getClusterEnrichData = (series,source,group)=>{
 }
 
 // getClusterContrastGroup
-export const getClusterContrastGroup = (series,source)=>{
+export const getSCDiffContrastGroup = (series)=>{
 	return axios.request({
 
-		url:'public/getClusterContrastGroup',
+		url:'public/getSCDiffContrastGroup',
 		data:{
 			series: series,
-			source:source,
+			// source:source,
 		},
 		method:'post',
 	})
 }
+
+export const getSCEnrichContrastGroup = (series)=>{
+	return axios.request({
+
+		url:'public/getSCEnrichContrastGroup',
+		data:{
+			series: series,
+			// source:source,
+		},
+		method:'post',
+	})
+}
+
 // getClusterDiff(this.series,this.source,this.group)
-export const getSCClusterDiff = (series,source,group)=>{
+export const getSCClusterDiff = (series,group)=>{
 	return axios.request({
 
 		url:'public/getSCClusterDiff',
 		data:{
 			series: series,
-			source:source,
+			// source:source,
 			group:group,
 		},
 		method:'post',
@@ -317,14 +351,15 @@ export const getSCClusterDiff = (series,source,group)=>{
 }
 
 // getScDiffEnrich(this.series,this.source,this.group)
-export const getScDiffEnrich = (series,source,group)=>{
+export const getScDiffEnrich = (series,group,enrichType)=>{
 	return axios.request({
 
 		url:'public/getScDiffEnrich',
 		data:{
 			series: series,
-			source:source,
+			// source:source,
 			group:group,
+			enrichType:enrichType
 		},
 		method:'post',
 	})
@@ -369,7 +404,16 @@ export const getsimData = (series) => {
 	})
 } 
 
-
+// getDatasetSourceInfoData
+export const getDatasetSourceInfoData  =  (series) => {
+	return axios.request({
+	  url: 'public/getDatasetSourceInfoData',
+	  data: {
+		  'series':series
+		},
+	  method: 'post',
+	}) 
+}
 
 // series
 export const getDatatest = () => {

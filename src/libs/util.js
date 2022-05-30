@@ -158,9 +158,9 @@ export const checkStatus=(response_code)=>{
     }
 
     if(response_code === 500){
-        router.push({
-            name: 'error_500',
-        });
+        // router.push({
+        //     name: 'error_500',
+        // });
     }
 
     return response_code

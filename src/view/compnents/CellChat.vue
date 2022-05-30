@@ -85,7 +85,7 @@
 
 <script>
 import {getdiffGroup} from '@/api/erythdataservice'
-import {getCellChatSigData,getLRPlotData,geteSigPathNetData}  from '@/api/erythroidAtlas'
+import {getCellChatSigData,geteSigPathNetData}  from '@/api/erythroidAtlas'
 import VuePlotly from '@statnett/vue-plotly'
 export default {
 	name:"CellChat",

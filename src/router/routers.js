@@ -1,6 +1,7 @@
 import Main from '@/components/main'
 import DatasetDetail from '@/view/eryth/DatasetDetail.vue'
 import ErythroidAtlas from '@/view/single-page/ErythroidAtlas'
+import Main_sub from '@/components/main/main_sub'
 
 export default [
     {
@@ -18,7 +19,7 @@ export default [
                 name: 'home',
                 meta: {
                     hideInMenu: true,
-                    title: 'home',
+                    title: 'Home',
                     notCache: true,
                     icon: 'md-home'
                 },
@@ -27,10 +28,10 @@ export default [
             },
             
             {
-                path: '/ErythroidAtlas',
-                name: 'ErythroidAtlas',
+                path: '/Erythroid Atlas',
+                name: 'Erythroid Atlas',
                
-                meta: { title: "ErythroidAtlas" },
+                meta: { title: "Erythroid Atlas" },
                 // component: resolve => require(['@/view/single-page/ErythroidAtlas'], resolve),
                 component: ErythroidAtlas,
                 children:[
@@ -74,6 +75,16 @@ export default [
                         component: () =>
                             import ('@/view/compnents/all_Enrich.vue'),
                     },
+                    // sc pca
+                    {
+                        path :'/scPCA',
+                        name:'scPCA',
+                        meta:{
+                            title:'Single Cell Visualization'
+                        },
+                        component: () =>
+                            import ('@/view/compnents/all_sc_pca.vue'),
+                    },
                     //all LRPlot single cell 
                     {
                         path:'/LRPlot',
@@ -94,9 +105,7 @@ export default [
                         component: () =>
                             import ('@/view/compnents/CellChat.vue'),
 
-                    }
-
-
+                    },
                 ]
             },
             {
@@ -114,53 +123,45 @@ export default [
 
 
         ]
-
-
-
-
     },
 
     {
-        path: '/Eryth',
-        name: 'Erythropoiesis',
-        redirect: '/Eryth_index',
+        path :'/Search',
+        name:'Search',
+        meta: { title: "Search" },
+        component: resolve => require(['@/components/main/main_sub'], resolve)
+        
+    },
+    
+    {
+        path: '/Dataset-Service',
+        name: '',
         component: Main,
         meta: {    
-            title: "Erythropoiesis",
-
             
+            title: "Dataset Service",
         },
-        children: [
-            {
-                path: '/Eryth_index',
-                name: 'Eryth_index',
-                meta: {
-                    hideInMenu: true,
-                    title: 'Erythropoiesis-index',
 
-                },
-                component: () =>
-                    import ('@/view/eryth'),
-            },
+        children: [
+
             {
-                path: '/Dataset_detail',
+                path: '/Dataset_detai',
                 name: 'Dataset_detail',
                 redirect: '/Dataset_service',
                 meta: {
                     hideInMenu: true,
-                    title: "Dataset-detail",
+                    title: "Dataset Detail",
 
                 },
                 // component: () =>
                 //     import ('@/view/eryth/Dataset-service.vue')
                 component:DatasetDetail,
-                
                 children:[
                     {
                         path: '/Dataset_service',
                         name: 'Dataset_service',
                         meta: {
-                            
+                            hideInMenu: true,
                             title: 'Dataset Service',
         
                         },
@@ -168,15 +169,15 @@ export default [
                             import ('@/view/compnents/DatasetService.vue'),
                     },
 
-                    {
-                        path:'/RNA_Expression',
-                        name:'RNA_Expression',
-                        meta:{
-                            title: 'RNA Expression',
-                        },
-                        component: () =>
-                            import ('@/view/compnents/RNA_Expression.vue'),
-                    },
+                    // {
+                    //     path:'/RNA_Expression',
+                    //     name:'RNA_Expression',
+                    //     meta:{
+                    //         title: 'RNA Expression',
+                    //     },
+                    //     component: () =>
+                    //         import ('@/view/compnents/RNA_Expression.vue'),
+                    // },
                     //
                     //name:"Principal components",
 						// link:'PCA'
@@ -217,22 +218,22 @@ export default [
                     // link:'EnrichGO'
                     {
                         path :'/PlotTSNE',
-                        name:'Single Cell t_SNE',
+                        name:'Single Cell PCA',
                         meta:{
-                            title:'Single Cell t_SNE'
+                            title:'Single Cell PCA'
                         },
                         component: () =>
-                            import ('@/view/compnents/PlotTSNE.vue'),
+                            import ('@/view/compnents/scPlotTSNE.vue'),
                     },
-                    {
-                        path :'/FeaturePlot',
-                        name:'Single Cell Feature Plot ',
-                        meta:{
-                            title:'Single Cell t_SNE'
-                        },
-                        component: () =>
-                            import ('@/view/compnents/FeaturePlot.vue'),
-                    },
+                    // {
+                    //     path :'/FeaturePlot',
+                    //     name:'Single Cell Feature Plot ',
+                    //     meta:{
+                    //         title:'Single Cell t_SNE'
+                    //     },
+                    //     component: () =>
+                    //         import ('@/view/compnents/FeaturePlot.vue'),
+                    // },
                     // ClusterMarker
                     {
                         path :'/ClusterMarker',
@@ -310,89 +311,109 @@ export default [
                 ]
 
             },
-            // {
-            //     path: '/clustgram',
-            //     name: 'ClustGram',
-            //     meta: { title: "ClustGram" },
-            //     component: () =>
-            //         import ('@/view/eryth/ClustGram.vue')
+         
+        ]
+    },
 
-            // },
+
+    {
+        path: '/Eryth',
+        name: 'differentiation',
+        redirect: '/Eryth_index',
+        component: Main,
+        meta: {    
+            title: "Differentiation",
+        },
+
+        children: [
+            {
+                path: '/Eryth_index',
+                name: 'Eryth_index',
+                meta: {
+                    hideInMenu: true,
+                    title: 'Erythropoiesis-index',
+
+                },
+                component: () =>
+                    import ('@/view/eryth'),
+            },
+            
         ]
     },
 
 
     
     {
-        path: '/Hema',
-        name: 'Hematonosis',
-        redirect: '/Hema_index',
+        path: '/disease',
+        name: 'disease',
+        redirect: '/Disease_index',
         component: Main,
         meta: {
-            title: "Erythropoiesis",
+            title: "Diseases",
+
+
+        },
+        children: [
+            {
+                path: '/Disease_index',
+                name: 'Disease_index',
+                meta: {
+                    hideInMenu: true,
+                    title: 'Disease-index',
+                },
+                component: () =>
+                    import ('@/view/disease'),
+            },
+        ]
+    },
+
+    {
+        path: '/gene',
+        name: 'genes',
+        redirect: '/gene_index',
+        component: Main,
+        meta: {
+            title: "Genes",
 
 
         },
         children: [{
-                path: '/Hema_index',
-                name: 'Hema_index',
+                path: '/gene_index',
+                name: 'gene_index',
                 meta: {
-
-                    title: 'Hematonosis-index',
+                    hideInMenu: true,
+                    title: 'gene-index',
 
                 },
                 component: () =>
-                    import ('@/view/hema'),
+                    import ('@/view/genes'),
             },
 
         ]
     },
 
     {
-        path: '/patients',
-        name: 'patients',
-        redirect: '/Patient_index',
+        path: '/molecules',
+        name: 'molecules',
+        redirect: '/molecules_index',
         component: Main,
         meta: {
-            title: "Patient",
+            title: "Compounds",
 
 
         },
-        children: [{
-                path: '/Patient_index',
-                name: 'Patient_index',
-                meta: {
 
-                    title: 'Patient-index',
+        children: [
+            {
+                path: '/molecules_index',
+                name: 'molecules_index',
+                meta: {
+                    hideInMenu: true,
+                    title: 'molecules-index',
 
                 },
                 component: () =>
-                    import ('@/view/patients'),
-            },
-
-        ]
-    },
-
-    {
-        path: '/drugs',
-        name: 'drugs',
-        redirect: '/drugs_index',
-        component: Main,
-        meta: {
-            title: "Drugs",
-
-
-        },
-        children: [{
-                path: '/drugs_index',
-                name: 'drugs_index',
-                meta: {
-
-                    title: 'drugs-index',
-
-                },
-                component: () =>
-                    import ('@/view/patients'),
+                    import ('@/view/molecules'),
             },
 
         ]
@@ -415,23 +436,23 @@ export default [
           hideInMenu: true
         },
         component: () => import('@/view/error-page/401.vue')
-      },
-      {
+    },
+    {
         path: '/500',
         name: 'error_500',
         meta: {
           hideInMenu: true
         },
         component: () => import('@/view/error-page/500.vue')
-      },
-      {
+    },
+    {
         path: '*',
         name: 'error_404',
         meta: {
           hideInMenu: true
         },
         component: () => import('@/view/error-page/404.vue')
-      }
+    }
 
 
 

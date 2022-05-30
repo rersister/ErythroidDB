@@ -5,28 +5,36 @@
     <div class="lay_out">      <!-- enrichGO analysis -->  
 
         <h1 class="my_h1">Single Cell Communication Pattern</h1> 
+		</br>
         <div>
             <Row>
-                <Col span="12">
-                    <i-select placeholder="Select cell source" clearable style="width:80%" @on-change='changedSourceGroup'>
-						<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
-					</i-select>
-                </Col>
-                <Col span="12">
-                    <!-- 数据查询分子名 -->
-                    <i-select :model.sync="contrastsGroup" clearable placeholder="Please select signal pattern"  @on-change="changedSigPattern">        
-                        <i-option v-for="(group,index) in sigPattern_list" :key='index' :value="group.name">{{ group.name }}</i-option>
-                    </i-select>
-                </Col>
+				<i-form :label-width="120">
+					<i-col span="12">
+						<Form-item label="Group: "> 	
+							<i-select placeholder="Select cell source" clearable style="width:80%" @on-change='changedSourceGroup'>
+								<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
+							</i-select>
+						</Form-item>
+					</i-col>
+					<i-col span="12">
+						<Form-item label="Signal pattern: "> 
+							<!-- 数据查询分子名 -->
+							<i-select :model.sync="contrastsGroup" clearable placeholder="Please select signal pattern"  @on-change="changedSigPattern">        
+								<i-option v-for="(group,index) in sigPattern_list" :key='index' :value="group.name">{{ group.name }}</i-option>
+							</i-select>
+						</Form-item>
+					</i-col>
+				</i-form>
             </Row>
              
-        
+           
 		
 			<Row :gutter="4"> 
 					<!-- <Spin size="large" fix v-if="spinShow2"></Spin>              -->
 				<!-- <vue-plotly :autoResize="ifResize" :data="enrichGO_data" :layout="enrichGO_layout" :options="enrichGO_options"/> -->
 				<!--<div id="Cell_Chart" style="width: 100%;height:600%; text-aglign:center"></div>-->
 				<Col span="8"><highcharts class='river_container'  :options='Cell_Chart_RiverCell'></highcharts></Col>
+				
 				<Col span="16">
 					<div><highcharts class='river_container' :options='Cell_Chart_RiverPath'></highcharts></div>
 					<!--<div id="cellChat_sig" style="width: 100%;height:600%; text-aglign:center">-->
@@ -35,24 +43,32 @@
 			</Row> 
 			
 		</div>
-			
-		<div>
+		<br>
+		<br>	
+		<div class="pathway_info">
+			<br>
 			<Row>
-				<div class="box_two">
-					<div class="left">
-						<i-select :model.sync="contrastsGroup" clearable placeholder="Please select signal name"  @on-change="changedSigName">        
-							<i-option v-for="(group,index) in sigName_list" :key='index' :value="group.name">{{ group.name }}</i-option>
-						</i-select>
-						<vue-plotly :watchShallow="ifResize" :autoResize="ifResize"  :data="CellChartHotMap_data" :layout="CellChartHotMap_layout" :options="CellChartHotMap_options"/>
-						
+				<i-form :label-width="120">	
+					<i-col span="10">
+						<Form-item label="Signal name: ">
+							<i-select :model.sync="contrastsGroup" clearable placeholder="Please select signal name"  @on-change="changedSigName">        
+								<i-option v-for="(group,index) in sigName_list" :key='index' :value="group.name">{{ group.name }}</i-option>
+							</i-select>
+						</Form-item>
+					</i-col>
+				</i-form>
+			</Row>
 
-					</div>
-					<div class="right">
-						<!-- <i-col span="12"> -->
-						<div id="eSigPathNet" style="width: 100%;height:400%; text-aglign:center;"></div>	
-						<!-- </i-col> -->
-					</div>
-				</div>
+			<Row>
+				<vue-plotly :watchShallow="ifResize" :autoResize="ifResize"  :data="CellChartHotMap_data" :layout="CellChartHotMap_layout" :options="CellChartHotMap_options"/>
+			</Row>
+			
+			<br>
+			<br>
+			<Row>
+				<div>
+					<div id="eSigPathNet" style="width: 100%;height:400%; text-aglign:center"></div>	
+				</div>	
 			</Row>
 			<br>
 			<br>
@@ -64,15 +80,7 @@
 		</div>
 
 		<br>
-		<router-link to="/Dataset_service">
-            <div style="text-align:right;font-size:calc((30/1920) * 100vw);">
-                <!-- <img width="20%" height="10%" src="@/assets/img/red_sys.jpg"> -->
-                <h3>Back To Dataset Service</h3>
-                <!-- <p>Sample: 
-                    <count-to :end="68" count-class="count-style"/>                                                              
-                </p> -->
-            </div> 
-		</router-link>
+	
 		
 
     </div>  
@@ -82,7 +90,7 @@
 
 <script>
 import {getTsneGroup,getSigName,getEachSig} from '@/api/erythdataservice'
-import {getCellChatSigData,getLRPlotData,geteSigPathNetData,getCellChartRcontri}  from '@/api/erythroidAtlas'
+import {getCellChatSigData,geteSigPathNetData,getCellChartRcontri}  from '@/api/erythroidAtlas'
 import VuePlotly from '@statnett/vue-plotly'
 export default {
 	name:"ScCommunication",
@@ -144,30 +152,36 @@ export default {
     methods:{
 		getDataSourceList(series){
 
-			getTsneGroup(this.series).then(res =>{
+			getTsneGroup(series).then(res =>{
 
 				let _this = this
                 let datas = res.data  
 				console.log(datas)
 				var data =   datas 
-				this.source = datas[1]       
-				datas.forEach(key => this.data_source_list.push({
-                    name:key
-				})) 
+	
+				this.source = data[0].source_g
+				datas.forEach(function (group) {
+					// if (group.if_anal === 'yes'){
+								console.log(group.source_g)
+
+								_this.data_source_list.push({
+									name:group.source_g
+								})
+								
+							// }
+				}) 
 				
-				// this.getTraCol(this.series,data[0])
-				// console.log("===")
-				// console.log(_this.colnames[0]) 
-				// this.getTraChart(this.series,data[0],'new_cluster_name')
 				var pName = 'incoming'
-				this.getCellChartView(data[1],pName);
-				this.getSigNameList(this.series,datas[1])
+				this.getCellChartView(data[0].source_g,pName);
+				this.getSigNameList(series,data[0].source_g)
            })
+
 		},
 
 		getSigNameList(series,source){
 
-			getSigName(this.series,this.source).then(res =>{
+			this.sigName_list = []
+			getSigName(series,source).then(res =>{
 
 				let _this = this
                 let datas = res.data  
@@ -177,7 +191,7 @@ export default {
 				datas.forEach(key => this.sigName_list.push({
                     name:key
 				})) 
-
+				// alert(this.sigName_list)
 				this.getCellChartHotMap(this.series,this.source,datas[0])
 				this.geteSigPathNet_chart(this.series,this.source,datas[0]);
 				this.getCellChartRcontri(this.series,this.source,datas[0]);
@@ -237,7 +251,7 @@ export default {
 					});
 					var option = {
 						title: {
-							text: sigName + ' signaling pathway network',
+							text: sigName + ' signaling pathway',
 							subtext: this.series +" "+ source,
 							top: 'top',
 							//left: 'left'
@@ -290,20 +304,10 @@ export default {
 			getEachSig(series,source,sigName).then(res=>{
 
 				let datas = res.data 
+				console.log("I am query")
 				console.log(datas)
 
-				// var data = [{
-				// 	z:[
-				// 		[3.08E-10,7.09E-08,4.60E-09,1.77E-09,5.25E-09,2.06E-08],
-				// 		[1.03E-09,7.62E-08,5.68E-09,2.89E-09,4.17E-09,1.35E-08],
-				// 		[0.004384834,1,0.064925258,0.025005543,0.074077788,0.291360538],
-				// 		[0.013612703,1,0.074587455,0.037984126,0.054744687,0.177036742],
-				// 	],
-				// 	x: ['Erythrocyte','Monocyte','HSPC','B','NK','T'],
-				// 	y: ['sender','receiver','mediator','influencer'],
-				// 	type: 'heatmap',
-				// 	hoverongaps: false
-				// }];
+				
 				var data = [{
 					z:datas.zData,
 					x: datas.xData,
@@ -314,6 +318,22 @@ export default {
 				
 				var layout = {
 					title: sigName +' signaling pathway network',
+
+					xaxis: {
+							title:'Cell type',		
+							tickmode: 'array',
+							automargin: true,
+							titlefont: { size:15},
+							
+
+							},
+					yaxis: {
+									// range: [0, 8],
+								title:'Signal role name',
+								tickmode: 'array',
+								automargin: true,
+								titlefont: { size:15},
+								},
 				}
 				this.CellChartHotMap_data = data
 				this.CellChartHotMap_layout = layout
@@ -324,8 +344,8 @@ export default {
 			
 			// var dev_type = 'BM(vitro)'
 			// var sig_pattern = 'outgoing'
-			var sig_pattern = this.series + "_" + pName 
-			getCellChatSigData(dev_type,sig_pattern).then(res=>{
+			var sig_pattern = pName 
+			getCellChatSigData(this.series,dev_type,sig_pattern).then(res=>{
 			 	console.log(res.data)
 		
 			 	var data = res.data
@@ -360,6 +380,8 @@ export default {
 		},
 
 		getCellChartRcontri(series,dev_type,sigName){
+
+			// alert(sigName)
 
 			getCellChartRcontri(series,dev_type,sigName).then(res=>{
 			 	console.log(res.data)
@@ -515,7 +537,7 @@ export default {
 			// console.log("----")
 		
 			myChartContainer2.style.height = window.innerHeight * 0.85 + 'px';
-			myChartContainer2.style.width = window.innerWidth * 0.45+ 'px';
+			myChartContainer2.style.width = window.innerWidth * 0.75+ 'px';
 		};
 
 		// 设置容器高和宽
@@ -576,7 +598,7 @@ export default {
 		text-align: center;
 		float: right;
 		height: 100%;
-		width:48%;
+		width:40%;
 		margin:20px auto;
 	}
 	.river_container{
@@ -589,6 +611,11 @@ export default {
 		height: 400px;
 		margin: 0 auto;
 		border: 1px solid silver;
+	}
+	.pathway_info{
+		border-style: solid;
+		border-width: 1px;
+
 	}
 
 </style>
