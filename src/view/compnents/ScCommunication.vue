@@ -63,13 +63,13 @@
 				<vue-plotly :watchShallow="ifResize" :autoResize="ifResize"  :data="CellChartHotMap_data" :layout="CellChartHotMap_layout" :options="CellChartHotMap_options"/>
 			</Row>
 			
-			<br>
+			<!-- <br>
 			<br>
 			<Row>
 				<div>
 					<div id="eSigPathNet" style="width: 100%;height:400%; text-aglign:center"></div>	
 				</div>	
-			</Row>
+			</Row> -->
 			<br>
 			<br>
 			<Row>
@@ -509,7 +509,7 @@ export default {
 			
 			this.getCellChartHotMap(this.series,this.source,sigName)
 			// this.getCellChartView(this.source,pName);
-			this.geteSigPathNet_chart(this.series,this.source,sigName);
+			// this.geteSigPathNet_chart(this.series,this.source,sigName);
 			this.getCellChartRcontri(this.series,this.source,sigName);
 			
 		},

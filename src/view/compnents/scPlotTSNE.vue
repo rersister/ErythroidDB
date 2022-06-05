@@ -59,7 +59,7 @@
 	</div>
 
 	<div>
-		<h1>Feature Plot</h1>
+		<h1 class="my_h1">Feature Plot</h1>
 		<br>
 		<Row :gutter="4">
         	<i-form :label-width="120">
@@ -183,6 +183,7 @@ export default {
 	methods:{
 		getFeatureByName(feature_name){
 			let _this = this
+			_this.feature_name = feature_name
 			this.getFeaturePlot(this.series,this.source2,feature_name)
 
 		},
@@ -190,22 +191,22 @@ export default {
 		getFeaturePlot(series,source2,feature_name){
 
 			let _this = this
-			_this.spinShow2 = true
 			console.log(this.series)
 			console.log(feature_name)
 			if( "" == source2 ){
 				this.$Message.info('please select data source', 10);
 				return 
             } 
+			if( "" == feature_name ){
+				this.$Message.info('please input gene symbol', 10);
+				return 
+            } 
 
+			_this.spinShow2 = true
             getFeaturePlot(series,source2,feature_name).then(res =>{
-
-				
                 let datas = res.data
-				console.log('getFeaturePlotData')  
-				console.log(datas)			
-				// var data =   datas           
-				
+				console.log('getFeaturePlotData')
+				console.log(datas)
 				var featurename = datas.featurename
 				this.searchVivoGene = featurename
 				var xData = datas.x_list
@@ -228,28 +229,22 @@ export default {
 					},
 					
 				};
-				// alert(this.vivo_data)
 				this.Feature_data.push(result);
-				
 				var title_x= 'UMAP 1'
 				var title_y = 'UMAP 2'
 				if(iftsne === true){
-					// alert('yes')
 					title_x = 'tSNE 1'
 					title_y = 'tSNE 2'
 				}
-				
 				let layout = {
 					title:  this.searchVivoGene +' expression level in  erythroid differentiation ('+ source2 +')',
 					xaxis: {
-						// range: [ 0.75, 5.25 ],
                         title:title_x,
                     },
                     yaxis: {
-						// range: [0, 8],
                        title:title_y
 					},
-					 legend: {
+					legend: {
 						y: 0.5,
 						yref: 'paper',
 						font: {
@@ -516,6 +511,22 @@ export default {
         text-align: center;
     }
 
+.ivu-input-group-append{
+  background: #870909!important;
+  color: #fff!important;
+  border-color:#870909!important;
+}
 
+.ivu-input-search {
+  background: #870909!important;
+  color: #fff!important;
+  border-color:#870909!important;
+
+}
+.ivu-input-search:hover{
+      background: #e6b9b8 !important;
+      color: #fff !important;
+      border-color: #ea898c !important;
+}
 </style>
 

@@ -2,7 +2,7 @@
 <div>
 	
 	<div>
-		<h1>Cluster's Markers HeatMap</h1>
+		<h1 class="my_h1">Cluster's Markers HeatMap</h1>
 		<br>
 		<Row :gutter="16">					
 				<i-form :label-width="120">
@@ -34,7 +34,7 @@
 	
 
 	<div>
-		<h1>Cluster's Enrichment Analysis</h1> 	
+		<h1 class="my_h1">Cluster's Enrichment Analysis</h1> 	
 		<br>		
 		<Row :gutter="16">		     
 			<i-form :label-width="120">

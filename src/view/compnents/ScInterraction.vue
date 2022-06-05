@@ -3,7 +3,7 @@
     <div class="lay_out">
             <Row>
 				<!--<i-col span="12"> -->
-					<h1 class="my_h1">Single Cell ii   Interraction Atlas</h1> 
+					<h1 class="my_h1">Single Cell  Interraction Atlas</h1> 
 					</br>
 					<i-form :label-width="120">
 						<i-col span="10">

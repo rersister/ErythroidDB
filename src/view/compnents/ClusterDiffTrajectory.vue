@@ -2,7 +2,7 @@
 <div>
 	
 	<div>
-		<h1>Pseudotime Trajectory</h1>
+		<h1 class="my_h1">Pseudotime Trajectory</h1>
 		<br>
 		<Row :gutter="16">
         	<i-form :label-width="120">
@@ -26,7 +26,7 @@
 	</div>
 	
 	<div>
-		<h1>Differentiation Trajectory</h1>
+		<h1 class="my_h1">Differentiation Trajectory</h1>
 		<br>
 		<Row>
         	<i-form :label-width="120">
@@ -129,6 +129,7 @@ export default {
                         name: gData[i],
                         // text: gData[i],                       
                         marker: { size: 6 }
+						
                     };
                     data.push(result)   
 				};
