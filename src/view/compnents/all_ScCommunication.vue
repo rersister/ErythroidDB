@@ -63,13 +63,13 @@
 				<vue-plotly :watchShallow="ifResize" :autoResize="ifResize"  :data="CellChartHotMap_data" :layout="CellChartHotMap_layout" :options="CellChartHotMap_options"/>
 			</Row>
 			
-			<br>
-			<br>
-			<Row>
+			<!-- <br>
+			<br> -->
+			<!-- <Row>
 				<div>
 					<div id="eSigPathNet" style="width: 100%;height:400%; text-aglign:center"></div>	
 				</div>	
-			</Row>
+			</Row> -->
 			<br>
 			<br>
 			<Row>
@@ -620,10 +620,6 @@ export default {
         margin: 2% 2%  2% 2%;
     }
 
-    .my_h1{
-        font-size: calc((40/1920) * 100vw);
-        text-align: center;
-    }
 	.box_two{
 		margin:auto; 
 		/* width:calc((500/1920) * 100vw);;*/

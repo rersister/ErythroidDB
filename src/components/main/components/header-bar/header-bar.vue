@@ -31,6 +31,8 @@ export default {
 
 <style lang="less">
 
-
+  .ivu-breadcrumb-item-link{
+    font-size: 16px;
+  }
 
 </style>

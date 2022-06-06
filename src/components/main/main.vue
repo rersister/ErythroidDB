@@ -473,7 +473,7 @@ body {
 .menu-horizontal {
   height: calc((60 / 1920) * 100vw);
   line-height: calc((60 / 1920) * 100vw);
-  font-size:calc((35/1920) * 100vw);
+  font-size:20px;
 }
 
 .menu {
@@ -493,7 +493,7 @@ body {
   // display: block;
   outline: 0;
   list-style: none;
-  font-size: calc((20 / 1920) * 100vw);
+  font-size: 20px;
   position: relative;
   z-index: 1;
   cursor: pointer;
@@ -578,4 +578,7 @@ body {
     background-color: #8c0c0b;
     margin-bottom: 0;
 }
+
+
+
 </style>

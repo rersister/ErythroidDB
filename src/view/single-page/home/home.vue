@@ -4,12 +4,12 @@
             <Row>
               
                 <Collapse v-model="value1">   
-                        <Panel name="1">
+                        <Panel name="1" class="Panel_c">
                                 About EryDB
                                  <!-- All datasets were divided into different developmental stages. Unlike other added-value databases, EryDB allows users to easily retrieve and explore data of specific studies, determine differentially expressed genes and their functions via principal component analysis, differential gene expression analysis, gene set enrichment analysis, and transcription factor analysis under certain conditions, such as in vitro or in vivo. Besides, EryDB integrated single-cell RNA sequencing data to visualize gene expression in single cell resolution by color-coded t-SNE or UMAP plots. Plots and tables in EryDB are customizable, downloadable and interactive.  -->
-                                <p class="intr_text" slot="content">
+                                <p class="p_text" slot="content">
                                     EryDB: A database of transcriptome profile of erythroid development. 
-                                    we developed the erythroid database EryDB, a web-accessible collection of expert curated, quality assured and pre-analyzed data collected from ~106 datasets comprising a total of ~3,899 bulk RNA-seq samples and 175,628 single cell erythroid cells from three different organisms.
+                                    We developed the erythroid database EryDB, a web-accessible collection of expert curated, quality assured and pre-analyzed data collected from ~106 datasets comprising a total of ~3,899 bulk RNA-seq samples and 175,628 single cell erythroid cells from three different organisms.
                                     
                                 </p>
 
@@ -53,13 +53,13 @@
                         
                     </Carousel>
                 </Col>
-                <Col span="12">
+                <Col span="12" class="keyWord">
                             <!-- 数据查询分子名 -->
                     </br>
                     </br>
                     </br>
                     </br>
-                    Input Gene/Tissue/Dataset Id/Organism Name:
+                    <span >Input Gene/Tissue/Dataset Id/Organism Name:</span>
                     <Input search enter-button="Search"    @on-search="searchDataSetByKeyName($event)" :placeholder="search_placeholder"/>                         
                 </Col> 
             </Row>
@@ -116,9 +116,9 @@
                         <Card>
                                 <div class="moudle">
                                     <img class="moudle_image" src="@/assets/img/subredcell.png">
-                                    <div class="moudle_title">
-                                      Differentiation
-                                    </div>
+                                    <!-- <div class="moudle_title"> -->
+                                    <span class="moudle_title">Differentiation</span>
+                                    <!-- </div> -->
                                 </div>
                                 
                                 <div class='count_div'>
@@ -341,9 +341,20 @@ export default {
         //  !important calc((90/1920) * 100vw) 
     }
 
-    .intr_text{
-        font-size:calc((30/1920) * 100vw);
+
+    .Panel_c{
+        font-size:16px;
     }
+    .p_text{
+        font-size:18px;
+        text-align: justify;
+
+
+    }
+    .keyWord{
+        font-size:18px;
+    }
+
     .moudle{
         float: left;
         text-align:center;
@@ -364,10 +375,10 @@ export default {
 
     }
     .moudle_title{
-        margin-top:1%;
+        // margin-top:1%;
         // margin-left:15%;
-        font-size: calc((25/1920) * 100vw);
-        text-align:center;
+        font-size: 20px;
+        // text-align:top;
         // padding-left:40%;
         font-weight:bold
 
@@ -380,10 +391,9 @@ export default {
         
     }
     
-    .h3_title{
-		font-size:calc((30/1920) * 100vw);
-		   
-	}
+ 
+
+    
     .count_div{
         text-align:center ;height:10%
     }
@@ -393,7 +403,7 @@ export default {
         background: #a85557!important;
         color: #fff!important;
         border-color: #a85557!important;
-   
+        font-size:18px;
     }
     .ivu-input-search:hover{
         background: #e6b9b8 !important;

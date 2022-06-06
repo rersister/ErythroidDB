@@ -732,7 +732,7 @@ export default {
               title: 'Tissue',//来源 dataset 里的source
               key: 'source',
               // "sortable": true,
-              width:'150px',
+              // width:'150px',
               
           },
 
@@ -750,7 +750,7 @@ export default {
           {
             title: 'Title',
             key: 'title',
-            width:'200px',
+            // width:'200px',
            
 
           },

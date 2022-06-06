@@ -6,7 +6,7 @@
 	<!-- 
 		Principal component analysis -->
     <br/>
-	<h1>Principal Component Analysis(PCA)</h1>
+	<h1 class="my_h1">Principal Component Analysis(PCA)</h1>
 	<Row>
 		<!-- 相似性分析 MDS 聚类图-->
 		<Spin size="large" fix v-if="spinShow3"></Spin>
@@ -121,10 +121,7 @@ export default {
 
 <style>
 
-    .h3_title{
-		font-size:calc((30/1920) * 100vw);
-		   
-	}
+
 
 
 </style>

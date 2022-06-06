@@ -64,5 +64,29 @@ html,body{
       border-color: #ea898c !important;
 }
 
+
+  .h1_title{
+    
+          font-size:25px;
+    }
+    
+  .h2_title{
+    font-size:20px;
+  }
+
+  .h3_title{
+    font-size:20px;
+  }
+
+  .h4_title{
+    font-size:16px;
+  }
+  
+
+  .my_h1{
+      font-size:25px;
+      text-align: center;
+  }
+
 </style>
 

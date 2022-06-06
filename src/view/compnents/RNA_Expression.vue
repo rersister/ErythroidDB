@@ -1,7 +1,7 @@
 <template>
     <div>
         <br/>
-        <h1 >Expression Profile</h1>
+        <h1 class="my_h1">Expression Profile</h1>
 		<div style="margin-top: 10px;">                             
             <div style="margin-top: 10px;">
                 <Row>
@@ -499,12 +499,9 @@ export default {
 
 
 <style>
- .h1_title{
-        font-size:calc((40/1920) * 100vw);
-}
-.h3_title{
-        font-size:calc((20/1920) * 100vw);
-}
+
+
+
 
 .button_style{
     font-size:calc((4/1920) * 100vw);

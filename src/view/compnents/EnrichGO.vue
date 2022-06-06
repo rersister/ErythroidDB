@@ -5,7 +5,7 @@
     <div>      <!-- enrichGO analysis -->  
 
         <br>
-        <h1 >Enrichment Analysis</h1> 
+        <h1 class="my_h1">Enrichment Analysis</h1> 
         <br>
         <Row>
         	<i-form :label-width="120">
@@ -324,10 +324,7 @@ export default {
 </script>
 
 <style>
-    .h3_title{
-		font-size:calc((30/1920) * 100vw);
-		   
-	}
+
 
 
     .form_style{

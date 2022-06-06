@@ -652,10 +652,7 @@ export default {
         margin: 2% 2%  2% 2%;
     }
 
-    .my_h1{
-        font-size: calc((40/1920) * 100vw);
-        text-align: center;
-    }
+ 
     .my_input{
         font-size: calc((40/1920) * 100vw);
         width:calc((100/1920) * 100vw); 

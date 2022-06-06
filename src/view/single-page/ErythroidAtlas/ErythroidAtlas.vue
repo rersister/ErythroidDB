@@ -3,7 +3,7 @@
     <div class="my_layout-content">
       <div id="chart_choice" v-show="isShow">
         <div class="row_choice">
-          <span>Organism:</span>
+          <span class="h4_title">Organism:</span>
           <RadioGroup class="myOption" @on-change="changeOrgaType($event)" >
             <Radio
               class="myOption"
@@ -17,7 +17,7 @@
         </div>
         <!-- Expression profiling -->
         <div class="row_choice">
-          <span>Experiment Type:</span>
+          <span class="h4_title">Experiment Type:</span>
           <RadioGroup class="myOption"  @on-change="changeExperimentType($event)">
             <Radio
               class="myOption"
@@ -49,7 +49,7 @@
         </div> -->
 
         <div class="row_choice">
-          <span>Sequence Type:</span>
+          <span class="h4_title">Sequence Type:</span>
           <RadioGroup class="myOption" @on-change="changeSequnceType($event)">
             <Radio
               class="myOption"
@@ -1275,7 +1275,7 @@ export default {
   padding: 0 15px;
   height: calc((100 / 1920) * 100vw);
   line-height: calc((100 / 1920) * 100vw);
-  font-size: calc((30 / 1920) * 100vw);
+  font-size: 18px;
   /* padding:calc((5/1920) * 100vw) calc((1/1920) * 100vw) calc((1/1920) * 100vw) calc((1/1920) * 100vw); */
   /* width:calc((250/1920) * 100vw);
 		text-align:center;
@@ -1344,7 +1344,7 @@ export default {
   font-size: calc((20 / 1920) * 100vw);
 }
 .myOption {
-  font-size: calc((20 / 1920) * 100vw);
+  font-size: 16px;
   /* height:calc((20/1920) * 100vw) */
 }
 
@@ -1384,13 +1384,10 @@ export default {
   border-radius: calc((4 / 1920) * 100vw);
 }
 
-.h3_title {
-  font-size: calc((35 / 1920) * 100vw);
 
-}
 
 .servetitle {
-  font-size: calc((20 / 1920) * 100vw);
+  font-size: 18px;
   cursor: pointer;
 }
 </style>

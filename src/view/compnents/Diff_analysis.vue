@@ -1,7 +1,7 @@
 <template>
 <div>
     <br/>
-	<h1 >Differential Analysis</h1>
+	<h1 class="my_h1">Differential Analysis</h1>
     <br>
 	<div>
 		<Row>
@@ -382,10 +382,6 @@ export default {
 </script>
 
 <style>
-    .h3_title{
-		font-size:calc((30/1920) * 100vw);
-		   
-	}
 
 
 

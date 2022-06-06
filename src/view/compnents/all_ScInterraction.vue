@@ -529,11 +529,6 @@ export default {
         margin: 2% 2%  2% 2%;
     }
 
-    .my_h1{
-        font-size: calc((40/1920) * 100vw);
-        text-align: center;
-    }
-	
 
 
 

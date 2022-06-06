@@ -296,10 +296,7 @@ export default {
 </script>
 
 <style>
-	.my_h1{
-        font-size: calc((40/1920) * 100vw);
-        text-align: center;
-    }
+
 
 	.my_select{
 		font-size: calc((20/1920) * 100vw);

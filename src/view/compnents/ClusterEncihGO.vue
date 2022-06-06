@@ -237,10 +237,6 @@ export default {
 </script>
 
 <style>
-    .h3_title{
-		font-size:calc((30/1920) * 100vw);
-		   
-	}
 
 
     .form_style{

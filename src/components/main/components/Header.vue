@@ -116,7 +116,7 @@ export default{
   .menu-horizontal {
     height: calc((60 / 1920) * 100vw);
     line-height: calc((60 / 1920) * 100vw);
-    font-size: calc((35/1920) * 100vw);
+    font-size:20px;
   }
 
   .layout-logo{
@@ -172,7 +172,7 @@ export default{
         /* border-color: #ea898c !important; */
   }
 
-  .moudle_image_header[data-v-2dd27700] {
+  .moudle_image_header{
     block: true;
     /* float: left; */
     margin-bottom: 2%;

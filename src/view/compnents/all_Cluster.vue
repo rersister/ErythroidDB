@@ -1,6 +1,5 @@
 <template>
-    <div class="lay_out">
-        
+    <div class="lay_out">   
           <h1 class="my_h1">Principal Components Analysis({{orga_name}})</h1>
           <!-- <h1 class="my_h1">Expression profiling ({{selectList[0]}})</h1> -->
         </Br>     
@@ -15,7 +14,6 @@
 					</Form-item>
 				</i-col>
 			</i-form>
-            
         </Row>
         <Row>
             <div>
@@ -333,10 +331,7 @@ export default {
 
 
 <style>
-    .my_h1{
-        font-size: calc((40/1920) * 100vw);
-        text-align: center;
-    }
+
 
     .lay_out{
         margin: 2% 2%  2% 2%;

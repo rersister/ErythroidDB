@@ -486,12 +486,9 @@ export default {
 }
 </script>
 <style>
-.h3_title {
-  font-size: calc((35 / 1920) * 100vw);
 
-}
 .servetitle {
-  font-size: calc((20 / 1920) * 100vw);
+  font-size: 18px;
   cursor: pointer;
 }
 .anal_div {
@@ -506,7 +503,7 @@ export default {
   padding: 0 15px;
   height: calc((100 / 1920) * 100vw);
   line-height: calc((100 / 1920) * 100vw);
-  font-size: calc((30 / 1920) * 100vw);
+  font-size: 18px;
   /* padding:calc((5/1920) * 100vw) calc((1/1920) * 100vw) calc((1/1920) * 100vw) calc((1/1920) * 100vw); */
   /* width:calc((250/1920) * 100vw);
 		text-align:center;

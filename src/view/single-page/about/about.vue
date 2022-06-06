@@ -289,10 +289,6 @@ export default {
 
 
 <style>
- .h1_title{
-        font-size:calc((40/1920) * 100vw);
-  }
-
 
 
 </style>

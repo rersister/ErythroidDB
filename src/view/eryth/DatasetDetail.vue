@@ -9,6 +9,7 @@
                 <p></p>
             </Col>
         </Row>
+        <br>
         <!-- dataset description -->
         <Row class='detail_style'>  
             <Col>
@@ -53,7 +54,7 @@
                     <!-- summary -->                
                     <Row>                       
                         <Col span="4"><strong>Summary:</strong></Col>                   
-                        <Col span="18">{{summary}}</Col>
+                        <Col span="18" class="text_p">{{summary}}</Col>
                     </Row>
 
                     <!-- <Row >                     
@@ -83,8 +84,9 @@
                         <Col span="4"><strong>Citation(s):</strong></Col>                   
                         <Col span="20" v-html='citations'></Col>
                     </Row> 
-                     <Row>                     
+                    <Row>                     
                         <Col span="6"><strong> Samples({{samples_count}}) And Group:</strong></Col>                   
+                        <br>
                         <Col span="24">
                             <Table :columns="sampleCols" :data="sampleData" size="small" ref="table"></Table>
                             <!-- <Spin size="large" fix v-if="spinShowSampleSource"></Spin> -->
@@ -109,58 +111,58 @@
                         <Collapse>
                             <Panel name="0">
                                 Data processing
-                                <p slot="content">{{data_processing}}</p>
+                                <p slot="content" class="text_p">{{data_processing}}</p>
 
                             </Panel>  
                             <Panel name="_0">
                                 Normalization method
-                                <p slot="content">{{normalization_method}}</p>
+                                <p slot="content" class="text_p">{{normalization_method}}</p>
 
                             </Panel> 
                             <Panel name="1">
                                 Overall design
-                                <p slot="content">{{overall_design}}</p>
+                                <p slot="content" class="text_p">{{overall_design}}</p>
 
                             </Panel>
 
                             <Panel name="2">
                                 Contributor(s)
-                                <p slot="content"  v-html='contributors'></p>
+                                <p slot="content" class="text_p" v-html='contributors'></p>
                                 
                             </Panel>
                             <Panel name="3">
                                 Submission date
-                                <p slot="content">{{submission_date}}</p>
+                                <p slot="content" class="text_p">{{submission_date}}</p>
                                 
                             </Panel>                                              
                             <Panel name="4">
                                 Contact name
-                                <p slot="content">{{contact_name}}</p>
+                                <p slot="content" class="text_p">{{contact_name}}</p>
                                 
                             </Panel>
                             <Panel name="5">
                                 E-mails
-                                <p slot="content">{{e_mails}}</p>
+                                <p slot="content" class="text_p">{{e_mails}}</p>
                                 
                             </Panel>
                             <Panel name="6">
                                 Organization name
-                                <p slot="content">{{organization_name}}</p>
+                                <p slot="content" class="text_p">{{organization_name}}</p>
                                 
                             </Panel>
                             <Panel name="7">
                                 Country
-                                <p slot="content">{{country}}</p>
+                                <p slot="content" class="text_p">{{country}}</p>
                                 
                             </Panel>
                             <Panel name="8">
                                 City
-                                <p slot="content">{{city}}</p>
+                                <p slot="content" class="text_p">{{city}}</p>
                                 
                             </Panel>
                             <Panel name="9" v-if='ifSub'>
                                 Subseries
-                                <p slot="content" v-html='subseries'></p>
+                                <p slot="content" class="text_p" v-html='subseries'></p>
                                 
                             </Panel>
                             <!-- <Panel name="10">
@@ -1246,12 +1248,14 @@ export default {
 
    }
 
-    .h1_title{
-        font-size:calc((40/1920) * 100vw);
-    }
+  
    
     .detail_style{
-        font-size:calc((25/1920) * 100vw);
+        font-size:18px;
+    }
+
+    .text_p{
+        text-align: justify;
     }
     
 

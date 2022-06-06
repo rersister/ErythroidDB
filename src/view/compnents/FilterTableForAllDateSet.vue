@@ -244,7 +244,8 @@ export default {
   color: #fff;
 }
 
-.h1_title {
+/* .h1_title {
   font-size: calc((40 / 1920) * 100vw);
-}
+} */
+
 </style>

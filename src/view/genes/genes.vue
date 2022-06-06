@@ -1513,12 +1513,6 @@ export default {
 <style>
 
 
- .h1_title{
-        font-size:40px;
-  }
-  .h2_title{
-    font-size:30px;
-  }
   .button_style{
     font-size:calc((40/1920) * 100vw);
   }

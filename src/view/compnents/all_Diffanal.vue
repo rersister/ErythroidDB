@@ -349,7 +349,7 @@ export default {
 			let _this = this  
 			// alert(this.table_name)
 			this.getdiff_chart(this.table_name,diffgroup)
-			alert(diffgroup)
+			// alert(diffgroup)
 			this.mockTableData(this.table_name,this.currentPage,this.pageSize,diffgroup)
             
 		},
@@ -425,10 +425,7 @@ export default {
 </script>
 
 <style>
-	.my_h1{
-        font-size: calc((40/1920) * 100vw);
-        text-align: center;
-    }
+
 
 	.my_select{
 		font-size: calc((20/1920) * 100vw);

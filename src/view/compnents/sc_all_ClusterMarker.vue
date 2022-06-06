@@ -2,7 +2,8 @@
 <div>
 	
 	<div>
-		<h1>Cluster's Markers HeatMap</h1>
+		<br>
+		<h1 class="my_h1">Cluster's Markers HeatMap</h1>
 		<br>
 		<Row :gutter="16">					
 				<i-form :label-width="120">
@@ -34,7 +35,8 @@
 	
 
 	<div>
-		<h1>Cluster's Enrichment Analysis</h1> 	
+		<br>
+		<h1 class="my_h1">Cluster's Enrichment Analysis</h1> 	
 		<br>		
 		<Row :gutter="16">		     
 			<i-form :label-width="120">
@@ -645,7 +647,7 @@ export default {
 
 	},
 	mounted(){
-		alert(this.table_name)
+		// alert(this.table_name)
 		this.getDataSourceList(this.table_name)
 
 
