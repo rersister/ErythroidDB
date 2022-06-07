@@ -607,8 +607,14 @@ export default {
                     gridcolor: 'rgb(255, 255, 255)',
                     gridwidth: 1,
                     zerolinecolor: 'rgb(255, 255, 255)',
-                    zerolinewidth: 2
+                    zerolinewidth: 2,
+                    title:"Normalized Value"
                 },
+                xaxis:{
+
+                    title:"Group"
+                },
+
                 margin: {
                     l: 40,
                     r: 30,

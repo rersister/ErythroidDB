@@ -148,7 +148,7 @@ export default{
     font-size: calc((20/1920) * 100vw);
     height: 40px;
     /* line-height: 90px; */
-    min-width: 580px;
+    min-width: 910px;
     /* position: absolute; */
     left: 0;
     bottom: 3px;

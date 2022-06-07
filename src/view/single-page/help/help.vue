@@ -1,455 +1,492 @@
 <template>
     <div>
-        <h1 class="h1_title">
-        Tutorial for Erythroid Database
-        </h1>
-        <br>
-        <p class="p_text">
-            Erythroid Database: A database of transcriptome profile of erythroid development. 
-                        We developed the erythroid database EryDB, a web-accessible collection of expert curated, 
-                        quality assured and pre-analyzed data collected from ~106 datasets comprising 
-                        a total of ~3,899 bulk RNA-seq samples and 175,628 single cell erythroid cells from 
-                        three species.All datasets were  divided into different developmental stages.
-                        Unlike other added-value databases, EryDB allows users to easily retrieve and explore data of specific studies, 
-                        determine differentially expressed genes and their functions via principal component analysis, 
-                        differential gene expression analysis, gene set enrichment analysis, and transcription factor analysis under certain conditions, 
-                        such as in vitro or in vivo. Besides, EryDB integrated single-cell RNA sequencing data to visualize gene expression in 
-                        single cell resolution by color-coded t-SNE or UMAP plots.
-                        Plots and tables in EryDB are customizable, downloadable and interactive.
-                                    
-        </p>
-        
-        <br>
-        <br>
-        <h1 class="h1_title">
-        Home page
-        </h1>
-        <br>
+ 
+    <!-- 导航区域 -->
+    <ul class="navs">
+      <li :class="{ active: active === 1 }" @click="scrollTo(0)">Tutorial</li>
+      <li :class="{ active: active === 1 }" @click="scrollTo(1)">Home page</li>
+      <li :class="{ active: active === 1 }" @click="scrollTo(1)">Differentiation</li>
+      <li :class="{ active: active === 1 }" @click="scrollTo(1)">Genes</li>
+      <li :class="{ active: active === 1 }" @click="scrollTo(1)">Compounds</li>
+      <li :class="{ active: active === 1 }" @click="scrollTo(1)">Disease</li>
+      <li :class="{ active: active === 2 }" @click="scrollTo(2)">Search page</li>
+      <li :class="{ active: active === 3 }" @click="scrollTo(3)">Erythroid Atlas</li>
+      <li :class="{ active: active === 4 }" @click="scrollTo(4)">About</li>
+      
+    </ul>
 
-        <p class="p_text">
-           In the quik search box, you can search for genes(GATA1),tissues(Bone Marrow),Dataset ID(GSE102182) and 
-           species(homo sapiens). It will redirect you to the corresponding page(Search page) and 
-           you will get the datasets related to your input. The clickable  'About EryDB' on the top is a representative display of the simpe introduction of
-           this database, and a click will easily hide it.            
-        </p>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_homePage.svg" alt="img"></p>
-        
-        <br>
-        <br>
-        <p class="p_text">
-           In the Home page you can also search datasets by four moudles.
-           1. By the cell type; 
-           2. By the reported gene; 
-           3. By the compound name; 
-           4. By the disease type.
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img  width="80%" src="@/assets/img/help_homePage2.svg" alt="img"></p>
-    
-        <br>
-        <br>
+    <!-- 内容区域 -->
+    <div class="content">
+        <!-- <div>content-0</div>
+        <div>content-1</div>
+        <div>content-2</div>
+        <div>content-3</div>
+        <div>content-4</div> -->
 
-        <h3>
-            <li>Differentiation</li>
-        </h3>
-        <br>
-        <p class="p_text">
-        This moudle allows you to get datasets according to the celltype.            
-        </p>
+        <div>
+            <h1 class="h1_title">
+            Tutorial for Erythroid Database
+            </h1>
+            <br>
+            <p class="p_text">
+                Erythroid Database: A database of transcriptome profile of erythroid development. 
+                            We developed the erythroid database EryDB, a web-accessible collection of expert curated, 
+                            quality assured and pre-analyzed data collected from ~106 datasets comprising 
+                            a total of ~3,899 bulk RNA-seq samples and 175,628 single cell erythroid cells from 
+                            three species.All datasets were  divided into different developmental stages.
+                            Unlike other added-value databases, EryDB allows users to easily retrieve and explore data of specific studies, 
+                            determine differentially expressed genes and their functions via principal component analysis, 
+                            differential gene expression analysis, gene set enrichment analysis, and transcription factor analysis under certain conditions, 
+                            such as in vitro or in vivo. Besides, EryDB integrated single-cell RNA sequencing data to visualize gene expression in 
+                            single cell resolution by color-coded t-SNE or UMAP plots.
+                            Plots and tables in EryDB are customizable, downloadable and interactive.
+                                        
+            </p>
+        </div>
 
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_homeDiffer.svg" alt="img"></p>
+        <div>
+            <h1 class="h1_title">
+            Home page
+            </h1>
+            <br>
 
-        <br>
-        <br>
-
-        <h3>
-            <li>Genes</li>
-        </h3>
-        <br>
-        <p class="p_text">
-        This moudle allows you to get datasets according to the reported genes.            
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_homeGenes.svg" alt="img"></p>
-
-        <br>
-        <br>
-        <h3>
-            <li>Compounds</li>
-        </h3>
-        <br>
-        <p class="p_text">
-        This moudle allows you to get datasets according to the compounds.            
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_homeCompounds.svg" alt="img"></p>
-
-
-        <br>
-        <br>
-        <h3>
-            <li>Disease</li>
-        </h3>
-        <br>
-        <p class="p_text">
-        This moudle allows you to get datasets according to the Diseases.            
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_homeDiseases.svg" alt="img"></p>
-
-
-        <br>
-        <br>
-        <h3>
-            Search
-        </h3>
-        <br>
-        <p class="p_text">
-           In this page, the advanced search is provided relative to the quick search. 
-           In specific, you can search for multiple aspects including cell type,reported gene,compound,speceis,tissue,growth mode,development,and.         
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_search.svg" alt="img"></p>
-       
-       <br>
-        <br>
-        <h1 class="h1_title">
-            Dataset
-        </h1>
-        <br>
-       
-        <p class="p_text">
-            When you get the interested dataset from searching,clicking the dataset(each row) 
-            will easily redirect you to the corresponding page(Dataset Service)
-        </p>
-        <br>
-        <br>
-        <h3>
-            <li>Dataset Details</li>
-        </h3>
-        <br>
-        <p class="p_text">
-            This panel represents basic details of this study including the 
-            dataset id, organism, tissue, growth mode, development type , experiment type, PMID and so on.
-        </p>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_datasetDetial.svg" alt="img"></p>
-
-        <br>
-        <br>
-        <h3>
-            <li>Dataset Sample</li>
-        </h3>
-        <br>
-        <p class="p_text">
-            This panel represents one or multiple samples contained in this dataset, 
-            including the information of species, tissue, and cell number.</p>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_datasetSample.svg" alt="img"></p>
-
-        <h3>
-            <li>Dataset Service</li>
-        </h3>
-        <br>
-        <p class="p_text">
-            This panel represents analysis provided by this dataset. 
-            In general,datasets of bulk sequence provide  the following analysis function
-            1)Expression Profile;
-            2)principal Compnents;
-            3)Differential Analysis;
-            4)Enrichment Analysis.
-        </p>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_datasetAnalBulk.svg" alt="img"></p>
-        <br>
-
-        <br>
-        <h4>
-            1)Expression Profile
-        </h4>
-        <br>
-        <p class="p_text">
-            The barbox shows the number of expression level of gene in different group. 
-            You can input your interested gene through the input box in the upper left corner and 
-            get more information from linked wed.
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_expPro.svg" alt="img"></p>
-        <br>
-        
-        <br>
-        <h4>
-            2)Principal Components
-        </h4>
-        <br>
-        <p class="p_text">
-            The dot plot shows the Principal Compoment Analysis of samples in dataset. 
-            You can choose your interested group through clicking the dot  in the right lable and 
-            get group information from dataset's sample information.
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_BulkPCA.svg" alt="img"></p>
-        <br>
-
-        <br>
-        <h4>
-            3)Differential Analysis
-        </h4>
-        <br>
-        <p class="p_text">
-            The dot plot shows the differential expressiona of samples in group. 
-            You can click the 'Contrasts Group' to select interested group.
-            Here 'LMO2-GATA1' means the LMO2 group versus the GATA1 group.
-            The signifcant differential genes is colored by orange and the unsignifcant differential gene is colored by bule.
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_BulkDiff.svg" alt="img"></p>
-        <br>
-        <p class="p_text">
-            In the following table , you can search your interested gene by input the gene symbol.
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_BulkDiffTable.svg" alt="img"></p>
-        
-        <br>
-        <br>
-        <h4>
-            4)Enrichment Analysis
-        </h4>
-        <br>
-        <p class="p_text">
-            The bar plot shows the enrichment of the signifcant differential gene of group. 
-            You can click the 'Contrasts Group' to select interested group and click the 'Tpye' to select the interested enrichment type.
-            The orange reprents the up group the the blue reprents the down group.
-        </p> 
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_BulkEnrich.svg" alt="img"></p>
-        <br>
-
-
-
-        <br>
-        <p class="p_text">
-            If this dataset was of single cell sequence,it provides  the following analysis function.
-            1)Dimensional Reduction & Feature;
-            2)Markers & Enrich;
-            3)Differential & Enrich;
-            4)Differentiation Trajectory;
-            5)Cell-Cell Interraction;
-            6)Cell-Cell Communication.
-        </p>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_datasetAnalSC.svg" alt="img"></p>
-        <br>
-
-
-        <br>
-        <h4>
-            1)Dimensional Reduction & Feature
-        </h4>
-        <br>
-        <p class="p_text">
-            The PCA,t-SNE or UMAP graph are presented for cell clusters in dataset. 
-           The original annotation of cell type in the study is used as reference for clustering results.
-            You can customize the visualization chart. Plot size decides the dot size in this chart.View method provides  2D or 3D.
-            Visaul Method includes PCA,t-SNE and UMAP. Group means the sample's group.The dot  usually can by colored by Phase(Cells' Phase), Celltype or  orig.ident(original ident).
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_scPCA.svg" alt="img"></p>
-        <br>
-        <p class="p_text">
-            In Feature Plot you can input your interested gene symbol,the you will get the gene expression level in all cells in a choosed group.
+            <p class="p_text">
+            In the quik search box, you can search for genes(GATA1),tissues(Bone Marrow),Dataset ID(GSE102182) and 
+            species(homo sapiens). It will redirect you to the corresponding page(Search page) and 
+            you will get the datasets related to your input. The clickable  'About EryDB' on the top is a representative display of the simpe introduction of
+            this database, and a click will easily hide it.            
+            </p>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_homePage.svg" alt="img"></p>
             
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_scFeature.svg" alt="img"></p>
-        <br>
-
-
-        <br>
-        <h4>
-            2)Markers & Enrich
-        </h4>
-        <br>
-        <p class="p_text">
-            This panel shows the top cell markers highly specifically expressed in 
-            this cell type (with significant high fold change between this cell 
-            type and others in relevant scRNA-seq datasets; FDR < 0.05).
-       </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_scMarker.svg" alt="img"></p>
-        <br>
-        <p class="p_text">
-            In Cluster's Enrichment Analysis, you can get the enrichment pathway of an interested cell cluster.
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_scMarkerEnrich.svg" alt="img"></p>
-        <br>
+            <br>
+            <br>
+            <p class="p_text">
+            In the Home page you can also search datasets by four moudles.
+            1. By the cell type; 
+            2. By the reported gene; 
+            3. By the compound name; 
+            4. By the disease type.
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img  width="80%" src="@/assets/img/help_homePage2.svg" alt="img"></p>
         
+            <br>
+            <br>
+        </div>
 
-        <br>
-        <h4>
-            3)Differential & Enrich;
-        </h4>
-        <br>
-       <p class="p_text">
-            The dot plot shows the differential expressiona of cells in different group. 
-            You can click the 'Contrasts Group' to select interested group.
-            Here 'Macrophages-iPSC-VS-Macrophages_PB' means the Macrophages of  iPSC group versus the Macrophages of PB group.
-            The signifcant differential genes is colored by orange and the unsignifcant differential gene is colored by bule.
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_scDiffer.svg" alt="img"></p>
-        <br>
-        <p class="p_text">
-            In the following table , you also can search your interested gene by input the gene symbol.
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_scDifferTable.svg" alt="img"></p>
-        <br>
-        <br>
-        <p class="p_text">
-            The bar plot shows the enrichment of the signifcant differential gene of cluster. 
-            You can click the 'Contrasts Group' to select interested group and click the 'Enrich Tpye' to select the interested enrichment type.
-            The orange reprents the up group the the blue reprents the down group.
+        <div>
+            <h3>
+                <li>Differentiation</li>
+            </h3>
+            <br>
+            <p class="p_text">
+            This moudle allows you to get datasets according to the celltype.            
+            </p>
 
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_scDifferEnrich.svg" alt="img"></p>
-        <br>
-        <!-- help_scDifferEnrich.svg -->
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_homeDiffer.svg" alt="img"></p>
 
-        <br>
-        <h4>
-            4)Differentiation Trajectory;
-        </h4>
-        <br>
-       <p class="p_text">
-            The dot plot shows the differentiation trajectory of cells in a choosed group. 
-            You can click the 'Group' to select interested group.Here the first dot plot is Pseudotime Trajectory。
-       </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_scPseu.svg" alt="img"></p>
-        <br>
-        <p class="p_text">
-            In the following table , you also can choose your interested group and color the dot by celltype,phanse or orig.ident.
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_scDifferenceTra.svg" alt="img"></p>
-        <br>
+            <br>
+            <br>
+        </div>
+
+        <div>
+            <h3>
+                <li>Genes</li>
+            </h3>
+            <br>
+            <p class="p_text">
+            This moudle allows you to get datasets according to the reported genes.            
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_homeGenes.svg" alt="img"></p>
+
+            <br>
+            <br>
+        </div>
+
+        <div>
+            <h3>
+                <li>Compounds</li>
+            </h3>
+            <br>
+            <p class="p_text">
+            This moudle allows you to get datasets according to the compounds.            
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_homeCompounds.svg" alt="img"></p>
+        </div>
+
+           
+        <div>
+            <h3>
+                <li>Disease</li>
+            </h3>
+            <br>
+            <p class="p_text">
+            This moudle allows you to get datasets according to the Diseases.            
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_homeDiseases.svg" alt="img"></p>
+        </div>
+
+        <div>
+            <h3>
+                Search page
+            </h3>
+            <br>
+            <p class="p_text">
+            In this page, the advanced search is provided relative to the quick search. 
+            In specific, you can search for multiple aspects including cell type,reported gene,compound,speceis,tissue,growth mode,development,and.         
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_search.svg" alt="img"></p>
         
-
         <br>
-        <h4>
-            5)Cell-Cell Interraction;
-        </h4>
-        <br>
-       <p class="p_text">
-            The plot shows the interaction fact of cell cluster in a choosed group. 
-            You can click the 'Group' to select interested group and click the 'Communication type'(all, growth gactor,other,cytokie,checkpoint)
-            to define the interrection type.
-       </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_scInter.svg" alt="img"></p>
-        <br>
+            <br>
+            <h1 class="h1_title">
+                Dataset
+            </h1>
+            <br>
         
+            <p class="p_text">
+                When you get the interested dataset from searching,clicking the dataset(each row) 
+                will easily redirect you to the corresponding page(Dataset Service)
+            </p>
+            <br>
+            <br>
+            <h3>
+                <li>Dataset Details</li>
+            </h3>
+            <br>
+            <p class="p_text">
+                This panel represents basic details of this study including the 
+                dataset id, organism, tissue, growth mode, development type , experiment type, PMID and so on.
+            </p>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_datasetDetial.svg" alt="img"></p>
 
-        <br>
-        <h4>
-            6)Cell-Cell Communication.
-        </h4>
-        <br>
-       <p class="p_text">
-            The plot shows the communication pattern of cell cluster in a choosed group. 
-            You can click the 'Group' to select interested group and signal pattern(incoming and outgoing).
+            <br>
+            <br>
+            <h3>
+                <li>Dataset Sample</li>
+            </h3>
+            <br>
+            <p class="p_text">
+                This panel represents one or multiple samples contained in this dataset, 
+                including the information of species, tissue, and cell number.</p>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_datasetSample.svg" alt="img"></p>
+
+            <h3>
+                <li>Dataset Service</li>
+            </h3>
+            <br>
+            <p class="p_text">
+                This panel represents analysis provided by this dataset. 
+                In general,datasets of bulk sequence provide  the following analysis function
+                1)Expression Profile;
+                2)principal Compnents;
+                3)Differential Analysis;
+                4)Enrichment Analysis.
+            </p>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_datasetAnalBulk.svg" alt="img"></p>
+            <br>
+
+            <br>
+            <h4>
+                1)Expression Profile
+            </h4>
+            <br>
+            <p class="p_text">
+                The barbox shows the number of expression level of gene in different group. 
+                You can input your interested gene through the input box in the upper left corner and 
+                get more information from linked wed.
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_expPro.svg" alt="img"></p>
+            <br>
             
-       </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_scCommu.svg" alt="img"></p>
-        <br>
-        <br>
-        <p class="p_text">
-            In the following plot , you  can choose your interested signal name and check the signal name and the contribution of each L-R pair..
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_scCommuNetP.svg" alt="img"></p>
-        <br>
+            <br>
+            <h4>
+                2)Principal Components
+            </h4>
+            <br>
+            <p class="p_text">
+                The dot plot shows the Principal Compoment Analysis of samples in dataset. 
+                You can choose your interested group through clicking the dot  in the right lable and 
+                get group information from dataset's sample information.
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_BulkPCA.svg" alt="img"></p>
+            <br>
+
+            <br>
+            <h4>
+                3)Differential Analysis
+            </h4>
+            <br>
+            <p class="p_text">
+                The dot plot shows the differential expressiona of samples in group. 
+                You can click the 'Contrasts Group' to select interested group.
+                Here 'LMO2-GATA1' means the LMO2 group versus the GATA1 group.
+                The signifcant differential genes is colored by orange and the unsignifcant differential gene is colored by bule.
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_BulkDiff.svg" alt="img"></p>
+            <br>
+            <p class="p_text">
+                In the following table , you can search your interested gene by input the gene symbol.
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_BulkDiffTable.svg" alt="img"></p>
+            
+            <br>
+            <br>
+            <h4>
+                4)Enrichment Analysis
+            </h4>
+            <br>
+            <p class="p_text">
+                The bar plot shows the enrichment of the signifcant differential gene of group. 
+                You can click the 'Contrasts Group' to select interested group and click the 'Tpye' to select the interested enrichment type.
+                The orange reprents the up group the the blue reprents the down group.
+            </p> 
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_BulkEnrich.svg" alt="img"></p>
+            <br>
 
 
-        <br>
-        <br>
-        <h3>
-            Erythroid Atlas
-        </h3>
-        <br>
-        <p class="p_text">
-           In this page, we provide intergrated datasets for users to query their interested analysis. 
-           In specific, you can the choose organism and sequence type to see the intergrated datasets,which provide the same analysis content as a single dataset.
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_eryAtlas.svg" alt="img"></p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_eryAtlas1.svg" alt="img"></p>
-        <br>
-        <br>
-        <p class="p_text">
-           In the bottom of this page, we provide the information of  samples and groups about the intergrated datasets. 
-        </p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_eryAtlaSample.svg" alt="img"></p>
+
+            <br>
+            <p class="p_text">
+                If this dataset was of single cell sequence,it provides  the following analysis function.
+                1)Dimensional Reduction & Feature;
+                2)Markers & Enrich;
+                3)Differential & Enrich;
+                4)Differentiation Trajectory;
+                5)Cell-Cell Interraction;
+                6)Cell-Cell Communication.
+            </p>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_datasetAnalSC.svg" alt="img"></p>
+            <br>
 
 
-        <br>
-        <br>
-        <h3>
-            About 
-        </h3>
-        <br>
-        <p class="p_text">
-           In this page, we provide the statistic informaton about all the datasets.
-           You can the datasets' number,  samples' number ,and cells' number showed by organism, growth mode and tissue</p>
-        <br>
-        <br>
-        <p class="img_c"><img width="80%" src="@/assets/img/help_about.svg" alt="img"></p>
-        <br>
-        <br>
-        
-        <h3>
-            About  us
-        </h3>
-        <br>
-        <p class="p_text">
-          If you have any questions or comments, 
-          please feel free to contact us via email (zhenggm@big.ac.cn, fangxd@big.ac.cn).
+            <br>
+            <h4>
+                1)Dimensional Reduction & Feature
+            </h4>
+            <br>
+            <p class="p_text">
+                The PCA,t-SNE or UMAP graph are presented for cell clusters in dataset. 
+            The original annotation of cell type in the study is used as reference for clustering results.
+                You can customize the visualization chart. Plot size decides the dot size in this chart.View method provides  2D or 3D.
+                Visaul Method includes PCA,t-SNE and UMAP. Group means the sample's group.The dot  usually can by colored by Phase(Cells' Phase), Celltype or  orig.ident(original ident).
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_scPCA.svg" alt="img"></p>
+            <br>
+            <p class="p_text">
+                In Feature Plot you can input your interested gene symbol,the you will get the gene expression level in all cells in a choosed group.
+                
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_scFeature.svg" alt="img"></p>
+            <br>
+
+
+            <br>
+            <h4>
+                2)Markers & Enrich
+            </h4>
+            <br>
+            <p class="p_text">
+                This panel shows the top cell markers highly specifically expressed in 
+                this cell type (with significant high fold change between this cell 
+                type and others in relevant scRNA-seq datasets; FDR < 0.05).
         </p>
-        <br>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_scMarker.svg" alt="img"></p>
+            <br>
+            <p class="p_text">
+                In Cluster's Enrichment Analysis, you can get the enrichment pathway of an interested cell cluster.
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_scMarkerEnrich.svg" alt="img"></p>
+            <br>
+            
+
+            <br>
+            <h4>
+                3)Differential & Enrich;
+            </h4>
+            <br>
+        <p class="p_text">
+                The dot plot shows the differential expressiona of cells in different group. 
+                You can click the 'Contrasts Group' to select interested group.
+                Here 'Macrophages-iPSC-VS-Macrophages_PB' means the Macrophages of  iPSC group versus the Macrophages of PB group.
+                The signifcant differential genes is colored by orange and the unsignifcant differential gene is colored by bule.
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_scDiffer.svg" alt="img"></p>
+            <br>
+            <p class="p_text">
+                In the following table , you also can search your interested gene by input the gene symbol.
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_scDifferTable.svg" alt="img"></p>
+            <br>
+            <br>
+            <p class="p_text">
+                The bar plot shows the enrichment of the signifcant differential gene of cluster. 
+                You can click the 'Contrasts Group' to select interested group and click the 'Enrich Tpye' to select the interested enrichment type.
+                The orange reprents the up group the the blue reprents the down group.
+
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_scDifferEnrich.svg" alt="img"></p>
+            <br>
+            <!-- help_scDifferEnrich.svg -->
+
+            <br>
+            <h4>
+                4)Differentiation Trajectory;
+            </h4>
+            <br>
+        <p class="p_text">
+                The dot plot shows the differentiation trajectory of cells in a choosed group. 
+                You can click the 'Group' to select interested group.Here the first dot plot is Pseudotime Trajectory。
+        </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_scPseu.svg" alt="img"></p>
+            <br>
+            <p class="p_text">
+                In the following table , you also can choose your interested group and color the dot by celltype,phanse or orig.ident.
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_scDifferenceTra.svg" alt="img"></p>
+            <br>
+            
+
+            <br>
+            <h4>
+                5)Cell-Cell Interraction;
+            </h4>
+            <br>
+        <p class="p_text">
+                The plot shows the interaction fact of cell cluster in a choosed group. 
+                You can click the 'Group' to select interested group and click the 'Communication type'(all, growth gactor,other,cytokie,checkpoint)
+                to define the interrection type.
+        </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_scInter.svg" alt="img"></p>
+            <br>
+            
+
+            <br>
+            <h4>
+                6)Cell-Cell Communication.
+            </h4>
+            <br>
+        <p class="p_text">
+                The plot shows the communication pattern of cell cluster in a choosed group. 
+                You can click the 'Group' to select interested group and signal pattern(incoming and outgoing).
+                
+        </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_scCommu.svg" alt="img"></p>
+            <br>
+            <br>
+            <p class="p_text">
+                In the following plot , you  can choose your interested signal name and check the signal name and the contribution of each L-R pair..
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_scCommuNetP.svg" alt="img"></p>
+            <br>
+
+        </div>
+
+
+        <div>
+            <br>
+            <br>
+            <h3>
+                Erythroid Atlas
+            </h3>
+            <br>
+            <p class="p_text">
+            In this page, we provide intergrated datasets for users to query their interested analysis. 
+            In specific, you can the choose organism and sequence type to see the intergrated datasets,which provide the same analysis content as a single dataset.
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_eryAtlas.svg" alt="img"></p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_eryAtlas1.svg" alt="img"></p>
+            <br>
+            <br>
+            <p class="p_text">
+            In the bottom of this page, we provide the information of  samples and groups about the intergrated datasets. 
+            </p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_eryAtlaSample.svg" alt="img"></p>
+
+        </div>
+
+        <div>
+            <br>
+            <br>
+            <h3>
+                About 
+            </h3>
+            <br>
+            <p class="p_text">
+            In this page, we provide the statistic informaton about all the datasets.
+            You can the datasets' number,  samples' number ,and cells' number showed by organism, growth mode and tissue</p>
+            <br>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_about.svg" alt="img"></p>
+            <br>
+            <br>
+            
+            <h3>
+                About  us
+            </h3>
+            <br>
+            <p class="p_text">
+            If you have any questions or comments, 
+            please feel free to contact us via email (zhenggm@big.ac.cn, fangxd@big.ac.cn).
+            </p>
+            <br>
+        </div>
     </div>
+</div>
 
 
 
@@ -467,27 +504,157 @@ export default {
     },
     data () {
         return {
-            // help: help
+            active: 0, // 当前激活的导航索引
+
+        };
+    },
+
+    mounted() {
+        // 监听滚动事件
+        window.addEventListener("scroll", this.onScroll, false);
+    },
+
+    destroy() {
+        // 必须移除监听器，不然当该vue组件被销毁了，监听器还在就会出错
+        window.removeEventListener("scroll", this.onScroll);
+    },
+
+     methods: {
+    // 滚动监听器
+    onScroll() {
+      // 获取所有锚点元素
+      const navContents = document.querySelectorAll(".content div");
+      // 所有锚点元素的 offsetTop
+      const offsetTopArr = [];
+      navContents.forEach((item) => {
+        offsetTopArr.push(item.offsetTop);
+      });
+      // 获取当前文档流的 scrollTop
+      const scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      // 定义当前点亮的导航下标
+      let navIndex = 0;
+      for (let n = 0; n < offsetTopArr.length; n++) {
+        // 如果 scrollTop 大于等于第n个元素的 offsetTop 则说明 n-1 的内容已经完全不可见
+        // 那么此时导航索引就应该是n了
+        if (scrollTop >= offsetTopArr[n]) {
+          navIndex = n;
         }
-    }
-
-
-    
+ 
+        if (
+          scrollTop + document.documentElement.clientHeight ===
+          document.documentElement.scrollHeight
+        ) {
+          navIndex = offsetTopArr.length - 1;
+        }
+      }
+      this.active = navIndex;
+    },
+    // 跳转到指定索引的元素
+    scrollTo(index) {
+      // 获取目标的 offsetTop
+      // css选择器是从 1 开始计数，我们是从 0 开始，所以要 +1
+      const targetOffsetTop = document.querySelector(
+        `.content div:nth-child(${index + 1})`
+      ).offsetTop;
+      // 获取当前 offsetTop
+      let scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      // 定义一次跳 50 个像素，数字越大跳得越快，但是会有掉帧得感觉，步子迈大了会扯到蛋
+      const STEP = 30;
+      // 判断是往下滑还是往上滑
+      if (scrollTop > targetOffsetTop) {
+        // 往上滑
+        smoothUp();
+      } else {
+        // 往下滑
+        smoothDown();
+      }
+      // 定义往下滑函数
+      function smoothDown() {
+        // 如果当前 scrollTop 小于 targetOffsetTop 说明视口还没滑到指定位置
+        if (scrollTop < targetOffsetTop) {
+          // 如果和目标相差距离大于等于 STEP 就跳 STEP
+          // 否则直接跳到目标点，目标是为了防止跳过了。
+          if (targetOffsetTop - scrollTop >= STEP) {
+            scrollTop += STEP;
+          } else {
+            scrollTop = targetOffsetTop;
+          }
+          document.body.scrollTop = scrollTop;
+          document.documentElement.scrollTop = scrollTop;
+          // 关于 requestAnimationFrame 可以自己查一下，在这种场景下，相比 setInterval 性价比更高
+          requestAnimationFrame(smoothDown);
+        }
+      }
+      // 定义往上滑函数
+      function smoothUp() {
+        if (scrollTop > targetOffsetTop) {
+          if (scrollTop - targetOffsetTop >= STEP) {
+            scrollTop -= STEP;
+          } else {
+            scrollTop = targetOffsetTop;
+          }
+          document.body.scrollTop = scrollTop;
+          document.documentElement.scrollTop = scrollTop;
+          requestAnimationFrame(smoothUp);
+        }
+      }
+    },
+  }, 
 }
 </script>
 
 <style>
 
-    .p_text{
-        font-size:18px;
-        text-align: justify;
+.p_text{
+    font-size:18px;
+    text-align: justify;
 
 
-    }
-    .img_c{
-        text-align: center;
-    }
+}
 
+.img_c{
+    text-align: center;
+}
+
+    /* 内容区的样式 */
+.content {
+  background-color: white;
+  /* width: 500px; */
+}
+
+.content div {
+  /* width: 100%; */
+  /* height: 600px; */
+  font-size: 18px;
+  padding: 20px;
+  /* background-color: #7ec384; */
+}
+.content div:nth-child(2n) {
+  /* background-color: #847ec3; */
+}
+
+/* 导航栏的样式 */
+.navs {
+    position: fixed;
+    top: 180px;
+    left: 10px;
+    background-color: #efefef;
+    cursor: pointer;
+
+}
+
+.navs li {
+  padding: 0 20px;
+  line-height: 1.6;
+  font-size: 16px;
+}
+/* 当导航被点亮后改变颜色 */
+.navs .active {
+  color: #847ec3;
+  background-color: #e2e2e2;
+}
 
 </style>
 
