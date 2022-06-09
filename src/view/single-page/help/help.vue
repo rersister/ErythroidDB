@@ -11,11 +11,21 @@
             <collapse>
                 <div class="container" v-show="isActive">
                     <li><a href="#Home" class="a1">Home</a></li>
-                    <li><a href="#Differentiation">Differentiation</a></li>
-                    <li><a href="#Genes">Genes</a></li>
-                    <li><a href="#Compounds">Compounds</a></li>
-                    <li><a href="#Disease">Disease</a></li>
+                    <li><a href="#Differentiation">&nbsp;&nbsp;Differentiation</a></li>
+                    <li><a href="#Genes">&nbsp;&nbsp;Genes</a></li>
+                    <li><a href="#Compounds">&nbsp;&nbsp;Compounds</a></li>
+                    <li><a href="#Disease">&nbsp;&nbsp;Disease</a></li>
                     <li><a href="#Search">Search</a></li>
+                    <li><a href="#Dataset">Dataset</a></li>
+                    <li><a href="#DatasetService">Dataset Service</a></li>
+                    <li><a href="#ExpressionProfile">&nbsp;&nbsp;Expression Profile</a></li>
+                    <li><a href="#PrincipalComponents">&nbsp;&nbsp;Principal Components</a></li>
+                    <li><a href="#DifferentialAnalysis">&nbsp;&nbsp;Differential Analysis</a></li>
+                    <!-- Enrichment Analysis -->
+                    <li><a href="#EnrichmentAnalysis">&nbsp;&nbsp;Enrichment Analysis</a></li>
+                    <!-- Dimensional Reduction & Feature -->
+                    <li><a href="#DRF">&nbsp;&nbsp;Dimensional Reduction & Feature</a></li>
+                    
                     <li><a href="#Erythroid">Erythroid Atlas</a></li>
                     <li><a href="#About">About</a></li>
                 </div>
@@ -154,8 +164,8 @@
             <p class="img_c"><img width="80%" src="@/assets/img/help_search.svg" alt="img"></p>
         
         <br>
-            <br>
-            <h1 class="h1_title">
+        <br>
+            <h1 class="h1_title" id="Dataset">
                 Dataset
             </h1>
             <br>
@@ -187,7 +197,7 @@
                 including the information of species, tissue, and cell number.</p>
             <p class="img_c"><img width="80%" src="@/assets/img/help_datasetSample.svg" alt="img"></p>
 
-            <h3>
+            <h3 id="DatasetService">
                 <li>Dataset Service</li>
             </h3>
             <br>
@@ -204,7 +214,7 @@
             <br>
 
             <br>
-            <h4>
+            <h4 id = 'ExpressionProfile'>
                 1)Expression Profile
             </h4>
             <br>
@@ -219,7 +229,7 @@
             <br>
             
             <br>
-            <h4>
+            <h4 id = 'Principal Components'>
                 2)Principal Components
             </h4>
             <br>
@@ -234,7 +244,7 @@
             <br>
 
             <br>
-            <h4>
+            <h4 id = 'DifferentialAnalysis'>
                 3)Differential Analysis
             </h4>
             <br>
@@ -257,7 +267,7 @@
             
             <br>
             <br>
-            <h4>
+            <h4 id = 'EnrichmentAnalysis'>
                 4)Enrichment Analysis
             </h4>
             <br>
@@ -289,7 +299,7 @@
 
 
             <br>
-            <h4>
+            <h4 id = 'DRF'>
                 1)Dimensional Reduction & Feature
             </h4>
             <br>
@@ -579,7 +589,7 @@ export default {
 
 
 .container li {
-  padding: 0 20px;
+  padding: 0 0px;
   line-height: 1.6;
   font-size: 16px;
 }
@@ -596,7 +606,7 @@ export default {
   }
 
 .container {
-    width: 175px;
+    width: 280px;
     position: fixed;
     /* left: 10px; */
     background-color: #f5f7f9;

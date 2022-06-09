@@ -117,12 +117,14 @@
                                 <div class="moudle">
                                     <img class="moudle_image" src="@/assets/img/subredcell.png">
                                     <!-- <div class="moudle_title"> -->
-                                    <span class="moudle_title">Differentiation</span>
+                                    <div class="moudle_title">
+                                        Differentiation
+                                    </div>
                                     <!-- </div> -->
                                 </div>
                                 
                                 <div class='count_div'>
-                                    <p  class='h3_title'>Main Cell Type
+                                    <p  class='h3_title'>Cell Type
                                         <count-to :end="13" count-class="count-style"/>                                                              
                                     </p>
                                 </div>
@@ -355,14 +357,13 @@ export default {
         font-size:18px;
     }
 
-    .moudle{
+   .moudle {
         float: left;
-        text-align:center;
-        margin-left: 30%;
-        height:calc((80/1920) * 100vw);
-        line-height: calc((80/1920) * 100vw);
-        width:calc((80/1920) * 100vw);
-
+        text-align: center;
+        margin-left: 20%;
+        height: 90px;
+        line-height: 40px;
+        min-width: 90px;
     }
 
     .moudle_image{
