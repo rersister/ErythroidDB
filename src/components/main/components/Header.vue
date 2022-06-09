@@ -162,8 +162,9 @@ export default{
       cursor: pointer;
       -webkit-transition: all 0.2s ease-in-out;
       transition: all 0.2s ease-in-out;
-      color: #870909
+      color: #870909;
       /* height: 60px; */
+      bottom: 5px
   }
 
   .menu-dark:hover{

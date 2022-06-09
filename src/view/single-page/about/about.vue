@@ -291,5 +291,9 @@ export default {
 <style>
 
 
+.ivu-card{
+    font-size: 18px;
+}
+
 </style>
 
