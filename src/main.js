@@ -20,8 +20,8 @@ import drilldown from 'highcharts/modules/drilldown'
 import mapInit from 'highcharts/modules/map'
 import exportingInit from 'highcharts/modules/exporting'
 import loadHighchartsMore from 'highcharts/highcharts-more';
-
-
+import enLocale from 'iview/src/locale/lang/en-US';
+import locale from 'iview/src/locale/lang/en-US';
 
 
 Vue.prototype.$echarts = echarts;
@@ -33,16 +33,19 @@ Vue.use(HighchartsVue)
 
 
 
-Vue.use(iView, {
-    i18n: (key, value) => i18n.t(key, value),
-    transfer: true,
-    size: 'large',
-    select: {
-        arrow: 'md-arrow-dropdown',
-        arrowSize: 20
-    }
-});
+// Vue.use(iView, {
+//     i18n: (key, value) => i18n.t(key, value),
+//     transfer: true,
+//     size: 'large',
+//     select: {
+//         arrow: 'md-arrow-dropdown',
+//         arrowSize: 20
+//     }
+// });
 
+Vue.use(iView, { locale });
+Vue.config.lang = 'en-US';
+Vue.locale('en-US', enLocale);
 
 /**
  * @description 生产环境关掉提示

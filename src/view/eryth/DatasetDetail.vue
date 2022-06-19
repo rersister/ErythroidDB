@@ -14,47 +14,47 @@
         <Row class='detail_style'>  
             <Col>
                     <Row>
-                        <Col span="4"><strong>Dataset:</strong></Col>
-                        <Col span="20"><a :href="getSeriHref()">{{dataset}}</a></Col>                         
+                        <Col span="5"><strong>Dataset:</strong></Col>
+                        <Col span="19"><a :href="getSeriHref()" target="_blank">{{dataset}}</a></Col>                         
                     </Row>
                     <Row>
-                        <Col span="4"><strong>Organism:</strong></Col>
-                        <Col span="20">{{organism}}</Col> 
+                        <Col span="5"><strong>Organism:</strong></Col>
+                        <Col span="19">{{organism}}</Col> 
                     </Row>
                     <Row>
-                        <Col span="4"><strong>Tissue:</strong></Col>
-                        <Col span="20">{{tissue}}</Col> 
+                        <Col span="5"><strong>Tissue:</strong></Col>
+                        <Col span="19">{{tissue}}</Col> 
                     </Row>
                     <Row>
-                        <Col span="4"><strong>Growth Type:</strong></Col>
-                        <Col span="20">{{growth_type}}</Col> 
+                        <Col span="5"><strong>Growth Type:</strong></Col>
+                        <Col span="19">{{growth_type}}</Col> 
                     </Row>
                      <Row>
-                        <Col span="4"><strong>Development Type:</strong></Col>
-                        <Col span="20">{{development_type}}</Col> 
+                        <Col span="5"><strong>Development Type:</strong></Col>
+                        <Col span="19">{{development_type}}</Col> 
                     </Row>
 
                     <Row>
                         <!-- experiment_type -->
-                        <Col span="4"><strong>Experiment Type:</strong></Col>                   
-                        <Col span="20">{{experiment_type}}</Col>
+                        <Col span="5"><strong>Experiment Type:</strong></Col>                   
+                        <Col span="19">{{experiment_type}}</Col>
                     </Row> 
                     <Row>
                         <!-- experiment_type -->
-                        <Col span="4"><strong>Sequencing Type:</strong></Col>                   
-                        <Col span="20">{{sequencing_type}}</Col>
+                        <Col span="5"><strong>Sequencing Type:</strong></Col>                   
+                        <Col span="19">{{sequencing_type}}</Col>
                     </Row> 
                     <!-- status -->
                     <Row>
-                        <Col span="4"><strong>Status:</strong></Col>
-                        <Col span="20">{{status}}</Col> 
+                        <Col span="5"><strong>Status:</strong></Col>
+                        <Col span="19">{{status}}</Col> 
                     </Row>
 
 
                     <!-- summary -->                
                     <Row>                       
-                        <Col span="4"><strong>Summary:</strong></Col>                   
-                        <Col span="18" class="text_p">{{summary}}</Col>
+                        <Col span="5"><strong>Summary:</strong></Col>                   
+                        <Col span="19" class="text_p">{{summary}}</Col>
                     </Row>
 
                     <!-- <Row >                     
@@ -73,21 +73,22 @@
                         <Col span="18" >{{sequencing_type}}</Col>
                     </Row> -->
                      <Row>
-                        <Col span="4"><strong>Organization Name:</strong></Col>                   
-                        <Col span="20">{{organization_name}}</Col>
+                        <Col span="5"><strong>Organization Name:</strong></Col>                   
+                        <Col span="19">{{organization_name}}</Col>
                     </Row>
                     <Row>                     
-                        <Col span="4"><strong>Platforms:</strong></Col>                   
-                        <Col span="20"  v-html='platforms'></Col>
+                        <Col span="5"><strong>Platforms:</strong></Col>                   
+                        <Col span="19"  v-html='platforms'></Col>
                     </Row> 
                     <Row>                     
-                        <Col span="4"><strong>Citation(s):</strong></Col>                   
-                        <Col span="20" v-html='citations'></Col>
+                        <Col span="5"><strong>Citation(s):</strong></Col>                   
+                        <Col span="19" v-html='citations'></Col>
                     </Row> 
                     <Row>                     
-                        <Col span="6"><strong> Samples({{samples_count}}) And Group:</strong></Col>                   
-                        <br>
-                        <Col span="24">
+                       <strong> Samples({{totalRow}}) And Group:</strong>                   
+                    </Row>
+                    <Row>
+                       
                             <Table :columns="sampleCols" :data="sampleData" size="small" ref="table"></Table>
                             <!-- <Spin size="large" fix v-if="spinShowSampleSource"></Spin> -->
                             <div style="margin: 10px;overflow: hidden">               
@@ -105,7 +106,8 @@
                             </div>
                         
                         
-                        </Col>
+                     
+                    
                     </Row> 
                     <Row> 
                         <Collapse>
@@ -198,7 +200,7 @@
 
         <!-- 各数据类型表 -->
         <Content>
-            <Card>                            
+            <Card >                            
                 <div>                              
                      <!-- <router-view/>-->                        
                     <DatasetService />
@@ -245,6 +247,7 @@ export default {
                                 type: 'Input'
                                 },
                                 fixed: 'left',
+                                width:120,
                                 render: (h, params) => {  
                                     if (params.row.gid.indexOf("GSM") > -1){
                                         return h('div', [
@@ -285,6 +288,7 @@ export default {
                             {
                                 title: 'Organism',
                                 key: 'organism',
+                                width:120,
                                 "sortable": true,
                                 filter: {
                                 type: 'Input'
@@ -294,6 +298,7 @@ export default {
                             {
                                 title: 'Tissue',  //和dataset 里的source 一致
                                 key: 'tissue',
+                                width:120,
                                 "sortable": true,
                                 filter: {
                                 type: 'Input'
@@ -311,6 +316,7 @@ export default {
                             {
                                 title: 'Cell Type',
                                 key: 'cell_type',
+                                width:120,
                                 "sortable": true,
                                 // filter: {
                                 //     type: 'Select',
@@ -321,7 +327,7 @@ export default {
                                 title: 'Source', // 细胞来源时间，分选等信息
                                 key: 'source',
                                 "sortable": true,
-                                width:200,
+                                width:120,
                                 // filter: {
                                 //     type: 'Select',
                                 //     option: P_Value_range
@@ -342,6 +348,7 @@ export default {
                             {
                                 title: 'Development Type',
                                 key: 'development_type',
+                                width:120,
                                 filter: {
                                     type: 'Input',
                                 },
@@ -516,7 +523,19 @@ export default {
             
             if (this.dataset.indexOf("GSE") > -1){
                   return 'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+ this.dataset
-            }else{
+            }
+            
+            if (this.dataset.indexOf("PMID") > -1){
+                  var key = this.dataset.split('PMID')[1]
+                  return 'https://pubmed.ncbi.nlm.nih.gov/'+ key
+            }
+
+            if (this.dataset.indexOf("CRA") > -1){
+                  
+                  return 'https://ngdc.cncb.ac.cn/gsa/browse/'+ this.dataset
+            }
+
+            else{
                 
                 return  '#'
               
@@ -579,14 +598,14 @@ export default {
                         for (var i=0;i<platforms_arry.length;i++){
                             let platform_arry = platforms_arry[i].split(" ")
                             if ( platform_arry[0].indexOf("GPL") > -1 ){                            
-                                platforms_string =  platforms_string + "<a href=https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=" + platform_arry[0] +">"+platforms_arry[i]+"</a>&nbsp;&nbsp;"
+                                platforms_string =  platforms_string + "<a target=_blank href=https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=" + platform_arry[0] +">"+platforms_arry[i]+"</a>&nbsp;&nbsp;"
                             }else{
 
                             }
                         }
                     }else{
                         let platform_arry = platforms_data.split(" ")
-                        platforms_string =   platforms_string + "<a href=https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=" + platform_arry[0] +">"+platforms_data+"</a>"
+                        platforms_string =   platforms_string + "<a target=_blank href=https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=" + platform_arry[0] +">"+platforms_data+"</a>"
                     }
                 }
 
@@ -628,12 +647,12 @@ export default {
                         for (var i=0;i<citations_arry.length;i++){
                             // https://pubmed.ncbi.nlm.nih.gov/27281222
                                                    
-                            citations_string =  citations_string + "<a href=https://pubmed.ncbi.nlm.nih.gov/" + citations_arry[i] +">"+citations_arry[i]+"</a>&nbsp;&nbsp;"
+                            citations_string =  citations_string + "<a target=_blank href=https://pubmed.ncbi.nlm.nih.gov/" + citations_arry[i] +">"+citations_arry[i]+"</a>&nbsp;&nbsp;"
                            
                         }
                     }else{
                         let citation_arry = citations_data
-                        citations_string =  "<a href=https://pubmed.ncbi.nlm.nih.gov/" + citation_arry +">"+citation_arry+"</a>"
+                        citations_string =  "<a target=_blank href=https://pubmed.ncbi.nlm.nih.gov/"  + citation_arry +">"+citation_arry+"</a>"
                     }
                 }
                 _this.citations = citations_string
@@ -1257,7 +1276,9 @@ export default {
     .text_p{
         text-align: justify;
     }
-    
+    .testtype{
+        background: #eee;
+    }
 
 
 </style>

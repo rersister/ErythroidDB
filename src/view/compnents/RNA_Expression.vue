@@ -7,7 +7,7 @@
                 <Row>
                         <Col span="12">
                             <!-- 数据查询分子名 -->
-                            <span>Input Gene Symbol:</span>
+                            <span class="h4_title" >Input Gene Symbol:</span>
                             <Input search enter-button="Search"  @on-search="searchItemByName($event)" :placeholder="search_placeholder"/>                         
                         </Col>                                                                                                                                                       
                 </Row>       
@@ -35,10 +35,10 @@
                         <Collapse simple v-model='value1' class='h3_title'>                                      
                                 <Panel name="2">
                                 <!-- Look up this {{search_datatype}} in: -->
-                                Search Gene Symbol in:
+                               <span class="h4_title">Search Gene Symbol in:</span> 
                                 <p slot="content">
                                     <Button class='button_style' v-for="(search_item,index) in othersearch_items" :key='index' :label='search_item.name' type="primary" icon="ios-search">
-                                    <a :href='search_item.link' style="color:white">    
+                                    <a :href='search_item.link' target=_blank style="color:white">    
                                         {{search_item.name}}
                                     </a>
                                     </Button>                                               
@@ -504,7 +504,7 @@ export default {
 
 
 .button_style{
-    font-size:calc((4/1920) * 100vw);
+    font-size:16px;
     margin-right: calc((5/1920) * 100vw);;
     margin-bottom:calc((5/1920) * 100vw);
     /* width:calc((50/1920) * 100vw); 
@@ -515,40 +515,27 @@ export default {
     width:calc((1600/1920) * 100vw); 
     height: calc((600/1920) * 100vw);;
 }
-/* .ivu-btn-primary {
-  color: #fff;
-  background-color: #e4b7b6;
-  border-color: #efc6c7;
-}
+
 
 .ivu-input-search {
-    cursor: pointer;
-    padding: 0 16px!important;
-    background: #a94442!important;
+
+    background: #a85557!important;
     color: #fff!important;
-    border-color: #515a6e!important;
-    transition: all .2s ease-in-out;
-    position: relative;
-    z-index: 2;
-} */
-    .ivu-input-search {
-    
-        background: #a85557!important;
-        color: #fff!important;
-        border-color: #a85557!important;
-    
-    }
+    border-color: #a85557!important;
 
-    .ivu-input-search:hover{
-        background: #e6b9b8 !important;
-        color: #fff !important;
-        border-color: #ea898c !important;
-    }
+}
 
-    .ivu-btn-primary {
-        background: #a85557!important;
-        color: #fff!important;
-        border-color: #a85557!important;
-    }
+.ivu-input-search:hover{
+    background: #e6b9b8 !important;
+    color: #fff !important;
+    border-color: #ea898c !important;
+}
+
+.ivu-btn-primary {
+    background: #a85557!important;
+    color: #fff!important;
+    border-color: #a85557!important;
+}
+
 </style>
 

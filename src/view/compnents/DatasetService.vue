@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 提供分析服务内容卡片 -->
-    <div class="card">
+    <div>
       <Row v-if="ifshowvis">
         <Col span="4"><strong>Visualize Site:</strong></Col>
         <Col span="20"
@@ -9,29 +9,21 @@
         >
       </Row>
 
-      <div v-if="ifshowAnalContent">
+      <div class="card"  v-if="ifshowAnalContent">
         <h3 class="h3_title">Analyze Content:</h3>
-        <Row :gutter="16" style="background:#eee;padding:20px">
-          <Col v-if="showSubAnalContent">{{ SubAnalContent }}</Col>
-          <!--<Col span="4" v-for="(AnalyzeType,index) in AnalyzeTypeList" :key='index' :value="AnalyzeType.name" >
-							<div class='anal_div' >
-								<div @click="changeDom(AnalyzeType.link)"><span class="servetitle"  >{{ AnalyzeType.name }}</span></div>
-								<router-link :to="AnalyzeType.link" style="font-size:'font-size:calc((20/1920) * 100vw);'">
-										<img width="20%" height="10%" src="@/assets/img/red_sys.jpg">
-										<div ><span class="servetitle"  >{{ AnalyzeType.name }}</span></div>
-								</router-link>                 
-							</div>
-					</Col>-->
-        </Row>
-        <div
-          class="anal_div"
-          v-for="(AnalyzeType, index) in AnalyzeTypeList"
-          :key="index"
-        >
-          <div @click="changeDom(AnalyzeType.link)">
-            <span class="servetitle">{{ AnalyzeType.name }}</span>
+        <!-- <Row :gutter="16" style="background:#eee;padding:20px">
+        </Row> -->
+          <div
+            class="anal_div"
+            v-for="(AnalyzeType, index) in AnalyzeTypeList"
+            :key="index"
+          >
+            <div @click="changeDom(AnalyzeType.link)">
+              <span class="servetitle">{{ AnalyzeType.name }}</span>
+            </div>
           </div>
-        </div>
+       
+       
       
       </div>
     </div>
@@ -491,15 +483,17 @@ export default {
   font-size: 18px;
   cursor: pointer;
 }
+
 .anal_div {
   display: inline-block;
-  background: white;
+  background:  #eee;
   border: 1px;
   border-color: black;
   border-radius: 4px;
   text-align: center;
   transition: all 0.2s ease-in-out;
   margin-right: 15px;
+  margin-top: 8px;
   padding: 0 15px;
   height: calc((100 / 1920) * 100vw);
   line-height: calc((100 / 1920) * 100vw);
@@ -517,6 +511,11 @@ export default {
 		position: relative; */
 }
 .anal_div:hover {
-  background: #eee;
+  background: #f1ede9;
+}
+.card{
+  margin: 2% 2% 2% 2%;
+  /* background: #eee; */
+  
 }
 </style>
