@@ -59,8 +59,12 @@
                     </br>
                     </br>
                     </br>
-                    <span >Input Gene/Tissue/Dataset Id/Organism Name:</span>
-                    <Input search enter-button="Search"    @on-search="searchDataSetByKeyName($event)" :placeholder="search_placeholder"/>                         
+                    <span >Input Reported Gene/Tissue/Dataset Id/Organism Name:</span>
+                    <i-select enter-button="Search"  @on-search="searchDataSetByKeyName($event)" :model.sync="showByGroup" clearable :placeholder="search_placeholder"  @on-change="searchDataSetByKeyName($event)"  filterable>        
+							<i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
+					</i-select>
+                    <!-- <Input  filterable search enter-button="Search"    @on-search="searchDataSetByKeyName($event)" :placeholder="search_placeholder"/>                          -->
+                
                 </Col> 
             </Row>
 
@@ -223,7 +227,7 @@ import router from '@/router'
 import routers from '@/router/routers'
 import CountTo from '@/components/count-to'
 import {mapMutations,} from 'vuex'
-import {getAllSampleCellNumber,} from '@/api/erythdataset'
+import {getAllSampleCellNumber,getDatasetKeyWords,} from '@/api/erythdataset'
 
 export default {
     name:"home",
@@ -232,6 +236,18 @@ export default {
     },
     data () {
             return {
+               keyWords_list:[
+                    {
+                        name:'Danio rerio',
+                    },
+                    {
+                        name:'Homo sapiens',
+                    },
+                    {  
+                        name:'Mus musculus',
+                    }
+
+                ],
                 value1: '1',
                 // all_sampleN:3900,
                 // all_cellN:175628,
@@ -264,21 +280,28 @@ export default {
             this.active =''
         },
 
+        getAllkeyWords(){
+
+            getDatasetKeyWords().then(res=>{
+
+                this.keyWords_list = res.data.keywords
+                console.log("this.keyWords_list")
+                console.log(res.data.keywords)
+                
+            })
+           
+
+            // this.keyWords_list.push()
+
+        },
         getAllSampleCellN(){
             getAllSampleCellNumber().then(res => {
 				console.log("sample number")
                 let _this = this
                 let datas = res.data
 				console.log(datas.allsampleN)
-				// this.group_type_list= []
-				// this.group = datas[0]
-                // datas.forEach(key => this.group_type_list.push({
-                //     name:key
-				// })) 
-                
 				_this.allSampleN = datas.allsampleN
                 _this.allCellN = datas.allcellN
-
             })
         },
 
@@ -315,6 +338,7 @@ export default {
     },
     mounted(){
 		this.getAllSampleCellN()
+        this.getAllkeyWords()
 
 
 

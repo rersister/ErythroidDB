@@ -88,5 +88,12 @@ html,body{
       text-align: center;
   }
 
+.ivu-table-wrapper {
+    position: relative;
+    border: 1px solid #dcdee2;
+    border-bottom: 0;
+    border-right: 0;
+    /* overflow: hidden; */
+}
 </style>
 

@@ -40,7 +40,7 @@
 
           </Row>
           </br>  
-          <div> 
+          <div > 
             <!-- dataset 展示页 FilterTableForAllDateSet -->
             
             <FilterTableForAllDateSet 
@@ -683,7 +683,8 @@ export default {
               var gData = data.gData
               var mData =data.mData
               var lData =data.lData
-              
+              console.log("gData.name")
+              console.log(gData.name)
               for ( var i = 0; i < gData.length; i ++ ) {
                 // color.push('#781111')
                 // alert(gData[i])

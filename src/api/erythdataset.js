@@ -193,7 +193,17 @@ export const getDatasetGene = () => {
 	},
 	  method: 'post',
 	})
-  }
+}
+
+export const getDatasetKeyWords = () =>{
+	return axios.request({
+		url: 'public/getDatasetKeyWords',
+		data: { 
+	  },
+		method: 'post',
+	  })
+}
+
 export const searchDataset = (datasetName,search,pageIndex,pageSize)=>{
 	return axios.request({
 		url: 'public/getPageDataSetsByParms',
