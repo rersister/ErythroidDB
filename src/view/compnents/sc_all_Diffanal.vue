@@ -14,7 +14,7 @@
 				</i-col> -->
                 <i-col span="10">
 					<Form-item label="Contrast Cluster: ">                                                  
-						<i-select  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart">        
+						<i-select  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart"  filterable>        
 							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
@@ -68,7 +68,7 @@
 				</i-col> -->
                 <i-col span="8">
 					<Form-item label="Contrast Cluster: ">                                                  
-						<i-select  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart2">        
+						<i-select  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart2"  filterable>        
 							<i-option v-for="(group,index) in group_type_list2" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
@@ -77,7 +77,7 @@
                                             
                 
 					<Form-item label="Enrich type: ">
-						<i-select :model.sync="enrichGroup" clearable  placeholder="Pleace select Enrich Type" @on-change="changeEnrichType">                    
+						<i-select :model.sync="enrichGroup" clearable  placeholder="Pleace select Enrich Type" @on-change="changeEnrichType"  filterable>                    
 							<i-option v-for="(goType,index) in goTypeList" :key='index' :value="goType.value">{{ goType.name }}</i-option>
 						</i-select>
 					</Form-item>

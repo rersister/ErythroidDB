@@ -8,35 +8,35 @@
         	<i-form :label-width="120">
 				<i-col span="6">
 					<Form-item label="Plot Size: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedPlotSize">        
+						<i-select :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedPlotSize"  filterable>        
 							<i-option v-for="(value,index) in plotSize_list" :key='index' :value="value.name">{{ value.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
 				<i-col span="6">
 					<Form-item label="View by: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedViewMethod">        
+						<i-select :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedViewMethod"  filterable>        
 							<i-option v-for="(method,index) in viewMethod_list" :key='index' :value="method.name">{{ method.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
 				<i-col span="6">
 					<Form-item label="Visaul Method: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Select view method"  @on-change="changedVisaulMethod">        
+						<i-select :model.sync="showByGroup" clearable placeholder="Select view method"  @on-change="changedVisaulMethod"  filterable>        
 							<i-option v-for="(method,index) in VisaulMethod_list" :key='index' :value="method.name">{{ method.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
 				<i-col span="8">
 					<Form-item label="Group: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedSource">        
+						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedSource"  filterable>        
 							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
 				<i-col span="8">
 					<Form-item label="Color by: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedGroup">        
+						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedGroup"  filterable>        
 							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
@@ -66,14 +66,14 @@
         	<i-form :label-width="120">
 				<i-col span="6">
 					<Form-item label="Plot Size: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedPlotSize2">        
+						<i-select :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedPlotSize2"  filterable>        
 							<i-option v-for="(value,index) in plotSize_list" :key='index' :value="value.name">{{ value.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
 				<i-col span="8">
 					<Form-item label="Group: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup2">        
+						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup2"  filterable>        
 							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 						</i-select>
 					</Form-item>

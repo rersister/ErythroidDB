@@ -29,7 +29,7 @@
             <div>
               <h4>Choose Cell Type:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
-              <i-select  clearable placeholder="Pleace select cell type"  @on-change="changedCellType">        
+              <i-select  clearable placeholder="Pleace select cell type"  @on-change="changedCellType" filterable>        
                 <i-option v-for="(celltype,index) in celltype_list" :key='index' :value="celltype.name">{{ celltype.full_name }}</i-option>
               </i-select>
             </div>
@@ -37,7 +37,7 @@
             <div>
               <h4>Choose Reported Gene:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
-              <i-select  clearable placeholder="Pleace select reported gene"  @on-change="changedReportedGene">        
+              <i-select  clearable placeholder="Pleace select reported gene"  @on-change="changedReportedGene" filterable>        
                 <i-option v-for="(reportedGene,index) in reportedGene_list" :key='index' :value="reportedGene.name">{{ reportedGene.name }}</i-option>
               </i-select>
             </div>
@@ -45,7 +45,7 @@
             <div>
               <h4>Choose Compound Type:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
-              <i-select  clearable placeholder="Pleace select compound type"  @on-change="changedComppoundType">        
+              <i-select  clearable placeholder="Pleace select compound type"  @on-change="changedComppoundType" filterable>        
                 <i-option v-for="(compound,index) in compound_list" :key='index' :value="compound.name">{{ compound.name }}</i-option>
               </i-select>
             </div>
@@ -53,7 +53,7 @@
             <div>
               <h4>Choose Disease Type:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
-              <i-select  clearable placeholder="Pleace select disease type"  @on-change="changedDiseaseType">        
+              <i-select   clearable placeholder="Pleace select disease type"  @on-change="changedDiseaseType" filterable>        
                 <i-option v-for="(disease,index) in disease_list" :key='index' :value="disease.name">{{ disease.name }}</i-option>
               </i-select>
             </div>
@@ -61,7 +61,7 @@
             <div>
               <h4>Choose Species:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
-              <i-select  clearable placeholder="Pleace select species"  @on-change="changedSpecies">        
+              <i-select  clearable placeholder="Pleace select species"  @on-change="changedSpecies" filterable>        
                 <i-option v-for="(species,index) in species_list" :key='index' :value="species.name">{{ species.name }}</i-option>
               </i-select>
             </div>
@@ -69,7 +69,7 @@
             <div>
               <h4>Choose Tissue:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
-              <i-select  clearable placeholder="Pleace select tissue"  @on-change="changedTissue">        
+              <i-select  clearable placeholder="Pleace select tissue"  @on-change="changedTissue" filterable>        
                 <i-option v-for="(tissue,index) in tissue_list" :key='index' :value="tissue.value">{{ tissue.name }}</i-option>
               </i-select>
             </div>
@@ -77,7 +77,7 @@
             <div>
               <h4>Choose Growth Mode:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
-              <i-select  clearable placeholder="Pleace select growth mode"  @on-change="changedGrowthMode">        
+              <i-select  clearable placeholder="Pleace select growth mode"  @on-change="changedGrowthMode" filterable>        
                 <i-option v-for="(growth_mode,index) in growth_mode_list" :key='index' :value="growth_mode.name">{{growth_mode.name }}</i-option>
               </i-select>
             </div>
@@ -85,7 +85,7 @@
             <div>
               <h4>Choose Development Type:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
-              <i-select  clearable placeholder="Pleace select development type"  @on-change="changedDevelopmentType">        
+              <i-select  clearable placeholder="Pleace select development type"  @on-change="changedDevelopmentType" filterable>        
                 <i-option v-for="(development,index) in development_list" :key='index' :value="development.name">{{ development.name }}</i-option>
               </i-select>
             </div>
@@ -93,7 +93,7 @@
             <div>
               <h4>Choose Sequence Type:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
-              <i-select  clearable placeholder="Pleace select sequence type"  @on-change="changedSequenceType">        
+              <i-select  clearable placeholder="Pleace select sequence type"  @on-change="changedSequenceType" filterable>        
                 <i-option v-for="(sequence,index) in sequenceType_list" :key='index' :value="sequence.name">{{ sequence.name }}</i-option>
               </i-select>
             </div>

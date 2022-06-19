@@ -11,7 +11,7 @@
         	<i-form :label-width="120">
 				<i-col span="8">
 					<Form-item label="Contrasts Group: ">                                                  
-						<i-select  clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup">        
+						<i-select  clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup"  filterable>        
 							<i-option v-for="(group,index) in contrasts_group" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
@@ -19,7 +19,7 @@
                 &nbsp;&nbsp;
                 <i-col span="12">
 					<Form-item label="Type: ">                                                  
-						<i-select :model.sync="enrichGroup" clearable  placeholder="Pleace select GO Type" @on-change="changeGoType">                    
+						<i-select :model.sync="enrichGroup" clearable  placeholder="Pleace select GO Type" @on-change="changeGoType"  filterable>                    
                             <i-option v-for="(goType,index) in goTypeList" :key='index' :value="goType.value">{{ goType.name }}</i-option>
                         </i-select>
                     

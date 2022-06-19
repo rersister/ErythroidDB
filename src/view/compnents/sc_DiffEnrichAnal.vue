@@ -6,14 +6,14 @@
 			<i-form :label-width="120">
 				<i-col span="10">
 					<Form-item label="Data source: ">                                                  
-						<i-select  clearable placeholder="Pleace select cell source"  @on-change="changedDataSource">        
+						<i-select  clearable placeholder="Pleace select cell source"  @on-change="changedDataSource"  filterable>        
 							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
                 <i-col span="10">
 					<Form-item label="Contrast group: ">                                                  
-						<i-select  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart">        
+						<i-select  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart"  filterable>        
 							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>

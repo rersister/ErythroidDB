@@ -7,7 +7,7 @@
             </Br>
             <Row>
                 <Col span="12">
-                    <i-select placeholder="Please choose cell source" clearable style="width:80%" @on-change='changeCellSource($event)'>
+                    <i-select placeholder="Please choose cell source" clearable style="width:80%" @on-change='changeCellSource($event)'  filterable>
                         <i-option v-for="item in SourceList" :value="item.value" >{{ item.label }}</i-option>
                     </i-select>
                 </Col>

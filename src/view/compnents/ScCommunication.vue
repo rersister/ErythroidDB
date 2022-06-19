@@ -11,7 +11,7 @@
 				<i-form :label-width="120">
 					<i-col span="12">
 						<Form-item label="Group: "> 	
-							<i-select placeholder="Select cell source" clearable style="width:80%" @on-change='changedSourceGroup'>
+							<i-select placeholder="Select cell source" clearable style="width:80%" @on-change='changedSourceGroup'  filterable>
 								<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 							</i-select>
 						</Form-item>
@@ -19,7 +19,7 @@
 					<i-col span="12">
 						<Form-item label="Signal pattern: "> 
 							<!-- 数据查询分子名 -->
-							<i-select :model.sync="contrastsGroup" clearable placeholder="Please select signal pattern"  @on-change="changedSigPattern">        
+							<i-select :model.sync="contrastsGroup" clearable placeholder="Please select signal pattern"  @on-change="changedSigPattern"  filterable>        
 								<i-option v-for="(group,index) in sigPattern_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 							</i-select>
 						</Form-item>
@@ -51,7 +51,7 @@
 				<i-form :label-width="120">	
 					<i-col span="10">
 						<Form-item label="Signal name: ">
-							<i-select :model.sync="contrastsGroup" clearable placeholder="Please select signal name"  @on-change="changedSigName">        
+							<i-select :model.sync="contrastsGroup" clearable placeholder="Please select signal name"  @on-change="changedSigName"  filterable>        
 								<i-option v-for="(group,index) in sigName_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 							</i-select>
 						</Form-item>

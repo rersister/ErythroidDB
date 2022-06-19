@@ -8,7 +8,7 @@
 				<i-form :label-width="120">
 					<i-col span="8">
 						<Form-item label="Group: ">                                                  
-							<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup">        
+							<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup"  filterable>        
 								<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 							</i-select>
 						</Form-item>
@@ -40,7 +40,7 @@
 			<i-form :label-width="120">
 				<i-col span="10"> 
 					<Form-item label="Enrich Cluster: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cluster group"  @on-change="changedEnrichChart">        
+						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cluster group"  @on-change="changedEnrichChart"  filterable>        
 							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
@@ -50,7 +50,7 @@
                                             
                 
 					<Form-item label="Enrich Type: ">
-						<i-select  clearable  placeholder="Pleace select Enrich Type" @on-change="changeEnrichType">                    
+						<i-select  clearable  placeholder="Pleace select Enrich Type" @on-change="changeEnrichType"  filterable>                    
 							<i-option v-for="(goType,index) in goTypeList" :key='index' :value="goType.value">{{ goType.name }}</i-option>
 						</i-select>
 					</Form-item>

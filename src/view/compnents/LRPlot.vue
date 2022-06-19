@@ -8,7 +8,7 @@
         <div>
             <Row>
                 <Col span="12">
-                    <i-select placeholder="Pleace select cell source" clearable style="width:80%" @on-change='changedSourceGroup'>
+                    <i-select placeholder="Pleace select cell source" clearable style="width:80%" @on-change='changedSourceGroup'  filterable>
                         <i-option v-for="(source,index) in source_group" :key='index' :value="source.name">{{ source.name }}</i-option>
                     </i-select>
                 </Col>
@@ -33,13 +33,13 @@
 		<div>
             <Row>
                 <Col span="12">
-                    <i-select placeholder="Pleace select cell source" clearable style="width:80%" @on-change='changedSourceGroup'>
+                    <i-select placeholder="Pleace select cell source" clearable style="width:80%" @on-change='changedSourceGroup'  filterable>
                         <i-option v-for="(source,index) in source_group" :key='index' :value="source.value">{{ source.name }}</i-option>
                     </i-select>
                 </Col>
                 <Col span="12">
                     <!-- 数据查询分子名 -->
-                    <i-select :model.sync="contrastsGroup" clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup">        
+                    <i-select :model.sync="contrastsGroup" clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup"  filterable>        
                         <i-option v-for="(group,index) in contrasts_group" :key='index' :value="group.name">{{ group.name }}</i-option>
                     </i-select>
                 </Col>

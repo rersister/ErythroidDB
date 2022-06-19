@@ -8,7 +8,7 @@
             <i-form :label-width="100">
 				<i-col span="8">
 					<Form-item label="Color by: ">                                                  
-						<i-select  clearable placeholder="Pleace select cell group"  @on-change="changedClustChart($event)">        
+						<i-select  clearable placeholder="Pleace select cell group"  @on-change="changedClustChart($event)"  filterable>        
 							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
