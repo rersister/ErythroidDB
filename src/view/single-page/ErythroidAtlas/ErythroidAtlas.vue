@@ -31,22 +31,7 @@
         </div>
         
 
-        <!-- <div class="row_choice">
-          <span>Development Type:</span>
-          <RadioGroup
-            class="myOption"
-            @on-change="changeDevelopmentType($event)"
-          >
-            <Radio
-              class="myOption"
-              v-for="(item, i) in DevelopmentList"
-              :label="item.value"
-              :key="i"
-            >
-              <span class="myOption">{{ item.label }}</span>
-            </Radio>
-          </RadioGroup>
-        </div> -->
+       
 
         <div class="row_choice">
           <span class="h4_title">Sequence Type:</span>
@@ -275,7 +260,7 @@
                                 </Page>                   
                             </div>
                         </div>      
-      </div>
+    </div>
 
   </div>
 </template>
@@ -284,7 +269,7 @@
 // Datatest
 import FilterTable from '../../compnents/FilterTable'
 import { getDatatest } from '@/api/erythdataservice'
-import { getallDevSampleGroup } from '@/api/erythroidAtlas'
+import { getallDevSampleGroup,getAllDevType } from '@/api/erythroidAtlas'
 import router from '@/router'
 import { mapMutations } from 'vuex'
 import FilterTableForAllDateSet from '../../compnents/FilterTableForAllDateSet'
@@ -338,17 +323,43 @@ const sample_numbers = {
   },
 }
 
-const P_Value_range = {
-  0: {
-    value: '>0.05',
-    name: '>0.05',
-  },
-  1: {
-    value: '=<0.05',
-    name: '=<0.05',
-    // color: 'red'
-  },
-}
+const source_dict = [
+   {
+      value: "BM_vitro",
+      name: 'Bone Marrow(vitro)'
+    },
+    {
+      value: "CB_vivo",
+      name: 'Cord Blood(vivo)',
+      // color: 'red'
+    },
+     {
+      value: "CB_vitro",
+      name: 'Cord Blood(vitro)',
+      // color: 'green'
+    },
+     {
+      value: "PB_vitro",
+      name: 'Peripheral Blood(vitro)',
+      // color: 'green'
+    },
+     {
+      value: "FL_vitro",
+      name: 'Fetal Liver(vitro)',
+      // color: 'green'
+    },
+     {
+      value: "PB_vivo",
+      name: 'Peripheral Blood(vivo)',
+      // color: 'green'
+    },
+    {
+      value: "iPSC_vitro",
+      name: 'Induced Pluripotent Stem Cells(vitro)',
+      // color: 'green'
+    },
+    
+  ]
 
 export default {
   name: 'ErythroidAtlas',
@@ -459,6 +470,7 @@ export default {
         },
       ],
       search: '',
+      SourceList:[],
       ifShow: false,
       currentPage: 1,
       currentPageTypeSource: 1,
@@ -606,13 +618,14 @@ export default {
             type: 'Input',
           },
           fixed: 'left',
+          width:120,
           render: (h, params) => {            
               if (params.row.gid.indexOf("GSE") > -1){
                   return h('div', [
                   h('a', {                               
                         attrs:{                              
-                          href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.gid
-
+                          href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.gid,
+                          target:'_blank',
                         },    
                     },params.row.gid)
                   ])
@@ -635,6 +648,7 @@ export default {
         {
           title: 'Sid',
           key: 'sample_name',
+          width:100,
           filter: {
             type: 'Input',
           },
@@ -642,6 +656,7 @@ export default {
         {
           title: 'Organism',
           key: 'organism',
+          width:110,
           filter: {
             type: 'Input',
           },
@@ -649,22 +664,25 @@ export default {
         {
           title: 'Cell Type',
           key: 'cell_type',
-          width:200,
+          // width:100,
           filter: {
             type: 'Input',
           },
         },
         {
-          title: 'Cell Source',
-          width:200,
+          title: 'Source',
+          width:120,
           key: 'source_cell',
           filter: {
             type: 'Input',
           },
+            filterMethod (value, row) {
+                return row.address.indexOf(value) > -1;
+            }
         },
         {
-          title: 'Growth Mode',
-          width :100,
+          title: 'Experiment Type',
+          width :120,
           key: 'growth_mode',
           filter: {
             type: 'Input',
@@ -674,18 +692,19 @@ export default {
           //     option: P_Value_range
           // },
         },
-         {
-          title: 'Development Type',
-          key: 'development_type',
-          width :125,
-          filter: {
-            type: 'Input',
-          },
+        //  {
+        //   title: 'Development Type',
+        //   key: 'development_type',
+        //   width :125,
+        //   filter: {
+        //     type: 'Input',
+        //   },
           // filter: {
           //     type: 'Select',
           //     option: P_Value_range
           // },
-        },
+        // },
+
         {
           title: 'Group',
           key: 'group',
@@ -749,9 +768,13 @@ export default {
         this.orga +
         '_ep_' +
         this.curentSequnceType 
-      
       this.table_name = table_name
-      this.mockTableData(table_name, this.currentPage, this.pageSize)
+      if (table_name.indexOf('all_mm_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'CRA002445'
+				}
+      this.getAllDevType(this.table_name)
+      this.mockTableData(this.table_name, this.currentPage, this.pageSize)
 
       this.selectList = select
 
@@ -779,6 +802,33 @@ export default {
           _this.datasetsTypeSource = datas.list
           _this.totalTypeSource = datas.total
         })
+    },
+    getAllDevType(table_name){
+            let dev_group_type_list = []
+            // this.table_name = 'all_hs_ep_bulk'
+            // var table_name = selectDict
+			// alert(table_name)
+            getAllDevType(table_name).then(res =>{
+                let datas = res.data 
+                //console.log(datas)  
+                datas.forEach(key =>{ 
+                    
+                    source_dict.forEach(element => {
+                        if(element.value == key){
+                            dev_group_type_list.push({
+                                value:key,
+                                label:element.name
+                            })
+                        }
+                    });
+                
+                    
+                
+                })
+                 this.SourceList =dev_group_type_list
+            })
+
+
     },
 
     onSearch_datasetTypeSource(searchTypeSource) {
@@ -833,6 +883,7 @@ export default {
     },
 
     changePge() {
+    
        this.mockTableData(this.table_name, this.currentPage, this.pageSize)
     },
 
@@ -843,7 +894,8 @@ export default {
     handleCurrentChange(val) {
       // console.log(`当前页: ${val}`);
       this.currentPage = val
-       this.mockTableData(this.table_name, this.currentPage, this.pageSize)
+ 
+      this.mockTableData(this.table_name, this.currentPage, this.pageSize)
     },
     handleCurrentChangeTypeSource(val) {
       // console.log(`当前页: ${val}`);
@@ -853,7 +905,8 @@ export default {
     handleSizeChange(val) {
       // console.log(`每页 ${val} 条`);
       this.pageSize = val
-       this.mockTableData(this.table_name, this.currentPage, this.pageSize)
+
+      this.mockTableData(this.table_name, this.currentPage, this.pageSize)
     },
     handleSizeChangeTypeSource(val) {
       // console.log(`每页 ${val} 条`);
@@ -885,10 +938,12 @@ export default {
     handleSizeChange(val) {
       this.pageSize = val
       // mockTableData(table_name,currentPage,pageSize)
+ 
       this.mockTableData(this.table_name, this.currentPage, this.pageSize)
     },
     handleCurrentChange(val) {
       this.currentPage = val
+
       this.mockTableData(this.table_name, this.currentPage, this.pageSize)
     },
     toggleClick() {
@@ -909,9 +964,13 @@ export default {
                       this.orga +
                       '_ep_' +
                       this.curentSequnceType 
-      
         this.table_name = table_name
-        this.mockTableData(table_name, this.currentPage, this.pageSize)
+        if (table_name.indexOf('all_mm_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'CRA002445'
+				}
+        this.getAllDevType(this.table_name)
+        this.mockTableData(this.table_name, this.currentPage, this.pageSize)
       }
       
 
@@ -936,8 +995,8 @@ export default {
         ]
       } else {
         // alert(this.orga)
-        if ( this.orga == 'hs'){
-             this.analList = [
+        // if ( this.orga == 'hs'){
+          this.analList = [
           {
             label: 'Single Cell Visualization & Feature',
             value: 'scPCA',
@@ -969,9 +1028,9 @@ export default {
 
         ]
 
-        }else{
-          this.analList = []
-        }
+        // }else{
+        //   this.analList = []
+        // }
 
        
         
@@ -988,9 +1047,13 @@ export default {
                       this.orga +
                       '_ep_' +
                       this.curentSequnceType 
-      
         this.table_name = table_name
-        this.mockTableData(table_name, this.currentPage, this.pageSize)
+        if (table_name.indexOf('all_mm_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'CRA002445'
+				}
+        this.getAllDevType(this.table_name)
+        this.mockTableData(this.table_name, this.currentPage, this.pageSize)
       }
     },
     changeSequnceType($value) {
@@ -1003,9 +1066,13 @@ export default {
                       this.orga +
                       '_ep_' +
                       this.curentSequnceType 
-      
         this.table_name = table_name
-        this.mockTableData(table_name, this.currentPage, this.pageSize)
+        if (table_name.indexOf('all_mm_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'CRA002445'
+				}
+        this.getAllDevType(this.table_name)
+        this.mockTableData(this.table_name, this.currentPage, this.pageSize)
       }
 
       if (this.curentSequnceType == 'bulk') {
@@ -1029,8 +1096,8 @@ export default {
         ]
       } else {
         // alert(this.orga)
-        if ( this.orga == 'hs'){
-             this.analList = [
+        // if ( this.orga == 'hs'){
+          this.analList = [
           {
             label: 'Single Cell Visualization & Feature',
             value: 'scPCA',
@@ -1062,9 +1129,9 @@ export default {
 
         ]
 
-        }else{
-          this.analList = []
-        }
+        // }else{
+        //   this.analList = []
+        // }
 
        
         
@@ -1139,9 +1206,13 @@ export default {
                       this.orga +
                       '_ep_' +
                       this.curentSequnceType 
-      
         this.table_name = table_name
-        this.mockTableData(table_name, this.currentPage, this.pageSize)
+        if (table_name.indexOf('all_mm_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'CRA002445'
+				}
+        this.getAllDevType(this.table_name)
+        this.mockTableData(this.table_name, this.currentPage, this.pageSize)
       }
 
     },
@@ -1189,9 +1260,14 @@ export default {
         this.orga +
         '_ep_' +
         this.curentSequnceType 
-      
       this.table_name = table_name
-      this.mockTableData(table_name, this.currentPage, this.pageSize)
+      if (table_name.indexOf('all_mm_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'CRA002445'
+				}
+      this.getAllDevType(this.table_name)
+
+      this.mockTableData(this.table_name, this.currentPage, this.pageSize)
 
       this.selectList = select
 

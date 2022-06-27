@@ -14,7 +14,7 @@ export const getAllDevExpreBulkData = (source,gene_symbol,cell_source) => {
   }
 
 // getClusterDataAll
-export const getClusterDataAll = (selectList,group_by) => {
+export const getClusterDataAll = (selectList,group_by,source) => {
 	return axios.request({
 
 		// url:'public/getClusterDataAllDev',
@@ -22,6 +22,7 @@ export const getClusterDataAll = (selectList,group_by) => {
 		data:{
 			selectList: selectList,
 			group_by:group_by,
+			source:source
 			// cell_type:cell_type
 		
 		},
@@ -47,6 +48,19 @@ export const getAllDevType = (table_name) => {
 	return axios.request({
 
 		url:'public/getAllDevType',
+		data:{
+			table_name: table_name,
+		},
+		method:'post',
+	})
+
+}
+
+// getAllDevGene
+export const getAllDevGene = (table_name) => {
+	return axios.request({
+
+		url:'public/getAllDevGene',
 		data:{
 			table_name: table_name,
 		},

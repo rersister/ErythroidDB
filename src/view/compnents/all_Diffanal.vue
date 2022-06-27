@@ -3,7 +3,7 @@
 	<h1 class="my_h1">Differential analysis({{orga_name}})</h1>
 	</Br>
 	<div>
-		<Row>
+		<Row :gutter="4">
 			<!-- <Col span="12">
 				<i-select placeholder="Pleace select cell's development type" clearable style="width:80%" @on-change='changedSourceGroup'>
 					<i-option v-for="(source,index) in source_group" :key='index' :value="source.name">{{ source.name }}</i-option>
@@ -17,12 +17,23 @@
 					</Form-item>
 				</i-col>
 			</i-form> -->
-			<Col span="12">
+			<Col span="10">
 				<!-- 数据查询分子名 -->
-				<i-select :model.sync="contrastsGroup" clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup"  filterable>        
+				
+				<i-select :model.sync="contrastsGroup" clearable placeholder="Pleace select/input contrasts group"  @on-change="changedContrGroup"  filterable>        
 					<i-option v-for="(group,index) in contrasts_group" :key='index' :value="group.name">{{ group.name }}</i-option>
 				</i-select>
+				
 			</Col>
+			<Col span="12">
+				<div style="margin-left: 4px; ">
+					<span>
+						e.g, late_basoE_CB_vitro-orthoE_CB_vitro means the late_basoE_CB_vitro  group versus the orthoE_CB_vitro group
+					</span>
+				</div>
+				
+			</Col>
+			
         </Row>
 		</Br>
 		<Row>					
@@ -171,7 +182,7 @@ export default {
 
 			},
 			{
-				title: 'P.Value',
+				title: 'adj.P.Val',
 				key: 'FDR',
 				"sortable": true,
 				filter: {
@@ -179,8 +190,8 @@ export default {
 				},
 			},
 			{
-				title: 'adj.P.Val',
-				key: 'PValue',
+				title: 'P.Value',
+				key: 'P.Value',
 				"sortable": true,
 				filter: {
 					type: 'Select',

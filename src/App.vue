@@ -95,5 +95,16 @@ html,body{
     border-right: 0;
     /* overflow: hidden; */
 }
+
+  .my_reset_button{
+    background: #8c0c0b !important;
+    color: #fff !important;
+    border-color: #ea898c !important;
+  }
+
+  .ivu-table tr:hover{
+    cursor:pointer;
+  }
+
 </style>
 

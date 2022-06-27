@@ -351,14 +351,14 @@
 import routers from '@/router/routers'
 import { mapMutations } from 'vuex'
 import HeaderBar from './components/header-bar'
-import Language from './components/language'
+
 // import {prependHeaderSection,appendFooterSection} from '@/libs/headerfooter.js'
 
 export default {
   name: 'App',
   components: {
     HeaderBar,
-    Language,
+  
   },
   data() {
     return {

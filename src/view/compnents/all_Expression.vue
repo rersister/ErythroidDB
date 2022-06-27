@@ -7,13 +7,17 @@
             </Br>
             <Row>
                 <Col span="12">
-                    <i-select placeholder="Please choose cell source" clearable style="width:80%" @on-change='changeCellSource($event)'  filterable>
+                    <i-select placeholder="Please choose source" clearable style="width:80%" @on-change='changeCellSource($event)'  filterable>
                         <i-option v-for="item in SourceList" :value="item.value" >{{ item.label }}</i-option>
-                    </i-select>
+                    </i-select>  
                 </Col>
                 <Col span="12">
                     <!-- 数据查询分子名 -->
-                    <Input search enter-button="Search" @on-search="searchBygene($event)" placeholder="Please input gene symbol"/>                         
+                    <!-- <Input search enter-button="Search" @on-search="searchBygene($event)" placeholder="Please input gene symbol"/>                          -->
+                    <i-select placeholder="Please input gene symbol" clearable style="width:80%" @on-change='changeGsymbol($event)'  filterable>
+                        <i-option v-for="item in GeneList" :value="item.value" >{{ item.label }}</i-option>
+                    </i-select>
+                    <Button type="primary" @click="searchBygene($event)" >Search</Button>
                 </Col>
 
             </Row>
@@ -56,8 +60,56 @@
 
 <script>
 // getAllDevExpreBulkData
-import {getAllDevExpreBulkData,getAllDevType} from '@/api/erythroidAtlas'
+import {getAllDevExpreBulkData,getAllDevType,getAllDevGene} from '@/api/erythroidAtlas'
 import VuePlotly from '@statnett/vue-plotly'
+
+const source_dict = [
+    {
+      value: "BM_vitro",
+      name: 'Bone Marrow(vitro)'
+    },
+    {
+      value: "BM_vivo",
+      name: 'Bone Marrow(vivo)'
+    },
+    {
+      value: "CB_vivo",
+      name: 'Cord Blood(vivo)',
+      // color: 'red'
+    },
+     {
+      value: "CB_vitro",
+      name: 'Cord Blood(vitro)',
+      // color: 'green'
+    },
+     {
+      value: "PB_vitro",
+      name: 'Peripheral Blood(vitro)',
+      // color: 'green'
+    },
+    {
+      value: "FL_vitro",
+      name: 'Fetal Liver(vitro)',
+      // color: 'green'
+    },
+    {
+      value: "FL_vivo",
+      name: 'Fetal Liver(vivo)',
+      // color: 'green'
+    },
+     {
+      value: "PB_vivo",
+      name: 'Peripheral Blood(vivo)',
+      // color: 'green'
+    },
+    {
+      value: "iPSC_vitro",
+      name: 'Induced Pluripotent Stem Cells(vitro)',
+      // color: 'green'
+    },
+    
+  ]
+
 export default {
     name:"AllExpression",
     components:{
@@ -89,6 +141,7 @@ export default {
            },
            SourceList:[
            ],
+           GeneList:[],
            vitroSourceList:[
                 {
                     value: 'BM_vitro', // 传入后台的查询值
@@ -132,7 +185,8 @@ export default {
                     val[0].sequnceType 
                 this.table_name = table_name
                 this.getAllDevType(table_name)
-              
+                this.getAllDevGene(table_name)
+
                 if (val[0].orga == 'hs'){
                     this.orga_name = 'Homo sapiens'
 
@@ -168,11 +222,21 @@ export default {
             getAllDevType(table_name).then(res =>{
                 let datas = res.data 
                 //console.log(datas)  
-                datas.forEach(key => dev_group_type_list.push({
-                    value:key,
-                    label:key
-                }))
-                 this.SourceList =dev_group_type_list
+                datas.forEach(key =>{ 
+                    // alert(key)
+                    source_dict.forEach(element => {
+                        if(element.value == key){
+                            dev_group_type_list.push({
+                                value:key,
+                                label:element.name
+                            })
+                        }
+                    });
+                
+                    
+                
+                })
+                this.SourceList =dev_group_type_list
 				//this.getdiff_chart(table_name,datas[0])
                 this.cell_source = datas[0]
                 this.searchGene = "GATA1"
@@ -180,6 +244,34 @@ export default {
                
             })
 
+
+        },
+
+        getAllDevGene(table_name){
+
+             let all_gene_list = []
+            // this.table_name = 'all_hs_ep_bulk'
+            // var table_name = selectDict
+			// alert(table_name)
+            getAllDevGene(table_name).then(res =>{
+                let datas = res.data 
+                //console.log(datas)  
+                datas.forEach(key =>{ 
+                    
+                     
+                    all_gene_list.push({
+                            value:key,
+                            label:key,
+                    })
+                   
+                  
+                
+                    
+                
+                })
+                this.GeneList = all_gene_list
+
+            })
 
         },
 
@@ -197,7 +289,7 @@ export default {
             // alert($event)
             this.searchVitroGene = $event
             if( "" == this.vitro_source ){
-                this.$Message.info('please select cell source', 10);
+                this.$Message.info('please select source', 10);
                 return
             } 
             if( "" ==  $event ){
@@ -298,15 +390,20 @@ export default {
 
             })
         },
-        searchBygene($event){
-            //alert(this.cell_source)
-            // alert($event)
+
+        changeGsymbol($event){
             this.searchGene= $event
+        },
+
+        searchBygene(){
+            // alert(this.cell_source)
+            // alert(this.searchGene)
+            // this.searchGene= $event
             if( "" == this.cell_source ){
-                this.$Message.info('please select cell source', 10);
+                this.$Message.info('please select source', 10);
                 return
             } 
-            if( "" ==  $event ){
+            if( "" ==  this.searchGene ){
                 this.$Message.info('please input gene symbol', 10);
             } 
             // alert('进来')
@@ -345,8 +442,16 @@ export default {
                         // alert(this.vivo_data)
                         this.vivo_data.push(result);
                     }
+
+                    var cell_source_full_name  = ''
+                    source_dict.forEach(element => {
+                        if(element.value == this.cell_source){
+                           cell_source_full_name = element.name
+                        }
+                    });
+
                     let layout = {
-                        title:  this.searchGene +' expression level in  erythroid differentiation ('+ this.cell_source+')',
+                        title:  this.searchGene +' expression level in  erythroid differentiation ('+ cell_source_full_name+')',
                         bargap: 0.25,
                         yaxis: {
                             
@@ -359,11 +464,16 @@ export default {
                             gridcolor: 'rgb(255, 255, 255)',
                             gridwidth: 1,
                             zerolinecolor: 'rgb(255, 255, 255)',
-                            zerolinewidth: 2
+                            zerolinewidth: 2,
+                            title:"Normalized Value",
+                        },
+                        xaxis:{
+
+                            title:"Group"
                         },
                         margin: {
                                 l: 40,
-                                r: 30,
+                                r: 40,
                                 b: 80,
                                 t: 100
                             },
@@ -649,6 +759,8 @@ export default {
     
 
 }
+
+
 </script>
 
 

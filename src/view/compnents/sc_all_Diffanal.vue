@@ -264,9 +264,11 @@ export default {
                     val[0].orga +
                     '_ep_' +
                     val[0].sequnceType 
-
                 this.table_name = table_name
-
+				if (table_name.indexOf('all_mm_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'CRA002445'
+				}
                 if (val[0].orga == 'hs'){
                     this.orga_name = 'Homo sapiens'
 

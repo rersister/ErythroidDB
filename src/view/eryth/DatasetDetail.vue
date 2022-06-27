@@ -22,28 +22,28 @@
                         <Col span="19">{{organism}}</Col> 
                     </Row>
                     <Row>
-                        <Col span="5"><strong>Tissue:</strong></Col>
+                        <Col span="5"><strong>Source:</strong></Col>
                         <Col span="19">{{tissue}}</Col> 
                     </Row>
                     <Row>
-                        <Col span="5"><strong>Growth Type:</strong></Col>
+                        <Col span="5"><strong>Experiment Type:</strong></Col>
                         <Col span="19">{{growth_type}}</Col> 
                     </Row>
-                     <Row>
+                    <!-- <Row>
                         <Col span="5"><strong>Development Type:</strong></Col>
                         <Col span="19">{{development_type}}</Col> 
-                    </Row>
+                    </Row> -->
 
                     <Row>
                         <!-- experiment_type -->
-                        <Col span="5"><strong>Experiment Type:</strong></Col>                   
+                        <Col span="5"><strong>Omics Type:</strong></Col>                   
                         <Col span="19">{{experiment_type}}</Col>
                     </Row> 
-                    <Row>
-                        <!-- experiment_type -->
+                    <!-- <Row>
+                      
                         <Col span="5"><strong>Sequencing Type:</strong></Col>                   
                         <Col span="19">{{sequencing_type}}</Col>
-                    </Row> 
+                    </Row>  -->
                     <!-- status -->
                     <Row>
                         <Col span="5"><strong>Status:</strong></Col>
@@ -109,6 +109,18 @@
                      
                     
                     </Row> 
+
+                    <!-- Datase Service 内容 -->
+                    <Content>
+                        <Card >                            
+                            <div>                              
+                                <!-- <router-view/>-->                        
+                                <DatasetService />
+                                <All />
+                            </div>
+                        </Card> 
+                    </Content> 
+
                     <Row> 
                         <Collapse>
                             <Panel name="0">
@@ -180,14 +192,6 @@
                         </Collapse>
                     </Row>            
             </Col>
-
-            <!-- 右列 -->
-            <!-- <Col span="12" > 
-                <!-- "'@/assets/img/'+ dataset + '.png'" -->
-                <!-- <img   :src="getImgURL()" alt="img "> -->
-                <!-- src\assets\img\hspc_1.png 
-                <!-- <img :src="`${publicPath}hspc_1.png`" /> 
-            </Col> -->
         </Row> 
        
         <Row>          
@@ -198,16 +202,7 @@
             </Col>
         </Row>
 
-        <!-- 各数据类型表 -->
-        <Content>
-            <Card >                            
-                <div>                              
-                     <!-- <router-view/>-->                        
-                    <DatasetService />
-                    <All />
-                </div>
-            </Card> 
-        </Content> 
+        
 
     </div>
    
@@ -253,8 +248,8 @@ export default {
                                         return h('div', [
                                         h('a', {                               
                                                 attrs:{                              
-                                                href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.gid
-
+                                                href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.gid,
+                                                target:'_blank',                    
                                                 },    
                                             },params.row.gid)
                                         ])
@@ -262,7 +257,8 @@ export default {
                                         return h('div', [
                                         h('a', {                               
                                                 attrs:{                              
-                                                href:'https://web2.ega-archive.org/datasets/'+params.row.gid.split('_')[0]
+                                                href:'https://web2.ega-archive.org/datasets/'+params.row.gid.split('_')[0],
+                                                target:'_blank',
 
                                                 },    
                                             },params.row.gid)

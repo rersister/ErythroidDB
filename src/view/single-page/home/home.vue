@@ -8,9 +8,7 @@
                                 About EryDB
                                  <!-- All datasets were divided into different developmental stages. Unlike other added-value databases, EryDB allows users to easily retrieve and explore data of specific studies, determine differentially expressed genes and their functions via principal component analysis, differential gene expression analysis, gene set enrichment analysis, and transcription factor analysis under certain conditions, such as in vitro or in vivo. Besides, EryDB integrated single-cell RNA sequencing data to visualize gene expression in single cell resolution by color-coded t-SNE or UMAP plots. Plots and tables in EryDB are customizable, downloadable and interactive.  -->
                                 <p class="p_text" slot="content">
-                                    EryDB: A database of transcriptome profile of erythroid development. 
-                                    We developed the erythroid database EryDB, a web-accessible collection of expert curated, quality assured and pre-analyzed data collected from ~106 datasets comprising a total of ~3,899 bulk RNA-seq samples and 175,628 single cell erythroid cells from three different organisms.
-                                    
+                                    EryDB: a database of transcriptome profile of erythropoiesis and a web-accessible collection of expertly curated, quality-assured, and pre-analyzed data sets covering three species and nine sources, totaling ~3,544 samples and ~693,342 single cell. 
                                 </p>
 
                         </Panel>
@@ -60,9 +58,10 @@
                     </br>
                     </br>
                     <span >Input Reported Gene/Tissue/Dataset Id/Organism Name:</span>
-                    <i-select enter-button="Search"  @on-search="searchDataSetByKeyName($event)" :model.sync="showByGroup" clearable :placeholder="search_placeholder"  @on-change="searchDataSetByKeyName($event)"  filterable>        
+                    <i-select enter-button="Search" style="width:80%"  @on-search="searchDataSetByKeyName($event)" :model.sync="showByGroup" clearable :placeholder="search_placeholder"  @on-change="searchDataSetByKeyName($event)"  filterable>        
 							<i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
 					</i-select>
+                    <Button type="primary" @click="searchByKeyWord()" >Search</Button>
                     <!-- <Input  filterable search enter-button="Search"    @on-search="searchDataSetByKeyName($event)" :placeholder="search_placeholder"/>                          -->
                 
                 </Col> 
@@ -128,7 +127,7 @@
                                 </div>
                                 
                                 <div class='count_div'>
-                                    <p  class='h3_title'>Cell Type
+                                    <p  class='h3_title'>Stage Number
                                         <count-to :end="13" count-class="count-style"/>                                                              
                                     </p>
                                 </div>
@@ -146,7 +145,7 @@
                                 </div>
                                 
                                 <div class='count_div'>
-                                    <p  class='h3_title'>Reported Gene
+                                    <p  class='h3_title'>Gene  Number
                                         <count-to :end="124" count-class="count-style"/>                                                              
                                     </p>
                                 </div>
@@ -309,14 +308,19 @@ export default {
             let _this = this
             _this.InputKeyName = InputKeyName
             // alert(InputKeyName)
-            router.push({
-                name: 'Search',
-                params: {
-                    KeyName: InputKeyName,
-                },
-            })
+           
 
         },
+
+        searchByKeyWord(){
+             router.push({
+                name: 'Search',
+                params: {
+                    KeyName: this.InputKeyName,
+                },
+            })
+        },
+
         intoDataSet(dataset_id){               
         
          // alert(data.dataset);

@@ -6,7 +6,7 @@
             <!-- Process of Red blood cell differentiation and development -->
         
             <h1 class='h1_title' > 
-              Process of Erythroid  Differentiation and Development
+              Erythropoiesis
             </h1>
             <Row>
               <h2 class='h2_title' > {{ current_cellname }} </h2>
@@ -24,8 +24,9 @@
           <Row>
             <h1 class='h1_title' > Get Research Datasets Have Cells of  {{cell_name}}
               <!-- <i-button  shape="circle" icon="ios-search" @click="changedCellType"></i-button> -->
-              <i-button  shape="circle"  @click="resetCellType">Reset</i-button>
-            </h1>
+              <!-- <i-button class="my_reset_button"  shape="circle"  @click="resetCellType">Reset</i-button> -->
+              <Button type="primary"  @click="resetCellType" >Reset</Button>
+           </h1>
             <!-- <Col span='12'>
                     <i-select :model.sync="cell_name" placeholder="Select cell source" clearable style="width:80%" @on-change='changedCellType'>
                       <i-option v-for="(source,index) in cell_type_list" :key='index' :value="source.name">{{ source.name }}</i-option>
@@ -443,7 +444,8 @@ export default {
                   return h('div', [
                   h('a', {                               
                         attrs:{                              
-                          href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset
+                          href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset,
+                          target:'_blank',
 
                         },    
                     },params.row.dataset)
@@ -479,7 +481,8 @@ export default {
                             marginRight: '5px'
                       },
                       attrs:{                              
-                        href:'https://www.ncbi.nlm.nih.gov/pubmed/'+citations[cita]
+                        href:'https://www.ncbi.nlm.nih.gov/pubmed/'+citations[cita],
+                        target:'_blank',
 
                       },    
                   }, citations[cita]))
@@ -527,31 +530,31 @@ export default {
               type: 'Input'
             },
             fixed: 'left',
-            render: (h, params) => {            
-              if (params.row.dataset_id.indexOf("GSE") > -1){
-                  return h('div', [
-                  h('a', {                               
-                        attrs:{                              
-                          href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id
-
-                        },    
-                    },params.row.dataset_id)
-                  ])
-              }else{
-                return h('div',params.row.dataset_id)
+            // render: (h, params) => {            
+            //   if (params.row.dataset_id.indexOf("GSE") > -1){
+            //       return h('div', [
+            //       h('a', {                               
+            //             attrs:{                              
+            //               href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id,
+            //               target:'_blank',  
+            //             },    
+            //         },params.row.dataset_id)
+            //       ])
+            //   }else{
+            //     return h('div',params.row.dataset_id)
               
-              }     
+            //   }     
 
-              // return h('div', [
-              //   h('a', {                               
-              //         attrs:{                              
-              //           href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id
+            //   // return h('div', [
+            //   //   h('a', {                               
+            //   //         attrs:{                              
+            //   //           href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id
 
-              //         },    
-              //     },params.row.dataset_id)
-              //   ])
+            //   //         },    
+            //   //     },params.row.dataset_id)
+            //   //   ])
 
-            }
+            // }
           },
           //organism
           {
@@ -564,7 +567,7 @@ export default {
 
           },
           {
-              title: 'Tissue',//来源 dataset 里的source
+              title: 'Source',//来源 dataset 里的source
               key: 'source',
               // "sortable": true,
               filter: {
@@ -574,23 +577,23 @@ export default {
           },
 
           {
-              title: 'Growth Mode',
+              title: 'Experiment Type',
               key: 'growth_mode',
-            
+              width:'120',
               filter: {
                   type: 'Select',
                   option: growth_type
               },
           },
-          {
-              title: 'Development Type',
-              key: 'development_type',
-             width:'130',
-              filter: {
-                  type: 'Select',
-                  option: development_type
-              },
-          },
+          // {
+          //     title: 'Development Type',
+          //     key: 'development_type',
+          //    width:'130',
+          //     filter: {
+          //         type: 'Select',
+          //         option: development_type
+          //     },
+          // },
         
           {
             title: 'Title',
@@ -600,19 +603,19 @@ export default {
             }
 
           },
+          // {
+          //   title: 'Omics Data Type',
+          //   key: 'experiment_type',
+          //   width:'120',
+          //   filter: {
+          //         type: 'Select',
+          //         option: experiment_type
+          //     },
+          // },
           {
-            title: 'Omics Data Type',
-            key: 'experiment_type',
-            width:'120',
-            filter: {
-                  type: 'Select',
-                  option: experiment_type
-              },
-          },
-          {
-            title: 'Sequence Type',
+            title: 'Omics Type',
             key: 'sequence_type',
-            width:'110',
+            width:'125',
             filter: {
                 type: 'Select',
                 option: sequence_type
@@ -675,6 +678,8 @@ export default {
 
         var _this = this;      
         _this.spinShowTypeSource = true, 
+        // alert(_this.currentPageTypeSource)
+        // pageSizeTypeSource
         getDatasetTypeSource(_this.table_name,_this.currentPageTypeSource,_this.pageSizeTypeSource ).then( res=>{
            
             _this.spinShowTypeSource = false                    
@@ -722,15 +727,12 @@ export default {
           this.tableColumns = this.getTable2Columns();
       },
 
-      handleCurrentChange(val) {
-          // console.log(`当前页: ${val}`);
-          this.currentPage = val;
-          this.mockTableData()
-
-      },
+   
       handleCurrentChangeTypeSource(val){
+          // alert('chenge')
           // console.log(`当前页: ${val}`);
-          this.currentPage = val;
+          var _this = this; 
+          _this.currentPageTypeSource = val;
           this.mockTableDataTypeSource()
       },
       handleSizeChange(val){
@@ -739,10 +741,13 @@ export default {
           this.mockTableData()
 
       },
+      
       handleSizeChangeTypeSource(val){
         // console.log(`每页 ${val} 条`);
-        this.pageSizeTypeSource = val;
-        this.mockTableDataTypeSource
+        var _this = this; 
+        _this.pageSizeTypeSource = val;
+        // alert('chenge')
+        this.mockTableDataTypeSource()
       },
 
       /**
@@ -865,14 +870,14 @@ export default {
             'cell_ano':'Hematopoietic stem cells (HSCs) are a rare population of cells residing in the bone marrow (BM) and continuously replenish all mature blood cells throughout the life span.'},
           {'name':'MPP',
             'full_name':'Multipotent Progenitor Cell',
-            'cell_ano':'Multipotent adult progenitor cells (MAPC) are an attractive choice for cytotherapy because they have a large proliferative potential, the ability to differentiate into different cell types and produce a variety of cytokines and growth factors important to wound healing. '},
+            'cell_ano':'Multipotent progenitor cell is generated from HSC and has the ability of self-renewing and differentiation into all blood cell forms.'},
           {'name':'CMP',
           'full_name':'Common Myeloid Progenitor',
-          'cell_ano':'Common myeloid progenitors give rise to either megakaryocyte/erythrocyte or granulocyte/macrophage progenitors. Purified progenitors were used to provide a first-pass expression profile of various haematopoiesis-related genes.'},
+          'cell_ano':'Common myeloid progenitors give rise to either megakaryocyte/erythrocyte or granulocyte/macrophage progenitors. '},
           
           {'name':'MEP',
           'full_name':'Megakaryocyte-Erythroid Progenitor',
-          'cell_ano':'Megakaryocyte/erythroid progenitors (MEPs) are bipotent cells that undergo a fate decision to become either megakaryocytes (Mk) or erythroid (E) cells. Detailed mechanistic knowledge of the human MEP fate decision is not only critical for our understanding of normal and perturbed hematopoiesis, but also has important therapeutic implications.'},
+          'cell_ano':'Megakaryocyte/erythroid progenitors (MEPs) are bipotent cells that undergo a fate decision to become either megakaryocytes (Mk) or erythroid (E) cells.'},
           {'name':'BFU-E',
           'full_name':'Burst-Forming Unit -Erythroid',
           'cell_ano':'BFU-E Burst forming unit-erythroid, the earliest known erythroid precursor cell that eventually differentiates into erythrocytes. Produces a colony containing greater than 200 erythroblasts in a hematopoietic colony assay.'},
@@ -881,11 +886,11 @@ export default {
           'cell_ano':'A CFU-E cell, which has a lesser proliferative capacity than a BFU-E cell, requires the presence of erythropoietin as a stimulatory factor. '},
 
           {'name':'ProE',
-          'full_name':'The Proerythroblast Stage',
-          'cell_ano':'The proerythroblast is a large cell with deep blue cytoplasm, high N:C ratio, and prominent nucleoli. Subsequent to proerythroblasts, nucleoli are no longer seen. '},
+          'full_name':'Proerythroblast',
+          'cell_ano':'The proerythroblast is a large cell with deep blue cytoplasm, high nucleus-to-cytoplasm ratio, and prominent nucleoli. Subsequent to proerythroblasts, nucleoli are no longer seen.'},
           {'name':'BasoE',
           'full_name':'Basophilic Erythroblast',
-          'cell_ano':'Basophilic erythroblast a nucleated precursor in the erythrocytic series, preceding the polychromatophilic erythroblast and following the proerythroblast; the cytoplasm is basophilic, the nucleus is large with clumped chromatin, and the nucleoli have disappeared. Called also basophilic normoblast.'},
+          'cell_ano':'Basophilic erythroblast is a nucleated precursor in the erythrocytic series, preceding the polychromatophilic erythroblast and following the proerythroblast; the cytoplasm is basophilic, the nucleus is large with clumped chromatin, and the nucleoli have disappeared. It is also called basophilic normoblast.'},
           {'name':'PolyE',
           'full_name':'Polychromatophilic Erythroblast',
           'cell_ano':'The nucleus is intensely heterochromatic, and the cytoplasm is now a characteristic lilac color. The basophilia is due to the cytoplasmic ribosomes, and the acidophilia is due to the increase in the amount of hemoglobin being synthesized by the ribosomes. This is the last stage during which cell division occurs.'},

@@ -293,7 +293,6 @@
 import routers from '@/router/routers'
 import { mapMutations } from 'vuex'
 import HeaderBar from './components/header-bar'
-import Language from './components/language'
 import Header from './components/Header'
 
 
@@ -303,7 +302,7 @@ export default {
   name: 'App',
   components: {
     HeaderBar,
-    Language,
+
     Header,
    
   },

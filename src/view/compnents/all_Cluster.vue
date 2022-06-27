@@ -6,13 +6,21 @@
         <Row>
           
             <i-form :label-width="100">
-				<i-col span="8">
+                <Col span="12">
+                    <i-select placeholder="Please choose source" clearable style="width:80%" @on-change='changeCellSource($event)'  filterable>
+                        <i-option v-for="item in SourceList" :value="item.value" >{{ item.label }}</i-option>
+                    </i-select>  
+                </Col>
+				<Col span="12">
 					<Form-item label="Color by: ">                                                  
-						<i-select  clearable placeholder="Pleace select cell group"  @on-change="changedClustChart($event)"  filterable>        
+						<i-select  style="width:70%" clearable placeholder="Pleace select cell group"  @on-change="changedClustChart($event)"  filterable>        
 							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
+                        <Button type="primary" @click="getPCAByKey($event)" >Search</Button>
+               
 					</Form-item>
-				</i-col>
+                    
+				</Col>
 			</i-form>
         </Row>
         <Row>
@@ -51,7 +59,53 @@
 
 <script>
 import VuePlotly from '@statnett/vue-plotly'
-import {getClusterDataAll,} from '@/api/erythroidAtlas'
+import {getClusterDataAll,getAllDevType} from '@/api/erythroidAtlas'
+const source_dict = [
+    {
+      value: "BM_vitro",
+      name: 'Bone Marrow(vitro)'
+    },
+    {
+      value: "BM_vivo",
+      name: 'Bone Marrow(vivo)'
+    },
+    {
+      value: "CB_vivo",
+      name: 'Cord Blood(vivo)',
+      // color: 'red'
+    },
+     {
+      value: "CB_vitro",
+      name: 'Cord Blood(vitro)',
+      // color: 'green'
+    },
+     {
+      value: "PB_vitro",
+      name: 'Peripheral Blood(vitro)',
+      // color: 'green'
+    },
+    {
+      value: "FL_vitro",
+      name: 'Fetal Liver(vitro)',
+      // color: 'green'
+    },
+    {
+      value: "FL_vivo",
+      name: 'Fetal Liver(vivo)',
+      // color: 'green'
+    },
+     {
+      value: "PB_vivo",
+      name: 'Peripheral Blood(vivo)',
+      // color: 'green'
+    },
+    {
+      value: "iPSC_vitro",
+      name: 'Induced Pluripotent Stem Cells(vitro)',
+      // color: 'green'
+    },
+    
+  ]
 export default {
     name:"all_Cluster",
     components:{
@@ -72,6 +126,8 @@ export default {
           	series:this.$store.state.app.CurrentPageToken,
             spinShow3:'true',
             spinShow2:'true',
+            SourceList:[
+            ],
             spinShow1:'true',
 			clusterbyifVivo_data:[],
 			clusterbyifVivo_layout:{},
@@ -92,20 +148,21 @@ export default {
             sequ_type:this.$route.params.sequ_type,
             table_name:'all_hsrna_dev_cluster',
             colorby:'',
+            cell_source:'',
             group_type_list : [ 
-				{
-					id:"0",
-                    name:"development type ",
-                    value:'development_type'
-				},
+				// {
+				// 	id:"0",
+                //     name:"Experiment type ",
+                //     value:'development_type'
+				// },
 				{
 					id:'1',
-                    name:"cell type ",
+                    name:"Cell type ",
                     value:'cell_type'
                 },
                 {
                     id:'2',
-                    name:"development and cell type " ,
+                    name:"Experiment and cell type " ,
                     value:'group'
                 }
         
@@ -117,7 +174,15 @@ export default {
         selectList: {
             handler(val){
                 // console.log(val)
-                
+                var table_name =
+                    'all_' +
+                    val[0].orga +
+                    '_ep_' +
+                    val[0].sequnceType 
+                this.table_name = table_name
+                this.getAllDevType(table_name)
+                this.getCluster_chart3(this.selectList,'cell_type','BM_vitro')
+
                 if (val[0].orga == 'hs'){
                     this.orga_name = 'Homo sapiens'
 
@@ -145,6 +210,49 @@ export default {
         
     },
 	methods:{
+      getAllDevType(table_name){
+            let dev_group_type_list = []
+            // this.table_name = 'all_hs_ep_bulk'
+            // var table_name = selectDict
+			// alert(table_name)
+            getAllDevType(table_name).then(res =>{
+                let datas = res.data 
+                //console.log(datas)  
+                datas.forEach(key =>{ 
+                    
+                    source_dict.forEach(element => {
+                        if(element.value == key){
+                            dev_group_type_list.push({
+                                value:key,
+                                label:element.name
+                            })
+                        }
+                    });
+                
+                    
+                
+                })
+                this.SourceList =dev_group_type_list
+				
+               
+            })
+
+
+        },
+    
+      changeCellSource($event){
+            // alert($event)
+            this.cell_source = $event
+      },
+
+      getPCAByKey(){
+
+        // alert(this.selectList)
+        // alert(this.cell_source)
+        // alert(this.colorby)
+        this.getCluster_chart3(this.selectList,this.colorby,this.cell_source)
+
+      },
 	  changedClustChart(value){
         //   alert(value)
           let _this = this
@@ -155,17 +263,17 @@ export default {
 
           })
         //   alert(_this.colorby)
-        var table_name = 'all_'+this.orga +'rna'+'_dev_'+this.sequ_type+'cluster'
-        var colorby = _this.colorby  //source / group / order 
-        this.getCluster_chart3(this.selectList,colorby)
+        //var table_name = 'all_'+this.orga +'rna'+'_dev_'+this.sequ_type+'cluster'
+        
 
       },
-	  getCluster_chart3(selectList,colorby){
+	  getCluster_chart3(selectList,colorby,source){
         //   redcell.all_hsrnadev_bulkcluster
             // var table_name = 'all_'+this.orga +'rna'+'dev_'+this.sequ_type+'cluster'
             // var colorby = this.colorby  //source / group / order 
             var _this = this
-            getClusterDataAll(selectList[0],colorby).then(res =>{
+            // alert(selectList[0])
+            getClusterDataAll(selectList[0],colorby,source).then(res =>{
                 let datas = res.data  
                 console.log(datas)             
                 var xData = datas.xData  // list 里面装list
@@ -186,10 +294,15 @@ export default {
                     };
                     this.clusterbyifVivo_data.push(result)   
                 };
-                                
+                var cell_source_full_name  = ''
+                    source_dict.forEach(element => {
+                        if(element.value == this.cell_source){
+                           cell_source_full_name = element.name
+                        }
+                });                
                 var layout={ 
-                   
-                    title:'',
+                    
+                    title:'Principal Components Analysis(' + this.orga_name+";"+cell_source_full_name +')',
                     xaxis: {
                         title:'Leading logFC dim 1',
                     },
@@ -326,6 +439,10 @@ export default {
 
 
 }
+
+
+
+
 </script>
 
 

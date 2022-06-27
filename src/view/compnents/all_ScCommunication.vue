@@ -169,7 +169,10 @@ export default {
                     val[0].sequnceType 
 
                 this.table_name = table_name
-
+				if (table_name.indexOf('all_mm_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'CRA002445'
+				}
                 if (val[0].orga == 'hs'){
                     this.orga_name = 'Homo sapiens'
 
@@ -240,7 +243,7 @@ export default {
 				})) 
 				// alert(this.sigName_list)
 				this.getCellChartHotMap(this.table_name,this.source,datas[0])
-				this.geteSigPathNet_chart(this.table_name,this.source,datas[0]);
+				// this.geteSigPathNet_chart(this.table_name,this.source,datas[0]);
 				this.getCellChartRcontri(this.table_name,this.source,datas[0]);
            })
 
@@ -556,7 +559,7 @@ export default {
 			
 			this.getCellChartHotMap(this.table_name,this.source,sigName)
 			// this.getCellChartView(this.source,pName);
-			this.geteSigPathNet_chart(this.table_name,this.source,sigName);
+			// this.geteSigPathNet_chart(this.table_name,this.source,sigName);
 			this.getCellChartRcontri(this.table_name,this.source,sigName);
 			
 		},

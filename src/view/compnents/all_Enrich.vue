@@ -7,18 +7,26 @@
         <h1 class="my_h1">Enrichment Analysis  ({{orga_name}}) </h1> 
         </Br>
         <div>
-            <Row>
+            <Row :gutter="4">
                 <!-- <Col span="12">
                     <i-select placeholder="Pleace select cell source" clearable style="width:80%" @on-change='changedSourceGroup'>
                         <i-option v-for="(source,index) in source_group" :key='index' :value="source.name">{{ source.name }}</i-option>
                     </i-select>
                 </Col> -->
-                <Col span="12">
+                <Col span="10">
                     <!-- 数据查询分子名 -->
                     <i-select :model.sync="contrastsGroup" clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup"  filterable>        
                         <i-option v-for="(group,index) in contrasts_group" :key='index' :value="group.name">{{ group.name }}</i-option>
                     </i-select>
                 </Col>
+                <Col span="12">
+				<div style="margin-left: 4px; ">
+					<span>
+						e.g, late_basoE_CB_vitro-orthoE_CB_vitro means the late_basoE_CB_vitro  group versus the orthoE_CB_vitro group
+					</span>
+				</div>
+				
+			    </Col>
             </Row>
              
             </Br>
@@ -185,7 +193,7 @@ export default {
 					};
 
 					var layout = {
-						title:'GO (in '+ this.sourceGroup+ ') enrichment of ' + this.contrastsGroup,
+						title:'GO '+ 'enrichment of ' + this.contrastsGroup,
                         bargap: 0.25,
                         xaxis: {
 							title:'-log10(p.adjust)',

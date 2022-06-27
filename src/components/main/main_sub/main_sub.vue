@@ -104,7 +104,7 @@
             <div> 
             <!-- dataset 展示页 FilterTableForAllDateSet -->
               
-              <Table stripe
+              <Table class="my_hover" stripe
                     @on-row-click="intoDataSet"
                     :data="datasetsTypeSource"
                     :columns="tAdatasetTypeSourceColumns">
@@ -147,253 +147,14 @@
                   >Fang's Lab.</a>
                 All Rights Reserved.</span>
     </div>
-    <!-- <footer class="bigd-footer" style="font-family: Arial">
-      <div class="bigd-container">
-        <div class="bigd-panel bigd-panel-default">
-          <div class="bigd-panel-body">
-            <div class="bigd-row">
-              <div class="bigd-col-md-2">
-                <a href="https://bigd.big.ac.cn/"
-                  ><img
-                    src="https://bigd.big.ac.cn/cdn/image/CNCB-NGDC.png"
-                    class="bigd-img-responsive"
-                    style="margin-top: calc((15/1920) * 100vw);"
-                /></a>
-                <ul class="bigd-list-unstyled">
-                  <li><a href="https://bigd.big.ac.cn/about">About NGDC</a></li>
-                  <li><a href="https://bigd.big.ac.cn/people">People</a></li>
-                  <li><a href="https://bigd.big.ac.cn/mission">Mission</a></li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/board">Advisory Board</a>
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/structure"
-                      >Organizational Structure</a
-                    >
-                  </li>
-                  <li><a href="https://bigd.big.ac.cn/history">History</a></li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/annual-report"
-                      >Annual Reports</a
-                    >
-                  </li>
-                </ul>
-              </div>
-
-              <div class="bigd-col-md-2">
-                <h3>Research & Resources</h3>
-                <ul class="bigd-list-unstyled">
-                  <li>
-                    <a href="https://bigd.big.ac.cn/databases">Databases</a>
-                  </li>
-                  <li><a href="https://bigd.big.ac.cn/tools">Tools</a></li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/standards">Standards</a>
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/research"
-                      >Topics & Projects</a
-                    >
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/publications"
-                      >Publications</a
-                    >
-                  </li>
-                </ul>
-              </div>
-
-              <div class="bigd-col-md-2">
-                <h3>Featured</h3>
-                <ul class="bigd-list-unstyled">
-                  <li>
-                    <a
-                      href="https://bigd.big.ac.cn/databasecommons"
-                      target="_blank"
-                      >Database Commons</a
-                    >
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/ewas" target="_blank"
-                      >EWAS Atlas</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="https://bigd.big.ac.cn/gsa"
-                      target="_blank"
-                      title="Genome Sequence Archive"
-                      >GSA</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="https://bigd.big.ac.cn/gvm"
-                      target="_blank"
-                      title="Genome Variation Map"
-                      >GVM</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="http://ic4r.org"
-                      target="_blank"
-                      title="Information Commons for Rice"
-                      >IC4R</a
-                    >
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/idog" target="_blank"
-                      >iDog</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="https://bigd.big.ac.cn/methbank"
-                      target="_blank"
-                      title="Methylation DataBank"
-                      >MethBank</a
-                    >
-                  </li>
-                </ul>
-              </div>
-
-              <div class="bigd-col-md-2">
-                <h3>Conferences & Education</h3>
-                <ul class="bigd-list-unstyled">
-                  <li>
-                    <a href="https://bigd.big.ac.cn/conference">Conferences</a>
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/education">Education</a>
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/training">Training</a>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="bigd-col-md-2">
-                <h3>Alliance & Collaboration</h3>
-                <ul class="bigd-list-unstyled">
-                  <li>
-                    <a href="https://bigd.big.ac.cn/bhbd-alliance">BHBD</a>
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/partners">Partners</a>
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/collaborations"
-                      >Collaborations</a
-                    >
-                  </li>
-                  <li><a href="https://bigd.big.ac.cn/funding">Funding</a></li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/contact">Contact Us</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <hr class="footer-hr" />
-            <div class="bigd-row">
-              <div class="bigd-col-md-7">
-                <p class="bigd-text-muted">
-                  &copy; year National Genomics Data Center,
-                  <span
-                    ><a href="http://english.big.cas.cn" target="_blank"
-                      >China National Center for Bioinformation / Beijing
-                      Institute of Genomics</a
-                    ></span
-                  >,
-                  <span
-                    ><a href="http://english.cas.cn" target="_blank"
-                      >Chinese Academy of Sciences</a
-                    ></span
-                  ><br />
-                  No.1 Beichen West Road, Chaoyang District, Beijing 100101,
-                  China<br />
-                  <span
-                    ><a href="bigd_sitepolicies"
-                      >Policies and Disclaimers</a
-                    ></span
-                  >
-                </p>
-                <p class="bigd-text-muted">
-                  <span
-                    ><a
-                      rel="license"
-                      target="_blank"
-                      href="http://creativecommons.org/licenses/by/3.0/cn/"
-                    >
-                      <img
-                        alt="Creative Commons License"
-                        style="border-width:0;height: calc((15/1920) * 100vw)"
-                        src="https://bigd.big.ac.cn/static/image/cc.png"/></a
-                  ></span>
-                  This work is licensed under a
-                  <span
-                    ><a
-                      rel="license"
-                      href="http://creativecommons.org/licenses/by/3.0/cn/"
-                      target="_blank"
-                      >Creative Commons Attribution 3.0 China Mainland
-                      License</a
-                    ><br /><a
-                      href="http://www.beian.miit.gov.cn"
-                      target="_blank"
-                      >京ICP备10050270号</a
-                    ></span
-                  >
-                </p>
-              </div>
-              <div class="bigd-col-md-5">
-                <div class="pull-right">
-                  <ul class="bigd-list-inline">
-                    <li>
-                      <a href="http://english.big.cas.cn" target="_blank"
-                        ><img
-                          src="https://bigd.big.ac.cn/static/image/big_logo.png"
-                          style="width: calc((32/1920) * 100vw)"
-                      /></a>
-                    </li>
-                    <li>
-                      <a href="http://www.picb.ac.cn/picb" target="_blank"
-                        ><img
-                          src="https://bigd.big.ac.cn/static/image/picb.png"
-                          style="height: calc((32/1920) * 100vw);"
-                      /></a>
-                    </li>
-                    <li>
-                      <a href="http://english.ibp.cas.cn/" target="_blank"
-                        ><img
-                          src="https://bigd.big.ac.cn/static/image/ibp.png"
-                          style="height: calc((32/1920) * 100vw);"
-                      /></a>
-                    </li>
-                    <li>
-                      <a href="http://english.cas.cn/" target="_blank"
-                        ><img
-                          src="https://bigd.big.ac.cn/static/image/cas.png"
-                          style="height: calc((32/1920) * 100vw);"
-                      /></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer> -->
-  </div>
+ </div>
 </template>
 <script>
 import router from '@/router'
 import routers from '@/router/routers'
 import { mapMutations } from 'vuex'
 import HeaderBar from '../components/header-bar'
-import Language from '../components/language'
+
 import Header from '../components/Header'
 import FilterTableForAllDateSet from '@/view/compnents/FilterTableForAllDateSet'
 import { getDatasetTypeSource,getDatasetDataByKeyParam,getDatasetGene,getDatasetDataByMultiInput } from '@/api/erythdataset'
@@ -660,7 +421,7 @@ export default {
   name: 'App',
   components: {
     HeaderBar,
-    Language,
+
     Header,
     FilterTableForAllDateSet,
   },
@@ -691,15 +452,17 @@ export default {
           {
             title: 'Dataset',
             key: 'dataset_id',
-            width:'135px',
-            // fixed: 'left',
+            filter: {
+              type: 'Input'
+            },
+            fixed: 'left',
             // render: (h, params) => {            
             //   if (params.row.dataset_id.indexOf("GSE") > -1){
             //       return h('div', [
             //       h('a', {                               
             //             attrs:{                              
-            //               href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id
-
+            //               href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id,
+            //               target:'_blank',  
             //             },    
             //         },params.row.dataset_id)
             //       ])
@@ -722,56 +485,76 @@ export default {
           //organism
           {
             title: 'Species',
-            
-            
             key: 'organism',
-            width:'130px',
+            filter: {
+              type: 'Select',
+              option: species_type
+            },
 
           },
           {
-              title: 'Tissue',//来源 dataset 里的source
+              title: 'Source',//来源 dataset 里的source
               key: 'source',
               // "sortable": true,
-              // width:'150px',
-              
+              filter: {
+                type: 'Select',
+                option:source_type
+              }
           },
 
           {
-              title: 'Growth Mode',
+              title: 'Experiment Type',
               key: 'growth_mode',
-              width:'85px',
+              width:'120',
+              filter: {
+                  type: 'Select',
+                  option: growth_type
+              },
           },
-          {
-              title: 'Development Type',
-              key: 'development_type',
-              width:'160px',
-          },
+          // {
+          //     title: 'Development Type',
+          //     key: 'development_type',
+          //    width:'130',
+          //     filter: {
+          //         type: 'Select',
+          //         option: development_type
+          //     },
+          // },
         
           {
             title: 'Title',
             key: 'title',
-            // width:'200px',
-           
+            filter: {
+              type: 'Input'
+            }
 
           },
+          // {
+          //   title: 'Omics Data Type',
+          //   key: 'experiment_type',
+          //   width:'120',
+          //   filter: {
+          //         type: 'Select',
+          //         option: experiment_type
+          //     },
+          // },
           {
-            title: 'Omics Data Type',
-            key: 'experiment_type',
-            width:'125px',
-           
-          },
-          {
-            title: 'Sequence Type',
+            title: 'Omics Type',
             key: 'sequence_type',
-            width:'110px',
-        
-          
+            width:'125',
+            filter: {
+                type: 'Select',
+                option: sequence_type
+            },
           },
           {
             title: 'Sample Number',
             key: 'sample_number',
-            width:'90px',
-           
+            width:'90',
+            filter: {
+              type: 'Select',
+              option: sample_numbers
+            },
           },
 
 
@@ -1066,14 +849,17 @@ export default {
   methods: {
     ...mapMutations(['setCurrentPageToken']),
     handleCurrentChangeTypeSource(val){
-          // console.log(`当前页: ${val}`);
-          this.currentPage = val;
-          this.mockTableDataTypeSource()
+        // console.log(`当前页: ${val}`);
+        var _this = this; 
+        _this.currentPageTypeSource = val;
+        this.mockTableDataTypeSource()
     },
     handleSizeChangeTypeSource(val){
-        // console.log(`每页 ${val} 条`);
-        this.pageSizeTypeSource = val;
-        this.mockTableDataTypeSource
+      // console.log(`每页 ${val} 条`);
+      var _this = this; 
+      _this.pageSizeTypeSource = val;
+      // alert('chenge')
+      this.mockTableDataTypeSource
     },  
 
     intoDataSet(data, index, event) {
@@ -1339,5 +1125,6 @@ export default {
   text-align: center;
   clear: both;
 }
+
 
 </style>

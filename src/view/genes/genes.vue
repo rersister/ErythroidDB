@@ -29,7 +29,9 @@
           <Row>
             <h1 class='h1_title' > Get Research Datasets Related to  {{cell_name}}
               <!-- <i-button  shape="circle" icon="ios-search" @click="changedGene"></i-button> -->
-              <i-button  shape="circle"  @click="resetCellType">Reset</i-button>
+              <!-- <i-button  class="my_reset_button" shape="circle"  @click="resetCellType">Reset</i-button> -->
+              <Button type="primary"  @click="resetCellType" >Reset</Button>
+                    
             </h1>
             <!-- <Col span='12'>
                     <i-select :model.sync="cell_name" placeholder="Select cell source" clearable style="width:80%" @on-change='changedCellType'>
@@ -429,21 +431,21 @@ export default {
               type: 'Input'
             },
             fixed: 'left',
-            render: (h, params) => {    
-              if (params.row.dataset.indexOf("GSE") > -1){
-                  return h('div', [
-                  h('a', {                               
-                        attrs:{                              
-                          href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset
-
-                        },    
-                    },params.row.dataset)
-                  ])
-              }else{
-                return h('div',params.row.dataset)
+            // render: (h, params) => {    
+            //   if (params.row.dataset.indexOf("GSE") > -1){
+            //       return h('div', [
+            //       h('a', {                               
+            //             attrs:{                              
+            //               href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset,
+            //               target:'_blank',
+            //             },    
+            //         },params.row.dataset)
+            //       ])
+            //   }else{
+            //     return h('div',params.row.dataset)
               
-              }
-            }
+            //   }
+            // }
 
           },
           {
@@ -470,8 +472,8 @@ export default {
                             marginRight: '5px'
                       },
                       attrs:{                              
-                        href:'https://www.ncbi.nlm.nih.gov/pubmed/'+citations[cita]
-
+                        href:'https://www.ncbi.nlm.nih.gov/pubmed/'+citations[cita],
+                        target:'_blank',
                       },    
                   }, citations[cita]))
               }
@@ -510,7 +512,7 @@ export default {
           },
          
         ],
-        tAdatasetTypeSourceColumns:[
+       tAdatasetTypeSourceColumns:[
           {
             title: 'Dataset',
             key: 'dataset_id',
@@ -518,31 +520,31 @@ export default {
               type: 'Input'
             },
             fixed: 'left',
-            render: (h, params) => {            
-              if (params.row.dataset_id.indexOf("GSE") > -1){
-                  return h('div', [
-                  h('a', {                               
-                        attrs:{                              
-                          href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id
-
-                        },    
-                    },params.row.dataset_id)
-                  ])
-              }else{
-                return h('div',params.row.dataset_id)
+            // render: (h, params) => {            
+            //   if (params.row.dataset_id.indexOf("GSE") > -1){
+            //       return h('div', [
+            //       h('a', {                               
+            //             attrs:{                              
+            //               href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id,
+            //               target:'_blank',  
+            //             },    
+            //         },params.row.dataset_id)
+            //       ])
+            //   }else{
+            //     return h('div',params.row.dataset_id)
               
-              }     
+            //   }     
 
-              // return h('div', [
-              //   h('a', {                               
-              //         attrs:{                              
-              //           href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id
+            //   // return h('div', [
+            //   //   h('a', {                               
+            //   //         attrs:{                              
+            //   //           href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id
 
-              //         },    
-              //     },params.row.dataset_id)
-              //   ])
+            //   //         },    
+            //   //     },params.row.dataset_id)
+            //   //   ])
 
-            }
+            // }
           },
           //organism
           {
@@ -555,7 +557,7 @@ export default {
 
           },
           {
-              title: 'Tissue',//来源 dataset 里的source
+              title: 'Source',//来源 dataset 里的source
               key: 'source',
               // "sortable": true,
               filter: {
@@ -565,23 +567,23 @@ export default {
           },
 
           {
-              title: 'Growth Mode',
+              title: 'Experiment Type',
               key: 'growth_mode',
-            
+              width:'120',
               filter: {
                   type: 'Select',
                   option: growth_type
               },
           },
-          {
-              title: 'Development Type',
-              key: 'development_type',
-             width:'130',
-              filter: {
-                  type: 'Select',
-                  option: development_type
-              },
-          },
+          // {
+          //     title: 'Development Type',
+          //     key: 'development_type',
+          //    width:'130',
+          //     filter: {
+          //         type: 'Select',
+          //         option: development_type
+          //     },
+          // },
         
           {
             title: 'Title',
@@ -591,19 +593,19 @@ export default {
             }
 
           },
+          // {
+          //   title: 'Omics Data Type',
+          //   key: 'experiment_type',
+          //   width:'120',
+          //   filter: {
+          //         type: 'Select',
+          //         option: experiment_type
+          //     },
+          // },
           {
-            title: 'Omics Data Type',
-            key: 'experiment_type',
-            width:'120',
-            filter: {
-                  type: 'Select',
-                  option: experiment_type
-              },
-          },
-          {
-            title: 'Sequence Type',
+            title: 'Omics Type',
             key: 'sequence_type',
-            width:'110',
+            width:'125',
             filter: {
                 type: 'Select',
                 option: sequence_type
@@ -836,20 +838,17 @@ export default {
           this.mockTableData()
 
       },
-      handleCurrentChangeTypeSource(val){
+       handleCurrentChangeTypeSource(val){
           // console.log(`当前页: ${val}`);
-          this.currentPage = val;
+          var _this = this; 
+          _this.currentPageTypeSource = val;
           this.mockTableDataTypeSource()
-      },
-      handleSizeChange(val){
-          // console.log(`每页 ${val} 条`);
-          this.pageSize = val;
-          this.mockTableData()
-
       },
       handleSizeChangeTypeSource(val){
         // console.log(`每页 ${val} 条`);
-        this.pageSizeTypeSource = val;
+        var _this = this; 
+        _this.pageSizeTypeSource = val;
+        // alert('chenge')
         this.mockTableDataTypeSource
       },
 
