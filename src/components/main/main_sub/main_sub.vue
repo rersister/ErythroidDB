@@ -75,23 +75,23 @@
             </div>
             <Br/>
             <div>
-              <h4>Choose Growth Mode:</h4>
+              <h4>Choose Experiment Type:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
-              <i-select  clearable placeholder="Pleace select growth mode"  @on-change="changedGrowthMode" filterable>        
+              <i-select  clearable placeholder="Pleace select experiment type"  @on-change="changedGrowthMode" filterable>        
                 <i-option v-for="(growth_mode,index) in growth_mode_list" :key='index' :value="growth_mode.name">{{growth_mode.name }}</i-option>
               </i-select>
             </div>
-            <Br/>
+            <!-- <Br/>
             <div>
               <h4>Choose Development Type:</h4>
-              <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
+              <Input enter-button="Search"   :placeholder="search_placeholder"/>  
               <i-select  clearable placeholder="Pleace select development type"  @on-change="changedDevelopmentType" filterable>        
                 <i-option v-for="(development,index) in development_list" :key='index' :value="development.name">{{ development.name }}</i-option>
               </i-select>
-            </div>
+            </div> -->
             <Br/>
             <div>
-              <h4>Choose Sequence Type:</h4>
+              <h4>Choose Omics Type:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
               <i-select  clearable placeholder="Pleace select sequence type"  @on-change="changedSequenceType" filterable>        
                 <i-option v-for="(sequence,index) in sequenceType_list" :key='index' :value="sequence.name">{{ sequence.name }}</i-option>
@@ -299,115 +299,18 @@ const growth_type ={
     },
 }
 
-const development_type ={
-    0: {
-        value: "BM_vitro",
-        name: 'BM_vitro'
-      },
-    1: {
-      value: "CL_vitro",
-      name: 'CL_vitro'
-    },
-    2: {
-      value: "FL_vitro",
-      name: 'FL_vitro'
-    },
-    
-    3: {
-      value: "PB_vitro",
-      name: 'PB_vitro'
-    },
-    4:{
-      value:'ESC_vitro',
-      name:'ESC_vitro'
-    },
-    
-    5:{
-          value:'CB_vitro',
-          name:'CB_vitro'
-    },
-
-    6:{
-      value:'SP_vitro',
-      name:'SP_vitro'
-    },
-
-    7:{
-      value:'CL_vitro',
-      name:'CL_vitro'
-    },
-    8:{
-      value:'iPSC_vitro',
-      name:'iPSC_vitro',
-    },
 
 
-    9: {
-      value: "BM_vivo",
-      name: 'BM_vivo',
-      // color: 'red'
-    },
-    10:{
-      value:'CB_vivo',
-      name:'CB_vivo',
-    },
-    
-    11:{
-      value:'PB_vivo',
-      name:'PB_vivo',
-    },
-
-    12:{
-      value:'CP_vivo',
-      name:'CP_vivo',
-    },
-    13:{
-      value:'FL_vivo',
-      name:'FL_vivo'
-    },
-    14:{
-      value:'ESC_vivo',
-      name:'ESC_vivo',
-    },
-
-    15:{
-      value:'SP_vivo',
-      name:'SP_vivo',
-    },
-
-    16:{
-      value:'YS_vivo',
-      name:'YS_vivo'
-    },
-
-    17: {
-      value: "all",
-      name: 'All',
-      // color: 'green'
-    },
-  
-}
-
-const experiment_type = {
-  0:{
-    name:'Expression profiling by high throughput sequencing',
-    value:'Expression'
-  },
-  1:{
-    name:'All',
-    value:'all'
-  }
-}
 
 const sequence_type ={
   0:{
 
-    name:'Bulk',
+    name:'Bulk RNA-seq',
     value:'Bulk'
   },
   1:{
-    name:'Single Cell',
-    value:'Single'
+    name:'scRNA-seq',
+    value:'scRNA'
   },
   2: {
       value: "all",
@@ -830,13 +733,18 @@ export default {
       sequenceType_list:[
             {
 
-              name:'Bulk',
+              name:'Bulk RNA-seq',
               value:'Bulk'
             },
             {
-              name:'Single Cell',
-              value:'Single'
+              name:'scRNA-seq',
+              value:'scRNA'
             },
+            {
+                value: "all",
+                name: 'All',
+                // color: 'green'
+              },
       ],
   
     }

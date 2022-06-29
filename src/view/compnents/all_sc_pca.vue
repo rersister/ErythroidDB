@@ -43,7 +43,9 @@
 				</i-col>
 				<i-col span="8">
 					<Form-item>
-					<i-button  shape="circle" icon="ios-search" @click="getTsneShow">Show</i-button>
+					<!-- <i-button  shape="circle" icon="ios-search" @click="getTsneShow">Show</i-button> -->
+					<Button type="primary" icon="ios-search"  @click="getTsneShow" >Show</Button>
+					
 					</Form-item>
 				</i-col>
 			</i-form>
@@ -294,7 +296,7 @@ export default {
 				this.Feature_data.push(result);
 				
 				let layout = {
-					title:  this.searchVivoGene +' expression level in  erythroid differentiation ('+ source2 +')',
+					title:  this.searchVivoGene +' expression level in  erythroid differentiation'+ "(Organism:"+ this.orga_name + ";group:"+ source2 +")",
 					xaxis: {
 						// range: [ 0.75, 5.25 ],
                         title:'UMAP 1',
@@ -386,7 +388,7 @@ export default {
 
 					var TSNE_layout={ 
 						
-						title: tmp_title+ '	Plot' + "("+this.table_name + "/"+ source+")",
+						title: tmp_title+ '	Plot' + "(Organism:"+ this.orga_name + ";group:"+ source+")",
 						scene:{
 							xaxis: {
 								// range: [ 0.75, 5.25 ],
@@ -435,7 +437,7 @@ export default {
 					
 					var TSNE_layout={ 
 						
-						title: tmp_title+ '	Plot' + "("+this.table_name + "/"+ source+")",
+						title: tmp_title+ '	Plot' + "(Organism:"+ this.orga_name + ";group:"+ source+")",
 						xaxis: {
 							// range: [ 0.75, 5.25 ],
 							title:xtitle,

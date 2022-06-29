@@ -8,7 +8,7 @@
                                 About EryDB
                                  <!-- All datasets were divided into different developmental stages. Unlike other added-value databases, EryDB allows users to easily retrieve and explore data of specific studies, determine differentially expressed genes and their functions via principal component analysis, differential gene expression analysis, gene set enrichment analysis, and transcription factor analysis under certain conditions, such as in vitro or in vivo. Besides, EryDB integrated single-cell RNA sequencing data to visualize gene expression in single cell resolution by color-coded t-SNE or UMAP plots. Plots and tables in EryDB are customizable, downloadable and interactive.  -->
                                 <p class="p_text" slot="content">
-                                    EryDB: a database of transcriptome profile of erythropoiesis and a web-accessible collection of expertly curated, quality-assured, and pre-analyzed data sets covering three species and nine sources, totaling ~3,544 samples and ~693,342 single cell. 
+                                    EryDB: a database of transcriptome profile of erythropoiesis and a web-accessible collection of expertly curated, quality-assured, and pre-analyzed data sets covering three species and nine sources, totaling {{allSampleN}} samples and {{allCellN}} single cell. 
                                 </p>
 
                         </Panel>
@@ -58,7 +58,7 @@
                     </br>
                     </br>
                     <span >Input Reported Gene/Tissue/Dataset Id/Organism Name:</span>
-                    <i-select enter-button="Search" style="width:80%"  @on-search="searchDataSetByKeyName($event)" :model.sync="showByGroup" clearable :placeholder="search_placeholder"  @on-change="searchDataSetByKeyName($event)"  filterable>        
+                    <i-select enter-button="Search" style="width:80%"  @on-search="searchDataSetByKeyName($event)" :model.sync="showByGroup"  :placeholder="search_placeholder"  @on-change="searchDataSetByKeyName($event)"  filterable>        
 							<i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
 					</i-select>
                     <Button type="primary" @click="searchByKeyWord()" >Search</Button>

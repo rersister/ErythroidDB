@@ -1,7 +1,7 @@
 <template>
 <div>
 	<br>
-	<h1 class="my_h1">Single cell visualization</h1>
+	<h1 class="my_h1">Single cell visualization22</h1>
 	<br>
 	<div>
 		<Row :gutter="2">
@@ -43,7 +43,8 @@
 				</i-col>
 				<i-col span="8">
 					<Form-item>
-					<i-button  shape="circle" icon="ios-search" @click="getTsneShow">Show</i-button>
+					<!-- <i-button  shape="circle" icon="ios-search" @click="getTsneShow">Show</i-button> -->
+					<Button type="primary" icon="ios-search"  @click="getTsneShow" >Show</Button>
 					</Form-item>
 				</i-col>
 			</i-form>

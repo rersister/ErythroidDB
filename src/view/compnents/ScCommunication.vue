@@ -193,7 +193,7 @@ export default {
 				})) 
 				// alert(this.sigName_list)
 				this.getCellChartHotMap(this.series,this.source,datas[0])
-				this.geteSigPathNet_chart(this.series,this.source,datas[0]);
+				// this.geteSigPathNet_chart(this.series,this.source,datas[0]);
 				this.getCellChartRcontri(this.series,this.source,datas[0]);
            })
 

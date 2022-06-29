@@ -127,7 +127,7 @@ export default {
 				responsive: true,
 			},
 			ClusterHotMapMarker_layout:{
-				title: 'Identity features for each cluster',
+					title: 'Identity features for each cluster'  + "(Organism:"+ this.orga_name + ";group:"+ this.source+")",
 					xaxis: {
 						// range: [ 0.75, 5.25 ],
                         title:'Cell cluster',
@@ -456,7 +456,7 @@ export default {
 				}];
 				
 				var layout = {
-					title: 'Enrichment'+"("+this.enrichType+") of " + this.group +'('+this.source+')',
+					title: 'Enrichment'+"("+this.enrichType+") of "  + "(Organism:"+ this.orga_name + ";group:"+ this.source+")",
 					xaxis: {
 						title: '-log10(p.adjust)',
 						showgrid: false,
@@ -583,7 +583,7 @@ export default {
 				}];
 				
 				var layout = {
-					title: 'Identity features for each cluster(' + source+')',
+					title: 'Identity features for each cluster'  + "(Organism:"+ this.orga_name + ";group:"+ source+")",
 					xaxis: {
 						// range: [ 0.75, 5.25 ],
                         title:'Cell cluster',
@@ -670,5 +670,11 @@ export default {
   border-color:#870909!important;
 
 }
+.ivu-input-search:hover{
+      background: #e6b9b8 !important;
+      color: #fff !important;
+      border-color: #ea898c !important;
+}
+
 
 </style>

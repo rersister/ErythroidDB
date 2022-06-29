@@ -687,5 +687,18 @@ export default {
         margin: 2% 2%  2% 2%;
     }
 
+	.ivu-input-search {
+	background: #870909!important;
+	color: #fff!important;
+	border-color:#870909!important;
+
+	}
+	.ivu-input-search:hover{
+		background: #e6b9b8 !important;
+		color: #fff !important;
+		border-color: #ea898c !important;
+	}
+
+
 </style>
 

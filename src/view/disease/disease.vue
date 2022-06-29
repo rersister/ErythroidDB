@@ -361,12 +361,12 @@ const experiment_type = {
 const sequence_type ={
   0:{
 
-    name:'Bulk',
+    name:'Bulk RNA-seq',
     value:'Bulk'
   },
   1:{
-    name:'Single Cell',
-    value:'Single'
+    name:'scRNA-seq',
+    value:'scRNA'
   },
   2: {
       value: "all",
