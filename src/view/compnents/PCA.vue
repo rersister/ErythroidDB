@@ -37,7 +37,16 @@ export default {
 			sim_layout:{},
 			sim_options:{
                 responsive: true,
+                displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'pca_image',
+                    height: 500,
+                    width: 700,
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
             },
+
             source:'',
             Dsource:'',
             Dgrowth_mode:''
@@ -76,7 +85,7 @@ export default {
                 this.sim_data = datas.data                    
                 var layout={ 
                    
-                    title:'PCA of '+this.series+'( Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
+                    title:'PCA '+'( '+ this.series +';Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
 
                     
 

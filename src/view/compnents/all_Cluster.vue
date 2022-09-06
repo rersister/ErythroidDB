@@ -2,13 +2,13 @@
     <div class="lay_out">   
           <h1 class="my_h1">Principal Components Analysis({{orga_name}})</h1>
           <!-- <h1 class="my_h1">Expression profiling ({{selectList[0]}})</h1> -->
-        </Br>     
+        <!-- </Br>      -->
         <Row>
           
             <i-form :label-width="100">
                 <Col span="12">
                     <i-select placeholder="Please choose source" clearable style="width:80%" @on-change='changeCellSource($event)'  filterable>
-                        <i-option v-for="item in SourceList" :value="item.value" >{{ item.label }}</i-option>
+                        <!-- <i-option v-for="item in SourceList" :value="item.value" >{{ item.label }}</i-option> -->
                     </i-select>  
                 </Col>
 				<Col span="12">
@@ -36,7 +36,7 @@
         <!-- <Row>
             <h1 class="my_h1">Unsupervised Clustering group by Cell type</h1>
             <div>
-                <!-- 相似性分析 MDS 聚类图
+               相似性分析 MDS 聚类图
             <Spin size="large" fix v-if="spinShow2"></Spin>
             <vue-plotly :autoResize="ifResize" :data="clusterbyCellType_data" :layout="clusterbyCellType_layout" :options="clusterbyCellType_options"/>
 
@@ -45,7 +45,7 @@
         <!-- <Row>
             <h1 class="my_h1">Unsupervised Clustering group by source and cell </h1>
             <div>
-                <!-- 相似性分析 MDS 聚类图
+                相似性分析 MDS 聚类图
             <Spin size="large" fix v-if="spinShow1"></Spin>
             <vue-plotly :autoResize="ifResize" :data="clusterbySourceCell_data" :layout="clusterbySourceCell_layout" :options="clusterbySourceCell_options"/>
 

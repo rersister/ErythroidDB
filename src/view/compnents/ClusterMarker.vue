@@ -111,26 +111,52 @@ export default {
                 ],
 			ClusterHotMapMarker_option:{
 				responsive: true,
+				displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'sc_marker_image',
+                    height: 500,
+                    width: 700,
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
+
 			},
+
 			enrich_option:{
 				responsive: true,
+				displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'sc_enrich_image',
+                    height: 500,
+                    width: 700,
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
 			},
+
 			ClusterHotMapMarker_layout:{
 				title: 'Identity features for each cluster',
 					xaxis: {
 						// range: [ 0.75, 5.25 ],
                         title:'Cell cluster',
-						tickmode: 'array',
+						// tickmode: 'array',
 						automargin: true,
 						titlefont: { size:15},
+						automargin: true,
+						gridcolor: 'rgb(243, 243, 243)',
+						gridwidth: 1,
+						rangemode: "normal",
+						dtick: 1,
 
                     },
                     yaxis: {
 						// range: [0, 8],
                        title:'Feature name',
-					   tickmode: 'array',
+					//    tickmode: 'array',
 					   automargin: true,
+					   rangemode: "normal",
 					   titlefont: { size:15},
+					   dtick: 1,
 					},
 			},
 			enrich_layout:{},
@@ -365,6 +391,7 @@ export default {
 			}else{
 			
 				this.group = group
+				// alert(this.source)
 				this.getEnrichChart(this.series,this.source,group)
 
 			}
@@ -403,7 +430,7 @@ export default {
 				}];
 				
 				var layout = {
-					title: 'Enrichment'+"("+this.enrichType+") of " + this.group +'('+this.source+')',
+					title: 'Enrichment'+"("+this.enrichType+") of " + this.group+'('  +this.series+';group:'+this.source +')',
 					xaxis: {
 						title: '-log10(p.adjust)',
 						showgrid: false,
@@ -425,13 +452,7 @@ export default {
         },
 
 
-		changedDataSource(source){
-			let _this = this  
-			this.source2 = source
-            this.getEnrichGroup(this.series,source)
-            
-		},
-
+	
 		getEnrichGroup(series,source){
 			
             getClusterEncihGroup(series,source).then(res => {
@@ -530,7 +551,7 @@ export default {
 				}];
 				
 				var layout = {
-					title: 'Identity features for each cluster(' + source+')',
+					title: 'Identity features for each cluster(' +this.series+';group:' + source+')',
 					xaxis: {
 						// range: [ 0.75, 5.25 ],
                         title:'Cell cluster',
@@ -586,7 +607,7 @@ export default {
 						})
 			
 				}) 
-
+				_this.group_type_list.push({name:'all'})
 				// alert(data[0].source_g)
 				this.getMarkerChart(this.series,data[0].source_g)
 				this.getEnrichGroup(this.series,data[0].source_g)

@@ -78,10 +78,28 @@ export default {
 			pseudo_data:[],
 			pseudo_layout:{},
 			pseudo_options:{
-				responsive: true,
+					responsive: true,
+					displaylogo: false,
+					toImageButtonOptions: {
+						format: 'svg', // one of png, svg, jpeg, webp
+						filename: 'sc_traPseu_image',
+						height: 500,
+						width: 700,
+						scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+					}
+
 			},
 			spinShow2:'true',
-			Tra_options: {  responsive: true
+			Tra_options: { 
+					responsive: true,
+					displaylogo: false,
+					toImageButtonOptions: {
+						format: 'svg', // one of png, svg, jpeg, webp
+						filename: 'sc_tra_image',
+						height: 500,
+						width: 700,
+						scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+					}
 			},
 			showByGroup:'',
 			series:this.$store.state.app.CurrentPageToken,
@@ -137,7 +155,7 @@ export default {
 				this.Tra_data = data
                 var Tra_layout={ 
                     
-                    title:'Differentiation Trajectory ' + "("+this.series+" "+ source + ")",
+                    title:'Differentiation Trajectory ' + "("+this.series+";"+ source + ")",
                     xaxis: {
 						// range: [ 0.75, 5.25 ],
                         title:'Component 1',
@@ -192,7 +210,7 @@ export default {
                     
                 var pseudo_layout={ 
                     
-                    title: 'Pseudotime Trajectory' + "("+this.series+" "+ source2 + ")",
+                    title: 'Pseudotime Trajectory' + "("+this.series+";"+ source2 + ")",
                     xaxis: {
 						// range: [ 0.75, 5.25 ],
                         title:'Component 1',

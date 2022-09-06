@@ -3,7 +3,7 @@
     <div class="lay_out">
             <Row>
 				<!--<i-col span="12"> -->
-					<h1 class="my_h1">Single Cell  Interraction Atlas</h1> 
+					<h1 class="my_h1">Single Cell  Interaction Atlas</h1> 
 					</br>
 					<i-form :label-width="120">
 						<i-col span="10">
@@ -56,9 +56,11 @@
 			</br>
 
             <Row>
+					<!-- <button id="download" @click="download">Download </button> -->
 					<div>
 						<div id="Net_view" style="width: 100%;height:400%; text-aglign:center"></div>
 					</div>
+					
 			</Row>
         
 		
@@ -166,6 +168,25 @@ export default {
 
            })
 		},
+
+		download(){
+			const a = window.document.querySelector('#download')
+			a.addEventListener('click',()=> {
+				const content = document.querySelector('svg').outerHTML
+				const blob = new Blob([content],{type:'xml/svg'})
+				a.href = URL.createObjectURL(blob)
+				a.download = 'test.svg'
+			})
+			// let mycanvas=document.getElementsByTagName('canvas')[0]
+			// let image=mycanvas.toDataURL("image/svg");
+			
+			// let $a = document.createElement('a');
+		
+			// $a.setAttribute("href", image);
+			// $a.setAttribute("download", "inter_image.svg");
+			// $a.click();
+
+		},
 		getCellSource(){
 			getCellSourceData().then(res =>{
 				var dev_types = res.data.dev_types
@@ -181,7 +202,7 @@ export default {
 
 		},
         getNetView(dataset_name,source,comm_type){
-			let myChart = this.$echarts.init(document.getElementById("Net_view"));
+			let myChart = this.$echarts.init(document.getElementById("Net_view"),null, {renderer: 'svg'});
             myChart.showLoading();
 			// this.spinShow2 = true
 			// var dataset_name = 'erthy'
@@ -231,23 +252,52 @@ export default {
 						node.category = node.category
 					});
 					var option = {
+
 						title: {
-							text: 'Top 40 factor of '+ comm_type +'('+this.source+ ')',
-							subtext: 'Circular layout',
-							top: 'bottom',
-							left: 'left'
+							text: 'Top 40 factor of '+ comm_type +'('+this.series + ';group:'+this.source+ ')',
+							// subtext: 'Circular layout',
+							// top: 'bottom',
+							left: 'center'
 						},
-						tooltip: {},
+
+						toolbox:{
+							show:true,
+							feature:{
+								saveAsImage:{
+									show:true,
+									excludeComponents:['toolbox'],
+									pixelRatio:2,
+									// type:'svg',
+									name:'inter_image'
+								}
+							}
+
+						},
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: {
+							type: 'cross',
+							label: {
+								backgroundColor: '#6a7985'
+							}
+						}
+
+						},
+						
+
 						legend: [{
 							data: categories_chart.map(function (a) {
 								return a.name;
-							})
+							}),
+							bottom:'0px'
 						}],
+
+						
 						animationDurationUpdate: 1500,
 						animationEasingUpdate: 'quinticInOut',
 						series: [
 							{
-								name: 'Top 40 '+ comm_type +' factor',
+								name: 'Top 40 '+ comm_type +' factor'+'(' +this.series + ')',
 								type: 'graph',
 								layout: 'circular',
 								circular: {
@@ -273,6 +323,8 @@ export default {
 					};
 
 					myChart.setOption(option);
+
+
 					})
 		},
         getLRPlot_chart(dataset_name,source,comm_type){
@@ -327,18 +379,34 @@ export default {
 						};
 						node.category = node.category
 					});
+
 					var option = {
 						title: {
 							text: 'Top 40 '+ comm_type +' factor',
 							subtext: 'Circular layout',
-							top: 'bottom',
-							left: 'right'
+							// top: '',
+							left: 'center'
 						},
-						tooltip: {},
+						tooltip: {
+							trigger: 'axis',
+							axisPointer: {
+							type: 'cross',
+							label: {
+								backgroundColor: '#6a7985'
+							}
+						}
+
+						},
+						feature: {
+							saveAsImage: {}
+						},
+
 						legend: [{
 							data: categories_chart.map(function (a) {
 								return a.name;
-							})
+							}),
+						
+							bottom:'0px'
 						}],
 						animationDurationUpdate: 1500,
 						animationEasingUpdate: 'quinticInOut',

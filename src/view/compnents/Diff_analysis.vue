@@ -104,7 +104,16 @@ export default {
 			contrasts_group:[],
 			diff_options: {
                 responsive: true,
+                displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'diff_image',
+                    height: 500,
+                    width: 700,
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
             },
+            
             diffData:[],
 			contrastsGroup:'',
             totalRow: 400,
@@ -326,7 +335,7 @@ export default {
                     
                 var diff_layout={ 
                    
-                    title:'Differential analysis of ' + diffgroup + " in "+this.series+'( Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
+                    title:'Differential analysis of ' + diffgroup +'( '+this.series+';Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
 
                 //    subtitle: {
                 //             text: 'Data Souce:' + this.series

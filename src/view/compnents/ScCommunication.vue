@@ -113,7 +113,11 @@ export default {
 				sigName_list:[],
 				sigPattern:'',
 			    data_source_list:[],
-				Cell_Chart_RiverCell:{},
+				Cell_Chart_RiverCell:{
+					credits:{
+								enabled:false
+						},
+				},
 				Cell_Chart_RiverPath:{},
 				Cell_Chart_Rcontri:{},
 				ifResize:true,
@@ -121,6 +125,15 @@ export default {
 				CellChartHotMap_data:[],
 				CellChartHotMap_options:{
 					responsive: true,
+					displaylogo: false,
+					toImageButtonOptions: {
+						format: 'svg', // one of png, svg, jpeg, webp
+						filename: 'sc_sigRole_image',
+						height: 500,
+						width: 700,
+						scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+					}
+
 				},
 				dataset_name:'erthy',
 				comm_type:'all',
@@ -317,7 +330,7 @@ export default {
 				}];
 				
 				var layout = {
-					title: sigName +' signaling pathway network',
+					title: sigName +' signaling pathway network'  +'(' + this.series +';group:' + source +')',
 
 					xaxis: {
 							title:'Cell type',		
@@ -351,8 +364,11 @@ export default {
 			 	var data = res.data
 			 	var option_1 = {
 			 				title: {
-			 					text: 'communication('+pName +') patterns', 
+			 					text: 'communication('+pName +') patterns' +'(' + this.series +';group:' + dev_type +')', 
 			 				},
+							credits:{
+								enabled:false
+							},
 			 				series: [{
 			 					keys: ['from', 'to', 'weight'],
 			 					data: data.netSigCell,
@@ -363,8 +379,11 @@ export default {
 			    this.Cell_Chart_RiverCell = option_1
 				var option_2 = {
 			 				title: {
-			 					text: 'communication('+pName +') signal of cells'
+			 					text: 'communication('+pName +') signal of cells'  +'(' + this.series +';group:' + dev_type +')',
 			 				},
+							credits:{
+								enabled:false
+							},
 			 				series: [{
 			 					keys: ['from', 'to', 'weight'],
 			 					data: data.netSigPath,
@@ -393,10 +412,13 @@ export default {
 						type: 'bar'
 					},
 					title: {
-						text: 'Contribution of each L-R pair ' 
+						text: 'Contribution of each L-R pair '   +'(' + this.series +';group:' + dev_type +')'
 					},
 					subtitle: {
 						
+					},
+					credits:{
+								enabled:false
 					},
 					xAxis: {
 						// categories: ['非洲', '美洲', '亚洲', '欧洲', '大洋洲'],
@@ -416,7 +438,7 @@ export default {
 						}
 					},
 					tooltip: {
-						valueSuffix: ' 百万'
+						// valueSuffix: ' 百万'
 					},
 					plotOptions: {
 						bar: {
@@ -428,9 +450,9 @@ export default {
 					},
 					legend: {
 						layout: 'vertical',
-						align: 'right',
-						verticalAlign: 'top',
-						x: -40,
+						align: 'left',
+						verticalAlign: 'bottom',
+						x: 0,
 						y: 1,
 						floating: true,
 						borderWidth: 1,

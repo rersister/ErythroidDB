@@ -82,7 +82,7 @@
 
 
 <script>
-import {getEnrichData,getdiffGroup,getDatasetGroup} from '@/api/erythdataservice'
+import {getEnrichData,getdiffGroup,getDatasetGroup,getDatasetSourceInfoData} from '@/api/erythdataservice'
 // import {getAllEnrichData}  from '@/api/erythroidAtlas'
 import VuePlotly from '@statnett/vue-plotly'
 export default {
@@ -126,6 +126,16 @@ export default {
                 enrichGO_layout:{},
                 enrichGO_options:{
                     responsive: true,
+                    displaylogo: false,
+                    toImageButtonOptions: {
+                        format: 'svg', // one of png, svg, jpeg, webp
+                        filename: 'enrich_image',
+                        // height: 500,
+                        // width: 700,
+                        scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                    }
+
+
                 },
 
         }
@@ -191,13 +201,16 @@ export default {
 
                         var layout = {
                             // "("+this.series+'('+ this.source+')'+')',  没有副标题，把标题设置简短
-                            title:'GO ('+ this.goType + ') enrichment of ' + this.contrGroupOfEnrich,
+                            title:'GO ('+ this.goType + ') enrichment of ' + this.contrGroupOfEnrich  +'( '+this.series+';Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
+                            //itle:'Differential analysis of ' + diffgroup +'( '+this.series+';Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
+
                             
-                            
-                            bargap: 0.25,
+                            // bargap: 0.25,
                             xaxis: {
                                 title:'-log10(p.adjust)',
                                 // showgrid : TRUE,
+                                gridcolor: 'rgb(243, 243, 243)',
+                                gridwidth: 1,
                             },
                             yaxis: {
                                 // showgrid: TRUE,
@@ -210,7 +223,8 @@ export default {
                                 // yanchor:'top',
                                 // position:'top',
                                 automargin: true,
-                                
+                                gridcolor: 'rgb(243, 243, 243)',
+                                gridwidth: 1,
                                 rangemode: "normal",
                                 dtick: 1,
                                 // axisLabel: {
@@ -227,7 +241,7 @@ export default {
                             
                             },
                             margin: {
-                                l:500
+                                l:100
                             },
                         
                         
@@ -256,6 +270,12 @@ export default {
             this.goType = goType
             this.getenrich_chart()
         },
+
+        changedContrGroup(contra_group){
+            this.contrGroupOfEnrich =  contra_group
+            this.getenrich_chart()
+
+        },
         changenrichType(enrichGroup){
             let _this = this
             this.enrichGroup = enrichGroup
@@ -282,12 +302,24 @@ export default {
                 // _this.samples = samples_string
                 
             })
+        },
+
+        getDatasetSourceInfo(series){
+             let _this = this
+             getDatasetSourceInfoData(this.series).then(res =>{
+                let datas =res.data
+                console.log(datas)
+                _this.Dsource = datas.source
+                _this.Dgrowth_mode = datas.growth_mode
+                
+            })
         }
     },
     mounted(){
 
         this.getDatasetSampleGroup();
         this.getdiff_group();
+        this.getDatasetSourceInfo(this.series)
 
 
 

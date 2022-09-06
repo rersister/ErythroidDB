@@ -290,7 +290,7 @@
                 2)Markers & Enrich;
                 3)Differential & Enrich;
                 4)Differentiation Trajectory;
-                5)Cell-Cell Interraction;
+                5)Cell-Cell Interaction;
                 6)Cell-Cell Communication.
             </p>
             <br>

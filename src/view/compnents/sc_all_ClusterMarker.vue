@@ -122,9 +122,27 @@ export default {
                 ],
 			ClusterHotMapMarker_option:{
 				responsive: true,
+				displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'sc_cluster_image',
+                    // height: 500,
+                    // width: 700,
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
+
 			},
 			enrich_option:{
+				
 				responsive: true,
+				displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'sc_cluster_image',
+                    // height: 500,
+                    // width: 700,
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
 			},
 			ClusterHotMapMarker_layout:{
 					title: 'Identity features for each cluster'  + "(Organism:"+ this.orga_name + ";group:"+ this.source+")",

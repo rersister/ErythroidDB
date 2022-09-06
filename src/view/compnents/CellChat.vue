@@ -4,7 +4,7 @@
 
     <div class="lay_out">      <!-- enrichGO analysis -->  
 
-        <h1 class="my_h1">Single Cell Interraction Atlas</h1> 
+        <h1 class="my_h1">Single Cell Interaction Atlas</h1> 
         <div>
             <Row>
                 <Col span="12">

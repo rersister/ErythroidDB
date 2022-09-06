@@ -171,7 +171,7 @@ export default {
                   },
                   // Single Cell Interraction
                   {
-                    name: 'Cell-Cell Interraction',
+                    name: 'Cell-Cell Interaction',
 
                     link: 'ScInterraction',
                   },

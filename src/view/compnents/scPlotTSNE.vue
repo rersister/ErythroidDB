@@ -1,7 +1,7 @@
 <template>
 <div>
 	<br>
-	<h1 class="my_h1">Single cell visualization22</h1>
+	<h1 class="my_h1">Single cell visualization</h1>
 	<br>
 	<div>
 		<Row :gutter="2">
@@ -54,7 +54,7 @@
 			<Spin size="large" fix v-if="spinShow1"></Spin>
 			<!-- vue-plotly -->
 			<!--<vue-plotly :data="TSNE_data" :layout="TSNE_layout" :options="TSNE_options"/>-->
-			<Plotly :data="TSNE_data" :layout="TSNE_layout" :options="TSNE_options"></Plotly>
+			<Plotly  :data="TSNE_data" :layout="TSNE_layout" :config="TSNE_options"></Plotly>
 		
 		</Row>
 	</div>
@@ -126,12 +126,30 @@ export default {
 			TSNE_data: [], 
 			TSNE_layout: {},              
 			contrasts_group:[],
-			TSNE_options: {  responsive: true
+			TSNE_options:{  
+				responsive: true,
+				displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'sc_cluster_image',
+                    // height: 500,
+                    // width: 700,
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
+
 			},
 			Feature_data:[],
 			Feature_layout:{},
 			Feature_options:{
 				responsive: true,
+				displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'sc_feature_image',
+                    // height: 500,
+                    // width: 700,
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
 			},
 			showByGroup:'',
 			series:this.$store.state.app.CurrentPageToken,
@@ -230,6 +248,7 @@ export default {
 					},
 					
 				};
+				this.Feature_data = []
 				this.Feature_data.push(result);
 				var title_x= 'UMAP 1'
 				var title_y = 'UMAP 2'
@@ -238,7 +257,7 @@ export default {
 					title_y = 'tSNE 2'
 				}
 				let layout = {
-					title:  this.searchVivoGene +' expression level in  erythroid differentiation ('+ source2 +')',
+					title:  this.searchVivoGene +' expression level in  erythroid differentiation (' +this.series+';group:'+ source2 +')',
 					xaxis: {
                         title:title_x,
                     },
@@ -328,7 +347,7 @@ export default {
 
 					var TSNE_layout={ 
 						
-						title: tmp_title+ '	Plot' + "("+this.series + "/"+ source+")",
+						title: tmp_title+ '	Plot' + "("+this.series + ";group:"+ source+")",
 						scene:{
 							xaxis: {
 								// range: [ 0.75, 5.25 ],
@@ -357,6 +376,7 @@ export default {
 
 
 				}else{
+
 					let data = []
 					//alert( this.plotSize)
 					for ( var i = 0; i < xData.length; i ++ ) {
@@ -377,7 +397,7 @@ export default {
 					
 					var TSNE_layout={ 
 						
-						title: tmp_title+ '	Plot' + "("+this.series + "/"+ source+")",
+						title: tmp_title+ '	Plot' + "("+this.series + ";group:"+ source+")",
 						xaxis: {
 							// range: [ 0.75, 5.25 ],
 							title:xtitle,
@@ -393,7 +413,7 @@ export default {
 
 					}
 
-				
+					
 				
 			})
                

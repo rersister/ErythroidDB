@@ -8,7 +8,8 @@
                         <Col span="12">
                             <!-- 数据查询分子名 -->
                             <span class="h4_title" >Input Gene Symbol:</span>
-                            <Input search enter-button="Search"  @on-search="searchItemByName($event)" :placeholder="search_placeholder"/>                         
+                            <Input class='my_class_input' v-on:input="search_value($event)"  :placeholder="search_placeholder"/>                         
+                            <Button class='button_mystyle' @click="searchItemByName" >Search</Button>
                         </Col>                                                                                                                                                       
                 </Row>       
                 <br>     
@@ -37,7 +38,7 @@
                                 <!-- Look up this {{search_datatype}} in: -->
                                <span class="h4_title">Search Gene Symbol in:</span> 
                                 <p slot="content">
-                                    <Button class='button_style' v-for="(search_item,index) in othersearch_items" :key='index' :label='search_item.name' type="primary" icon="ios-search">
+                                    <Button class="button_style" v-for="(search_item,index) in othersearch_items" :key='index' :label='search_item.name' type="primary" icon="ios-search">
                                     <a :href='search_item.link' target=_blank style="color:white">    
                                         {{search_item.name}}
                                     </a>
@@ -55,7 +56,7 @@
                     <!-- <Col span="8"> -->
                         <Spin size="large" fix v-if="spinShow4"></Spin>
                         <!-- <highcharts class="chart" :options='SpecifExpreOptionsByName'></highcharts> -->
-                         <vue-plotly  :autoResize="ifResize" :data="expreProfile_data" :layout="expreProfile_layout" :options="expreProfile_options"/>
+                         <vue-plotly  :autoResize="ifResize" :data="expreProfile_data" :layout="expreProfile_layout" :options="expreProfile_options" />
 
                     <!-- </Col> -->
                 </Row>
@@ -87,6 +88,7 @@ export default {
 	},
     data(){
         return{
+            inpute_v:'',
             search_placeholder:'',
             series:this.$store.state.app.CurrentPageToken,
             SpecifExpreOptionsByName:{},
@@ -95,6 +97,16 @@ export default {
             expreProfile_layout:{},
             expreProfile_options:{
                 responsive: true,
+                displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'expression_image',
+                   
+                    height: 500,
+                    width: 700,
+                   
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
             },
             spinShow4:'true',
             othersearch_items:[],
@@ -149,13 +161,16 @@ export default {
 
 
         },
-        
-		searchItemByName(micvalue){
+        search_value(inpute_v){
+            // alert(inpute_v)
+            this.inpute_v = inpute_v
+        },
+		searchItemByName(){
 
            let _this = this
            _this.ShowitemInfoTip = false
         
-           
+           var micvalue = _this.inpute_v
         //    alert(micvalue)
            this.specif_name = micvalue
            this.getSpecifExpreOptionsByName(this.series,this.dataType,micvalue)
@@ -266,7 +281,7 @@ export default {
                         this.expreProfile_data.push(result);
                     };
                     let layout = {
-                        title:  specif_name+' Expression level in '+ this.series + '( Source:' +datas.source + ";Growth Mode:"+ datas.growth_mode +')',
+                        title:  specif_name+' Expression level' + '('+ this.series+';Source:' +datas.source + ";Growth Mode:"+ datas.growth_mode +')',
                         // bargap: 0.25,
                         yaxis: {
                             
@@ -276,23 +291,26 @@ export default {
                             showgrid: true,
                             zeroline: true,
                             // dtick: 5,
-                            gridcolor: 'rgb(255, 255, 255)',
+                            gridcolor: 'rgb(243, 243, 243)',
                             gridwidth: 1,
-                            zerolinecolor: 'rgb(255, 255, 255)',
+                            zerolinecolor: 'rgb(243, 243, 243)',
                             zerolinewidth: 2,
-                            title:"Normalized Value"
+                            title:"Normalized Value",
+                           
                         },
                         xaxis:{
-                            title:"Group"
+                            title:"Group",
+                            gridcolor: 'rgb(243, 243, 243)',
+                            gridwidth: 1,
                         },
                         margin: {
-                                l: 40,
+                                l: 80,
                                 r: 30,
                                 b: 80,
                                 t: 100
                             },
-                            paper_bgcolor: 'rgb(243, 243, 243)',
-                            plot_bgcolor: 'rgb(243, 243, 243)',
+                            // paper_bgcolor: 'rgb(243, 243, 243)',
+                            // plot_bgcolor: 'rgb(243, 243, 243)',
                             showlegend: false
                     };
                     this.expreProfile_layout = layout
@@ -504,18 +522,25 @@ export default {
 
 
 .button_style{
-    font-size:16px;
-    margin-right: calc((5/1920) * 100vw);;
-    margin-bottom:calc((5/1920) * 100vw);
+    font-size:12px;
+    margin-right:10px;
+    margin-bottom:5px;
     /* width:calc((50/1920) * 100vw); 
     height: calc((20/1920) * 100vw); */
   }
+
 .chart{
     text-align: center;
     width:calc((1600/1920) * 100vw); 
     height: calc((600/1920) * 100vw);;
 }
 
+.button_mystyle{
+    background:#a85557!important;
+    color: #fff!important;
+    border-color:#a85557!important;
+    margin-top:5px;
+}
 
 .ivu-input-search {
 

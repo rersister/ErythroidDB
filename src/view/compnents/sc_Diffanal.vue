@@ -177,6 +177,14 @@ export default {
         	totalRow: 400,
 			diff_options: { 
 				responsive: true,
+				displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'sc_diff_image',
+                    height: 500,
+                    width: 700,
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
 			},
 			sourceGroup:'vivo',
 	
@@ -246,7 +254,7 @@ export default {
 				},
 			},
 			],
-			group_type_list:[],
+			group_type_list:['all'],
 			group_type_list2:[],
 			group:'',
 			gorup2:'',
@@ -254,6 +262,14 @@ export default {
 			enrichType:'CC',
 			enrichGO_options:{
 				responsive: true,
+				displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'sc_diff_enrich_image',
+                    height: 500,
+                    width: 700,
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
 			},
 		}
 	},
@@ -368,11 +384,13 @@ export default {
 					};
 
 					var layout = {
-						title: 'Enrichment('+this.enrichType +')' +' of ' + group2 ,
+						title: 'Enrichment('+this.enrichType +')' +' of ' + group2 +'('+this.series +')', 
                        
                         xaxis: {
 							title:'-log10(p.adjust)',
 							// showgrid : TRUE,
+							gridcolor: 'rgb(243, 243, 243)',
+							gridwidth: 1,
 						},
 						yaxis: {
 							// showgrid: TRUE,
@@ -385,7 +403,8 @@ export default {
                             // yanchor:'top',
                             // position:'top',
                             automargin: true,
-                            
+							gridcolor: 'rgb(243, 243, 243)',
+							gridwidth: 1,
                             rangemode: "normal",
                             dtick: 1,
 							// axisLabel: {
@@ -428,6 +447,7 @@ export default {
                     name:key
 				})) 
 				// + "_" + source
+				// _this.group_type_list.push({name:'all'})
 				var table_name = series   // 传过去的table_name 包含 series
 				// var table_name = series
 				// alert(table_name)
@@ -552,7 +572,7 @@ export default {
                     
                 var diff_layout={ 
                    
-                    title:'Differential Analysis ' + this.group ,
+                    title:'Differential Analysis ' + this.group +'('+this.series +')',
 					subtitle: {
                             text: 'Data Souce:' + this.series
                     },
