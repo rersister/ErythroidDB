@@ -105,6 +105,14 @@ export default {
 			type_layout: {},              
 			type_options: {
                 responsive: true,
+                    displaylogo: false,
+                    toImageButtonOptions: {
+                        format: 'svg', // one of png, svg, jpeg, webp
+                        filename: 'data_state',
+                        // height: 500,
+                        // width: 700,
+                        scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
             },
 
         }

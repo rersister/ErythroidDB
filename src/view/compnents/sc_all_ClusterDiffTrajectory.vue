@@ -91,7 +91,16 @@ export default {
 				responsive: true,
 			},
 			spinShow2:'true',
-			Tra_options: {  responsive: true
+			Tra_options: {  
+				responsive: true,
+				displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'sc_all_Trajectory',
+                    // height: 500,
+                    // width: 700,
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
 			},
 			showByGroup:'',
 			series:this.$store.state.app.CurrentPageToken,

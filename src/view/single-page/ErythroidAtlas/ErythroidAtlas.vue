@@ -525,58 +525,7 @@ export default {
         },
       ],
       anlType:'',
-      CellSourceList: [
-        {
-          value: 'CB',
-          label: 'CB',
-        },
-        {
-          value: 'FL',
-          label: 'FL',
-        },
-        {
-          value: 'BM',
-          label: 'BM',
-        },
 
-        {
-          value: 'PB',
-          label: 'PB',
-        },
-        {
-          value: 'SP',
-          label: 'SP',
-        },
-        {
-          value: 'YS',
-          label: 'YS',
-        },
-
-        {
-          value: 'ESC',
-          label: 'ESC',
-        },
-
-        {
-          value: 'cardiac',
-          label: 'cardiac',
-        },
-
-        {
-          value: 'J2E',
-          label: 'J2E',
-        },
-
-        {
-          value: 'K562',
-          label: 'K562',
-        },
-
-        {
-          value: 'iPSc',
-          label: 'iPSc',
-        },
-      ],
       analList: [
           {
             label: 'Expression Profile',
@@ -670,7 +619,7 @@ export default {
           },
         },
         {
-          title: 'Source',
+          title: 'Tissue',
           width:120,
           key: 'source_cell',
           filter: {

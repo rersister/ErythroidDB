@@ -107,9 +107,11 @@
               <Table class="my_hover" stripe
                     @on-row-click="intoDataSet"
                     :data="datasetsTypeSource"
-                    :columns="tAdatasetTypeSourceColumns">
-
+                    :columns="tAdatasetTypeSourceColumns"
+                    ref="table">
               </Table>
+
+           
               <!-- <Spin size="large" fix v-if="spinShowTypeSource"></Spin> -->
                  
               <div style="margin: 10px;overflow: hidden">               
@@ -125,6 +127,10 @@
                         </Page>                   
                     </div>
               </div>
+
+            <Button type="primary" size="large" @click="exportData(1)"><Icon type="ios-download-outline"></Icon>Download</Button>
+
+
           </div> 
         </div>
       </div>
@@ -221,7 +227,7 @@ const species_type = {
   }
 
 
-const source_type = {
+  const source_type = {
     0: {
       value: "Marrow",
       name: 'Bone Marrow(BM)'
@@ -241,39 +247,47 @@ const source_type = {
       name: 'Spleen(SP)',
       // color: 'green'
     },
+  
     4: {
-      value: "Cardiac",
-      name: 'Cardiac Puncture(CP)',
-      // color: 'green'
-    },
-    5: {
       value: "Line",
       name: 'Cell Line',
       // color: 'green'
     },
-    
-    6: {
-      value: "Fetal",
-      name: 'Fetal Liver(FL)',
-      // color: 'green'
+
+    5:{
+      value:'Embryo',
+      name:'Embryo(EM)'
     },
-    
-    7:{
+    6:{
+
       value:'Embryonic',
-      name:'Embryonic Stem Cells(ESC)'
-    },
-    8:{
-
-      value:'Yolk',
-      name:'Yolk Sac(YS)'
+      name:'Fetus Tissue '
     },
 
-    9:{
+    7:{
       value:'Pluripotent',
       name:'Induced Pluripotent Stem Cells(iPSC)'
     },
    
-    10: {
+    8:{
+      value: "Cardiac",
+      name: 'Cardiac(CAR)',
+      // color: 'green'
+    },
+
+    9:{
+      value: "Kidney",
+      name: 'Kidney(KID)',
+      // color: 'green'
+    },
+
+    10:{
+      value: "other",
+      name: 'Other',
+      // color: 'green'
+    },
+
+    11: {
       value: "all",
       name: 'All',
       // color: 'green'
@@ -396,7 +410,7 @@ export default {
 
           },
           {
-              title: 'Source',//来源 dataset 里的source
+              title: 'Tissue',//来源 dataset 里的source
               key: 'source',
               // "sortable": true,
               filter: {
@@ -518,6 +532,9 @@ export default {
               {name:'IDH2 inhibitor',
               full_name:'Isocitrate dehydrogenase 2(IDH2) mutant-specific inhibitor',
               'cell_ano':''},
+              {'name':'BET bromodomain inhibitor',
+              'full_name':'BET bromodomain inhibitor',
+              'cell_ano':''},
               
               {name:'PPAR-α agonists',
               full_name:'Peroxisome proliferator-activated receptor α(PPAR-α) agonists',
@@ -539,9 +556,9 @@ export default {
       ],    
       disease_n:'',
       disease_list:[
-              // 溶血  
-              {name:'Haemolysis', 
-                'full_name':'Haemolysis',
+              // 贫血  
+              {name:'Fanconi anemia', 
+                'full_name':'Fanconi anemia',
                 'cell_ano':''},
               //红细胞缺陷  贫血
               {name:'Diamond-Blackfan anaemia',  
@@ -551,22 +568,20 @@ export default {
               {name:'Epo-resistant anaemias',
                 'full_name':'Epo-resistant anaemias',
                 'cell_ano':' '},
+              //  贫血
+              {name:'Aplastic anemia',
+              'full_name':'Aplastic anemia',
+              'cell_ano':' '},
 
-              {name:'Sickle cell disease',
-                'full_name':'Sickle cell disease',
+              {name:'Sickle cell',
+                'full_name':'Sickle cell',
                 'cell_ano':' '},
 
+              //地中海贫血
               {name:'Thalassemia',
                 'full_name':'Thalassemia',
                 'cell_ano':' '},
-              
 
-              //  贫血
-              {name:'Aplastic anemia',
-                'full_name':'Aplastic anemia',
-                'cell_ano':' '},
-              
-                
               // 血红蛋白异常
               {name:'Hemoglobinopathies',
               'full_name':'Hemoglobinopathies',
@@ -592,61 +607,64 @@ export default {
       ],
       tissue:'',
       tissue_list:[ 
-          {
-              value: "Marrow",
-              name: 'Bone Marrow'
-            },
-          {
-            value: "Cord",
-            name: 'Cord Blood',
-            // color: 'red'
-          },
         {
-            value: "Peripheral",
-            name: 'Peripheral Blood',
-            // color: 'green'
-          },
-        {
-            value: "Spleen",
-            name: 'Spleen',
-            // color: 'green'
-          },
-        {
-          value: "Cardiac",
-          name: 'Cardiac',
-          // color: 'green'
-        },
-          {
-            value: "Line",
-            name: 'Cell Line',
-            // color: 'green'
-          },
-      
-        {
-          value: "Fetal",
-          name: 'Embryonic Fetal Liver',
-          // color: 'green'
-        },
-    
-        {
-          value:'Embryo',
-          name:'Embryo'
-        },
-        {
+        value: "Marrow",
+        name: 'Bone Marrow(BM)'
+      },
+      {
+      value: "Cord",
+      name: 'Cord Blood(CB)',
+      // color: 'red'
+    },
+    {
+      value: "Peripheral",
+      name: 'Peripheral Blood(PB)',
+      // color: 'green'
+    },
+    {
+      value: "Spleen",
+      name: 'Spleen(SP)',
+      // color: 'green'
+    },
+  
+    {
+      value: "Line",
+      name: 'Cell Line',
+      // color: 'green'
+    },
 
-          value:'Yolk',
-          name:'Embryonic Yolk Sac'
-        },
-        {
+      {
+      value:'Embryo',
+      name:'Embryo(EM)'
+    },
+    {
 
-          value:'Caudal',
-          name:'Embryonic Caudal Half'
-        },
+      value:'Embryonic',
+      name:'Fetus Tissue '
+    },
 
-        {
-          value:'Pluripotent',
-          name:'Induced Pluripotent Stem Cells(iPSC)'
-        }, 
+      {
+      value:'Pluripotent',
+      name:'Induced Pluripotent Stem Cells(iPSC)'
+    },
+   
+      {
+      value: "Cardiac",
+      name: 'Cardiac(CAR)',
+      // color: 'green'
+    },
+
+      {
+      value: "Kidney",
+      name: 'Kidney(KID)',
+      // color: 'green'
+    },
+
+      {
+      value: "other",
+      name: 'Other',
+      // color: 'green'
+    },
       ],
 
       growth_mode:'',
@@ -794,6 +812,25 @@ export default {
           dataset: data.dataset_id,
         },
       })
+    },
+    exportData(type){
+                if (type === 1) {
+                    this.$refs.table.exportCsv({
+                        filename: 'dataset_eryDB'
+                    });
+                }else if (type === 2) {
+                    this.$refs.table.exportCsv({
+                        filename: '排序和过滤后的数据',
+                        original: false
+                    });
+                }else if (type === 3) {
+                    this.$refs.table.exportCsv({
+                        filename: '自定义数据',
+                        columns: this.columns8.filter((col, index) => index < 4),
+                        data: this.data7.filter((data, index) => index < 4)
+                    });
+                }
+                  
     },
     searchItemByName(){
       

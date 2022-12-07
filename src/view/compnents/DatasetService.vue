@@ -246,112 +246,113 @@ export default {
             }
           }
 
-          // if(this.ifAnal.indexOf('1') > -1){
-          //   if (data.sequencing_type.indexOf('Single Cell') > -1) {
-          //                 if (data.visualize_site != null) {
-          //                   this.ifshowvis = true
-          //                 } else {
-          //                   this.ifshowAnalContent = true
-          //                   //  如果时单细胞数据，单细胞数据所提供的数据分析功能
-          //                   this.AnalyzeTypeList = [
-          //                     {
-          //                       name: 'PCA & Feature',
-          //                       link: 'PlotTSNE',
-          //                     },
+          if(this.ifAnal.indexOf('1') > -1){
+            if (data.sequencing_type.indexOf('Single Cell') > -1) {
+                          if (data.visualize_site != null) {
+                            this.ifshowvis = true
+                          } else {
+                            this.ifshowAnalContent = true
+                            //  如果时单细胞数据，单细胞数据所提供的数据分析功能
+                            this.AnalyzeTypeList = [
+                              {
+                                name: 'PCA & Feature',
+                                link: 'PlotTSNE',
+                              },
 
-          //                     // {
-          //                     // 	name:"Single Cell Feature Plot",
-          //                     // 	link:'FeaturePlot'
-          //                     // },
-          //                     {
-          //                       name: 'Markers & Enrich',
-          //                       link: 'ClusterMarker',
-          //                     },
-          //                     // {
-          //                     // 	name:"Cluster's Enrich Analyze",
-          //                     // 	link:"ClusterEnrichGO"
-          //                     // },
-          //                     {
-          //                       name: 'Differential & Enrich',
-          //                       link: 'sc_Diffanal',
-          //                     },
-          //                     // {
-          //                     // 	name:"Cluster's Differential Enrich Analyze",
-          //                     // 	link:"ClusterDiffEnrichAnal"
-          //                     // },
-          //                     // trajectory Cluster's
-          //                     {
-          //                       name: 'Differentiation Trajectory',
-          //                       link: 'ClusterDiffTrajectory',
-          //                     },
-          //                     // Single Cell Interraction
-          //                     {
-          //                       name: 'Cell-Cell Interraction',
+                              // {
+                              // 	name:"Single Cell Feature Plot",
+                              // 	link:'FeaturePlot'
+                              // },
+                              {
+                                name: 'Markers & Enrich',
+                                link: 'ClusterMarker',
+                              },
+                              // {
+                              // 	name:"Cluster's Enrich Analyze",
+                              // 	link:"ClusterEnrichGO"
+                              // },
+                              {
+                                name: 'Differential & Enrich',
+                                link: 'sc_Diffanal',
+                              },
+                              // {
+                              // 	name:"Cluster's Differential Enrich Analyze",
+                              // 	link:"ClusterDiffEnrichAnal"
+                              // },
+                              // trajectory Cluster's
+                              {
+                                name: 'Differentiation Trajectory',
+                                link: 'ClusterDiffTrajectory',
+                              },
+                              // Single Cell Interraction
+                              {
+                                name: 'Cell-Cell Interraction',
 
-          //                       link: 'ScInterraction',
-          //                     },
-          //                     // Single Cell Communication
-          //                     {
-          //                       name: 'Cell-Cell Communication',
+                                link: 'ScInterraction',
+                              },
+                              // Single Cell Communication
+                              {
+                                name: 'Cell-Cell Communication',
 
-          //                       link: 'ScCommunication',
-          //                     },
-          //                   ]
-          //                 }
-          //   }else {
-          //                 this.ifshowAnalContent = true
-          //                 var _this = this
-          //                 let experiment_type_list = data.experiment_type.split(',')
-          //                 // alert(data.experiment_type.indexOf("Expression profiling"))
-          //                 if (data.experiment_type.indexOf('Expression profiling') >= 0) {
-          //                   //alert(data.sequencing_type)
-          //                   if (data.sequencing_type.indexOf('Bulk') >= 0) {
-          //                     this.AnalyzeTypeList = [
-          //                       {
-          //                         name: 'Expression Profile',
-          //                         link: 'RNA_Expression',
-          //                       },
-          //                       {
-          //                         name: 'Principal Components',
-          //                         link: 'PCA',
-          //                       },
-          //                       {
-          //                         name: 'Differential Analysis',
-          //                         link: 'Diff_analysis',
-          //                       },
-          //                       // {
-          //                       //   name: 'Enrichment Analysis',
-          //                       //   link: 'EnrichGO',
-          //                       // },
-          //                       // {
-          //                       //   name: 'ClusterGrammer',
-          //                       //   link: 'ClustGram',
-          //                       // },
-          //                     ]
-          //                   } else {
-          //                     this.AnalyzeTypeList = [
-          //                       {
-          //                         name: 'Difference analysis',
-          //                         link: 'Diff_analysis',
-          //                       },
-          //                       {
-          //                         name: 'Enrichment Analysis',
-          //                         link: 'EnrichGO',
-          //                       },
-          //                       {
-          //                         name: 'Single Cell t_SNE',
-          //                         link: 'PlotTSNE',
-          //                       },
-          //                       {
-          //                         name: 'Single Cell Feature Plot',
-          //                         link: 'FeaturePlot',
-          //                       },
-          //                     ]
-          //                   }
-          //                 }
-          //   }
+                                link: 'ScCommunication',
+                              },
+                            ]
+                          }
+            }else {
+                          this.ifshowAnalContent = true
+                          var _this = this
+                          let experiment_type_list = data.experiment_type.split(',')
+                          // alert(data.experiment_type.indexOf("Expression profiling"))
+                          if (data.experiment_type.indexOf('Expression profiling') >= 0) {
+                            //alert(data.sequencing_type)
+                            if (data.sequencing_type.indexOf('Bulk') >= 0) {
+                              this.AnalyzeTypeList = [
+                                {
+                                  name: 'Expression Profile',
+                                  link: 'RNA_Expression',
+                                },
+                                {
+                                  name: 'Principal Components',
+                                  link: 'PCA',
+                                },
+                                // {
+                                //   name: 'Differential Analysis',
+                                //   link: 'Diff_analysis',
+                                // },
+                                // {
+                                //   name: 'Enrichment Analysis',
+                                //   link: 'EnrichGO',
+                                // },
+                                // {
+                                //   name: 'ClusterGrammer',
+                                //   link: 'ClustGram',
+                                // },
+                              ]
+                            } else {
+                              this.AnalyzeTypeList = [
+                                {
+                                  name: 'Difference analysis',
+                                  link: 'Diff_analysis',
+                                },
+                                {
+                                  name: 'Enrichment Analysis',
+                                  link: 'EnrichGO',
+                                },
+                                {
+                                  name: 'Single Cell t_SNE',
+                                  link: 'PlotTSNE',
+                                },
+                                {
+                                  name: 'Single Cell Feature Plot',
+                                  link: 'FeaturePlot',
+                                },
+                              ]
+                            }
+                          }
+            }
 
-          // }else {
+          }
+          // else {
           //               if (data.sequencing_type.indexOf('Single Cell') > -1) {
           //                 if (data.visualize_site != null) {
           //                   this.ifshowvis = true

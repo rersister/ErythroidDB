@@ -75,7 +75,7 @@
         <!-- 内容卡片 -->
         <div class="card">
               <Row style="background:#eee;padding:10px">
-                <Col span="12">
+                <Col span="8">
                    
                         <Card>
                                 <!-- <div class="moudle">
@@ -93,7 +93,7 @@
                         </Card>
                     
                 </Col>
-                <Col span="12">
+                <Col span="8">
                 
                         <Card>
                                 <!-- <div class="moudle">
@@ -111,6 +111,24 @@
                         </Card>
                  
                 </Col>
+                <Col span="8">
+                
+                <Card>
+                        <!-- <div class="moudle">
+                            <img class="moudle_image" src="@/assets/img/gene.png">
+                            <div class="moudle_title">
+                              Genes
+                            </div>
+                        </div> -->
+                        
+                        <div class='count_div'>
+                            <p  class='h3_title'>Study Number
+                                <count-to :end=allStudyN count-class="count-style"/>                                                              
+                            </p>
+                        </div>
+                </Card>
+         
+        </Col>
 
             </Row>
             <Row style="background:#eee;padding:10px">
@@ -168,7 +186,7 @@
                                 
                                 <div class='count_div'>
                                     <p  class='h3_title'>Type Number
-                                        <count-to :end="8" count-class="count-style"/>                                                              
+                                        <count-to :end="9" count-class="count-style"/>                                                              
                                     </p>
                                 </div>
                         </Card>
@@ -186,7 +204,7 @@
                                 
                                 <div class='count_div'>
                                     <p  class='h3_title'>Type Number
-                                        <count-to :end="3" count-class="count-style"/>                                                              
+                                        <count-to :end="7" count-class="count-style"/>                                                              
                                     </p>
                                 </div>
                         </Card>
@@ -253,6 +271,7 @@ export default {
                 value3: 0,
                 allSampleN:3900,
                 allCellN:175628,
+                allStudyN:88,
                 setting: {
                     autoplay: true,
                     autoplaySpeed: 4000,
@@ -295,12 +314,13 @@ export default {
         },
         getAllSampleCellN(){
             getAllSampleCellNumber().then(res => {
-				console.log("sample number")
+				console.log(res.data)
                 let _this = this
                 let datas = res.data
 				console.log(datas.allsampleN)
 				_this.allSampleN = datas.allsampleN
                 _this.allCellN = datas.allcellN
+                _this.allStudyN =  datas.allstudyN
             })
         },
 

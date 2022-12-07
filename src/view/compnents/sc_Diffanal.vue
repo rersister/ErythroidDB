@@ -62,6 +62,9 @@
                       </Page>                   
                   </div>
             </div>
+			<Button type="primary" size="large" @click="exportData(1)"><Icon type="ios-download-outline"></Icon>Download</Button>
+
+
 		</Row>
 	</div>
 	<br>
@@ -302,7 +305,26 @@ export default {
              
            })
 		},
-
+		
+		exportData(type){
+                if (type === 1) {
+                    this.$refs.table.exportCsv({
+                        filename: 'diff_data'
+                    });
+                }else if (type === 2) {
+                    this.$refs.table.exportCsv({
+                        filename: '排序和过滤后的数据',
+                        original: false
+                    });
+                }else if (type === 3) {
+                    this.$refs.table.exportCsv({
+                        filename: '自定义数据',
+                        columns: this.columns8.filter((col, index) => index < 4),
+                        data: this.data7.filter((data, index) => index < 4)
+                    });
+                }
+                  
+        },
 		changedDiffChart(group){
             console.log(group)
 			this.group = group

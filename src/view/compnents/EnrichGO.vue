@@ -125,6 +125,7 @@ export default {
                 enrichGO_data:[],
                 enrichGO_layout:{},
                 enrichGO_options:{
+                    
                     responsive: true,
                     displaylogo: false,
                     toImageButtonOptions: {
@@ -201,7 +202,8 @@ export default {
 
                         var layout = {
                             // "("+this.series+'('+ this.source+')'+')',  没有副标题，把标题设置简短
-                            title:'GO ('+ this.goType + ') enrichment of ' + this.contrGroupOfEnrich  +'( '+this.series+';Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
+                            title:'GO ('+ this.goType + ') enrichment of ' + this.contrGroupOfEnrich+ '\n'
+                              +'( '+this.series+';Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
                             //itle:'Differential analysis of ' + diffgroup +'( '+this.series+';Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
 
                             

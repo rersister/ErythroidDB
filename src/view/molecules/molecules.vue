@@ -197,44 +197,47 @@ const source_type = {
       name: 'Spleen(SP)',
       // color: 'green'
     },
+  
     4: {
-      value: "Cardiac",
-      name: 'Cardiac Puncture(CP)',
-      // color: 'green'
-    },
-    5: {
       value: "Line",
       name: 'Cell Line',
       // color: 'green'
     },
-    
-    6: {
-      value: "Fetal",
-      name: 'Embryonic Fetal Liver(EMFL)',
-      // color: 'green'
-    },
-    
-    7:{
+
+    5:{
       value:'Embryo',
       name:'Embryo(EM)'
     },
-    8:{
+    6:{
 
-      value:'Yolk',
-      name:'Embryonic Yolk Sac(EMYS)'
-    },
-    8:{
-
-      value:'Caudal',
-      name:'Embryonic Caudal Half(EMCH)'
+      value:'Embryonic',
+      name:'Fetus Tissue '
     },
 
-    9:{
+    7:{
       value:'Pluripotent',
       name:'Induced Pluripotent Stem Cells(iPSC)'
     },
    
-    10: {
+    8:{
+      value: "Cardiac",
+      name: 'Cardiac(CAR)',
+      // color: 'green'
+    },
+
+    9:{
+      value: "Kidney",
+      name: 'Kidney(KID)',
+      // color: 'green'
+    },
+
+    10:{
+      value: "other",
+      name: 'Other',
+      // color: 'green'
+    },
+
+    11: {
       value: "all",
       name: 'All',
       // color: 'green'
@@ -396,6 +399,9 @@ export default {
                 'cell_ano':' '},
               {'name':'IDH2 inhibitor',
               'full_name':'Isocitrate Dehydrogenase 2(IDH2) Mutant-specific Inhibitor',
+              'cell_ano':''},
+              {'name':'BET bromodomain inhibitor',
+              'full_name':'BET bromodomain inhibitor',
               'cell_ano':''},
               
               {'name':'PPAR-α agonists',
@@ -563,7 +569,7 @@ export default {
 
           },
           {
-              title: 'Source',//来源 dataset 里的source
+              title: 'Tissue',//来源 dataset 里的source
               key: 'source',
               // "sortable": true,
               filter: {
@@ -863,7 +869,9 @@ export default {
               {'name':'IDH2 Inhibitor',
               'full_name':'Isocitrate Dehydrogenase 2(IDH2) Mutant-specific Inhibitor',
               'cell_ano':''},
-              
+              {'name':'BET bromodomain inhibitor',
+              'full_name':'BET bromodomain inhibitor',
+              'cell_ano':''},
               {'name':'PPAR-α Agonists',
               'full_name':'Peroxisome Proliferator-activated Receptor α(PPAR-α) Agonists',
               'cell_ano':''},
@@ -945,7 +953,7 @@ export default {
                             },
                     },
                     // #ed7d31
-                    { value: 5, name: 'ERBB Inhibitors',
+                    { value: 1, name: 'ERBB Inhibitors',
                         'itemStyle': {
                         
                                     'color': '#781111'
@@ -963,13 +971,19 @@ export default {
                                     'color': '#dd6163'
                                 },  
                     },
-                    { value: 2, name: 'PPAR-α Agonists',
+                    { value: 1, name: 'BET bromodomain inhibitor',
+                        'itemStyle': {
+                        
+                                    'color': '#dd6263'
+                                },  
+                    },
+                    { value: 1, name: 'PPAR-α Agonists',
                         'itemStyle': {
                         
                                     'color': '#a79594'
                                 },
                     },
-                    { value: 2, name: 'HbF Inducers',
+                    { value: 1, name: 'HbF Inducers',
                       'itemStyle': {
                         
                                     'color': '#e2b5b4'

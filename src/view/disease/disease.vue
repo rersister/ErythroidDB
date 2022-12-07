@@ -175,7 +175,7 @@ const species_type = {
   }
 
 
-const source_type = {
+  const source_type = {
     0: {
       value: "Marrow",
       name: 'Bone Marrow(BM)'
@@ -195,44 +195,47 @@ const source_type = {
       name: 'Spleen(SP)',
       // color: 'green'
     },
+  
     4: {
-      value: "Cardiac",
-      name: 'Cardiac Puncture(CP)',
-      // color: 'green'
-    },
-    5: {
       value: "Line",
       name: 'Cell Line',
       // color: 'green'
     },
-    
-    6: {
-      value: "Fetal",
-      name: 'Embryonic Fetal Liver(EMFL)',
-      // color: 'green'
-    },
-    
-    7:{
+
+    5:{
       value:'Embryo',
       name:'Embryo(EM)'
     },
-    8:{
+    6:{
 
-      value:'Yolk',
-      name:'Embryonic Yolk Sac(EMYS)'
-    },
-    8:{
-
-      value:'Caudal',
-      name:'Embryonic Caudal Half(EMCH)'
+      value:'Embryonic',
+      name:'Fetus Tissue '
     },
 
-    9:{
+    7:{
       value:'Pluripotent',
       name:'Induced Pluripotent Stem Cells(iPSC)'
     },
    
-    10: {
+    8:{
+      value: "Cardiac",
+      name: 'Cardiac(CAR)',
+      // color: 'green'
+    },
+
+    9:{
+      value: "Kidney",
+      name: 'Kidney(KID)',
+      // color: 'green'
+    },
+
+    10:{
+      value: "other",
+      name: 'Other',
+      // color: 'green'
+    },
+
+    11: {
       value: "all",
       name: 'All',
       // color: 'green'
@@ -391,7 +394,7 @@ export default {
               {'name':'Diamond-Blackfan anaemia',
                 'full_name':'Diamond-Blackfan anaemia',
                 'cell_ano':''},
-              {'name':'Epo-resistant anaemias',
+              {'name':'Epo-resistant anaemia',
                 'full_name':'Epo-resistant anaemias',
                 'cell_ano':' '},
               {'name':'Hemoglobinopathies',
@@ -550,7 +553,7 @@ export default {
 
           },
           {
-              title: 'Source',//来源 dataset 里的source
+              title: 'Tissue',//来源 dataset 里的source
               key: 'source',
               // "sortable": true,
               filter: {
@@ -828,20 +831,39 @@ export default {
 
           var cell_type_list = cell_type_list=[
 
-              {'name':'Haemolysis',
-                'full_name':'Haemolysis',
+         
+              // 贫血  
+              {name:'Fanconi anemia', 
+                'full_name':'Fanconi anemia',
                 'cell_ano':''},
-              {'name':'Diamond-Blackfan Anaemia',
-                'full_name':'Diamond-Blackfan Anaemia',
+              //红细胞缺陷  贫血
+              {name:'Diamond-Blackfan anaemia',  
+                'full_name':'Diamond-Blackfan anaemia',
                 'cell_ano':''},
-              {'name':'Epo-resistant Anaemias',
-                'full_name':'Epo-resistant Anaemias',
+              // 贫血
+              {name:'Epo-resistant anaemia',
+                'full_name':'Epo-resistant anaemias',
                 'cell_ano':' '},
-              {'name':'Hemoglobinopathies',
+              //  贫血
+              {name:'Aplastic anemia',
+              'full_name':'Aplastic anemia',
+              'cell_ano':' '},
+
+              {name:'Sickle cell',
+                'full_name':'Sickle cell',
+                'cell_ano':' '},
+
+              //地中海贫血
+              {name:'Thalassemia',
+                'full_name':'Thalassemia',
+                'cell_ano':' '},
+
+              // 血红蛋白异常
+              {name:'Hemoglobinopathies',
               'full_name':'Hemoglobinopathies',
               'cell_ano':''},
-
         ]
+
           cell_type_list.forEach(element => {
             if(element.name == name){
               // alert(_this.cell_name)
@@ -901,22 +923,53 @@ export default {
                 },
                 data: [
                   // { name:'Haemolysis',value: 1},
-                  { name:'Diamond-Blackfan Anaemia',value:8,
+                  { name:'Diamond-Blackfan anaemia',value:6,
                       'itemStyle': {
                                 'color': '#8c0c0b'
                         },
                   },
-                  { name:'Epo-resistant Anaemias',value: 1,
+                  { name:'Epo-resistant anaemia',value: 1,
                       'itemStyle': {
                                 'color': '#8c0c0b'
                         },
                   },
-                  { name:'Hemoglobinopathies',value: 1,
+                  { name:'Hemoglobinopathies',value: 2,
                       'itemStyle': {
                                 'color': '#8c0c0b'
                         },
                   
                   },
+
+                  {name:'Fanconi anemia', value: 1,
+                  'itemStyle': {
+                                'color': '#8c0c0b'
+                        },
+                  },
+                //红细胞缺陷  贫血
+              
+              
+                //  贫血
+                  {name:'Aplastic anemia',value: 3,
+                  'itemStyle': {
+                                  'color': '#8c0c0b'
+                          },
+                  },
+
+                  {name:'Sickle cell',value: 1,
+                  'itemStyle': {
+                                  'color': '#8c0c0b'
+                          },
+                  },
+
+                //地中海贫血
+                {name:'Thalassemia',value: 1,
+                  'itemStyle': {
+                                  'color': '#8c0c0b'
+                          },
+                },
+
+             
+
                 ]
               }
             ]

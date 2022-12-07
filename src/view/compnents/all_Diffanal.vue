@@ -50,7 +50,8 @@
 			<filter-table 
                   @on-search="onSearch_diff"
                   :data="diffData"
-                  :columns="diffCols">
+                  :columns="diffCols"
+				  ref="table">
             </filter-table>
 			<div style="margin: 10px;overflow: hidden">               
                   <div style="float: right;">
@@ -65,7 +66,8 @@
                       </Page>                   
                   </div>
             </div>
-
+			<Button type="primary" size="large" @click="exportData(1)"><Icon type="ios-download-outline"></Icon>Download</Button>
+			</Br>
 		</Row>
 	</div>
 	
@@ -138,6 +140,14 @@ export default {
         	totalRow: 400,
 			diff_options: { 
 				responsive: true,
+                displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'all_diff',
+                    height: 500,
+                    width: 700,
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
 			},
 			contrastsGroup:'',
 			sourceGroup:'vivo',
@@ -287,7 +297,25 @@ export default {
             })
 		},
 
-     
+		exportData(type){
+                if (type === 1) {
+                    this.$refs.table.exportCsv({
+                        filename: 'diff_data'
+                    });
+                }else if (type === 2) {
+                    this.$refs.table.exportCsv({
+                        filename: '排序和过滤后的数据',
+                        original: false
+                    });
+                }else if (type === 3) {
+                    this.$refs.table.exportCsv({
+                        filename: '自定义数据',
+                        columns: this.columns8.filter((col, index) => index < 4),
+                        data: this.data7.filter((data, index) => index < 4)
+                    });
+                }
+                  
+        },
       
 		getdiff_group(table_name){
             let contrasts_group_type_list = []

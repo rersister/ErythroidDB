@@ -150,6 +150,14 @@ export default {
 			Feature_layout:{},
 			Feature_options:{
 				responsive: true,
+				displaylogo: false,
+				toImageButtonOptions: {
+					format: 'svg', // one of png, svg, jpeg, webp
+					filename: 'sc_all_feature',
+					height: 500,
+					width: 700,
+					scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+				}
 			},
 			showByGroup:'',
 			series:'',
@@ -296,7 +304,7 @@ export default {
 				this.Feature_data.push(result);
 				
 				let layout = {
-					title:  this.searchVivoGene +' expression level in  erythroid differentiation'+ "(Organism:"+ this.orga_name + ";group:"+ source2 +")",
+					title:  this.searchVivoGene +' expression level'+ "(Organism:"+ this.orga_name + ";group:"+ source2 +")",
 					xaxis: {
 						// range: [ 0.75, 5.25 ],
                         title:'UMAP 1',

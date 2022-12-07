@@ -174,7 +174,7 @@ const species_type = {
   }
 
 
-const source_type = {
+  const source_type = {
     0: {
       value: "Marrow",
       name: 'Bone Marrow(BM)'
@@ -194,50 +194,54 @@ const source_type = {
       name: 'Spleen(SP)',
       // color: 'green'
     },
+  
     4: {
-      value: "Cardiac",
-      name: 'Cardiac Puncture(CP)',
-      // color: 'green'
-    },
-    5: {
       value: "Line",
       name: 'Cell Line',
       // color: 'green'
     },
-    
-    6: {
-      value: "Fetal",
-      name: 'Embryonic Fetal Liver(EMFL)',
-      // color: 'green'
-    },
-    
-    7:{
+
+    5:{
       value:'Embryo',
       name:'Embryo(EM)'
     },
-    8:{
+    6:{
 
-      value:'Yolk',
-      name:'Embryonic Yolk Sac(EMYS)'
-    },
-    8:{
-
-      value:'Caudal',
-      name:'Embryonic Caudal Half(EMCH)'
+      value:'Embryonic',
+      name:'Fetus Tissue '
     },
 
-    9:{
+    7:{
       value:'Pluripotent',
       name:'Induced Pluripotent Stem Cells(iPSC)'
     },
    
-    10: {
+    8:{
+      value: "Cardiac",
+      name: 'Cardiac(CAR)',
+      // color: 'green'
+    },
+
+    9:{
+      value: "Kidney",
+      name: 'Kidney(KID)',
+      // color: 'green'
+    },
+
+    10:{
+      value: "other",
+      name: 'Other',
+      // color: 'green'
+    },
+
+    11: {
       value: "all",
       name: 'All',
       // color: 'green'
     },
 
   }
+
 
 
 const growth_type ={
@@ -568,7 +572,7 @@ export default {
 
           },
           {
-              title: 'Source',//来源 dataset 里的source
+              title: 'Tissue',//来源 dataset 里的source
               key: 'source',
               // "sortable": true,
               filter: {

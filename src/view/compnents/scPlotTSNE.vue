@@ -257,7 +257,7 @@ export default {
 					title_y = 'tSNE 2'
 				}
 				let layout = {
-					title:  this.searchVivoGene +' expression level in  erythroid differentiation (' +this.series+';group:'+ source2 +')',
+					title:  this.searchVivoGene +' expression level  (' +this.series+';group:'+ source2 +')',
 					xaxis: {
                         title:title_x,
                     },

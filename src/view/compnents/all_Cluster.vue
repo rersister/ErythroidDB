@@ -133,6 +133,14 @@ export default {
 			clusterbyifVivo_layout:{},
             clusterbyifVivo_options:{
                 responsive: true,
+                displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'all_pca',
+                    height: 500,
+                    width: 700,
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
             },
             clusterbyCellType_data:[],
 			clusterbyCellType_layout:{},

@@ -320,7 +320,7 @@ export default {
                                 // },
                             },
                             {
-                                title: 'Source', // 细胞来源时间，分选等信息
+                                title: 'Tissue', // 细胞来源时间，分选等信息
                                 key: 'source',
                                 "sortable": true,
                                 width:120,
@@ -518,7 +518,17 @@ export default {
             
             
             if (this.dataset.indexOf("GSE") > -1){
-                  return 'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+ this.dataset
+
+                if((this.dataset.indexOf("_") > -1)){
+                    var key = this.dataset.split('_')[0]
+                    return 'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+ key
+                
+                }else{
+                    return 'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+ this.dataset
+                
+            
+                }
+                  
             }
             
             if (this.dataset.indexOf("PMID") > -1){

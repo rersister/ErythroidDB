@@ -134,10 +134,26 @@ export default {
            vivo_layout:{},
            vitro_layout:{},
            vivo_options:{
-               responsive: true,
+                responsive: true,
+                displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'all_expression',
+                    height: 500,
+                    width: 700,
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
            },
            vitro_options:{
-                responsive: true,
+                    responsive: true,
+					displaylogo: false,
+					toImageButtonOptions: {
+						format: 'svg', // one of png, svg, jpeg, webp
+						filename: 'all_expression',
+						height: 500,
+						width: 700,
+						scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+					}
            },
            SourceList:[
            ],
@@ -332,7 +348,7 @@ export default {
                     }
 
                     let layout1 = {
-                        title:  this.searchVitroGene +' expression level in  erythroid differentiation ('+ this.cell_source+')',
+                        title:  this.searchVitroGene +' expression level ('+ this.cell_source+')',
                         // autosize:true,
                         yaxis: {
                             
@@ -360,7 +376,7 @@ export default {
 
                     };
                     let layout = {
-                        title:  this.searchGene +' expression level in  erythroid differentiation ('+ this.selectList[1]+')',
+                        title:  this.searchGene +' expression level ('+ this.selectList[1]+')',
                         bargap: 0.25,
                         yaxis: {
                             
@@ -451,7 +467,7 @@ export default {
                     });
 
                     let layout = {
-                        title:  this.searchGene +' expression level in  erythroid differentiation ('+ cell_source_full_name+')',
+                        title:  this.searchGene +' expression level ('+ cell_source_full_name+')',
                         bargap: 0.25,
                         yaxis: {
                             
@@ -524,7 +540,7 @@ export default {
                             this.vivo_data.push(result);
                         }
                         let layout = {
-                            title:  this.searchGene +' expression level in  erythroid differentiation ('+ this.selectList[0]+')',
+                            title:  this.searchGene +' expression level ('+ this.selectList[0]+')',
                             bargap: 0.25,
                             yaxis: {
                                 
@@ -591,7 +607,7 @@ export default {
                     }
 
                     let layout1 = {
-                        title:  this.searchVitroGene +' expression level in  erythroid differentiation ('+ this.vitro_source+')',
+                        title:  this.searchVitroGene +' expression level ('+ this.vitro_source+')',
                         // autosize:true,
                         yaxis: {
                             
@@ -619,7 +635,7 @@ export default {
 
                     };
                     let layout = {
-                        title:  this.searchGene +' expression level in  erythroid differentiation ('+ this.selectList[1]+')',
+                        title:  this.searchGene +' expression level ('+ this.selectList[1]+')',
                         bargap: 0.25,
                         yaxis: {
                             
@@ -708,7 +724,7 @@ export default {
             }
 
             let layout = {
-                title: 'AAGAB expression level in  erythroid differentiation (CB)',
+                title: 'AAGAB expression level (CB)',
                 yaxis: {
                     autorange: true,
                     showgrid: true,

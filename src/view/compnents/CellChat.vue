@@ -102,6 +102,14 @@ export default {
 				CellChartHotMap_data:[],
 				CellChartHotMap_options:{
 					responsive: true,
+					displaylogo: false,
+					toImageButtonOptions: {
+						format: 'svg', // one of png, svg, jpeg, webp
+						filename: 'sc_cellchat',
+						height: 500,
+						width: 700,
+						scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+					}
 				},
 				dataset_name:'erthy',
 				comm_type:'all',
