@@ -464,47 +464,41 @@ export default {
         ],
       cell_type:'',
       celltype_list:[
-
-          {name:'ESC',
-            full_name:'Embryonic Stem Cells',
-            'cell_ano':'Embryonic stem cells are pluripotent cells isolated from the inner cell mass of a blastocyst, the early mammalian embryo that implants into the uterus. Embryonic stem cells self-renew by dividing and can differentiate into any specialised cell of the body, but not extra-embryonic tissues such as the placenta.'},
-          {name:'HSC',
-            full_name:'Hematopoietic Stem cells',
+      {'name':'HSC',
+            'full_name':'Hematopoietic Stem cells',
             'cell_ano':'Hematopoietic stem cells (HSCs) are a rare population of cells residing in the bone marrow (BM) and continuously replenish all mature blood cells throughout the life span.'},
-          {name:'MPP',
-            full_name:'Multipotent Progenitor Cell',
-            'cell_ano':'Multipotent adult progenitor cells (MAPC) are an attractive choice for cytotherapy because they have a large proliferative potential, the ability to differentiate into different cell types and produce a variety of cytokines and growth factors important to wound healing. '},
-          {name:'CMP',
-          full_name:'Common Myeloid Progenitor',
-          'cell_ano':'Common myeloid progenitors give rise to either megakaryocyte/erythrocyte or granulocyte/macrophage progenitors. Purified progenitors were used to provide a first-pass expression profile of various haematopoiesis-related genes.'},
-          
-          {name:'MEP',
+          {'name':'MPP',
+            'full_name':'Multipotent Progenitor Cell',
+            'cell_ano':'Multipotent progenitor cell is generated from HSC and has the ability of self-renewing and differentiation into all blood cell forms.'},
+          {'name':'CMP',
+          'full_name':'Common Myeloid Progenitor',
+          'cell_ano':'Common myeloid progenitors give rise to either megakaryocyte/erythrocyte or granulocyte/macrophage progenitors. '},
+          {'name':'MEP',
           'full_name':'Megakaryocyte-Erythroid Progenitor',
-          'cell_ano':'Megakaryocyte/erythroid progenitors (MEPs) are bipotent cells that undergo a fate decision to become either megakaryocytes (Mk) or erythroid (E) cells. Detailed mechanistic knowledge of the human MEP fate decision is not only critical for our understanding of normal and perturbed hematopoiesis, but also has important therapeutic implications.'},
-          {name:'BFU-E',
-          full_name:'Burst-Forming Unit -Erythroid',
+          'cell_ano':'Megakaryocyte/erythroid progenitors (MEPs) are bipotent cells that undergo a fate decision to become either megakaryocytes (Mk) or erythroid (E) cells.'},
+          {'name':'BFU-E',
+          'full_name':'Burst-Forming Unit-Erythroid',
           'cell_ano':'BFU-E Burst forming unit-erythroid, the earliest known erythroid precursor cell that eventually differentiates into erythrocytes. Produces a colony containing greater than 200 erythroblasts in a hematopoietic colony assay.'},
-          {name:'CFU-E',
-          full_name:'Colony-Forming Unit – Erythroid',
+          {'name':'CFU-E',
+          'full_name':'Colony-Forming Unit-Erythroid',
           'cell_ano':'A CFU-E cell, which has a lesser proliferative capacity than a BFU-E cell, requires the presence of erythropoietin as a stimulatory factor. '},
-
-          {name:'ProE',
-          full_name:'The Proerythroblast Stage',
-          'cell_ano':'The proerythroblast is a large cell with deep blue cytoplasm, high N:C ratio, and prominent nucleoli. Subsequent to proerythroblasts, nucleoli are no longer seen. '},
-          {name:'BasoE',
-          full_name:'Basophilic Erythroblast',
-          'cell_ano':'Basophilic erythroblast a nucleated precursor in the erythrocytic series, preceding the polychromatophilic erythroblast and following the proerythroblast; the cytoplasm is basophilic, the nucleus is large with clumped chromatin, and the nucleoli have disappeared. Called also basophilic normoblast.'},
-          {name:'PolyE',
-          full_name:'Polychromatophilic Erythroblast',
+          {'name':'ProE',
+          'full_name':'Proerythroblast',
+          'cell_ano':'The proerythroblast is a large cell with deep blue cytoplasm, high nucleus-to-cytoplasm ratio, and prominent nucleoli. Subsequent to proerythroblasts, nucleoli are no longer seen.'},
+          {'name':'BasoE',
+          'full_name':'Basophilic Erythroblast',
+          'cell_ano':'Basophilic erythroblast is a nucleated precursor in the erythrocytic series, preceding the polychromatophilic erythroblast and following the proerythroblast; the cytoplasm is basophilic, the nucleus is large with clumped chromatin, and the nucleoli have disappeared. It is also called basophilic normoblast.'},
+          {'name':'PolyE',
+          'full_name':'Polychromatophilic Erythroblast',
           'cell_ano':'The nucleus is intensely heterochromatic, and the cytoplasm is now a characteristic lilac color. The basophilia is due to the cytoplasmic ribosomes, and the acidophilia is due to the increase in the amount of hemoglobin being synthesized by the ribosomes. This is the last stage during which cell division occurs.'},
-          {name:'OrthoE',
-          full_name:'Orthochromatic Erythroblast',
+          {'name':'OrthoE',
+          'full_name':'Orthochromatic Erythroblast',
           'cell_ano':'In an orthochromatic erythroblast, the nucleus has shrunk and become darker and the growing concentration of hemoglobin turns the cytoplasm pink. '},
-          {name:'Retic',
-          full_name:'Reticulocyte',
+          {'name':'Retic',
+          'full_name':'Reticulocyte',
           'cell_ano':'Reticulocytes are immature red blood cells that detect if your bone marrow is forming enough red blood cells'},
-          {name:'RBC',
-          full_name:'Red Blood Cell',
+          {'name':'RBC',
+          'full_name':'Red Blood Cell',
           'cell_ano':'Red blood cell, also called erythrocyte, cellular component of blood, millions of which in the circulation of vertebrates give the blood its characteristic colour and carry oxygen from the lungs to the tissues. The mature human red blood cell is small, round, and biconcave; it appears dumbbell-shaped in profile. '}
         ],
       reported_gene:'',
@@ -518,7 +512,7 @@ export default {
               {name:'ERBB inhibitors',
                 full_name:'Epidermal growth factor receptor inhibitors',
                 'cell_ano':''},
-              {name:'iron',
+              {name:'Iron',
                 full_name:'Iron',
                 'cell_ano':' '},
               {name:'IDH2 inhibitor',
@@ -532,11 +526,11 @@ export default {
               full_name:'Heterogeneity of fetal hemoglobin (HbF) activation',
               'cell_ano':''},
               
-              {name:'erythropoietin',
+              {name:'Erythropoietin',
               full_name:'Erythropoietin',
               'cell_ano':''},
 
-              {name:'corticosteroids',
+              {name:'Corticosteroids',
               full_name:'Corticosteroids',
               'cell_ano':''},
 
@@ -545,15 +539,35 @@ export default {
       ],    
       disease_n:'',
       disease_list:[
-              {name:'Haemolysis',
+              // 溶血  
+              {name:'Haemolysis', 
                 'full_name':'Haemolysis',
                 'cell_ano':''},
-              {name:'Diamond-Blackfan anaemia',
+              //红细胞缺陷  贫血
+              {name:'Diamond-Blackfan anaemia',  
                 'full_name':'Diamond-Blackfan anaemia',
                 'cell_ano':''},
+              // 贫血
               {name:'Epo-resistant anaemias',
                 'full_name':'Epo-resistant anaemias',
                 'cell_ano':' '},
+
+              {name:'Sickle cell disease',
+                'full_name':'Sickle cell disease',
+                'cell_ano':' '},
+
+              {name:'Thalassemia',
+                'full_name':'Thalassemia',
+                'cell_ano':' '},
+              
+
+              //  贫血
+              {name:'Aplastic anemia',
+                'full_name':'Aplastic anemia',
+                'cell_ano':' '},
+              
+                
+              // 血红蛋白异常
               {name:'Hemoglobinopathies',
               'full_name':'Hemoglobinopathies',
               'cell_ano':''},
@@ -580,26 +594,26 @@ export default {
       tissue_list:[ 
           {
               value: "Marrow",
-              name: 'Bone Marrow(BM)'
+              name: 'Bone Marrow'
             },
           {
             value: "Cord",
-            name: 'Cord Blood(CB)',
+            name: 'Cord Blood',
             // color: 'red'
           },
         {
             value: "Peripheral",
-            name: 'Peripheral Blood(PB)',
+            name: 'Peripheral Blood',
             // color: 'green'
           },
         {
             value: "Spleen",
-            name: 'Spleen(SP)',
+            name: 'Spleen',
             // color: 'green'
           },
         {
           value: "Cardiac",
-          name: 'Cardiac Puncture(CP)',
+          name: 'Cardiac',
           // color: 'green'
         },
           {
@@ -610,23 +624,23 @@ export default {
       
         {
           value: "Fetal",
-          name: 'Embryonic Fetal Liver(EMFL)',
+          name: 'Embryonic Fetal Liver',
           // color: 'green'
         },
     
         {
           value:'Embryo',
-          name:'Embryo(EM)'
+          name:'Embryo'
         },
         {
 
           value:'Yolk',
-          name:'Embryonic Yolk Sac(EMYS)'
+          name:'Embryonic Yolk Sac'
         },
         {
 
           value:'Caudal',
-          name:'Embryonic Caudal Half(EMCH)'
+          name:'Embryonic Caudal Half'
         },
 
         {

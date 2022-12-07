@@ -92,7 +92,7 @@ export default {
                
                 {
                     value: 'development_type',
-                    label: 'Growth Mode',
+                    label: 'Experiment type',
                 },
                 {
                     value: 'cell_source',
