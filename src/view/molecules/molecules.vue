@@ -968,7 +968,7 @@ export default {
                     { value: 1, name: 'IDH2 Inhibitor',
                         'itemStyle': {
                         
-                                    'color': '#dd6163'
+                                    'color': '#FF9966'
                                 },  
                     },
                     { value: 1, name: 'BET bromodomain inhibitor',

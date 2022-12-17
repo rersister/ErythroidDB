@@ -146,7 +146,7 @@
                                 
                                 <div class='count_div'>
                                     <p  class='h3_title'>Stage Number
-                                        <count-to :end="13" count-class="count-style"/>                                                              
+                                        <count-to :end="12" count-class="count-style"/>                                                              
                                     </p>
                                 </div>
                         </Card>
