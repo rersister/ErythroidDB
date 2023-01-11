@@ -25,7 +25,15 @@
                     <li><a href="#EnrichmentAnalysis">&nbsp;&nbsp;Enrichment Analysis</a></li>
                     <!-- Dimensional Reduction & Feature -->
                     <li><a href="#DRF">&nbsp;&nbsp;Dimensional Reduction & Feature</a></li>
-                    
+                    <li><a href="#ME">&nbsp;&nbsp;Markers & Enrich</a></li>
+                    <li><a href="#DE">&nbsp;&nbsp;Differential & Enrich</a></li>
+
+                    <!-- Differentiation Trajectory -->
+                    <li><a href="#DT">&nbsp;&nbsp;Differentiation Trajectory</a></li>
+                    <!-- Cell-Cell Interraction -->
+                    <li><a href="#CCI">&nbsp;&nbsp;Cell-Cell Interraction</a></li>
+                    <!-- Cell-Cell Communication. -->
+                    <li><a href="#CCC">&nbsp;&nbsp;Cell-Cell Communication</a></li>
                     <li><a href="#Erythroid">Erythroid Atlas</a></li>
                     <li><a href="#About">About</a></li>
                 </div>
@@ -49,16 +57,10 @@
             <br>
             <p class="p_text">
                 Erythroid Database: A database of transcriptome profile of erythroid development. 
-                            We developed the erythroid database EryDB, a web-accessible collection of expert curated, 
-                            quality assured and pre-analyzed data collected from ~106 datasets comprising 
-                            a total of ~3,899 bulk RNA-seq samples and 175,628 single cell erythroid cells from 
-                            three species.All datasets were  divided into different developmental stages.
-                            Unlike other added-value databases, EryDB allows users to easily retrieve and explore data of specific studies, 
-                            determine differentially expressed genes and their functions via principal component analysis, 
-                            differential gene expression analysis, gene set enrichment analysis, and transcription factor analysis under certain conditions, 
-                            such as in vitro or in vivo. Besides, EryDB integrated single-cell RNA sequencing data to visualize gene expression in 
-                            single cell resolution by color-coded t-SNE or UMAP plots.
-                            Plots and tables in EryDB are customizable, downloadable and interactive.
+                            We developed the erythroid database EryDB,an open-access and comprehensive database dedicated to the collection, integration, analysis, and visualization of transcriptomic data for erythropoiesis and related diseases.
+                            Currently, the database includes expertly curated quality-assured data of 3,802 samples and 1,167,800 single cells derived from 94 public studies of three species (Homo sapiens, Mus musculus, and Danio rerio), nine tissue types, and seven diseases. 
+                            EryDB provides the user with the ability to not only browse the molecular features of erythropoiesis between tissues and species, but also perform computational analyses of single-cell and bulk RNA-Seq data, 
+                            thus serving as a convenient platform for custom queries and analyses. 
                                         
             </p>
         </div>
@@ -157,7 +159,7 @@
             <br>
             <p class="p_text">
             In this page, the advanced search is provided relative to the quick search. 
-            In specific, you can search for multiple aspects including cell type,reported gene,compound,speceis,tissue,growth mode,development,and.         
+            In specific, you can search for multiple aspects including cell type,reported gene,compound,speceis,tissue,experiment type,and omics type.         
             </p>
             <br>
             <br>
@@ -324,7 +326,7 @@
 
 
             <br>
-            <h4>
+            <h4 id = 'ME'>
                 2)Markers & Enrich
             </h4>
             <br>
@@ -347,7 +349,7 @@
             
 
             <br>
-            <h4>
+            <h4 id = 'DE'>
                 3)Differential & Enrich;
             </h4>
             <br>
@@ -382,7 +384,7 @@
             <!-- help_scDifferEnrich.svg -->
 
             <br>
-            <h4>
+            <h4 id = 'DT'>
                 4)Differentiation Trajectory;
             </h4>
             <br>
@@ -404,7 +406,7 @@
             
 
             <br>
-            <h4>
+            <h4 id = 'CCI'>
                 5)Cell-Cell Interraction;
             </h4>
             <br>
@@ -420,7 +422,7 @@
             
 
             <br>
-            <h4>
+            <h4 id = 'CCC'>
                 6)Cell-Cell Communication.
             </h4>
             <br>
@@ -482,7 +484,9 @@
             <br>
             <p class="p_text">
             In this page, we provide the statistic informaton about all the datasets.
-            You can the datasets' number,  samples' number ,and cells' number showed by organism, growth mode and tissue</p>
+            You can the datasets' number,  samples' number ,and cells' number showed by organism, growth mode and tissue.
+            In future releases of EryDB, transcriptomic data will be continuously updated, and more types of omics data will be added, including epigenomic, proteomic, metabolomic, and genomic data, as well as next-generation omics data types.
+            </p>
             <br>
             <br>
             <p class="img_c"><img width="80%" src="@/assets/img/help_about.svg" alt="img"></p>

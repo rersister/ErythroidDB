@@ -11,8 +11,17 @@
 						<i-select  clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup">        
 							<i-option v-for="(group,index) in contrasts_group" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
+                        <span>eg: </span>
 					</Form-item>
 				</i-col>
+                <i-col span="12">
+                    <div style="margin-left: 4px; ">
+					<span>
+						e.g, late_basoE-orthoE means the late_basoE  group versus the orthoE group
+					</span>
+				</div>
+                </i-col>
+                
 			</i-form>
         </Row> 		
 		<Row>					

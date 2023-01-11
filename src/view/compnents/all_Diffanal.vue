@@ -142,7 +142,7 @@ export default {
 				responsive: true,
                 displaylogo: false,
                 toImageButtonOptions: {
-                    format: 'svg', // one of png, svg, jpeg, webp
+                   format: 'svg', // one of png, svg, jpeg, webp
                     filename: 'all_diff',
                     height: 500,
                     width: 700,

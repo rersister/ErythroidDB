@@ -35,10 +35,11 @@
                         <!-- <button @click="intoDataSet('GSE32991')"  style="{cursor='hand'}" >  </button>-->
                         <CarouselItem>
                             <!-- <button @click="intoDataSet('FLB000003')"  style="{cursor='hand'}" > </button>-->
-                            <div class="demo-carousel"><a><img width="100%"  src="@/assets/img/aboutSBySpecies.svg" alt="img"></a></div>
+                            <div class="demo-carousel"><a><img width="80%"  src="@/assets/img/gene_cloud.svg" alt="img"></a></div>
                         </CarouselItem>
+
                         <CarouselItem>
-                            <div class="demo-carousel"><a><img width="80%" src="../../../../src/assets/img/compState.svg" alt="img"></a></div>
+                            <div class="demo-carousel"><a><img width="100%" src="../../../../src/assets/img/disease_home.svg" alt="img"></a></div>
                         </CarouselItem>
                         <!-- <CarouselItem>
                             <!-- FLB000002  <button @click="intoDataSet('FLB000002')"  style="{cursor='hand'}" >  </button>
@@ -46,7 +47,7 @@
                         </CarouselItem> -->
                         <CarouselItem>
                             <!-- <button @click="intoDataSet('FLB000003')"  style="{cursor='hand'}" > </button>-->
-                            <div class="demo-carousel"><a><img width="80%"  src="@/assets/img/datasetState.svg" alt="img"></a></div>
+                            <div class="demo-carousel"><a><img width="90%"  src="@/assets/img/monocle_home.svg" alt="img"></a></div>
                         </CarouselItem>
                         
                     </Carousel>
