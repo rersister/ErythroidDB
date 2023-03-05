@@ -17,3 +17,12 @@ export const getDatasetSequenceType = dataset_serid => {
 	  method: 'post',
 	})
 }
+
+// getGeneKeyWords
+export const getGeneKeyWords = dataset_serid => {
+	return axios.request({
+	  url: 'public/getDatasetGeneKeyWords',
+	  data: {'dataset_serid':dataset_serid},
+	  method: 'post',
+	})
+}

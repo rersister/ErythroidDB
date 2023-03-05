@@ -10,13 +10,14 @@
     </Table>
 
     <!--  @on-row-click="intoDataSet"  想办法设置在 组件使用层 -->
+    <!--  border 去掉border 少 不对齐感 -->
     <Table
       class="h1_title"
       @on-row-click="intoDataSet"
       @on-selection-change="onChange"
       height="500"
       :show-header="false"
-      border
+     
       :data="data"
       :columns="columns"
       stripe

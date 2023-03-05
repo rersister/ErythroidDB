@@ -135,7 +135,7 @@ export default [
     
     {
         path: '/Dataset-Service',
-        name: '',
+        name: 'Dataset-Service',
         component: Main,
         meta: {    
             

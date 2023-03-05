@@ -8,7 +8,13 @@
                         <Col span="12">
                             <!-- 数据查询分子名 -->
                             <span class="h4_title" >Input Gene Symbol:</span>
-                            <Input class='my_class_input' v-on:input="search_value($event)"  :placeholder="search_placeholder"/>                         
+                            <i-select enter-button="Search" style="width:80%"   
+                            @on-search="search_value($event)" 
+                            :placeholder="search_placeholder"  
+                            @on-change="search_value($event)"  filterable>        
+							    <i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
+					        </i-select>
+                            <!-- <Input class='my_class_input' v-on:input="search_value($event)"  :placeholder="search_placeholder"/>                          -->
                             <Button class='button_mystyle' @click="searchItemByName" >Search</Button>
                         </Col>                                                                                                                                                       
                 </Row>       
@@ -76,7 +82,7 @@
 
 
 <script>
-import { getDatasetExperiType,  } from '@/api/datasetService'
+import { getDatasetExperiType,getGeneKeyWords } from '@/api/datasetService'
 import {getSpecifExpreOptionsByName,getMicroInfo } from '@/api/erythdataservice'
 import VuePlotly from '@statnett/vue-plotly'
 
@@ -108,6 +114,7 @@ export default {
                     scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
                 }
             },
+            keyWords_list:[],
             spinShow4:'true',
             othersearch_items:[],
             search_datatype:'',
@@ -123,7 +130,14 @@ export default {
         }
     },
 	methods:{
+        getAllkeyWords(){
+            getGeneKeyWords(this.$store.state.app.CurrentPageToken).then(res=>{
 
+                this.keyWords_list = res.data.keywords
+                // console.log("this.keyWords_list")
+                // console.log(res.data.keywords)
+            })
+        },
         getdatasetExperiType(){
 
             console.log(this.$store.state.app.CurrentPageToken)
@@ -506,7 +520,7 @@ export default {
     },
     mounted(){
         this.getdatasetExperiType()
-        
+        this.getAllkeyWords()
 
     }
 
@@ -525,8 +539,9 @@ export default {
     font-size:12px;
     margin-right:10px;
     margin-bottom:5px;
-    /* width:calc((50/1920) * 100vw); 
-    height: calc((20/1920) * 100vw); */
+    margin-top:5px;
+    width:15%; 
+    height: 12%;
   }
 
 .chart{

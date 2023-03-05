@@ -597,22 +597,36 @@ export default {
                 let platforms_data = datas.platforms  
                 
                 var platforms_string = ''
+
+
                 if (platforms_data != null){
-                    if ( platforms_data.indexOf(",") > -1){
+
+                    if(this.dataset.indexOf("GSE") > -1){
+                        if ( platforms_data.indexOf(",") > -1){
                          let platforms_arry = platforms_data.split(",")
                         // console.info(samples_arry)
                         for (var i=0;i<platforms_arry.length;i++){
                             let platform_arry = platforms_arry[i].split(" ")
-                            if ( platform_arry[0].indexOf("GPL") > -1 ){                            
+                            if ( platform_arry[0].indexOf("GPL") > -1 ){  
+
+                                // platforms_string =  platforms_string+ platform_arry[0] +platforms_arry[i]+"&nbsp;&nbsp;"
                                 platforms_string =  platforms_string + "<a target=_blank href=https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=" + platform_arry[0] +">"+platforms_arry[i]+"</a>&nbsp;&nbsp;"
                             }else{
 
                             }
                         }
+                        }else{
+                            let platform_arry = platforms_data.split(" ")
+                            // platforms_string =  platform_arry[0] +platforms_data
+                            platforms_string =   platforms_string + "<a target=_blank href=https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=" + platform_arry[0] +">"+platforms_data+"</a>"
+                        }
                     }else{
-                        let platform_arry = platforms_data.split(" ")
-                        platforms_string =   platforms_string + "<a target=_blank href=https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=" + platform_arry[0] +">"+platforms_data+"</a>"
+
+                        platforms_string =  platforms_data
                     }
+                   
+
+
                 }
 
                 _this.platforms = platforms_string

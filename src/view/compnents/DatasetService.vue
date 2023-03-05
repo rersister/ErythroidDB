@@ -512,7 +512,8 @@ export default {
 		position: relative; */
 }
 .anal_div:hover {
-  background: #f1ede9;
+  background:#a85557;
+  color: azure;
 }
 .card{
   margin: 2% 2% 2% 2%;

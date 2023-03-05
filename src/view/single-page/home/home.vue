@@ -8,7 +8,9 @@
                                 About EryDB
                                  <!-- All datasets were divided into different developmental stages. Unlike other added-value databases, EryDB allows users to easily retrieve and explore data of specific studies, determine differentially expressed genes and their functions via principal component analysis, differential gene expression analysis, gene set enrichment analysis, and transcription factor analysis under certain conditions, such as in vitro or in vivo. Besides, EryDB integrated single-cell RNA sequencing data to visualize gene expression in single cell resolution by color-coded t-SNE or UMAP plots. Plots and tables in EryDB are customizable, downloadable and interactive.  -->
                                 <p class="p_text" slot="content">
-                                    EryDB: a database of transcriptome profile of erythropoiesis and a web-accessible collection of expertly curated, quality-assured, and pre-analyzed data sets covering three species and nine sources, totaling {{allSampleN}} samples and {{allCellN}} single cell. 
+                                    EryDB: a database of transcriptome profile of erythropoiesis and a web-accessible collection of expertly curated, 
+                                    quality-assured, and pre-analyzed data sets covering three species and nine sources, 
+                                    totaling {{allSampleN}} samples and {{allCellN}} single cells. 
                                 </p>
 
                         </Panel>
@@ -17,7 +19,7 @@
             </Row>
             <br>
             <Row>
-                <Col span="12">
+                <Col span="11" >
                  <!-- 走马灯 -->
                     <Carousel
                         v-model="value3"             
@@ -52,7 +54,8 @@
                         
                     </Carousel>
                 </Col>
-                <Col span="12" class="keyWord">
+                <!-- <Col span="4" class="add_width"></Col> -->
+                <Col span="12" offset="1" class="keyWord">
                             <!-- 数据查询分子名 -->
                     </br>
                     </br>
@@ -302,7 +305,6 @@ export default {
         getAllkeyWords(){
 
             getDatasetKeyWords().then(res=>{
-
                 this.keyWords_list = res.data.keywords
                 console.log("this.keyWords_list")
                 console.log(res.data.keywords)
@@ -396,6 +398,9 @@ export default {
     .Panel_c{
         font-size:16px;
     }
+    .add_width{
+        width: 6px;
+    }
     .p_text{
         font-size:18px;
         text-align: justify;
@@ -404,6 +409,7 @@ export default {
     }
     .keyWord{
         font-size:18px;
+        // margin-left: 4px;
     }
 
    .moudle {
@@ -465,4 +471,32 @@ export default {
         color: #fff!important;
         border-color: #a85557!important;
     }
+    .ivu-carousel-arrow {
+        border: none;
+        outline: 0;
+        padding: 0;
+        border-radius: 50%;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        z-index: 
+        10;
+        transform: 
+        translateY(-50%);
+        transition: .2s;
+        color: #fff;
+        font-size: 2em;
+        font-family: inherit;
+        line-height: inherit;
+    }
+    .ivu-carousel-arrow-hover {
+        display: inherit;
+        opacity: 0;
+    }
+    .left, .right {
+        text-align: center;
+        height: 15%;
+        width: 15%;
+    }
+
 </style>

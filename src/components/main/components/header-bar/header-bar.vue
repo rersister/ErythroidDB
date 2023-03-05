@@ -19,7 +19,9 @@ export default {
     collapsed: Boolean
   },
   computed: {
+    
     breadCrumbList () {
+      // Array var test=this.$store.state.app.breadCrumbList.pop()
       return this.$store.state.app.breadCrumbList
     }
   },

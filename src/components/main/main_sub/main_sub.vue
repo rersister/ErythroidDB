@@ -104,7 +104,7 @@
             <div> 
             <!-- dataset 展示页 FilterTableForAllDateSet -->
               
-              <Table class="my_hover" stripe
+              <Table id="mytable" class="my_hover" stripe
                     @on-row-click="intoDataSet"
                     :data="datasetsTypeSource"
                     :columns="tAdatasetTypeSourceColumns"
@@ -147,7 +147,7 @@
     <div class="footer_style">
       <span class="my_footer">
                 Copyright ©2018-2019 Guangmin Zheng.&copy;<a
-                  href="http://sourcedb.big.cas.cn/zw/zjrc/yjy/201311/t20131116_3979427.html"
+                  href="https://people.ucas.edu.cn/~0009899"
                   target="_blank"
                   title="北京基因组研究所方向东"
                   >Fang's Lab.</a>
@@ -333,6 +333,7 @@ const sequence_type ={
     },
   
 }
+
 
 export default {
   name: 'App',
@@ -772,11 +773,11 @@ export default {
               name:'scRNA-seq',
               value:'scRNA'
             },
-            {
-                value: "all",
-                name: 'All',
-                // color: 'green'
-              },
+            // {
+            //     value: "all",
+            //     name: 'All',
+            //     // color: 'green'
+            //   },
       ],
   
     }
@@ -813,11 +814,76 @@ export default {
         },
       })
     },
+    // click: (el) => {
+    //               /* console.log(el, 'el') */
+    //               let alink = document.createElement('a')
+    //               fetch(row.url, { responseType: 'blob' }).then(res =>                 res.blob()).then(blob => { // 将链接地址字符内容转变成blob地址
+    //                 alink.href = URL.createObjectURL(blob)
+    //                 console.log(alink.href)
+    //                 alink.download = ''
+    //                 document.body.appendChild(alink)
+    //                 alink.click()
+    //               })
+    //             }
+    // exportScore () {
+    // let that = this;
+ 
+    // let newArr = JSON.parse(JSON.stringify(this.test_data));  //复制一层原数组列表，避免导出列表的data中对数组做出修改后界面数据也被修改
+ 
+    // this.$refs.test_table.exportCsv({
+    //     filename: '成绩单',
+    //     original: false,  //是否导出为原始数据,默认为true
+    //     columns: table_column,
+    //     data: newArr.map((item) => {
+    //         //对数据二次加工，在excel表中保留字符串类型
+    //         item.classRankChange = '= "'+item.classRankChange+'"'  //比如：'="+20"'     
+    //         item.gradeRankChange = '= "'+item.gradeRankChange+'"'
+    //         return item;
+    //     })
+    // });
+    // },
+    //将表格数据过滤
+
+
     exportData(type){
                 if (type === 1) {
-                    this.$refs.table.exportCsv({
-                        filename: 'dataset_eryDB'
-                    });
+                  let that = this;
+                  // let newArr = JSON.parse(JSON.stringify(this.data));  //复制一层原数组列表，避免导出列表的data中对数组做出修改后界面数据也被修改
+                  this.$refs.table.exportCsv({
+                      filename: 'dataset_eryDB',
+                      original: true,  //是否导出为原始数据,默认为true
+                      columns: this.tAdatasetTypeSourceColumns,
+                      data: _.forEach(this.datasetsTypeSource,function(v){
+                        var arr = []
+                        for(var k in v){
+                          if (typeof v[k] == 'string') {
+                                // v[k] = v[k].replace(/\n/g, '')
+                                // https://developer.aliyun.com/article/1141882 
+                                // 解决iview中表格导出Excel时单元格内不换行的问题
+                                v[k] = '"'+ v[k].replace(/"/g, '""')+'"'//成功
+                            }
+                        }
+                        arr.push(v)
+                        return arr
+                      })
+ 
+                  });
+                
+                      // data: newArr.map((item) => {
+                      //     //对数据二次加工，在excel表中保留字符串类型
+                      //     item.classRankChange = '= "'+item.classRankChange+'"'  //比如：'="+20"'     
+                      //     item.gradeRankChange = '= "'+item.gradeRankChange+'"'
+                      //     return item;
+                      // })
+             
+                    // let alink = document.createElement('mytable')
+                    // fetch(row.url, { responseType: 'blob' }).then(res =>                 res.blob()).then(blob => { // 将链接地址字符内容转变成blob地址
+                    //   alink.href = URL.createObjectURL(blob)
+                    //   console.log(alink.href)
+                    //   alink.download = ''
+                    //   document.body.appendChild(alink)
+                    //   alink.click()
+                    // })
                 }else if (type === 2) {
                     this.$refs.table.exportCsv({
                         filename: '排序和过滤后的数据',

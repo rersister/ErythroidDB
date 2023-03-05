@@ -1315,7 +1315,8 @@ export default {
 }
 
 .anal_div:hover {
-  background: #eee;
+  background:#a85557;
+  color: azure;
 }
 
 .search_b {
