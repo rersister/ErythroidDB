@@ -23,7 +23,7 @@
                             <i-option v-for="(goType,index) in goTypeList" :key='index' :value="goType.value">{{ goType.name }}</i-option>
                         </i-select>
                     
-                        <!-- <i-button class='button_style' icon="ios-search" shape="circle" @click="getenrich_chart"></i-button>  -->
+                      
 					</Form-item>
 				</i-col>
 
@@ -367,8 +367,6 @@ export default {
     .detail_title{
         font-size:calc((25/1920) * 100vw);
     }
-    .button_style{
-        font-size:calc((40/1920) * 100vw);
-    }
+    
 </style>
 

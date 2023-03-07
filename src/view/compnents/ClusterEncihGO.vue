@@ -245,8 +245,6 @@ export default {
     .detail_title{
         font-size:calc((25/1920) * 100vw);
     }
-    .button_style{
-        font-size:calc((40/1920) * 100vw);
-    }
+    
 </style>
 

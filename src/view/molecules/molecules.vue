@@ -34,7 +34,7 @@
                     <i-select :model.sync="cell_name" placeholder="Select cell source" clearable style="width:80%" @on-change='changedCellType'>
                       <i-option v-for="(source,index) in cell_type_list" :key='index' :value="source.name">{{ source.name }}</i-option>
                     </i-select>
-                    <!-- <i-button class='button_style' type="primary" icon="ios-search" @click="sdataSetByCellName($event)"></i-button>
+                   <i-button class='button_style' type="primary" icon="ios-search" @click="sdataSetByCellName($event)"></i-button>
             </Col>  -->
 
           </Row>
@@ -1059,14 +1059,6 @@ export default {
 </script>
 
 <style>
-
-
-  .button_style{
-    font-size:calc((40/1920) * 100vw);
-  }
-  .button_style{
-    font-size:calc((40/1920) * 100vw);
-  }
 
 
 
