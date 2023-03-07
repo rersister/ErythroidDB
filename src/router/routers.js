@@ -28,7 +28,7 @@ export default [
             },
             
             {
-                path: '/Erythroid Atlas',
+                path: '/Erythroid_Atlas',
                 name: 'Erythroid Atlas',
                
                 meta: { title: "Erythroid Atlas" },

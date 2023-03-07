@@ -3,12 +3,13 @@
     <div class="my_layout-content">
       <div id="chart_choice" v-show="isShow">
         <div class="row_choice">
-          <span class="h4_title">Organism:</span>
-          <RadioGroup class="myOption" @on-change="changeOrgaType($event)" >
+          <span class="h4_title">Organism:&emsp;</span>
+          <RadioGroup v-model="Orga_val" class="myOption" @on-change="changeOrgaType($event)" >
             <Radio
               class="myOption"
               v-for="(item, i) in OrgaList"
               :label="item.value"
+
               :key="i"
             >
               <span class="myOption">{{ item.label }}</span>
@@ -17,8 +18,8 @@
         </div>
         <!-- Expression profiling -->
         <div class="row_choice">
-          <span class="h4_title">Experiment Type:</span>
-          <RadioGroup class="myOption"  @on-change="changeExperimentType($event)">
+          <span class="h4_title">Experiment Type:&emsp;</span>
+          <RadioGroup v-model="DataType_val" class="myOption"  @on-change="changeExperimentType($event)">
             <Radio
               class="myOption"
               v-for="(item, i) in DataTypeList"
@@ -31,11 +32,9 @@
         </div>
         
 
-       
-
         <div class="row_choice">
-          <span class="h4_title">Sequence Type:</span>
-          <RadioGroup class="myOption" @on-change="changeSequnceType($event)">
+          <span class="h4_title">Sequence Type: &emsp;</span>
+          <RadioGroup v-model="SequType_val" class="myOption" @on-change="changeSequnceType($event)">
             <Radio
               class="myOption"
               v-for="(item, i) in typeList"
@@ -184,15 +183,20 @@
           </Dropdown> -->
           
 
-    
+          
       <div class="row_choice">
-        <h3 class="h3_title">Analyze Content:</h3>
         <Row :gutter="16" style="background:#eee;padding:20px">
-        </Row>  
+          <h3 class="h3_title">Analyze Content:</h3>
+        </Row>
+        <br>
+        
+        <!--  :value="anal_value" -->
         <div
-          class="anal_div"
+          value="anal_value='item.value'"
           v-for="(item,index) in analList"
+          @click="analClick(index)"
           :key="index"
+          :class="{active:currentAnalIndex===index}"
         >
         <div @click="changeDom(item.value)">
           <span class="servetitle">{{ item.label }}</span>
@@ -469,6 +473,11 @@ export default {
           },
         },
       ],
+      anal_value:'',
+      Orga_val:'hs',
+      DataType_val:'ep',
+      SequType_val:'bulk',
+      currentAnalIndex:0,//记录状态变化
       search: '',
       SourceList:[],
       ifShow: false,
@@ -485,6 +494,7 @@ export default {
       spanRight: 19,
       DataTypeList: [
         {
+          id:0,
           value: 'ep',
           label: 'Expression profiling',
         },
@@ -494,10 +504,12 @@ export default {
       deve:'',
       OrgaList: [
         {
+          id:0,
           value: 'hs',
           label: 'Homo sapiens',
         },
         {
+          id:1,
           value: 'mm',
           label: 'Mus musculus',
         },
@@ -505,10 +517,12 @@ export default {
       curentSequnceType: 'bulk',
       typeList: [
         {
+          id:0,
           value: 'bulk',
           label: 'Bulk',
         },
         {
+          id:1,
           value: 'sc',
           label: 'Single Cell',
         },
@@ -672,6 +686,7 @@ export default {
       selectList: [],
       Datase2: '0',
       dom: '',
+      value_anal:'',
     }
   },
   computed: {},
@@ -680,9 +695,16 @@ export default {
     // selectChange(data) {
     //   this.selectList = data
     // },
+    analClick(index){
+      // alert(item.index)
+      this.currentAnalIndex = index
+      // this.anal_value = item.value
+    },
 
     changeDom(name) {
+      // alert(name)
       var select = []
+      // alert(this.orga)
       if( "" == this.orga ){
                 this.$Message.info('please select Organism', 10);
                 return
@@ -716,7 +738,7 @@ export default {
         'all_' +
         this.orga +
         '_ep_' +
-        this.curentSequnceType 
+      this.curentSequnceType 
       this.table_name = table_name
       if (table_name.indexOf('all_mm_ep_sc') > -1){
 					// alert('change')
@@ -903,7 +925,7 @@ export default {
       // 	this.btnText = "显示"
       // }
     },
-    changeOrgaType($value) {
+    changeOrgaType($value){
       // alert($value)
       this.orga = $value
       
@@ -920,6 +942,9 @@ export default {
 				}
         this.getAllDevType(this.table_name)
         this.mockTableData(this.table_name, this.currentPage, this.pageSize)
+        // alert('Dom')
+        this.changeDom(this.anal_value)
+
       }
       
 
@@ -1003,6 +1028,7 @@ export default {
 				}
         this.getAllDevType(this.table_name)
         this.mockTableData(this.table_name, this.currentPage, this.pageSize)
+        this.changeDom(this.anal_value)
       }
     },
     changeSequnceType($value) {
@@ -1022,6 +1048,7 @@ export default {
 				}
         this.getAllDevType(this.table_name)
         this.mockTableData(this.table_name, this.currentPage, this.pageSize)
+        this.changeDom(this.anal_value)
       }
 
       if (this.curentSequnceType == 'bulk') {
@@ -1261,6 +1288,7 @@ export default {
   },
   mounted() {
     // this.mockTableDataTypeSource()
+    this.anal_value='all_Expression'
     this.changeDom('all_Expression')
   },
   created() {
@@ -1319,6 +1347,11 @@ export default {
   color: azure;
 }
 
+.active{
+  background:#a85557;
+  color: azure;
+}
+
 .search_b {
   /* #808695 */
   margin: 2% 2% 2% 2%;
@@ -1372,6 +1405,7 @@ export default {
 .myOption {
   font-size: 16px;
   /* height:calc((20/1920) * 100vw) */
+  font-weight: normal;
 }
 
 .ivu-select-large.ivu-select-single .ivu-select-selection {
@@ -1410,8 +1444,13 @@ export default {
   border-radius: calc((4 / 1920) * 100vw);
 }
 
-
-
+.h3_title{
+  font-weight: bold;
+}
+.h4_title{
+  font-weight: bold;
+  
+}
 .servetitle {
   font-size: 18px;
   cursor: pointer;

@@ -37,11 +37,11 @@
                         <!-- <button @click="intoDataSet('GSE32991')"  style="{cursor='hand'}" >  </button>-->
                         <CarouselItem>
                             <!-- <button @click="intoDataSet('FLB000003')"  style="{cursor='hand'}" > </button>-->
-                            <div class="demo-carousel"><a><img width="80%"  src="@/assets/img/gene_cloud.svg" alt="img"></a></div>
+                            <div class="demo-carousel"><a class="my_nolink" ><img  width="80%"  src="@/assets/img/gene_cloud.svg" alt="img" ></a></div>
                         </CarouselItem>
 
                         <CarouselItem>
-                            <div class="demo-carousel"><a><img width="100%" src="../../../../src/assets/img/disease_home.svg" alt="img"></a></div>
+                            <div class="demo-carousel"><a class="my_nolink"><img width="100%" src="../../../../src/assets/img/disease_home.svg" alt="img"></a></div>
                         </CarouselItem>
                         <!-- <CarouselItem>
                             <!-- FLB000002  <button @click="intoDataSet('FLB000002')"  style="{cursor='hand'}" >  </button>
@@ -49,7 +49,7 @@
                         </CarouselItem> -->
                         <CarouselItem>
                             <!-- <button @click="intoDataSet('FLB000003')"  style="{cursor='hand'}" > </button>-->
-                            <div class="demo-carousel"><a><img width="90%"  src="@/assets/img/monocle_home.svg" alt="img"></a></div>
+                            <div class="demo-carousel"><a class="my_nolink"><img width="90%"  src="@/assets/img/monocle_home.svg" alt="img"></a></div>
                         </CarouselItem>
                         
                     </Carousel>
@@ -62,7 +62,8 @@
                     </br>
                     </br>
                     <span >Input Reported Gene/Tissue/Dataset Id/Organism Name:</span>
-                    <i-select enter-button="Search" style="width:80%"  @on-search="searchDataSetByKeyName($event)" :model.sync="showByGroup"  :placeholder="search_placeholder"  @on-change="searchDataSetByKeyName($event)"  filterable>        
+                    <!-- :model.sync="showByGroup"  -->
+                    <i-select enter-button="Search" style="width:80%"  @on-search="searchDataSetByKeyName($event)"  :placeholder="search_placeholder"  @on-change="searchDataSetByKeyName($event)"  filterable>        
 							<i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
 					</i-select>
                     <Button type="primary" @click="searchByKeyWord()" >Search</Button>
@@ -306,8 +307,8 @@ export default {
 
             getDatasetKeyWords().then(res=>{
                 this.keyWords_list = res.data.keywords
-                console.log("this.keyWords_list")
-                console.log(res.data.keywords)
+                // console.log("this.keyWords_list")
+                // console.log(res.data.keywords)
                 
             })
            
@@ -317,10 +318,10 @@ export default {
         },
         getAllSampleCellN(){
             getAllSampleCellNumber().then(res => {
-				console.log(res.data)
+				// console.log(res.data)
                 let _this = this
                 let datas = res.data
-				console.log(datas.allsampleN)
+				// console.log(datas.allsampleN)
 				_this.allSampleN = datas.allsampleN
                 _this.allCellN = datas.allcellN
                 _this.allStudyN =  datas.allstudyN
@@ -446,7 +447,9 @@ export default {
         text-align:center;
         
     }
-    
+    .my_nolink{
+        cursor:auto; // 没有跳转，不出现小手
+    }
  
 
     

@@ -351,7 +351,7 @@ export default {
         {
           id: 2,
           name: 'Erythroid Atlas',
-          link: '/Erythroid Atlas',
+          link: '/Erythroid_Atlas',
           type: 'ios-analytics',
         },
         { id: 3, name: 'Help', link: '/help', type: 'ios-paper' },

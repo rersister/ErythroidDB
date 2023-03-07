@@ -314,7 +314,7 @@ export default {
         {
           id: 2,
           name: 'Erythroid Atlas',
-          link: '/Erythroid Atlas',
+          link: '/Erythroid_Atlas',
           type: 'ios-analytics',
         },
         { id: 3, name: 'Help', link: '/help', type: 'ios-paper' },
@@ -342,9 +342,9 @@ export default {
   },
 
   watch: {
-    $route(newRoute) {
-      this.setBreadCrumb(newRoute)
-    },
+    // $route(newRoute) {
+    //   this.setBreadCrumb(newRoute)
+    // },
   },
   mounted() {
     // 设置初始语言
@@ -362,39 +362,40 @@ export default {
 
     this.setBreadCrumb(this.$route)
 
-    $(document).ready(function() {
-      // prependHeaderSection();
-      // appendFooterSection();
+    // $(document).ready(function() {
+    //   // prependHeaderSection();
+    //   // appendFooterSection();
 
-      $('li.bigd-dropdown').hover(
-        function() {
-          $(this)
-            .find('.bigd-dropdown-menu')
-            .first()
-            .stop(true, true)
-            .delay(50)
-            .fadeIn()
-        },
-        function() {
-          $(this)
-            .find('.bigd-dropdown-menu')
-            .first()
-            .stop(true, true)
-            .delay(50)
-            .fadeOut()
-        }
-      )
+    //   $('li.bigd-dropdown').hover(
+    //     function() {
+    //       $(this)
+    //         .find('.bigd-dropdown-menu')
+    //         .first()
+    //         .stop(true, true)
+    //         .delay(50)
+    //         .fadeIn()
+    //     },
+    //     function() {
+    //       $(this)
+    //         .find('.bigd-dropdown-menu')
+    //         .first()
+    //         .stop(true, true)
+    //         .delay(50)
+    //         .fadeOut()
+    //     }
+    //   )
 
-      $('.bigd-collapsed').click(function() {
-        $('#bigd-coll').toggle()
-        var display = $('#bigd-coll').css('display')
-        if (display == 'block') {
-          $('.bigd-navbar').css('height', '200px')
-        } else {
-          $('.bigd-navbar').css('height', '30px')
-        }
-      })
-    })
+    //   $('.bigd-collapsed').click(function() {
+    //     $('#bigd-coll').toggle()
+    //     var display = $('#bigd-coll').css('display')
+    //     if (display == 'block') {
+    //       $('.bigd-navbar').css('height', '200px')
+    //     } else {
+    //       $('.bigd-navbar').css('height', '30px')
+    //     }
+    //   })
+    // })
+
   },
 }
 </script>

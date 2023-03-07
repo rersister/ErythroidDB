@@ -14,9 +14,12 @@
         <!-- <Row :gutter="16" style="background:#eee;padding:20px">
         </Row> -->
           <div
+
             class="anal_div"
             v-for="(AnalyzeType, index) in AnalyzeTypeList"
+            @click="analClick(index)"
             :key="index"
+            :class="{active:currentAnalIndex===index}"
           >
             <div @click="changeDom(AnalyzeType.link)">
               <span class="servetitle">{{ AnalyzeType.name }}</span>
@@ -82,6 +85,7 @@ export default {
       experiment_type: '',
       visualize_site: '',
       series: this.$store.state.app.CurrentPageToken,
+      currentAnalIndex:0,
       AnalyzeTypeList: [
         {
           name: 'Expression Profile',
@@ -114,6 +118,9 @@ export default {
       } else {
         this.childDom = ''
       }
+    },
+    analClick(index){
+      this.currentAnalIndex = index;
     },
     getVisHref() {
       return this.visualize_site
@@ -515,6 +522,12 @@ export default {
   background:#a85557;
   color: azure;
 }
+
+.active{
+  background:#a85557;
+  color: azure;
+}
+
 .card{
   margin: 2% 2% 2% 2%;
   /* background: #eee; */

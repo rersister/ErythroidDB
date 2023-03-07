@@ -116,7 +116,7 @@
                             <div>                              
                                 <!-- <router-view/>-->                        
                                 <DatasetService />
-                                <All />
+                                <!-- <All /> -->
                             </div>
                         </Card> 
                     </Content> 
