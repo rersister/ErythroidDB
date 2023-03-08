@@ -14,7 +14,6 @@
         <!-- <Row :gutter="16" style="background:#eee;padding:20px">
         </Row> -->
           <div
-
             class="anal_div"
             v-for="(AnalyzeType, index) in AnalyzeTypeList"
             @click="analClick(index)"

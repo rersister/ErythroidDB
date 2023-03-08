@@ -7,14 +7,14 @@
             </Br>
             <Row>
                 <Col span="12">
-                    <i-select placeholder="Please choose source" clearable style="width:80%" @on-change='changeCellSource($event)'  filterable>
+                    <i-select v-model="cell_source"  placeholder="Please choose source" clearable style="width:80%" @on-change='changeCellSource($event)'  filterable>
                         <i-option v-for="item in SourceList" :value="item.value" >{{ item.label }}</i-option>
                     </i-select>  
                 </Col>
                 <Col span="12">
                     <!-- 数据查询分子名 -->
                     <!-- <Input search enter-button="Search" @on-search="searchBygene($event)" placeholder="Please input gene symbol"/>                          -->
-                    <i-select placeholder="Please input gene symbol" clearable style="width:80%" @on-change='changeGsymbol($event)'  filterable>
+                    <i-select v-model="searchGene" placeholder="Please input gene symbol" clearable style="width:80%" @on-change='changeGsymbol($event)'  filterable>
                         <i-option v-for="item in GeneList" :value="item.value" >{{ item.label }}</i-option>
                     </i-select>
                     <Button type="primary" @click="searchBygene($event)" >Search</Button>

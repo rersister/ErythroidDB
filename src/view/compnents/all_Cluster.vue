@@ -2,27 +2,25 @@
     <div class="lay_out">   
           <h1 class="my_h1">Principal Components Analysis({{orga_name}})</h1>
           <!-- <h1 class="my_h1">Expression profiling ({{selectList[0]}})</h1> -->
-        <!-- </Br>      -->
+        </Br>     
         <Row>
           
             <i-form :label-width="100">
                 <Col span="12">
-                    <i-select placeholder="Please choose source" clearable style="width:80%" @on-change='changeCellSource($event)'  filterable>
-                        <!-- <i-option v-for="item in SourceList" :value="item.value" >{{ item.label }}</i-option> -->
+                    <i-select v-model="cell_source" placeholder="Please choose source" clearable style="width:80%" @on-change='changeCellSource($event)'  filterable>
+                        <i-option  v-for="item in SourceList" :value="item.value" >{{ item.label }}</i-option>
                     </i-select>  
                 </Col>
 				<Col span="12">
-					<Form-item label="Color by: ">                                                  
-						<i-select  style="width:70%" clearable placeholder="Pleace select cell group"  @on-change="changedClustChart($event)"  filterable>        
-							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
+
+						<i-select v-model="colorby" style="width:70%" clearable placeholder="Pleace select cell group"  @on-change="changedClustChart($event)"  filterable>        
+							<i-option   v-for="group in group_type_list" :value="group.value">{{ group.name }}</i-option>
 						</i-select>
                         <Button type="primary" @click="getPCAByKey($event)" >Search</Button>
-               
-					</Form-item>
-                    
 				</Col>
 			</i-form>
         </Row>
+        </Br>
         <Row>
             <div>
                 <!-- 相似性分析 MDS 聚类图-->
@@ -189,7 +187,8 @@ export default {
                     val[0].sequnceType 
                 this.table_name = table_name
                 this.getAllDevType(table_name)
-                this.getCluster_chart3(this.selectList,'cell_type','BM_vitro')
+                // alert(this.selectList)
+                // this.getCluster_chart3(this.selectList,'cell_type','BM_vitro')
 
                 if (val[0].orga == 'hs'){
                     this.orga_name = 'Homo sapiens'
@@ -241,8 +240,9 @@ export default {
                 
                 })
                 this.SourceList =dev_group_type_list
-				
-               
+                this.cell_source = datas[0]
+                this.colorby = "cell_type"
+                this.getCluster_chart3(this.selectList,this.colorby,this.cell_source)
             })
 
 
@@ -439,7 +439,7 @@ export default {
        this.orga = this.$route.params.orga;
        var table_name = 'all_'+this.orga +'rna'+'_dev_'+this.sequ_type+'cluster'
        var colorby = 'cell_type'  //source / group / order 
-       this.getCluster_chart3(this.selectList,colorby)
+       this.getCluster_chart3(this.selectList,colorby,'BM_vivo')
     //    this.getCluster_chart3('all_rna_dev');
     //    this.getCluster_chart2('all_rna_dev');
     //    this.getCluster_chart1('all_rna_dev');

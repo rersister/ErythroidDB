@@ -189,14 +189,14 @@
           <h3 class="h3_title">Analyze Content:</h3>
         </Row>
         <br>
-        
+        <!-- value="anal_value='item.value'" -->
         <!--  :value="anal_value" -->
         <div
-          value="anal_value='item.value'"
+          class="anal_div"
           v-for="(item,index) in analList"
-          @click="analClick(index)"
+          @click="analClick(item)"
           :key="index"
-          :class="{active:currentAnalIndex===index}"
+          :class="{active:currentAnalIndex===item.value}"
         >
         <div @click="changeDom(item.value)">
           <span class="servetitle">{{ item.label }}</span>
@@ -242,7 +242,7 @@
 
     <div class="row_choice">
               Samples({{totalRow}}) And Group:
-                        <Table stripe
+                        <Table  style="cursor: auto;" stripe
                             :type="true"
                             :model.sync="search"
                             :v-model="search"
@@ -477,7 +477,7 @@ export default {
       Orga_val:'hs',
       DataType_val:'ep',
       SequType_val:'bulk',
-      currentAnalIndex:0,//记录状态变化
+      currentAnalIndex:'all_Expression',//记录状态变化
       search: '',
       SourceList:[],
       ifShow: false,
@@ -695,14 +695,15 @@ export default {
     // selectChange(data) {
     //   this.selectList = data
     // },
-    analClick(index){
-      // alert(item.index)
-      this.currentAnalIndex = index
+    analClick(item){
+      // alert(item.value)
+      this.currentAnalIndex = item.value
       // this.anal_value = item.value
     },
 
     changeDom(name) {
       // alert(name)
+      var _this = this
       var select = []
       // alert(this.orga)
       if( "" == this.orga ){
@@ -752,9 +753,9 @@ export default {
 
 
       if (this.dom !== name) {
-        this.dom = name
+        _this.dom = name
       } else {
-        this.dom= ''
+        _this.dom= ''
       }
 
 
@@ -927,14 +928,15 @@ export default {
     },
     changeOrgaType($value){
       // alert($value)
-      this.orga = $value
+      var _this = this
+      _this.orga = $value
       
       if(this.orga != "" & this.curentSequnceType != "" ){
         var table_name =
                       'all_' +
-                      this.orga +
+                      _.orga +
                       '_ep_' +
-                      this.curentSequnceType 
+                      _this.curentSequnceType 
         this.table_name = table_name
         if (table_name.indexOf('all_mm_ep_sc') > -1){
 					// alert('change')
@@ -943,10 +945,11 @@ export default {
         this.getAllDevType(this.table_name)
         this.mockTableData(this.table_name, this.currentPage, this.pageSize)
         // alert('Dom')
-        this.changeDom(this.anal_value)
+        
 
       }
       
+      // this.changeDom(_this.currentAnalIndex)
 
       if (this.curentSequnceType == 'bulk') {
         this.analList = [
@@ -1028,7 +1031,7 @@ export default {
 				}
         this.getAllDevType(this.table_name)
         this.mockTableData(this.table_name, this.currentPage, this.pageSize)
-        this.changeDom(this.anal_value)
+        // this.changeDom(this.anal_value)
       }
     },
     changeSequnceType($value) {
@@ -1048,7 +1051,7 @@ export default {
 				}
         this.getAllDevType(this.table_name)
         this.mockTableData(this.table_name, this.currentPage, this.pageSize)
-        this.changeDom(this.anal_value)
+        // this.changeDom(this.anal_value)
       }
 
       if (this.curentSequnceType == 'bulk') {
@@ -1455,4 +1458,9 @@ export default {
   font-size: 18px;
   cursor: pointer;
 }
+.ivu-table-row{
+  cursor: auto;
+}
+
+
 </style>

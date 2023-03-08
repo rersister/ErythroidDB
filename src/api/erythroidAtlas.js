@@ -16,15 +16,11 @@ export const getAllDevExpreBulkData = (source,gene_symbol,cell_source) => {
 // getClusterDataAll
 export const getClusterDataAll = (selectList,group_by,source) => {
 	return axios.request({
-
-		// url:'public/getClusterDataAllDev',
 		url:'public/getClusterDataAllDev',
 		data:{
 			selectList: selectList,
 			group_by:group_by,
 			source:source
-			// cell_type:cell_type
-		
 		},
 		method:'post',
 	})

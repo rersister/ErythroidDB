@@ -20,7 +20,7 @@
 			<Col span="10">
 				<!-- 数据查询分子名 -->
 				
-				<i-select :model.sync="contrastsGroup" clearable placeholder="Pleace select/input contrasts group"  @on-change="changedContrGroup"  filterable>        
+				<i-select v-model="contrastsGroup" clearable placeholder="Pleace select/input contrasts group"  @on-change="changedContrGroup"  filterable>        
 					<i-option v-for="(group,index) in contrasts_group" :key='index' :value="group.name">{{ group.name }}</i-option>
 				</i-select>
 				
