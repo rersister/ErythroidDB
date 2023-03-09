@@ -41,22 +41,24 @@
             <span>EryDB v1.00: Erythroid Database</span>
           </div>
           <div class="layout-nav">
+            <!--         @click="analClick(item)"
+              :class="{menu_active:currentAnalIndex===item.value}" -->
             <ul
               class=" menu  menu-dark menu-horizontal"
-              v-for="(value, index) in values"
+              v-for="(value,index) in values"
               :key="index"
+              @click="cg_current_index(value)" 
             >
-              <router-link :to="value.link">
-                <li
-                  class="menu-item"
-                  @click="cg_current_index(index)"
-                  :class="{ bg_color: current_index == index }"
-                >
-                  <i class="icon icon-ios-navigate"></i>
-                  <Icon class="my_icon" :type="value.type"></Icon
-                  >{{ value.name }}
-                </li>
-              </router-link>
+                <router-link :to="value.link">
+                  <li 
+                    class="menu-item"
+                    :class="{bg_color: current_index === value.id}"
+                  >
+                    <i class="icon icon-ios-navigate"></i>
+                    <Icon class="my_icon" :type="value.type"></Icon
+                    >{{ value.name }}
+                  </li>
+                </router-link>
             </ul>
           </div>
         
@@ -72,24 +74,20 @@ export default{
 	data() {
     return {
       values: [
-        { id: 1, name: 'Home', link: '/', type: 'ios-home' },
-        { id: 0, name: 'Search', link: '/Search', type: 'ios-search' },
-        {
-          id: 2,
-          name: 'Erythroid Atlas',
-          link: '/Erythroid_Atlas',
-          type: 'ios-analytics',
-        },
+        { id: 0, name: 'Home', link: '/', type: 'ios-home' },
+        { id: 1, name: 'Search', link: '/Search', type: 'ios-search' },
+        { id: 2, name: 'Erythroid Atlas',link: '/Erythroid_Atlas',type: 'ios-analytics'},
         { id: 3, name: 'Help', link: '/help', type: 'ios-paper' },
         { id: 4, name: 'About', link: '/about', type: 'ios-navigate' },
       ],
-      current_index: -1,
+      current_index: 0,
     }
   },
   methods: {
     
-    cg_current_index(index) {
-      this.current_index = index
+    cg_current_index(value) {
+      // alert(index)
+      this.current_index = value.id
     },
     openWindow(url) {
       window.open(url)
@@ -103,6 +101,7 @@ export default{
 <style scoped>
   .header, .menu-dark {
     background: white;
+    
   }
 
 
@@ -118,6 +117,7 @@ export default{
     line-height: calc((60 / 1920) * 100vw);
     font-size:20px;
   }
+
 
   .layout-logo{
     color: #870909;
@@ -162,16 +162,27 @@ export default{
       cursor: pointer;
       -webkit-transition: all 0.2s ease-in-out;
       transition: all 0.2s ease-in-out;
-      color: #870909;
+      color: #8c0c0b;
       /* height: 60px; */
-      bottom: 5px
+      bottom: 5px;
+     
   }
+
+
+  /*  home 和 search 之间的样式切换 bug 不能很好对应样式变化 */
+  .bg_color{
+    /* background:  #8c0c0b;
+    color: white; */
+  }
+
 
   .menu-dark:hover{
         background:  #8c0c0b;
         /* color: #8c0c0b; */
         /* border-color: #ea898c !important; */
   }
+
+
 
   .moudle_image_header{
     block: true;

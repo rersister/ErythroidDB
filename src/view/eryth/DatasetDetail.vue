@@ -89,7 +89,13 @@
                     </Row>
                     <Row>
                        
-                            <Table :columns="sampleCols" :data="sampleData" size="small" ref="table"></Table>
+                            <Table 
+                            class="my-tableStyle"
+                            :columns="sampleCols" 
+                            :data="sampleData" 
+                            size="small" 
+                            disabled-hover="true"
+                            ref="table"></Table>
                             <!-- <Spin size="large" fix v-if="spinShowSampleSource"></Spin> -->
                             <div style="margin: 10px;overflow: hidden">               
                                 <div style="float: right;">
@@ -1300,6 +1306,14 @@ export default {
         background: #eee;
     }
 
-
+    .my-tableStyle{
+        cursor:auto;
+    }
+    .my-tableStyle:hover{
+        cursor:auto;
+    }
+    /* .ivu-table-row{
+        cursor:auto !important;
+    } */
 </style>
 

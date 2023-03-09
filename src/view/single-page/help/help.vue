@@ -152,8 +152,8 @@
             <p class="img_c"><img width="80%" src="@/assets/img/help_homeDiseases.svg" alt="img"></p>
         </div>
 
-        <div id="Search">
-            <h3 >
+        <div id="Search" >
+            <h3 class="h1_title">
                 Search page
             </h3>
             <br>
@@ -199,7 +199,7 @@
                 including the information of species, tissue, and cell number.</p>
             <p class="img_c"><img width="80%" src="@/assets/img/help_datasetSample.svg" alt="img"></p>
 
-            <h3 id="DatasetService">
+            <h3 class="h1_title" id="DatasetService">
                 <li>Dataset Service</li>
             </h3>
             <br>
@@ -450,7 +450,7 @@
         <div id="Erythroid">
             <br>
             <br>
-            <h3>
+            <h3 class="h1_title">
                 Erythroid Atlas
             </h3>
             <br>
@@ -475,10 +475,10 @@
 
         </div>
 
-        <div id = "About">
+        <div  id = "About">
             <br>
             <br>
-            <h3>
+            <h3 class="h1_title">
                 About 
             </h3>
             <br>

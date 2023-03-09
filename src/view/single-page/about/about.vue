@@ -10,10 +10,10 @@
         <Row>
             
 
-            <a href="javascript:void(0)">
-            Show by:
+            <span>
+                Show by:
             <Icon type="ios-arrow-down"></Icon>
-            </a>
+            </span>
             <Select v-model="Datase2" style="width:150px" @on-change="changeStaType($event)">
                 <Option
                 v-for="item in typeList"
@@ -114,7 +114,7 @@ export default {
                         scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
                 }
             },
-
+            Datase2:'organism',
         }
     },
     methods:{
@@ -285,6 +285,7 @@ export default {
 
     },
     mounted(){
+       
         var type_name = 'organism'
         this.getType_chart(type_name);
 
@@ -303,5 +304,8 @@ export default {
     font-size: 18px;
 }
 
+.h1_title{
+    font-weight: bold;
+}
 </style>
 

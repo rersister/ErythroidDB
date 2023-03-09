@@ -342,9 +342,9 @@ export default {
   },
 
   watch: {
-    // $route(newRoute) {
-    //   this.setBreadCrumb(newRoute)
-    // },
+    $route(newRoute) {
+      this.setBreadCrumb(newRoute)
+    },
   },
   mounted() {
     // 设置初始语言

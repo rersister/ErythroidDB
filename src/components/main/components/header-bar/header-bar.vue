@@ -12,7 +12,7 @@ import customBreadCrumb from './custom-bread-crumb'
 export default {
   name: 'HeaderBar',
   components: {
-  
+
     customBreadCrumb
   },
   props: {

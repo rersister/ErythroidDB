@@ -4,7 +4,7 @@
       <div id="chart_choice" v-show="isShow">
         <div class="row_choice">
           <span class="h4_title">Organism:&emsp;</span>
-          <RadioGroup v-model="Orga_val" class="myOption" @on-change="changeOrgaType($event)" >
+          <RadioGroup v-model="Orga_val" class="myOption" @on-change="changeOrgaType($event)">
             <Radio
               class="myOption"
               v-for="(item, i) in OrgaList"
@@ -198,9 +198,9 @@
           :key="index"
           :class="{active:currentAnalIndex===item.value}"
         >
-        <div @click="changeDom(item.value)">
-          <span class="servetitle">{{ item.label }}</span>
-        </div>
+          <div @click="changeDom(item.value)">
+            <span class="servetitle">{{ item.label }}</span>
+          </div>
         </div>
       </div>
 
@@ -242,7 +242,7 @@
 
     <div class="row_choice">
               Samples({{totalRow}}) And Group:
-                        <Table  style="cursor: auto;" stripe
+                        <Table  stripe
                             :type="true"
                             :model.sync="search"
                             :v-model="search"
@@ -701,8 +701,9 @@ export default {
       // this.anal_value = item.value
     },
 
-    changeDom(name) {
-      // alert(name)
+    changeDom(name){
+      // alert("kai shi")
+      // alert(this.orga)
       var _this = this
       var select = []
       // alert(this.orga)
@@ -855,7 +856,7 @@ export default {
     },
 
     changePge() {
-    
+    mockTableData
        this.mockTableData(this.table_name, this.currentPage, this.pageSize)
     },
 
@@ -929,27 +930,27 @@ export default {
     changeOrgaType($value){
       // alert($value)
       var _this = this
-      _this.orga = $value
+      this.orga = $value
       
       if(this.orga != "" & this.curentSequnceType != "" ){
         var table_name =
                       'all_' +
-                      _.orga +
+                      this.orga +
                       '_ep_' +
-                      _this.curentSequnceType 
+                      this.curentSequnceType 
         this.table_name = table_name
         if (table_name.indexOf('all_mm_ep_sc') > -1){
 					// alert('change')
 					this.table_name = 'CRA002445'
 				}
-        this.getAllDevType(this.table_name)
+        // alert('mockTableData')
         this.mockTableData(this.table_name, this.currentPage, this.pageSize)
-        // alert('Dom')
+      
         
 
       }
       
-      // this.changeDom(_this.currentAnalIndex)
+     
 
       if (this.curentSequnceType == 'bulk') {
         this.analList = [
@@ -1008,11 +1009,17 @@ export default {
         // }else{
         //   this.analList = []
         // }
-
+        // orga:this.orga,
+        // exper:this.exper,
+        // deve:this.deve,
+        // sequnceType:this.curentSequnceType
+        // this.mockTableData(this.table_name, this.currentPage, this.pageSize)
        
         
       }
 
+      this.changeDom(this.currentAnalIndex)
+      this.changeDom(this.currentAnalIndex)
     },
 
     changeExperimentType($value){
@@ -1051,7 +1058,7 @@ export default {
 				}
         this.getAllDevType(this.table_name)
         this.mockTableData(this.table_name, this.currentPage, this.pageSize)
-        // this.changeDom(this.anal_value)
+      
       }
 
       if (this.curentSequnceType == 'bulk') {
@@ -1073,6 +1080,7 @@ export default {
             value: 'all_Enrich',
           },
         ]
+        this.currentAnalIndex='all_Expression'
       } else {
         // alert(this.orga)
         // if ( this.orga == 'hs'){
@@ -1108,14 +1116,15 @@ export default {
 
         ]
 
-        // }else{
-        //   this.analList = []
-        // }
-
+        this.currentAnalIndex='scPCA'
        
         
       }
 
+      this.changeDom(this.currentAnalIndex)
+      this.changeDom(this.currentAnalIndex)
+      this.changeDom(this.currentAnalIndex)
+      
     },
 
     if2compare($value) {
@@ -1458,9 +1467,18 @@ export default {
   font-size: 18px;
   cursor: pointer;
 }
-.ivu-table-row{
+/* .ivu-table-row{
+  cursor: pointer !important;
+} */
+/* :deep(.ivu-table tr:hover){
   cursor: auto;
-}
+} */
 
+/* :deep(.ivu-table-row-hover){
+  cursor:default ;
+} */
 
+/* .ivu-table-body tr{
+  cursor:auto !important;
+} */
 </style>
