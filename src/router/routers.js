@@ -183,7 +183,7 @@ export default [
 						// link:'PCA'
                     {
                         path :'/PCA',
-                        name:'Principal components',
+                        name:'Principal Component',
                         meta:{
                             title:'Principal components'
                         },

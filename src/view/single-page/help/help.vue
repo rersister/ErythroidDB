@@ -19,19 +19,19 @@
                     <li><a href="#Dataset">Dataset</a></li>
                     <li><a href="#DatasetService">Dataset Service</a></li>
                     <li><a href="#ExpressionProfile">&nbsp;&nbsp;Expression Profile</a></li>
-                    <li><a href="#PrincipalComponents">&nbsp;&nbsp;Principal Components</a></li>
-                    <li><a href="#DifferentialAnalysis">&nbsp;&nbsp;Differential Analysis</a></li>
+                    <li><a href="#PrincipalComponents">&nbsp;&nbsp;Principal Component</a></li>
+                    <li><a href="#DifferentialAnalysis">&nbsp;&nbsp;Difference Analysis</a></li>
                     <!-- Enrichment Analysis -->
                     <li><a href="#EnrichmentAnalysis">&nbsp;&nbsp;Enrichment Analysis</a></li>
                     <!-- Dimensional Reduction & Feature -->
-                    <li><a href="#DRF">&nbsp;&nbsp;Dimensional Reduction & Feature</a></li>
-                    <li><a href="#ME">&nbsp;&nbsp;Markers & Enrich</a></li>
-                    <li><a href="#DE">&nbsp;&nbsp;Differential & Enrich</a></li>
+                    <li><a href="#DRF">&nbsp;&nbsp;Visualization & Feature</a></li>
+                    <li><a href="#ME">&nbsp;&nbsp;Marker & Enrichment</a></li>
+                    <li><a href="#DE">&nbsp;&nbsp;Difference & Enrichment</a></li>
 
                     <!-- Differentiation Trajectory -->
                     <li><a href="#DT">&nbsp;&nbsp;Differentiation Trajectory</a></li>
                     <!-- Cell-Cell Interraction -->
-                    <li><a href="#CCI">&nbsp;&nbsp;Cell-Cell Interraction</a></li>
+                    <li><a href="#CCI">&nbsp;&nbsp;Cell-Cell Interaction</a></li>
                     <!-- Cell-Cell Communication. -->
                     <li><a href="#CCC">&nbsp;&nbsp;Cell-Cell Communication</a></li>
                     <li><a href="#Erythroid">Erythroid Atlas</a></li>
@@ -207,8 +207,8 @@
                 This panel represents analysis provided by this dataset. 
                 In general,datasets of bulk sequence provide  the following analysis function
                 1)Expression Profile;
-                2)principal Compnents;
-                3)Differential Analysis;
+                2)Principal Component;
+                3)Difference Analysis;
                 4)Enrichment Analysis.
             </p>
             <br>
@@ -231,8 +231,8 @@
             <br>
             
             <br>
-            <h4 id = 'Principal Components'>
-                2)Principal Components
+            <h4 id = 'Principal Component'>
+                2)Principal Component
             </h4>
             <br>
             <p class="p_text">
@@ -247,7 +247,7 @@
 
             <br>
             <h4 id = 'DifferentialAnalysis'>
-                3)Differential Analysis
+                3)Difference Analysis
             </h4>
             <br>
             <p class="p_text">
@@ -288,9 +288,9 @@
             <br>
             <p class="p_text">
                 If this dataset was of single cell sequence,it provides  the following analysis function.
-                1)Dimensional Reduction & Feature;
-                2)Markers & Enrich;
-                3)Differential & Enrich;
+                1)Visualization & Feature;
+                2)Marker & EnrichmentEnrich;
+                3)Difference & Enrichment;
                 4)Differentiation Trajectory;
                 5)Cell-Cell Interaction;
                 6)Cell-Cell Communication.
@@ -302,14 +302,14 @@
 
             <br>
             <h4 id = 'DRF'>
-                1)Dimensional Reduction & Feature
+                1)Visualization & Feature
             </h4>
             <br>
             <p class="p_text">
                 The PCA,t-SNE or UMAP graph are presented for cell clusters in dataset. 
             The original annotation of cell type in the study is used as reference for clustering results.
                 You can customize the visualization chart. Plot size decides the dot size in this chart.View method provides  2D or 3D.
-                Visaul Method includes PCA,t-SNE and UMAP. Group means the sample's group.The dot  usually can by colored by Phase(Cells' Phase), Celltype or  orig.ident(original ident).
+                visual Method includes PCA,t-SNE and UMAP. Group means the sample's group.The dot  usually can by colored by Phase(Cells' Phase), Celltype or  orig.ident(original ident).
             </p>
             <br>
             <br>
@@ -327,7 +327,7 @@
 
             <br>
             <h4 id = 'ME'>
-                2)Markers & Enrich
+                2)Marker & Enrichment
             </h4>
             <br>
             <p class="p_text">
@@ -350,7 +350,7 @@
 
             <br>
             <h4 id = 'DE'>
-                3)Differential & Enrich;
+                3)Difference & Enrichment;
             </h4>
             <br>
         <p class="p_text">
@@ -407,7 +407,7 @@
 
             <br>
             <h4 id = 'CCI'>
-                5)Cell-Cell Interraction;
+                5)Cell-Cell Interaction;
             </h4>
             <br>
         <p class="p_text">
@@ -455,8 +455,8 @@
             </h3>
             <br>
             <p class="p_text">
-            In this page, we provide intergrated datasets for users to query their interested analysis. 
-            In specific, you can the choose organism and sequence type to see the intergrated datasets,which provide the same analysis content as a single dataset.
+            In this page, we provide integrated datasets for users to query their interested analysis. 
+            In specific, you can the choose organism and sequence type to see the integrated datasets,which provide the same analysis content as a single dataset.
             </p>
             <br>
             <br>
@@ -467,7 +467,7 @@
             <br>
             <br>
             <p class="p_text">
-            In the bottom of this page, we provide the information of  samples and groups about the intergrated datasets. 
+            In the bottom of this page, we provide the information of  samples and groups about the integrated datasets. 
             </p>
             <br>
             <br>

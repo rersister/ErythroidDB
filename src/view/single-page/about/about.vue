@@ -151,7 +151,7 @@ export default {
                     
         //         var diff_layout={ 
                    
-        //             title:'Differential analysis ' + diffgroup,
+      
 
         //         //    subtitle: {
         //         //             text: 'Data Souce:' + this.series

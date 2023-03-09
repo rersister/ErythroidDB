@@ -619,7 +619,7 @@ export default {
                     
                 var diff_layout={ 
                    
-                    title:'Differential Analysis ' + this.group ,
+                    title:'Difference Analysis' + this.group ,
 					subtitle: {
                             text: 'Data Souce:' + this.table_name
                     },

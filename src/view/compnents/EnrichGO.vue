@@ -204,8 +204,7 @@ export default {
                             // "("+this.series+'('+ this.source+')'+')',  没有副标题，把标题设置简短
                             title:'GO ('+ this.goType + ') enrichment of ' + this.contrGroupOfEnrich+ '\n'
                               +'( '+this.series+';Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
-                            //itle:'Differential analysis of ' + diffgroup +'( '+this.series+';Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
-
+                            
                             
                             // bargap: 0.25,
                             xaxis: {

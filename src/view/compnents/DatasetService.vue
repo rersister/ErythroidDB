@@ -10,7 +10,7 @@
       </Row>
 
       <div class="card"  v-if="ifshowAnalContent">
-        <h3 class="h3_title">Analyze Content:</h3>
+        <h3 class="h3_title">Analysis:</h3>
         <!-- <Row :gutter="16" style="background:#eee;padding:20px">
         </Row> -->
           <div
@@ -91,11 +91,11 @@ export default {
           link: 'RNA_Expression',
         },
         {
-          name: 'Principal Components',
+          name: 'Principal Component',
           link: 'PCA',
         },
         {
-          name: 'Differential Analysis',
+          name: 'Difference Analysis',
           link: 'Diff_analysis',
         },
         {
@@ -146,7 +146,7 @@ export default {
                 //  如果时单细胞数据，单细胞数据所提供的数据分析功能
                 this.AnalyzeTypeList = [
                   {
-                    name: 'Dimensional Reduction & Feature',
+                    name: 'Visualization & Feature',
                     link: 'scPlotTSNE',
                   },
 
@@ -155,7 +155,7 @@ export default {
                   // 	link:'FeaturePlot'
                   // },
                   {
-                    name: 'Markers & Enrich',
+                    name: 'Marker & Enrichment',
                     link: 'ClusterMarker',
                   },
                   // {
@@ -163,7 +163,7 @@ export default {
                   // 	link:"ClusterEnrichGO"
                   // },
                   {
-                    name: 'Differential & Enrich',
+                    name: 'Difference & Enrichment',
                     link: 'sc_Diffanal',
                   },
                   // {
@@ -203,11 +203,11 @@ export default {
                       link: 'RNA_Expression',
                     },
                     {
-                      name: 'Principal Components',
+                      name: 'Principal Component',
                       link: 'PCA',
                     },
                     {
-                      name: 'Differential Analysis',
+                      name: 'Difference Analysis',
                       link: 'Diff_analysis',
                     },
                     {
@@ -270,7 +270,7 @@ export default {
                               // 	link:'FeaturePlot'
                               // },
                               {
-                                name: 'Markers & Enrich',
+                                name: 'Marker & Enrichment',
                                 link: 'ClusterMarker',
                               },
                               // {
@@ -278,7 +278,7 @@ export default {
                               // 	link:"ClusterEnrichGO"
                               // },
                               {
-                                name: 'Differential & Enrich',
+                                name: 'Difference & Enrichment',
                                 link: 'sc_Diffanal',
                               },
                               // {
@@ -292,7 +292,7 @@ export default {
                               },
                               // Single Cell Interraction
                               {
-                                name: 'Cell-Cell Interraction',
+                                name: 'Cell-Cell Interaction',
 
                                 link: 'ScInterraction',
                               },
@@ -318,7 +318,7 @@ export default {
                                   link: 'RNA_Expression',
                                 },
                                 {
-                                  name: 'Principal Components',
+                                  name: 'Principal Component',
                                   link: 'PCA',
                                 },
                                 // {

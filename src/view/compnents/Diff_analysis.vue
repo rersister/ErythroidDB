@@ -1,7 +1,7 @@
 <template>
 <div>
     <br/>
-	<h1 class="my_h1">Differential Analysis</h1>
+	<h1 class="my_h1">Difference Analysis</h1>
     <br>
 	<div>
 		<Row>
@@ -363,7 +363,7 @@ export default {
                     
                 var diff_layout={ 
                    
-                    title:'Differential analysis of ' + diffgroup +'( '+this.series+';Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
+                    title:'Difference Analysis of ' + diffgroup +'( '+this.series+';Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
 
                 //    subtitle: {
                 //             text: 'Data Souce:' + this.series

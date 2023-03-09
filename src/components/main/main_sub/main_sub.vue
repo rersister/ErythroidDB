@@ -144,7 +144,7 @@
     <br>
     <br>
     <br>
-    <div class="footer_style">
+    <!-- <div class="footer_style">
       <span class="my_footer">
                 Copyright ©2018-2019 Guangmin Zheng.&copy;<a
                   href="https://people.ucas.edu.cn/~0009899"
@@ -152,7 +152,7 @@
                   title="北京基因组研究所方向东"
                   >Fang's Lab.</a>
                 All Rights Reserved.</span>
-    </div>
+    </div> -->
  </div>
 </template>
 <script>

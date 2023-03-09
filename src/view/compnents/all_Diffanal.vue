@@ -1,6 +1,6 @@
 <template>
 <div class="lay_out">
-	<h1 class="my_h1">Differential analysis({{orga_name}})</h1>
+	<h1 class="my_h1">Difference Analysis({{orga_name}})</h1>
 	</Br>
 	<div>
 		<Row :gutter="4">
@@ -371,7 +371,7 @@ export default {
                     
                 var diff_layout={ 
                    
-                    title:'Differential analysis ' + diffgroup,
+                    title:'Difference Analysis ' + diffgroup,
                     xaxis: {
                         title:'Log2(FC)',
                     },

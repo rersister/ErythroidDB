@@ -1,1 +1,40 @@
-<svg width="546.2" height="245.1" viewBox="0 0 546.2 245.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" overflow="hidden"><defs></defs><line x1="346.7" y1="57.5" x2="346.7" y2="241.8" stroke="#6B6969" stroke-width="0.25" fill="#6B6969"/><line x1="308.6" y1="57.5" x2="308.6" y2="241.8" stroke="#6B6969" stroke-width="0.25" fill="#6B6969"/><line x1="384.6" y1="61.3" x2="384.6" y2="241.8" stroke="#6B6969" stroke-width="0.25" fill="#6B6969"/><line x1="422.5" y1="57.5" x2="422.5" y2="238" stroke="#6B6969" stroke-width="0.25" fill="#6B6969"/><line x1="460.8" y1="57.5" x2="460.8" y2="238" stroke="#6B6969" stroke-width="0.25" fill="#6B6969"/><line x1="498.9" y1="57.5" x2="498.9" y2="238" stroke="#6B6969" stroke-width="0.25" fill="#6B6969"/><rect x="308.6" y="67.4" width="37.9" height="13.7" fill="#A0100B"/><rect x="308.6" y="94.4" width="37.9" height="13.7" fill="#A0100B"/><rect x="308.6" y="147.5" width="37.9" height="13.7" fill="#A0100B"/><rect x="308.6" y="202.4" width="37.9" height="13.7" fill="#A0100B"/><rect x="308.6" y="228" width="227.5" height="13.7" fill="#A0100B"/><rect x="308.6" y="174.9" width="75.8" height="13.7" fill="#A0100B"/><rect x="308.6" y="120.9" width="113.7" height="13.7" fill="#A0100B"/><text font-family="ArialMT" font-size="19.2237" transform="matrix(1.2707 0 0 1 302.149 47.5366)">0</text><text font-family="ArialMT" font-size="19.2237" transform="matrix(1.2707 0 0 1 336.477 47.5366)">1</text><text font-family="ArialMT" font-size="19.2237" transform="matrix(1.2707 0 0 1 378.366 47.5366)">2</text><text font-family="ArialMT" font-size="19.2237" transform="matrix(1.2707 0 0 1 419.117 47.5366)">3</text><text font-family="ArialMT" font-size="19.2237" transform="matrix(1.2707 0 0 1 455.771 47.5366)">4</text><text font-family="ArialMT" font-size="19.2237" transform="matrix(1.2707 0 0 1 495.319 47.5366)">5</text><text font-family="ArialMT" font-size="19.2237" transform="matrix(1.2707 0 0 1 528.741 47.0972)">6</text><text font-family="ArialMT" font-size="19.2237" transform="matrix(1.2707 0 0 1 161.589 76.9849)">Thalassemia</text><text font-family="ArialMT" font-size="19.2237" transform="matrix(1.2707 0 0 1 191.468 103.987)">Sickle cell</text><text font-family="ArialMT" font-size="19.2237" transform="matrix(1.2707 0 0 1 127.635 131.907)">Aplastic anemia</text><text font-family="ArialMT" font-size="19.2237" transform="matrix(1.2707 0 0 1 126.264 158.458)">Fanconi anemia</text><text font-family="ArialMT" font-size="19.2237" transform="matrix(1.2707 0 0 1 77.3624 185.919)">Hemoglobinopathies</text><text font-family="ArialMT" font-size="19.2237" transform="matrix(1.2707 0 0 1 43.4522 213.379)">Epo-resistant anaemias</text><text font-family="ArialMT" font-size="19.2237" transform="matrix(1.2707 0 0 1 8.47311e-05 238.868)">Diamond-Blackfan anaemia</text><text font-family="ArialMT" font-size="19.2237" transform="matrix(1.2707 0 0 1 333.026 16.4971)">Number of datasets</text></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 425.2 226.8" style="enable-background:new 0 0 425.2 226.8;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#6B6969;stroke:#6B6969;stroke-width:0.25;}
+	.st1{fill:#A0100B;}
+	.st2{font-family:'ArialMT';}
+	.st3{font-size:15.1249px;}
+</style>
+<line class="st0" x1="247.4" y1="56.9" x2="247.4" y2="201.8"/>
+<line class="st0" x1="223.8" y1="56.9" x2="223.8" y2="201.8"/>
+<line class="st0" x1="270.9" y1="59.8" x2="270.9" y2="201.8"/>
+<line class="st0" x1="294.4" y1="56.9" x2="294.4" y2="198.9"/>
+<line class="st0" x1="318.1" y1="56.9" x2="318.1" y2="198.9"/>
+<line class="st0" x1="341.7" y1="56.9" x2="341.7" y2="198.9"/>
+<line class="st0" x1="364.7" y1="56.4" x2="364.7" y2="198.5"/>
+<rect x="223.8" y="64.6" class="st1" width="23.5" height="10.8"/>
+<rect x="223.8" y="85.9" class="st1" width="23.5" height="10.8"/>
+<rect x="223.8" y="127.7" class="st1" width="23.5" height="10.8"/>
+<rect x="223.8" y="170.9" class="st1" width="23.5" height="10.8"/>
+<rect x="223.8" y="191" class="st1" width="140.9" height="10.8"/>
+<rect x="223.8" y="149.3" class="st1" width="47" height="10.8"/>
+<rect x="223.8" y="106.8" class="st1" width="70.5" height="10.8"/>
+<text transform="matrix(1.0006 0 0 1 209.8095 50.0284)" class="st2 st3">0</text>
+<text transform="matrix(1.0006 0 0 1 241.0761 49.0284)" class="st2 st3">1</text>
+<text transform="matrix(1.0006 0 0 1 267.0312 49.0284)" class="st2 st3">2</text>
+<text transform="matrix(1.0006 0 0 1 292.2802 49.0284)" class="st2 st3">3</text>
+<text transform="matrix(1.0006 0 0 1 314.9902 49.0284)" class="st2 st3">4</text>
+<text transform="matrix(1.0006 0 0 1 339.4931 49.0284)" class="st2 st3">5</text>
+<text transform="matrix(1.0006 0 0 1 360.2011 48.6817)" class="st2 st3">6</text>
+<text transform="matrix(1.0006 0 0 1 122.7216 73.1963)" class="st2 st3">Thalassemia</text>
+<text transform="matrix(1.0006 0 0 1 141.2343 94.4414)" class="st2 st3">Sickle cell</text>
+<text transform="matrix(1.0006 0 0 1 101.6835 116.4082)" class="st2 st3">Aplastic anemia</text>
+<text transform="matrix(1.0006 0 0 1 100.8339 137.2959)" class="st2 st3">Fanconi anemia</text>
+<text transform="matrix(1.0006 0 0 1 70.538 158.9034)" class="st2 st3">Hemoglobinopathies</text>
+<text transform="matrix(1.0006 0 0 1 49.5253 180.5088)" class="st2 st3">Epo-resistant anaemias</text>
+<text transform="matrix(1.0006 0 0 1 22.6054 200.5645)" class="st2 st3">Diamond-Blackfan anaemia</text>
+<text transform="matrix(1.0006 0 0 1 181.9404 24.6036)" class="st2 st3">Number of datasets</text>
+</svg>

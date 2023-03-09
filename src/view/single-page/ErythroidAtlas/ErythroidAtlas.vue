@@ -186,7 +186,7 @@
           
       <div class="row_choice">
         <Row :gutter="16" style="background:#eee;padding:20px">
-          <h3 class="h3_title">Analyze Content:</h3>
+          <h3 class="h3_title">Analysis:</h3>
         </Row>
         <br>
         <!-- value="anal_value='item.value'" -->
@@ -330,36 +330,36 @@ const sample_numbers = {
 const source_dict = [
    {
       value: "BM_vitro",
-      name: 'Bone Marrow(vitro)'
+      name: 'Bone Marrow(in vitro)'
     },
     {
       value: "CB_vivo",
-      name: 'Cord Blood(vivo)',
+      name: 'Cord Blood(in vivo)',
       // color: 'red'
     },
      {
       value: "CB_vitro",
-      name: 'Cord Blood(vitro)',
+      name: 'Cord Blood(in vitro)',
       // color: 'green'
     },
      {
       value: "PB_vitro",
-      name: 'Peripheral Blood(vitro)',
+      name: 'Peripheral Blood(in vitro)',
       // color: 'green'
     },
      {
       value: "FL_vitro",
-      name: 'Fetal Liver(vitro)',
+      name: 'Fetal Liver(in vitro)',
       // color: 'green'
     },
      {
       value: "PB_vivo",
-      name: 'Peripheral Blood(vivo)',
+      name: 'Peripheral Blood(in vivo)',
       // color: 'green'
     },
     {
       value: "iPSC_vitro",
-      name: 'Induced Pluripotent Stem Cells(vitro)',
+      name: 'Induced Pluripotent Stem Cells(in vitro)',
       // color: 'green'
     },
     
@@ -546,11 +546,11 @@ export default {
             value: 'all_Expression',
           },
           {
-            label: 'Principal Components',
+            label: 'Principal Component',
             value: 'all_Clutser',
           },
           {
-            label: 'Differential Analysis',
+            label: 'Difference Analysis',
             value: 'all_Diff',
           },
           {
@@ -959,11 +959,11 @@ export default {
             value: 'all_Expression',
           },
           {
-            label: 'Principal Components',
+            label: 'Principal Component',
             value: 'all_Clutser',
           },
           {
-            label: 'Differential Analysis',
+            label: 'Difference Analysis',
             value: 'all_Diff',
           },
           {
@@ -976,16 +976,16 @@ export default {
         // if ( this.orga == 'hs'){
           this.analList = [
           {
-            label: 'Single Cell Visualization & Feature',
+            label: 'Visualization & Feature',
             value: 'scPCA',
           },
           {
-            label: "Cluster's Markers & Enrich",
+            label: "Marker & Enrichment",
             value: 'FeaturePlot',
           },
 
           {
-              label:"Differential & Enrich",
+              label:"Difference & Enrichment",
               value:'Diffanal'
           },
 
@@ -994,7 +994,7 @@ export default {
               value:'ClusterDiffTrajectory'
           },
           {
-              label:"Cell-Cell Interraction",
+              label:"Cell-Cell Interaction",
               value:'ScInterraction'
           },
 
@@ -1068,11 +1068,11 @@ export default {
             value: 'all_Expression',
           },
           {
-            label: 'Principal Components',
+            label: 'Principal Component',
             value: 'all_Clutser',
           },
           {
-            label: 'Differential Analysis',
+            label: 'Difference Analysis',
             value: 'all_Diff',
           },
           {
@@ -1086,16 +1086,16 @@ export default {
         // if ( this.orga == 'hs'){
           this.analList = [
           {
-            label: 'Single Cell Visualization & Feature',
+            label: 'Visualization & Feature',
             value: 'scPCA',
           },
           {
-            label: "Cluster's Markers & Enrich",
+            label: "Marker & Enrichment",
             value: 'FeaturePlot',
           },
 
           {
-              label:"Differential & Enrich",
+              label:"Difference & Enrichment",
               value:'Diffanal'
           },
 
@@ -1104,7 +1104,7 @@ export default {
               value:'ClusterDiffTrajectory'
           },
           {
-              label:"Cell-Cell Interraction",
+              label:"Cell-Cell Interaction",
               value:'ScInterraction'
           },
 
@@ -1142,7 +1142,7 @@ export default {
               value: 'all_Expression',
             },
             {
-              label: 'Principal Components',
+              label: 'Principal Component',
               value: 'all_Clutser',
             },
 
@@ -1159,11 +1159,11 @@ export default {
             value: 'all_Expression',
           },
           {
-            label: 'Principal Components',
+            label: 'Principal Component',
             value: 'all_Clutser',
           },
           {
-            label: 'Differential Analysis',
+            label: 'Difference Analysis',
             value: 'all_Diff',
           },
           {
@@ -1171,11 +1171,11 @@ export default {
             value: 'all_Enrich',
           },
            {
-            label: 'Single Cell Visualization & Feature',
+            label: 'Visualization & Feature',
             value: 'scPCA',
           },
           {
-            label: "Cluster's Markers & Enrich",
+            label: "Marker & Enrichment",
             value: 'FeaturePlot',
           }
         ]

@@ -594,7 +594,7 @@ export default {
                     
                 var diff_layout={ 
                    
-                    title:'Differential Analysis ' + this.group +'('+this.series +')',
+                    title:'Difference Analysis' + this.group +'('+this.series +')',
 					subtitle: {
                             text: 'Data Souce:' + this.series
                     },

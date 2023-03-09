@@ -66,45 +66,45 @@ import VuePlotly from '@statnett/vue-plotly'
 const source_dict = [
     {
       value: "BM_vitro",
-      name: 'Bone Marrow(vitro)'
+      name: 'Bone Marrow(in vitro)'
     },
     {
       value: "BM_vivo",
-      name: 'Bone Marrow(vivo)'
+      name: 'Bone Marrow(in vivo)'
     },
     {
       value: "CB_vivo",
-      name: 'Cord Blood(vivo)',
+      name: 'Cord Blood(in vivo)',
       // color: 'red'
     },
      {
       value: "CB_vitro",
-      name: 'Cord Blood(vitro)',
+      name: 'Cord Blood(in vitro)',
       // color: 'green'
     },
      {
       value: "PB_vitro",
-      name: 'Peripheral Blood(vitro)',
+      name: 'Peripheral Blood(in vitro)',
       // color: 'green'
     },
     {
       value: "FL_vitro",
-      name: 'Fetal Liver(vitro)',
+      name: 'Fetal Liver(in vitro)',
       // color: 'green'
     },
     {
       value: "FL_vivo",
-      name: 'Fetal Liver(vivo)',
+      name: 'Fetal Liver(in vivo)',
       // color: 'green'
     },
      {
       value: "PB_vivo",
-      name: 'Peripheral Blood(vivo)',
+      name: 'Peripheral Blood(in vivo)',
       // color: 'green'
     },
     {
       value: "iPSC_vitro",
-      name: 'Induced Pluripotent Stem Cells(vitro)',
+      name: 'Induced Pluripotent Stem Cells(in vitro)',
       // color: 'green'
     },
     

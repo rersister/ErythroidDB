@@ -1,7 +1,7 @@
 <template>
 <div>
 	<br>
-	<h1 class="my_h1">Intergrated Single Cell Visualization</h1>
+	<h1 class="my_h1">Integrated Single Cell Visualization</h1>
 	<br>
 	<div>
 		<Row :gutter="2">
@@ -21,7 +21,7 @@
 					</Form-item>
 				</i-col>
 				<i-col span="6">
-					<Form-item label="Visaul Method: ">                                                  
+					<Form-item label="Visual Method: ">                                                  
 						<i-select :model.sync="showByGroup" clearable placeholder="Select view method"  @on-change="changedVisaulMethod"  filterable>        
 							<i-option v-for="(method,index) in VisaulMethod_list" :key='index' :value="method.name">{{ method.name }}</i-option>
 						</i-select>

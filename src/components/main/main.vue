@@ -32,16 +32,17 @@
               </Card>
             </Content>
             <Footer class="layout-footer-center"
-              ><span class="my_footer">
+              >
+              <!-- <span class="my_footer">
                 Copyright ©2018-2019 Guangmin Zheng.&copy;<a
                   href="https://people.ucas.edu.cn/~0009899"
                   target="_blank"
                   title="北京基因组研究所方向东"
                   >Fang's Lab.</a
                 >
-                All Rights Reserved.</span
-              ></Footer
-            >
+                All Rights Reserved.</span> -->
+
+              </Footer>
           </Content>
 
           <!-- </Layout> -->
