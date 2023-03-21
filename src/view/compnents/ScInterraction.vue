@@ -8,7 +8,7 @@
 					<i-form :label-width="120">
 						<i-col span="10">
 							<Form-item label="Group: "> 	
-								<i-select placeholder="Select cell source" clearable style="width:80%" @on-change='changedSourceGroup'  filterable>
+								<i-select v-model="source" placeholder="Select cell source" clearable style="width:80%" @on-change='changedSourceGroup'  filterable>
 									<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 								</i-select>
 							</Form-item>
@@ -17,7 +17,7 @@
 						<i-col span="10">
 							<!-- 数据查询分子名 -->
 							<Form-item label="Communication type: "> 
-								<i-select placeholder="Select communication type"  clearable @on-change="changedCommType"  filterable>        
+								<i-select v-model="comm_type" placeholder="Select communication type"  clearable @on-change="changedCommType"  filterable>        
 									<i-option v-for="(group,index) in comm_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 								</i-select>
 							</Form-item>
@@ -164,6 +164,7 @@ export default {
 
 				// var dataset_name = this.series +"_"+ data[0].source_g
 				var dataset_name = this.series 
+				this.comm_type = 'all'
 				this.getNetView(dataset_name,this.source,'all')
 
            })
@@ -254,7 +255,7 @@ export default {
 					var option = {
 
 						title: {
-							text: 'Top 40 factor of '+ comm_type +'('+this.series + ';group:'+this.source+ ')',
+							text: 'Top 40 factor of '+ comm_type +' ('+this.series + '; Group: '+this.source+ ')',
 							// subtext: 'Circular layout',
 							// top: 'bottom',
 							left: 'center'

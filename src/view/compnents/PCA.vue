@@ -6,7 +6,7 @@
 	<!-- 
 		Principal component analysis -->
     <br/>
-	<h1 class="my_h1">Principal Component Analysis(PCA)</h1>
+	<h1 class="my_h1">Principal Component Analysis (PCA)</h1>
 	<Row>
 		<!-- 相似性分析 MDS 聚类图-->
 		<Spin size="large" fix v-if="spinShow3"></Spin>
@@ -82,10 +82,16 @@ export default {
                 //     },              
                 // ]
 
-                this.sim_data = datas.data                    
+                this.sim_data = datas.data 
+
+                const capitalizedFirst = this.Dgrowth_mode[0].toUpperCase();
+                const rest = this.Dgrowth_mode.slice(1);
+                var myCagrowth_type = capitalizedFirst + rest 
+                // alert(this.Dgrowth_mode) 
+                // alert(myCagrowth_type)
                 var layout={ 
                    
-                    title:'PCA '+'( '+ this.series +';Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
+                    title:'PCA'+' ('+ this.series +'; Source:' + this.Dsource + "; Experiment type: "+ myCagrowth_type  +')',
 
                     
 

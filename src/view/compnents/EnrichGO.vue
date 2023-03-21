@@ -10,8 +10,8 @@
         <Row>
         	<i-form :label-width="120">
 				<i-col span="8">
-					<Form-item label="Contrasts Group: ">                                                  
-						<i-select  clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup"  filterable>        
+					<Form-item label="Comparison group:">                                                  
+						<i-select v-model="contrGroupOfEnrich"  clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup"  filterable>        
 							<i-option v-for="(group,index) in contrasts_group" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
@@ -19,7 +19,7 @@
                 &nbsp;&nbsp;
                 <i-col span="12">
 					<Form-item label="Type: ">                                                  
-						<i-select :model.sync="enrichGroup" clearable  placeholder="Pleace select GO Type" @on-change="changeGoType"  filterable>                    
+						<i-select v-model="goType" :model.sync="enrichGroup" clearable  placeholder="Pleace select GO Type" @on-change="changeGoType"  filterable>                    
                             <i-option v-for="(goType,index) in goTypeList" :key='index' :value="goType.value">{{ goType.name }}</i-option>
                         </i-select>
                     
@@ -66,7 +66,9 @@
         <Row> 
             <!-- <div id="enrichGO_echart" style="width: 100%;height:600%; text-aglign:center"></div>  -->
             <!-- <div v-if="enrichShow"> -->
-                <!-- <Spin size="large" fix v-if="spinShow2"></Spin>              -->
+                <!-- <Spin size="large" fix v-if="spinShow1"></Spin> -->
+                <!--bug: 加载回来后false取消不了  暂时不用             -->
+                <Spin size="large" fix v-if="spinShow2"></Spin>  
                 <vue-plotly :autoResize="ifResize" :data="enrichGO_data" :layout="enrichGO_layout" :options="enrichGO_options"/>
             <!-- </div>              -->
         </Row> 
@@ -166,6 +168,7 @@ export default {
         },
         
         getenrich_chart(){
+            let _this = this
             this.enrichShow = true
             // alert("go to sql")     
             if( "" == this.contrGroupOfEnrich ){
@@ -179,7 +182,7 @@ export default {
                         this.$Message.info('please select GO type', 10);
             } 
          
-            this.spinShow2 = true
+            _this.spinShow2 = true
 
             getEnrichData(this.series,this.contrGroupOfEnrich,this.goType).then(res =>{ 
                         let datas = res.data 
@@ -199,12 +202,15 @@ export default {
                             };
                             this.enrichGO_data.push(result)   
                         };
+                        
+                        const capitalizedFirst = this.Dgrowth_mode[0].toUpperCase();
+                        const rest = this.Dgrowth_mode.slice(1);
+                        var myCagrowth_type = capitalizedFirst + rest 
 
                         var layout = {
                             // "("+this.series+'('+ this.source+')'+')',  没有副标题，把标题设置简短
                             title:'GO ('+ this.goType + ') enrichment of ' + this.contrGroupOfEnrich+ '\n'
-                              +'( '+this.series+';Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
-                            
+                                +' ('+this.series+ "; Experiment type: "+ myCagrowth_type +')',
                             
                             // bargap: 0.25,
                             xaxis: {
@@ -216,7 +222,7 @@ export default {
                             yaxis: {
                                 // showgrid: TRUE,
                                 title:{
-                                        text: 'GO Term [-log10(p.adjust)]',
+                                        text: 'GO term [-log10(p.adjust)]',
                                         position:'top',
                                         standoff: 40,
                                         yanchor:'top',
@@ -248,10 +254,9 @@ export default {
                         
                         }
                         this.enrichGO_layout = layout
+                        _this.spinShow2 = false
             })
-            
-        
-        
+
         },
         changedContrGroupOfEnrich(contr_group){ 
             let enrich_group_list = []

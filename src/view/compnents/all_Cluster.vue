@@ -1,6 +1,6 @@
 <template>
     <div class="lay_out">   
-          <h1 class="my_h1">Principal Component Analysis({{orga_name}})</h1>
+          <h1 class="my_h1">Principal Component Analysis (Organism: {{orga_name}})</h1>
           <!-- <h1 class="my_h1">Expression profiling ({{selectList[0]}})</h1> -->
         </Br>     
         <Row>
@@ -59,51 +59,43 @@
 import VuePlotly from '@statnett/vue-plotly'
 import {getClusterDataAll,getAllDevType} from '@/api/erythroidAtlas'
 const source_dict = [
-    {
+   {
       value: "BM_vitro",
-      name: 'Bone Marrow(in vitro)'
-    },
-    {
-      value: "BM_vivo",
-      name: 'Bone Marrow(in vivo)'
+      name: 'Bone Marrow (in vitro)'
     },
     {
       value: "CB_vivo",
-      name: 'Cord Blood(in vivo)',
+      name: 'Cord Blood (in vivo)',
       // color: 'red'
     },
      {
       value: "CB_vitro",
-      name: 'Cord Blood(in vitro)',
+      name: 'Cord Blood (in vitro)',
       // color: 'green'
     },
      {
       value: "PB_vitro",
-      name: 'Peripheral Blood(in vitro)',
+      name: 'Peripheral Blood (in vitro)',
       // color: 'green'
     },
-    {
+     {
       value: "FL_vitro",
-      name: 'Fetal Liver(in vitro)',
-      // color: 'green'
-    },
-    {
-      value: "FL_vivo",
-      name: 'Fetal Liver(in vivo)',
+      name: 'Fetal Liver (in vitro)',
       // color: 'green'
     },
      {
       value: "PB_vivo",
-      name: 'Peripheral Blood(in vivo)',
+      name: 'Peripheral Blood (in vivo)',
       // color: 'green'
     },
     {
       value: "iPSC_vitro",
-      name: 'Induced Pluripotent Stem Cells(in vitro)',
+      name: 'Induced Pluripotent Stem Cells (in vitro)',
       // color: 'green'
     },
     
   ]
+
 export default {
     name:"all_Cluster",
     components:{
@@ -310,7 +302,7 @@ export default {
                 });                
                 var layout={ 
                     
-                    title:'Principal Component Analysis(' + this.orga_name+";"+cell_source_full_name +')',
+                    title:'Principal Component Analysis (Source: '+cell_source_full_name +')',
                     xaxis: {
                         title:'Leading logFC dim 1',
                     },
@@ -365,7 +357,7 @@ export default {
                                 
                 var layout={ 
                    
-                    title:'Principal Component Analysis(in {{selectList[0].deve}})',
+                    title:'Principal Component Analysis (in {{selectList[0].deve}})',
                     xaxis: {
                         title:'Leading logFC dim 1',
                     },
@@ -408,7 +400,7 @@ export default {
                                 
                 var layout={ 
                    
-                    title:'Principal Component Analysis(in {{selectList[0].deve}})',
+                    title:'Principal Component Analysis (in {{selectList[0].deve}})',
                     xaxis: {
                         title:'Leading logFC dim 1',
                     },

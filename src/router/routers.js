@@ -60,7 +60,7 @@ export default [
                         path:'/all_Diff',
                         name:'all_Diff',
                         meta:{
-                            title: 'Difference analysis',
+                            title: 'Differential analysis',
                         },
                         component: () =>
                             import ('@/view/compnents/all_Diffanal.vue'),
@@ -183,9 +183,9 @@ export default [
 						// link:'PCA'
                     {
                         path :'/PCA',
-                        name:'Principal Component',
+                        name:'Principal Component Analysis',
                         meta:{
-                            title:'Principal components'
+                            title:'Principal Component Analysis'
                         },
                         component: () =>
                             import ('@/view/compnents/PCA.vue'),
@@ -195,9 +195,9 @@ export default [
 						// link:'Diff_analysis'
                     {
                         path :'/Diff_analysis',
-                        name:'Difference analysis',
+                        name:'Differential analysis',
                         meta:{
-                            title:'Difference analysis'
+                            title:'Differential analysis'
                         },
                         component: () =>
                             import ('@/view/compnents/Diff_analysis.vue'),

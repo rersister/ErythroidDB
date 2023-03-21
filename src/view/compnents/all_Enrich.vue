@@ -4,7 +4,7 @@
 
     <div class="lay_out">      <!-- enrichGO analysis -->  
 
-        <h1 class="my_h1">Enrichment Analysis  ({{orga_name}}) </h1> 
+        <h1 class="my_h1">Enrichment Analysis (Organism: {{orga_name}}) </h1> 
         </Br>
         <div>
             <Row :gutter="4">
@@ -15,7 +15,7 @@
                 </Col> -->
                 <Col span="10">
                     <!-- 数据查询分子名 -->
-                    <i-select :model.sync="contrastsGroup" clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup"  filterable>        
+                    <i-select v-model="contrastsGroup" :model.sync="contrastsGroup" clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup"  filterable>        
                         <i-option v-for="(group,index) in contrasts_group" :key='index' :value="group.name">{{ group.name }}</i-option>
                     </i-select>
                 </Col>

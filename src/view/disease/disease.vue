@@ -25,7 +25,7 @@
           </br> 
           </br> 
           <Row>
-            <h1 class='h1_title' > Get Research Datasets Related to  {{cell_name}}
+            <h1 class='h1_title' >Datasets Related to  {{cell_name}}
               <!-- <i-button  shape="circle" icon="ios-search" @click="changedCompundsType"></i-button> -->
               <!-- <i-button class="my_reset_button"  shape="circle"  @click="resetCellType">Reset</i-button> -->
               <Button type="primary"  @click="resetCellType" >Reset</Button>
@@ -178,21 +178,21 @@ const species_type = {
   const source_type = {
     0: {
       value: "Marrow",
-      name: 'Bone Marrow(BM)'
+      name: 'Bone Marrow'
     },
     1: {
       value: "Cord",
-      name: 'Cord Blood(CB)',
+      name: 'Cord Blood',
       // color: 'red'
     },
     2: {
       value: "Peripheral",
-      name: 'Peripheral Blood(PB)',
+      name: 'Peripheral Blood',
       // color: 'green'
     },
     3: {
       value: "Spleen",
-      name: 'Spleen(SP)',
+      name: 'Spleen',
       // color: 'green'
     },
   
@@ -204,7 +204,7 @@ const species_type = {
 
     5:{
       value:'Embryo',
-      name:'Embryo(EM)'
+      name:'Embryo'
     },
     6:{
 
@@ -219,13 +219,13 @@ const species_type = {
    
     8:{
       value: "Cardiac",
-      name: 'Cardiac(CAR)',
+      name: 'Cardiac',
       // color: 'green'
     },
 
     9:{
       value: "Kidney",
-      name: 'Kidney(KID)',
+      name: 'Kidney',
       // color: 'green'
     },
 
@@ -391,18 +391,18 @@ export default {
            {'name':'Haemolysis',
                 'full_name':'Haemolysis',
                 'cell_ano':''},
-              {'name':'Diamond-Blackfan anaemia',
-                'full_name':'Diamond-Blackfan anaemia',
+              {'name':'Diamond-Blackfan anemia',
+                'full_name':'Diamond-Blackfan anemia',
                 'cell_ano':''},
-              {'name':'Epo-resistant anaemia',
-                'full_name':'Epo-resistant anaemias',
+              {'name':'Epo-resistant anemia',
+                'full_name':'Epo-resistant anemia',
                 'cell_ano':' '},
               {'name':'Hemoglobinopathies',
               'full_name':'Hemoglobinopathies',
               'cell_ano':''},
         ],
         search:'',
-        current_cellname:'Diamond-Blackfan anaemia',
+        current_cellname:'Diamond-Blackfan anemia',
         current_cell_anno:'',
         table_name:'all_dataset_source_type',
         spinShow:true,
@@ -478,7 +478,7 @@ export default {
 
           },
           {
-            title: 'Experiment Type',
+            title: 'Experiment type',
             key: 'experiment_type',
             filter: {
               type: 'Input'
@@ -563,7 +563,7 @@ export default {
           },
 
           {
-              title: 'Experiment Type',
+              title: 'Experiment type',
               key: 'growth_mode',
               width:'120',
               filter: {
@@ -599,7 +599,7 @@ export default {
           //     },
           // },
           {
-            title: 'Omics Type',
+            title: 'Omics type',
             key: 'sequence_type',
             width:'125',
             filter: {
@@ -608,7 +608,7 @@ export default {
             },
           },
           {
-            title: 'Sample Number',
+            title: 'Sample number',
             key: 'sample_number',
             width:'90',
             filter: {
@@ -837,20 +837,20 @@ export default {
                 'full_name':'Fanconi anemia',
                 'cell_ano':''},
               //红细胞缺陷  贫血
-              {name:'Diamond-Blackfan anaemia',  
-                'full_name':'Diamond-Blackfan anaemia',
+              {name:'Diamond-Blackfan anemia',  
+                'full_name':'Diamond-Blackfan anemia',
                 'cell_ano':''},
               // 贫血
-              {name:'Epo-resistant anaemia',
-                'full_name':'Epo-resistant anaemias',
+              {name:'Epo-resistant anemia',
+                'full_name':'Epo-resistant anemia',
                 'cell_ano':' '},
               //  贫血
               {name:'Aplastic anemia',
               'full_name':'Aplastic anemia',
               'cell_ano':' '},
 
-              {name:'Sickle cell',
-                'full_name':'Sickle cell',
+              {name:'Sickle cell anemia',
+                'full_name':'Sickle cell anemia',
                 'cell_ano':' '},
 
               //地中海贫血
@@ -923,12 +923,12 @@ export default {
                 },
                 data: [
                   // { name:'Haemolysis',value: 1},
-                  { name:'Diamond-Blackfan anaemia',value:6,
+                  { name:'Diamond-Blackfan anemia',value:6,
                       'itemStyle': {
                                 'color': '#8c0c0b'
                         },
                   },
-                  { name:'Epo-resistant anaemia',value: 1,
+                  { name:'Epo-resistant anemia',value: 1,
                       'itemStyle': {
                                 'color': '#8c0c0b'
                         },
@@ -955,7 +955,7 @@ export default {
                           },
                   },
 
-                  {name:'Sickle cell',value: 1,
+                  {name:'Sickle cell anemia',value: 1,
                   'itemStyle': {
                                   'color': '#8c0c0b'
                           },

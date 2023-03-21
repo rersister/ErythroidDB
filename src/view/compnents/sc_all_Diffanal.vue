@@ -13,8 +13,8 @@
 					</Form-item>
 				</i-col> -->
                 <i-col span="10">
-					<Form-item label="Contrast Cluster: ">                                                  
-						<i-select  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart"  filterable>        
+					<Form-item label="Comparison cluster: ">                                                  
+						<i-select v-model="group"  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart"  filterable>        
 							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
@@ -29,6 +29,7 @@
 		
 		</Row>
 		</Br>
+		
 		<Row>
 			<!-- <filter-table 
                 
@@ -68,18 +69,18 @@
 						</i-select>
 					</Form-item>
 				</i-col> -->
-                <i-col span="8">
-					<Form-item label="Contrast Cluster: ">                                                  
-						<i-select  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart2"  filterable>        
+                <i-col span="12">
+					<Form-item label="Comparison cluster: ">                                                  
+						<i-select v-model="group" clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart2"  filterable>        
 							<i-option v-for="(group,index) in group_type_list2" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
-				<i-col span="8">
+				<i-col span="12">
                                             
                 
-					<Form-item label="Enrich type: ">
-						<i-select :model.sync="enrichGroup" clearable  placeholder="Pleace select Enrich Type" @on-change="changeEnrichType"  filterable>                    
+					<Form-item label="Enrichment type: ">
+						<i-select v-model="enrichType" :model.sync="enrichGroup" clearable  placeholder="Pleace select Enrichment Type" @on-change="changeEnrichType"  filterable>                    
 							<i-option v-for="(goType,index) in goTypeList" :key='index' :value="goType.value">{{ goType.name }}</i-option>
 						</i-select>
 					</Form-item>
@@ -435,7 +436,7 @@ export default {
 					};
 
 					var layout = {
-						title: 'Enrichment('+this.enrichType +')' +' of ' + group2 ,
+						title: 'Enrichment ('+this.enrichType +')' +' of ' + group2 +' (Organism: '+this.orga_name+')',
                        
                         xaxis: {
 							title:'-log10(p.adjust)',
@@ -599,7 +600,7 @@ export default {
                             y: datas.no_signifcant.adj_P_Val,
                             mode: 'markers',
                             type: 'scatter',
-                            name: 'Not Signifcant',
+                            name: 'Not signifcant',
                             text: datas.no_signifcant.genes,
                             marker: { size: 4 }
                         },            
@@ -619,7 +620,7 @@ export default {
                     
                 var diff_layout={ 
                    
-                    title:'Difference Analysis' + this.group ,
+                    title:'Differential analysis of ' + this.group +' (Organism: '+this.orga_name+')',
 					subtitle: {
                             text: 'Data Souce:' + this.table_name
                     },

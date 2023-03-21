@@ -4,13 +4,16 @@
             <Row>
               
                 <Collapse v-model="value1">   
+                    <!--  數字的千分位展示　 -->
                         <Panel name="1" class="Panel_c">
-                                About EryDB
+
+                                <!-- About EryDB -->
                                  <!-- All datasets were divided into different developmental stages. Unlike other added-value databases, EryDB allows users to easily retrieve and explore data of specific studies, determine differentially expressed genes and their functions via principal component analysis, differential gene expression analysis, gene set enrichment analysis, and transcription factor analysis under certain conditions, such as in vitro or in vivo. Besides, EryDB integrated single-cell RNA sequencing data to visualize gene expression in single cell resolution by color-coded t-SNE or UMAP plots. Plots and tables in EryDB are customizable, downloadable and interactive.  -->
-                                <p class="p_text" slot="content">
-                                    EryDB: a database of transcriptome profile of erythropoiesis and a web-accessible collection of expertly curated, 
-                                    quality-assured, and pre-analyzed data sets covering three species and nine sources, 
-                                    totaling {{allSampleN}} samples and {{allCellN}} single cells. 
+                                <!-- {{allSampleN}}  {{allCellN}} 暫時寫死 -->
+                                 <p class="p_text" slot="content">
+                                    EryDB is a web-accessible erythropoiesis-related database of transcriptome profiles that contains expertly curated, quality-assured, and pre-analyzed datasets for
+                                    three species and nine sources, 
+                                    totaling 3,802 samples and 1,167,800 single cells. 
                                 </p>
 
                         </Panel>
@@ -41,7 +44,7 @@
                         </CarouselItem>
 
                         <CarouselItem>
-                            <div class="demo-carousel"><a class="my_nolink"><img width="90%" src="../../../../src/assets/img/disease_home.svg" alt="img"></a></div>
+                            <div class="demo-carousel"><a class="my_nolink"><img width="90%" src="../../../../src/assets/img/disease_home.png" alt="img"></a></div>
                         </CarouselItem>
                         <!-- <CarouselItem>
                             <!-- FLB000002  <button @click="intoDataSet('FLB000002')"  style="{cursor='hand'}" >  </button>
@@ -49,7 +52,7 @@
                         </CarouselItem> -->
                         <CarouselItem>
                             <!-- <button @click="intoDataSet('FLB000003')"  style="{cursor='hand'}" > </button>-->
-                            <div class="demo-carousel"><a class="my_nolink"><img width="80%"  src="@/assets/img/monocle_home.png" alt="img"></a></div>
+                            <div class="demo-carousel"><a class="my_nolink"><img width="90%"  src="@/assets/img/monocle_home.svg" alt="img"></a></div>
                         </CarouselItem>
                         
                     </Carousel>
@@ -61,9 +64,15 @@
                     </br>
                     </br>
                     </br>
-                    <span >Input Reported Gene/Tissue/Dataset Id/Organism Name:</span>
+                    <span >Input Reported Gene/Tissue/Dataset ID/Organism Name:</span>
                     <!-- :model.sync="showByGroup"  -->
-                    <i-select enter-button="Search" style="width:80%"  @on-search="searchDataSetByKeyName($event)"  :placeholder="search_placeholder"  @on-change="searchDataSetByKeyName($event)"  filterable>        
+                    <i-select 
+                        enter-button="Search" 
+                        style="width:80%"  
+                        v-model=InputKeyName
+                        @on-search="searchDataSetByKeyName($event)"  
+                        :placeholder="search_placeholder"  
+                        @on-change="searchDataSetByKeyName($event)"  filterable>        
 							<i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
 					</i-select>
                     <Button type="primary" @click="searchByKeyWord()" >Search</Button>
@@ -141,7 +150,7 @@
                     <router-link to="/Eryth">
                         <Card>
                                 <div class="moudle">
-                                    <img class="moudle_image" src="@/assets/img/subredcell.png">
+                                    <img class="moudle_image" src="@/assets/img/subredcell_test.png">
                                     <!-- <div class="moudle_title"> -->
                                     <div class="moudle_title">
                                         Differentiation
@@ -251,6 +260,8 @@ import CountTo from '@/components/count-to'
 import {mapMutations,} from 'vuex'
 import {getAllSampleCellNumber,getDatasetKeyWords,} from '@/api/erythdataset'
 
+
+
 export default {
     name:"home",
     components:{
@@ -269,7 +280,72 @@ export default {
                         name:'Mus musculus',
                     }
 
-                ],
+               ],
+               source_type:[
+                {
+                    value: "Marrow",
+                    name: 'Bone Marrow'
+                },
+                {
+                    value: "Cord",
+                    name: 'Cord Blood',
+                    // color: 'red'
+                },
+                {
+                    value: "Peripheral",
+                    name: 'Peripheral Blood',
+                    // color: 'green'
+                },
+                {
+                    value: "Spleen",
+                    name: 'Spleen',
+                    // color: 'green'
+                },
+
+                {
+                    value: "Line",
+                    name: 'Cell Line',
+                    // color: 'green'
+                },
+
+                {
+                    value:'Embryo',
+                    name:'Embryo'
+                },
+                {
+
+                    value:'Embryonic',
+                    name:'Fetus Tissue '
+                },
+
+                {
+                    value:'Pluripotent',
+                    name:'Induced Pluripotent Stem Cells'
+                },
+                
+                {
+                    value: "Cardiac",
+                    name: 'Cardiac',
+                    // color: 'green'
+                },
+
+                {
+                    value: "Kidney",
+                    name: 'Kidney',
+                    // color: 'green'
+                },
+
+                {
+                    value: "other",
+                    name: 'Other',
+                    // color: 'green'
+                },
+
+                {
+                    value: "all",
+                    name: 'All',
+                    // color: 'green'
+                }],        
                 value1: '1',
                 // all_sampleN:3900,
                 // all_cellN:175628,
@@ -306,10 +382,30 @@ export default {
         getAllkeyWords(){
 
             getDatasetKeyWords().then(res=>{
-                this.keyWords_list = res.data.keywords
+                let mykeyWord_list = res.data.keywords
                 // console.log("this.keyWords_list")
                 // console.log(res.data.keywords)
-                
+                // source_type
+                // datas.forEach(key =>{ 
+                    
+                //     source_dict.forEach(element => {
+                //         if(element.value == key){
+                //             dev_group_type_list.push({
+                //                 value:key,
+                //                 label:element.name
+                //             })
+                //         }
+                //     });
+                // })
+                console.log(mykeyWord_list)
+                this.source_type.forEach(element => {
+                    mykeyWord_list.push({
+                        name:element.name
+                    })
+                })    
+                console.log('after')
+                console.log(mykeyWord_list)
+                this.keyWords_list = mykeyWord_list
             })
            
 
@@ -353,9 +449,7 @@ export default {
         router.push({
            name: "Dataset_detail",
            params: {
-
              dataset : dataset_id,
-
            }
         
          });

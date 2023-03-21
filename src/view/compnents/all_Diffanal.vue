@@ -1,6 +1,6 @@
 <template>
 <div class="lay_out">
-	<h1 class="my_h1">Difference Analysis({{orga_name}})</h1>
+	<h1 class="my_h1">Differential Analysis (Organism: {{orga_name}})</h1>
 	</Br>
 	<div>
 		<Row :gutter="4">
@@ -351,7 +351,7 @@ export default {
                             y: datas.no_signifcant.adj_P_Val,
                             mode: 'markers',
                             type: 'scatter',
-                            name: 'Not Signifcant',
+                            name: 'Not signifcant',
                             text: datas.no_signifcant.genes,
                             marker: { size: 4 }
                         },            
@@ -371,7 +371,7 @@ export default {
                     
                 var diff_layout={ 
                    
-                    title:'Difference Analysis ' + diffgroup,
+                    title:'Differential Analysis ' + diffgroup,
                     xaxis: {
                         title:'Log2(FC)',
                     },

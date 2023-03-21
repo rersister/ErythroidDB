@@ -25,7 +25,7 @@
           </br> 
           </br> 
           <Row>
-            <h1 class='h1_title' > Get Research Datasets Related to  {{cell_name}}
+            <h1 class='h1_title' >Datasets Related to  {{cell_name}}
               <!-- <i-button  shape="circle" icon="ios-search" @click="changedCompundsType"></i-button> -->
               <!-- <i-button class="my_reset_button"  shape="circle"  @click="resetCellType">Reset</i-button> -->
               <Button type="primary"  @click="resetCellType" >Reset</Button>
@@ -180,21 +180,21 @@ const species_type = {
 const source_type = {
     0: {
       value: "Marrow",
-      name: 'Bone Marrow(BM)'
+      name: 'Bone Marrow'
     },
     1: {
       value: "Cord",
-      name: 'Cord Blood(CB)',
+      name: 'Cord Blood',
       // color: 'red'
     },
     2: {
       value: "Peripheral",
-      name: 'Peripheral Blood(PB)',
+      name: 'Peripheral Blood',
       // color: 'green'
     },
     3: {
       value: "Spleen",
-      name: 'Spleen(SP)',
+      name: 'Spleen',
       // color: 'green'
     },
   
@@ -206,7 +206,7 @@ const source_type = {
 
     5:{
       value:'Embryo',
-      name:'Embryo(EM)'
+      name:'Embryo'
     },
     6:{
 
@@ -221,13 +221,13 @@ const source_type = {
    
     8:{
       value: "Cardiac",
-      name: 'Cardiac(CAR)',
+      name: 'Cardiac',
       // color: 'green'
     },
 
     9:{
       value: "Kidney",
-      name: 'Kidney(KID)',
+      name: 'Kidney',
       // color: 'green'
     },
 
@@ -397,11 +397,11 @@ export default {
               {'name':'iron',
                 'full_name':'Iron',
                 'cell_ano':' '},
-              {'name':'IDH2 inhibitor',
-              'full_name':'Isocitrate Dehydrogenase 2(IDH2) Mutant-specific Inhibitor',
+              {'name':'IDH2 inhibitors',
+              'full_name':'Isocitrate Dehydrogenase 2(IDH2) Mutant-specific Inhibitors',
               'cell_ano':''},
-              {'name':'BET bromodomain inhibitor',
-              'full_name':'BET bromodomain inhibitor',
+              {'name':'BET bromodomain inhibitors',
+              'full_name':'BET bromodomain inhibitors',
               'cell_ano':''},
               
               {'name':'PPAR-α agonists',
@@ -494,7 +494,7 @@ export default {
 
           },
           {
-            title: 'Experiment Type',
+            title: 'Experiment type',
             key: 'experiment_type',
             filter: {
               type: 'Input'
@@ -579,7 +579,7 @@ export default {
           },
 
           {
-              title: 'Experiment Type',
+              title: 'Experiment type',
               key: 'growth_mode',
               width:'120',
               filter: {
@@ -615,7 +615,7 @@ export default {
           //     },
           // },
           {
-            title: 'Omics Type',
+            title: 'Omics type',
             key: 'sequence_type',
             width:'125',
             filter: {
@@ -624,7 +624,7 @@ export default {
             },
           },
           {
-            title: 'Sample Number',
+            title: 'Sample number',
             key: 'sample_number',
             width:'90',
             filter: {
@@ -946,14 +946,14 @@ export default {
                     show: false
                   },
                   data: [
-                    { value: 1, name: 'TRβ Agonists' ,
+                    { value: 1, name: 'TRβ agonists' ,
                       'itemStyle': {
                     
                                 'color': '#cfbcc3'
                             },
                     },
                     // #ed7d31
-                    { value: 1, name: 'ERBB Inhibitors',
+                    { value: 1, name: 'ERBB inhibitors',
                         'itemStyle': {
                         
                                     'color': '#781111'
@@ -965,25 +965,25 @@ export default {
                                     'color': '#db302a'
                                 },
                     },
-                    { value: 1, name: 'IDH2 Inhibitor',
+                    { value: 1, name: 'IDH2 inhibitors',
                         'itemStyle': {
                         
                                     'color': '#FF9966'
                                 },  
                     },
-                    { value: 1, name: 'BET bromodomain inhibitor',
+                    { value: 1, name: 'BET bromodomain inhibitors',
                         'itemStyle': {
                         
                                     'color': '#dd6263'
                                 },  
                     },
-                    { value: 1, name: 'PPAR-α Agonists',
+                    { value: 1, name: 'PPAR-α agonists',
                         'itemStyle': {
                         
                                     'color': '#a79594'
                                 },
                     },
-                    { value: 1, name: 'HbF Inducers',
+                    { value: 1, name: 'HbF inducers',
                       'itemStyle': {
                         
                                     'color': '#e2b5b4'

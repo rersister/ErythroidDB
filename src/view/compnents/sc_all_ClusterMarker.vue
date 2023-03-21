@@ -3,19 +3,19 @@
 	
 	<div>
 		<br>
-		<h1 class="my_h1">Cluster's Markers HeatMap</h1>
+		<h1 class="my_h1">Cell Cluster Marker Heatmap</h1>
 		<br>
 		<Row :gutter="16">					
 				<i-form :label-width="120">
 					<i-col span="8">
 						<Form-item label="Group: ">                                                  
-							<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup"  filterable>        
+							<i-select v-model="source" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup"  filterable>        
 								<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 							</i-select>
 						</Form-item>
 					</i-col>
 					<i-col span="12">
-						<Form-item label="Add feature name: ">
+						<Form-item label="Add feature: ">
 							<Input search enter-button="Add" @on-search="addFeatureByName($event)" placeholder="Please input gene symbol"/>
 						</Form-item>
 					</i-col>
@@ -41,8 +41,8 @@
 		<Row :gutter="16">		     
 			<i-form :label-width="120">
 				<i-col span="10"> 
-					<Form-item label="Enrich Cluster: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cluster group"  @on-change="changedEnrichChart"  filterable>        
+					<Form-item label="Enrichment cluster: ">                                                  
+						<i-select v-model="group" :model.sync="showByGroup" clearable placeholder="Pleace select cluster group"  @on-change="changedEnrichChart"  filterable>        
 							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
@@ -51,8 +51,8 @@
 				<i-col span="10">
                                             
                 
-					<Form-item label="Enrich Type: ">
-						<i-select  clearable  placeholder="Pleace select Enrich Type" @on-change="changeEnrichType"  filterable>                    
+					<Form-item label="Enrichment type: ">
+						<i-select v-model="enrichType"  clearable  placeholder="Pleace select Enrichment Type" @on-change="changeEnrichType"  filterable>                    
 							<i-option v-for="(goType,index) in goTypeList" :key='index' :value="goType.value">{{ goType.name }}</i-option>
 						</i-select>
 					</Form-item>
@@ -145,7 +145,7 @@ export default {
                 }
 			},
 			ClusterHotMapMarker_layout:{
-					title: 'Identity features for each cluster'  + "(Organism:"+ this.orga_name + ";group:"+ this.source+")",
+					title: 'Identity features for each cluster'  + " (Organism: "+ this.orga_name + "; Group: "+ this.source+")",
 					xaxis: {
 						// range: [ 0.75, 5.25 ],
                         title:'Cell cluster',
@@ -474,7 +474,7 @@ export default {
 				}];
 				
 				var layout = {
-					title: 'Enrichment'+"("+this.enrichType+") of "  + "(Organism:"+ this.orga_name + ";group:"+ this.source+")",
+					title: 'Enrichment'+" ("+this.enrichType+") of "  + " (Organism: "+ this.orga_name + "; Group: "+ this.source+")",
 					xaxis: {
 						title: '-log10(p.adjust)',
 						showgrid: false,
@@ -601,7 +601,7 @@ export default {
 				}];
 				
 				var layout = {
-					title: 'Identity features for each cluster'  + "(Organism:"+ this.orga_name + ";group:"+ source+")",
+					title: 'Identity features for each cluster'  + " (Organism: "+ this.orga_name + "; Group: "+ source+")",
 					xaxis: {
 						// range: [ 0.75, 5.25 ],
                         title:'Cell cluster',

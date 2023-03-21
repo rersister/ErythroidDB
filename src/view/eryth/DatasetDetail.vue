@@ -26,8 +26,10 @@
                         <Col span="19">{{tissue}}</Col> 
                     </Row>
                     <Row>
-                        <Col span="5"><strong>Experiment Type:</strong></Col>
-                        <Col span="19">{{growth_type}}</Col> 
+                        <Col span="5"><strong>Experiment type:</strong></Col>
+                        <!-- <Col span="19">{{growth_type}}</Col>  -->
+                        <!-- myCagrowth_type -->
+                        <Col span="19">{{myCagrowth_type}}</Col>
                     </Row>
                     <!-- <Row>
                         <Col span="5"><strong>Development Type:</strong></Col>
@@ -36,7 +38,7 @@
 
                     <Row>
                         <!-- experiment_type -->
-                        <Col span="5"><strong>Omics Type:</strong></Col>                   
+                        <Col span="5"><strong>Omics type:</strong></Col>                   
                         <Col span="19">{{experiment_type}}</Col>
                     </Row> 
                     <!-- <Row>
@@ -73,7 +75,7 @@
                         <Col span="18" >{{sequencing_type}}</Col>
                     </Row> -->
                      <Row>
-                        <Col span="5"><strong>Organization Name:</strong></Col>                   
+                        <Col span="5"><strong>Organization name:</strong></Col>                   
                         <Col span="19">{{organization_name}}</Col>
                     </Row>
                     <Row>                     
@@ -85,7 +87,7 @@
                         <Col span="19" v-html='citations'></Col>
                     </Row> 
                     <Row>                     
-                       <strong> Samples({{totalRow}}) And Group:</strong>                   
+                       <strong> Samples ({{totalRow}}) and group:</strong>                   
                     </Row>
                     <Row>
                        
@@ -279,7 +281,7 @@ export default {
                                 
                             },
                             {
-                                title: 'Sample Name',
+                                title: 'Sample name',
                                 key: 'sample',
                                 "sortable": true,
                                 filter: {
@@ -316,7 +318,7 @@ export default {
                             //     // },
                             // },
                             {
-                                title: 'Cell Type',
+                                title: 'Cell type',
                                 key: 'cell_type',
                                 width:120,
                                 "sortable": true,
@@ -337,7 +339,7 @@ export default {
                             },
 
                             {
-                                title: 'Growth Mode',
+                                title: 'Growth mode',
                                 key: 'growth_mode',
                                 filter: {
                                     type: 'Input',
@@ -348,9 +350,9 @@ export default {
                                 // },
                             },
                             {
-                                title: 'Development Type',
+                                title: 'Development  type',
                                 key: 'development_type',
-                                width:120,
+                                width:115,
                                 filter: {
                                     type: 'Input',
                                 },
@@ -386,6 +388,7 @@ export default {
                 organism:'',
                 tissue:'',
                 growth_type:'',
+                myCagrowth_type:'',
                 development_type:'',
                 sample_numbers:'',
                 organization_name:'',
@@ -553,6 +556,11 @@ export default {
               
             }    
        },
+    //    capitalized(name) {
+    //         const capitalizedFirst = name[0].toUpperCase();
+    //         const rest = name.slice(1);
+    //         return capitalizedFirst + rest;
+    //    },
        getDatasetDetail(){
             let _this = this
             // alert(this.$store.state.app.CurrentPageToken)
@@ -562,7 +570,13 @@ export default {
                 // console.log(datas.series)
                 _this.series = datas.series
                 _this.organism = datas.organism
-                _this.growth_type = datas.growth_type
+                // 把 datas.growth_type 首字符变大写
+                const capitalizedFirst = datas.growth_type[0].toUpperCase();
+                const rest = datas.growth_type.slice(1);
+                var myCagrowth_type = capitalizedFirst + rest
+        
+                _this.myCagrowth_type = myCagrowth_type
+                _this.growth_type = myCagrowth_type
                 _this.tissue = datas.tissue
                 _this.dataset_title = datas.title
                 _this.development_type = datas.development_type

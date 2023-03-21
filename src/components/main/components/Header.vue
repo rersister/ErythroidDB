@@ -37,7 +37,7 @@
         </nav>
         <div class="header">
           <div class="layout-logo">
-            <img class="moudle_image_header " src="@/assets/img/development.png">
+            <img class="moudle_image_header " src="@/assets/img/development_test.png">
             <span>EryDB v1.00: Erythroid Database</span>
           </div>
           <div class="layout-nav">
@@ -105,12 +105,7 @@ export default{
   }
 
 
-  .header {
-    height: 105px;
-    /* line-height: calc((150 / 1920) * 100vw); */
-    border-color: #a85557!important;
-    border-bottom-style: solid
-  }
+
 
   .menu-horizontal {
     height: calc((60 / 1920) * 100vw);
@@ -119,40 +114,8 @@ export default{
   }
 
 
-  .layout-logo{
-    color: #870909;
-    width: 1000px;
-    min-width: 500px;
-    height: 60px;
-    /* background: #5b6270; */
-    font-size: calc((35 / 1920) * 100vw);
-    border-radius: 3px;
-    /* text-align: center; */
-    /* float: right; */
-    /* position: relative; */
-    top: calc((5 / 1920) * 100vw);
-    /* padding-right: 110px; */
-    font-size: 30px;
-  }
-  .layout-nav {
-    display: block;
-    color: white;
-    margin: 0 auto;
-    /* margin-right: calc((10 / 1920) * 100vw); */
-    word-wrap: break-word;
-    word-break: break-all;
-    overflow: hidden;
-    -ms-flex-line-pack: center;
-    align-content: center;
-    /* text-align: right; */
-    font-size: calc((20/1920) * 100vw);
-    height: 40px;
-    /* line-height: 90px; */
-    min-width: 910px;
-    /* position: absolute; */
-    left: 0;
-    bottom: 3px;
-  }
+
+
   .menu-item {
       outline: 0;
       list-style: none;
@@ -183,6 +146,30 @@ export default{
   }
 
 
+  .header {
+    height: 105px;
+    /* line-height: calc((150 / 1920) * 100vw); */
+    border-color: #a85557!important;
+    border-bottom-style: solid
+  }
+
+
+  .layout-logo{
+    color: #870909;
+    width: 800px;
+    min-width: 300px;
+    height: 50px;
+    /* background: #5b6270; */
+    font-size: calc((35 / 1920) * 100vw);
+    border-radius: 3px;
+    /* text-align: center; */
+    /* float: right; */
+    /* position: relative; */
+    top: calc((5 / 1920) * 100vw);
+    /* padding-right: 110px; */
+    font-size: 30px;
+  }
+
 
   .moudle_image_header{
     block: true;
@@ -191,6 +178,29 @@ export default{
     width: calc((300/1920) * 100vw);
     height: calc((90/1920) * 100vw);
     line-height: calc((90/1920) * 100vw);
-    margin-right: 15px;
+    margin-left: 20px;
+    margin-right: 10px;
+    padding-top: 10px;
+  }
+
+  .layout-nav {
+    display: block;
+    color: white;
+    /* margin: 0 auto; */
+    /* margin-right: calc((10 / 1920) * 100vw); */
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    /* text-align: right; */
+    font-size: calc((20/1920) * 100vw);
+    height: 50px;
+    /* line-height: 90px; */
+    min-width: 400px;
+    /* position: absolute; */
+    padding-top: 5px;
+    left: 0;
+    bottom: 3px;
   }
 </style>

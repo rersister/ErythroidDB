@@ -40,7 +40,10 @@
                 
                     <h4><strong>Email:</strong></h4>
                     <br>
+                    <p>quhongzhu@big.ac.cn</p>
+                    <p>zhenggm@big.ac.cn</p>
                     <p>fangxd@big.ac.cn</p>
+
                     <br>
                     <h4><strong>Contributors:</strong></h4>
                     <br>
@@ -231,7 +234,7 @@ export default {
             
            
                 var layout = {
-                    title: 'Dataset information statistics',
+                    title: 'Dataset Information Statistics',
                     annotations: [
                         {
                         font: {

@@ -22,7 +22,7 @@
           
           <!-- 用表格展示 根据细胞分析搜索的数据集 -->
           <Row>
-            <h1 class='h1_title' > Get Research Datasets Have Cells of  {{cell_name}}
+            <h1 class='h1_title' >Datasets Include Cells of  {{cell_name}}
               <!-- <i-button  shape="circle" icon="ios-search" @click="changedCellType"></i-button> -->
               <!-- <i-button class="my_reset_button"  shape="circle"  @click="resetCellType">Reset</i-button> -->
               <Button type="primary"  @click="resetCellType" >Reset</Button>
@@ -177,21 +177,21 @@ const species_type = {
   const source_type = {
     0: {
       value: "Marrow",
-      name: 'Bone Marrow(BM)'
+      name: 'Bone Marrow'
     },
     1: {
       value: "Cord",
-      name: 'Cord Blood(CB)',
+      name: 'Cord Blood',
       // color: 'red'
     },
     2: {
       value: "Peripheral",
-      name: 'Peripheral Blood(PB)',
+      name: 'Peripheral Blood',
       // color: 'green'
     },
     3: {
       value: "Spleen",
-      name: 'Spleen(SP)',
+      name: 'Spleen',
       // color: 'green'
     },
   
@@ -203,7 +203,7 @@ const species_type = {
 
     5:{
       value:'Embryo',
-      name:'Embryo(EM)'
+      name:'Embryo'
     },
     6:{
 
@@ -218,13 +218,13 @@ const species_type = {
    
     8:{
       value: "Cardiac",
-      name: 'Cardiac(CAR)',
+      name: 'Cardiac',
       // color: 'green'
     },
 
     9:{
       value: "Kidney",
-      name: 'Kidney(KID)',
+      name: 'Kidney',
       // color: 'green'
     },
 
@@ -497,7 +497,7 @@ export default {
 
           },
           {
-            title: 'Experiment Type',
+            title: 'Experiment type',
             key: 'experiment_type',
             filter: {
               type: 'Input'
@@ -582,7 +582,7 @@ export default {
           },
 
           {
-              title: 'Experiment Type',
+              title: 'Experiment type',
               key: 'growth_mode',
               width:'120',
               filter: {
@@ -618,7 +618,7 @@ export default {
           //     },
           // },
           {
-            title: 'Omics Type',
+            title: 'Omics type',
             key: 'sequence_type',
             width:'125',
             filter: {
@@ -627,7 +627,7 @@ export default {
             },
           },
           {
-            title: 'Sample Number',
+            title: 'Sample number',
             key: 'sample_number',
             width:'90',
             filter: {
@@ -907,7 +907,7 @@ export default {
           'cell_ano':'Reticulocytes are immature red blood cells that detect if your bone marrow is forming enough red blood cells'},
           {'name':'RBC',
           'full_name':'Red Blood Cell',
-          'cell_ano':'Red blood cell, also called erythrocyte, cellular component of blood, millions of which in the circulation of vertebrates give the blood its characteristic colour and carry oxygen from the lungs to the tissues. The mature human red blood cell is small, round, and biconcave; it appears dumbbell-shaped in profile. '}
+          'cell_ano':'Red blood cell, also called erythrocyte, cellular component of blood, millions of which in the circulation of vertebrates give the blood its characteristic color and carry oxygen from the lungs to the tissues. The mature human red blood cell is small, round, and biconcave; it appears dumbbell-shaped in profile. '}
           ]
 
           cell_type_list.forEach(element => {

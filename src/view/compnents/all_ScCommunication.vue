@@ -11,7 +11,7 @@
 				<i-form :label-width="120">
 					<i-col span="12">
 						<Form-item label="Group: "> 	
-							<i-select placeholder="Select cell source" clearable style="width:80%" @on-change='changedSourceGroup'  filterable>
+							<i-select v-model="source" placeholder="Select cell source" clearable style="width:80%" @on-change='changedSourceGroup'  filterable>
 								<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 							</i-select>
 						</Form-item>
@@ -19,7 +19,7 @@
 					<i-col span="12">
 						<Form-item label="Signal pattern: "> 
 							<!-- 数据查询分子名 -->
-							<i-select :model.sync="contrastsGroup" clearable placeholder="Please select signal pattern"  @on-change="changedSigPattern"  filterable>        
+							<i-select v-model="sigPattern" :model.sync="contrastsGroup" clearable placeholder="Please select signal pattern"  @on-change="changedSigPattern"  filterable>        
 								<i-option v-for="(group,index) in sigPattern_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 							</i-select>
 						</Form-item>
@@ -51,7 +51,7 @@
 				<i-form :label-width="120">	
 					<i-col span="10">
 						<Form-item label="Signal name: ">
-							<i-select :model.sync="contrastsGroup" clearable placeholder="Please select signal name"  @on-change="changedSigName"  filterable>        
+							<i-select v-model="siName"  :model.sync="contrastsGroup" clearable placeholder="Please select signal name"  @on-change="changedSigName"  filterable>        
 								<i-option v-for="(group,index) in sigName_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 							</i-select>
 						</Form-item>
@@ -120,9 +120,21 @@ export default {
 				sigName_list:[],
 				sigPattern:'',
 			    data_source_list:[],
-				Cell_Chart_RiverCell:{},
-				Cell_Chart_RiverPath:{},
-				Cell_Chart_Rcontri:{},
+				Cell_Chart_RiverCell:{
+					credits:{
+								enabled:false
+					},
+				},
+				Cell_Chart_RiverPath:{
+					credits:{
+								enabled:false
+						},
+				},
+				Cell_Chart_Rcontri:{
+					credits:{
+								enabled:false
+						},
+				},
 				ifResize:true,
 				CellChartHotMap_layout:{},
 				CellChartHotMap_data:[],
@@ -230,6 +242,7 @@ export default {
 				}) 
 				
 				var pName = 'incoming'
+				this.sigPattern = pName
 				this.getCellChartView(data[0].source_g,pName);
 				this.getSigNameList(series,data[0].source_g)
            })
@@ -252,6 +265,7 @@ export default {
 				// alert(this.sigName_list)
 				this.getCellChartHotMap(this.table_name,this.source,datas[0])
 				// this.geteSigPathNet_chart(this.table_name,this.source,datas[0]);
+				this.siName = this.sigName_list[0].name
 				this.getCellChartRcontri(this.table_name,this.source,datas[0]);
            })
 
@@ -309,7 +323,7 @@ export default {
 					});
 					var option = {
 						title: {
-							text: sigName + ' signaling pathway',
+							text: sigName + ' signaling pathway'+" (Organism: "+ this.orga_name + "; Group: "+ this.source+")",
 							subtext: this.table_name +" "+ source,
 							top: 'top',
 							//left: 'left'
@@ -375,7 +389,7 @@ export default {
 				}];
 				
 				var layout = {
-					title: sigName +' signaling pathway network',
+					title: sigName +' signaling pathway network' +" (Organism: "+ this.orga_name + "; Group: "+ this.source+")",
 
 					xaxis: {
 							title:'Cell type',		
@@ -409,7 +423,7 @@ export default {
 			 	var data = res.data
 			 	var option_1 = {
 			 				title: {
-			 					text: 'communication('+pName +') patterns', 
+			 					text: 'Communication ('+pName +') patterns', 
 			 				},
 			 				series: [{
 			 					keys: ['from', 'to', 'weight'],
@@ -421,7 +435,7 @@ export default {
 			    this.Cell_Chart_RiverCell = option_1
 				var option_2 = {
 			 				title: {
-			 					text: 'communication('+pName +') signal of cells'
+			 					text: 'Communication ('+pName +') signals'+" (Organism: "+ this.orga_name + "; Group: "+ this.source+")",
 			 				},
 			 				series: [{
 			 					keys: ['from', 'to', 'weight'],
@@ -451,7 +465,7 @@ export default {
 						type: 'bar'
 					},
 					title: {
-						text: 'Contribution of each L-R pair ' 
+						text: 'Contribution of each L-R pair ' +" (Organism: "+ this.orga_name + "; Group: "+ this.source+")", 
 					},
 					subtitle: {
 						

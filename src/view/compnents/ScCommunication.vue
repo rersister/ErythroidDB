@@ -11,7 +11,7 @@
 				<i-form :label-width="120">
 					<i-col span="12">
 						<Form-item label="Group: "> 	
-							<i-select placeholder="Select cell source" clearable style="width:80%" @on-change='changedSourceGroup'  filterable>
+							<i-select v-model="source" placeholder="Select cell source" clearable style="width:80%" @on-change='changedSourceGroup'  filterable>
 								<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 							</i-select>
 						</Form-item>
@@ -19,7 +19,7 @@
 					<i-col span="12">
 						<Form-item label="Signal pattern: "> 
 							<!-- 数据查询分子名 -->
-							<i-select :model.sync="contrastsGroup" clearable placeholder="Please select signal pattern"  @on-change="changedSigPattern"  filterable>        
+							<i-select v-model="sigPattern" :model.sync="contrastsGroup" clearable placeholder="Please select signal pattern"  @on-change="changedSigPattern"  filterable>        
 								<i-option v-for="(group,index) in sigPattern_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 							</i-select>
 						</Form-item>
@@ -51,7 +51,7 @@
 				<i-form :label-width="120">	
 					<i-col span="10">
 						<Form-item label="Signal name: ">
-							<i-select :model.sync="contrastsGroup" clearable placeholder="Please select signal name"  @on-change="changedSigName"  filterable>        
+							<i-select v-model="siName" :model.sync="contrastsGroup" clearable placeholder="Please select signal name"  @on-change="changedSigName"  filterable>        
 								<i-option v-for="(group,index) in sigName_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 							</i-select>
 						</Form-item>
@@ -185,6 +185,7 @@ export default {
 				}) 
 				
 				var pName = 'incoming'
+				this.sigPattern = pName
 				this.getCellChartView(data[0].source_g,pName);
 				this.getSigNameList(series,data[0].source_g)
            })
@@ -205,6 +206,7 @@ export default {
                     name:key
 				})) 
 				// alert(this.sigName_list)
+				this.siName = this.sigName_list[0].name
 				this.getCellChartHotMap(this.series,this.source,datas[0])
 				// this.geteSigPathNet_chart(this.series,this.source,datas[0]);
 				this.getCellChartRcontri(this.series,this.source,datas[0]);
@@ -330,7 +332,7 @@ export default {
 				}];
 				
 				var layout = {
-					title: sigName +' signaling pathway network'  +'(' + this.series +';group:' + source +')',
+					title: sigName +' signaling pathway network'  +' (' + this.series +'; Group: ' + source +')',
 
 					xaxis: {
 							title:'Cell type',		
@@ -364,7 +366,7 @@ export default {
 			 	var data = res.data
 			 	var option_1 = {
 			 				title: {
-			 					text: 'communication('+pName +') patterns' +'(' + this.series +';group:' + dev_type +')', 
+			 					text: 'Communication ('+pName +') patterns' +' (' + this.series +'; Group: ' + dev_type +')', 
 			 				},
 							credits:{
 								enabled:false
@@ -379,7 +381,7 @@ export default {
 			    this.Cell_Chart_RiverCell = option_1
 				var option_2 = {
 			 				title: {
-			 					text: 'communication('+pName +') signal of cells'  +'(' + this.series +';group:' + dev_type +')',
+			 					text: 'Communication ('+pName +') signals'  +' (' + this.series +'; Group: ' + dev_type +')',
 			 				},
 							credits:{
 								enabled:false
@@ -412,7 +414,7 @@ export default {
 						type: 'bar'
 					},
 					title: {
-						text: 'Contribution of each L-R pair '   +'(' + this.series +';group:' + dev_type +')'
+						text: 'Contribution of each L-R pair'   +' (' + this.series +'; Group: ' + dev_type +')'
 					},
 					subtitle: {
 						

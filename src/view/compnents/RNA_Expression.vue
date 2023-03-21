@@ -6,12 +6,11 @@
             <div style="margin-top: 10px;">
                 <Row>
                         <Col span="12">
-                            <!-- 数据查询分子名 -->
-                            <span class="h4_title" >Input Gene Symbol:</span>
-                            <i-select enter-button="Search" style="width:80%"   
-                            @on-search="search_value($event)" 
-                            :placeholder="search_placeholder"  
-                            @on-change="search_value($event)"  filterable>        
+                            <!-- enter-button="Search"  数据查询分子名  @on-search="search_value($event)"  :placeholder="search_placeholder"   -->
+                            <span class="h4_title" >Input gene symbol:</span>
+                            <i-select style="width:80%"
+                                v-model=specif_name   
+                                @on-change="search_value($event)"  filterable>        
 							    <i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
 					        </i-select>
                             <!-- <Input class='my_class_input' v-on:input="search_value($event)"  :placeholder="search_placeholder"/>                          -->
@@ -42,7 +41,7 @@
                         <Collapse simple v-model='value1' class='h3_title'>                                      
                                 <Panel name="2">
                                 <!-- Look up this {{search_datatype}} in: -->
-                               <span class="h4_title">Search Gene Symbol in:</span> 
+                               <span class="h4_title">Search gene in:</span> 
                                 <p slot="content">
                                     <Button class="button_style" v-for="(search_item,index) in othersearch_items" :key='index' :label='search_item.name' type="primary" icon="ios-search">
                                     <a :href='search_item.link' target=_blank style="color:white">    
@@ -126,28 +125,38 @@ export default {
             itemInfo_Alias: '',
             itemInfo_Summary: '',
             ShowitemInfoTip:false,
-            dataType:''
+            dataType:'',
+            specif_name:''
         }
     },
 	methods:{
         getAllkeyWords(){
+
+            let mykeyWordList = []
             getGeneKeyWords(this.$store.state.app.CurrentPageToken).then(res=>{
 
-                this.keyWords_list = res.data.keywords
+                mykeyWordList = res.data.keywords
                 // console.log("this.keyWords_list")
                 // console.log(res.data.keywords)
+                this.keyWords_list = mykeyWordList
+                // alert(this.keyWords_list[0].name)
+                this.getdatasetExperiType(this.keyWords_list[0].name)
             })
+
+          
+
+
+
         },
-        getdatasetExperiType(){
+        getdatasetExperiType(myspecif_name){
 
             console.log(this.$store.state.app.CurrentPageToken)
             getDatasetExperiType(this.$store.state.app.CurrentPageToken).then(res => {                              
-             
-                
+
                 let data = res.data
                 console.log(data)
                 this.experiment_type = data.experiment_type
-               
+
                 if ( data.experiment_type.indexOf("Expression profiling") > -1){
                     this.search_placeholder = 'AAGAB'
                     // console.info(samples_arry)
@@ -156,22 +165,25 @@ export default {
                     this.search_datatype = "RNA's symbol"
                     
                     this.searchItemInfoBydataname('rna','CD36')
-                    this.specif_name = 'CD36'
+                    // this.specif_name = 'CD36'
+                    // alert(mykeyWordList[0].name)
+                    // var myspecif_name = mykeyWordList[0].name
+                    this.specif_name = myspecif_name
                     this.setOthersearchItems('rna')
-                    
-                    this.getSpecifExpreOptionsByName(this.series,dataType,'CD36')
+                    this.getSpecifExpreOptionsByName(this.series,dataType,myspecif_name)
+
                     
                 }else{
-                   
+                    
                 }
-             
-        
-            
 
-               
-         
 
-            })
+
+
+
+
+
+                })
 
 
         },
@@ -229,7 +241,7 @@ export default {
                     //         text: "  " + specif_name + " expression levels(" +this.series+")" 
                     //     },
                     //     subtitle: {
-                    //         text: 'Data Souce:' + this.series +"(" + datas.source + ")"
+                    //         text: 'Data Souce:' + this.series +" (" + datas.source + ")"
                     //     },
                     //     loading: {
                     //         hideDuration: 1000,
@@ -294,8 +306,12 @@ export default {
                         // alert(this.vivo_data)
                         this.expreProfile_data.push(result);
                     };
+
+                    const capitalizedFirst = datas.growth_mode[0].toUpperCase();
+                    const rest = datas.growth_mode.slice(1);
+                    var myCagrowth_type = capitalizedFirst + rest
                     let layout = {
-                        title:  specif_name+' Expression level' + '('+ this.series+';Source:' +datas.source + ";Growth Mode:"+ datas.growth_mode +')',
+                        title:  specif_name+' expression level' + ' ('+ this.series+'; Source:' +datas.source + "; Experiment type: "+ myCagrowth_type +')',
                         // bargap: 0.25,
                         yaxis: {
                             
@@ -309,7 +325,7 @@ export default {
                             gridwidth: 1,
                             zerolinecolor: 'rgb(243, 243, 243)',
                             zerolinewidth: 2,
-                            title:"Normalized Value",
+                            title:"Normalized value",
                            
                         },
                         xaxis:{
@@ -519,8 +535,9 @@ export default {
         
     },
     mounted(){
-        this.getdatasetExperiType()
         this.getAllkeyWords()
+        // this.getdatasetExperiType()
+       
 
     }
 

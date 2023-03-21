@@ -481,18 +481,21 @@ body {
   // word-wrap:break-word;
   // word-break:break-all;
 }
-.layout-logo {
-  color: white;
-  width: calc((500 / 1920) * 100vw);
-  height: calc((50 / 1920) * 100vw);
-  /* background: #5b6270; */
-  font-size: calc((30 / 1920) * 100vw);
-  border-radius: 3px;
-  float: left;
-  position: relative;
-  top: calc((5 / 1920) * 100vw);
-  left: calc((80 / 1920) * 100vw);
-}
+.layout-logo{
+    color: #870909;
+    width: 800px;
+    min-width: 300px;
+    height: 50px;
+    /* background: #5b6270; */
+    font-size: calc((35 / 1920) * 100vw);
+    border-radius: 3px;
+    /* text-align: center; */
+    /* float: right; */
+    /* position: relative; */
+    top: calc((5 / 1920) * 100vw);
+    /* padding-right: 110px; */
+    font-size: 30px;
+  }
 .layout-nav {
   display: block;
   color: white;

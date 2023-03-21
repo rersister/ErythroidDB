@@ -9,7 +9,7 @@
 				
 				<i-col span="8">
 					<Form-item label="Group: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup2"  filterable>        
+						<i-select v-model="source2" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup2"  filterable>        
 							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 						</i-select>
 					</Form-item>
@@ -32,14 +32,14 @@
         	<i-form :label-width="120">
 				<i-col span="8">
 					<Form-item label="Group: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup"  filterable>        
+						<i-select v-model="source" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup"  filterable>        
 							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
 				<i-col span="8">
 					<Form-item label="Color by: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedTraChart"  filterable>        
+						<i-select v-model="traCol"  :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedTraChart"  filterable>        
 							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
@@ -105,6 +105,7 @@ export default {
 			series:this.$store.state.app.CurrentPageToken,
 			source:'',
 			source2:'',
+			traCol:'',
 			group_type_list : [ 
 				// {
 				// 	id:"0",
@@ -155,7 +156,7 @@ export default {
 				this.Tra_data = data
                 var Tra_layout={ 
                     
-                    title:'Differentiation Trajectory ' + "("+this.series+";"+ source + ")",
+                    title:'Differentiation trajectory' + " ("+this.series+"; Group: "+ source + ")",
                     xaxis: {
 						// range: [ 0.75, 5.25 ],
                         title:'Component 1',
@@ -185,7 +186,7 @@ export default {
 				datas.forEach(key => this.group_type_list.push({
                     name:key
 				}))
-				
+				this.traCol = this.group_type_list[0].name
 			})
 		},
 		getPseudoPlot(series,source2){
@@ -210,7 +211,7 @@ export default {
                     
                 var pseudo_layout={ 
                     
-                    title: 'Pseudotime Trajectory' + "("+this.series+";"+ source2 + ")",
+                    title: 'Pseudotime trajectory' + " ("+this.series+"; Group: "+ source2 + ")",
                     xaxis: {
 						// range: [ 0.75, 5.25 ],
                         title:'Component 1',
@@ -250,6 +251,7 @@ export default {
 		},
 		changedTraChart(group){
 			console.log(group)
+			this.traCol = group
 			this.getTraChart(this.series,this.source,group)
 
 		},
@@ -278,7 +280,7 @@ export default {
 				}) 
 
 				this.getPseudoPlot(this.series,data[0].source_g)
-
+				this.getTraCol(this.series,data[0].source_g)
 				this.getTraChart(this.series,data[0].source_g,'celltype')
 				
              

@@ -84,18 +84,18 @@ export default {
       experiment_type: '',
       visualize_site: '',
       series: this.$store.state.app.CurrentPageToken,
-      currentAnalIndex:0,
+      currentAnalIndex:-1,
       AnalyzeTypeList: [
         {
           name: 'Expression Profile',
           link: 'RNA_Expression',
         },
         {
-          name: 'Principal Component',
+          name: 'Principal Component Analysis',
           link: 'PCA',
         },
         {
-          name: 'Difference Analysis',
+          name: 'Differential Analysis',
           link: 'Diff_analysis',
         },
         {
@@ -203,11 +203,11 @@ export default {
                       link: 'RNA_Expression',
                     },
                     {
-                      name: 'Principal Component',
+                      name: 'Principal Component Analysis',
                       link: 'PCA',
                     },
                     {
-                      name: 'Difference Analysis',
+                      name: 'Differential Analysis',
                       link: 'Diff_analysis',
                     },
                     {
@@ -222,7 +222,7 @@ export default {
                 } else {
                   this.AnalyzeTypeList = [
                     {
-                      name: 'Difference analysis',
+                      name: 'Differential analysis',
                       link: 'Diff_analysis',
                     },
                     {
@@ -318,7 +318,7 @@ export default {
                                   link: 'RNA_Expression',
                                 },
                                 {
-                                  name: 'Principal Component',
+                                  name: 'Principal Component Analysis',
                                   link: 'PCA',
                                 },
                                 // {
@@ -337,7 +337,7 @@ export default {
                             } else {
                               this.AnalyzeTypeList = [
                                 {
-                                  name: 'Difference analysis',
+                                  name: 'Differential analysis',
                                   link: 'Diff_analysis',
                                 },
                                 {

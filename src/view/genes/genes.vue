@@ -27,7 +27,7 @@
           </br>  
        
           <Row>
-            <h1 class='h1_title' > Get Research Datasets Related to  {{cell_name}}
+            <h1 class='h1_title' >Datasets Related to  {{cell_name}}
               <!-- <i-button  shape="circle" icon="ios-search" @click="changedGene"></i-button> -->
               <!-- <i-button  class="my_reset_button" shape="circle"  @click="resetCellType">Reset</i-button> -->
               <Button type="primary"  @click="resetCellType" >Reset</Button>
@@ -154,21 +154,21 @@ const species_type = {
   const source_type = {
     0: {
       value: "Marrow",
-      name: 'Bone Marrow(BM)'
+      name: 'Bone Marrow'
     },
     1: {
       value: "Cord",
-      name: 'Cord Blood(CB)',
+      name: 'Cord Blood',
       // color: 'red'
     },
     2: {
       value: "Peripheral",
-      name: 'Peripheral Blood(PB)',
+      name: 'Peripheral Blood',
       // color: 'green'
     },
     3: {
       value: "Spleen",
-      name: 'Spleen(SP)',
+      name: 'Spleen',
       // color: 'green'
     },
   
@@ -180,7 +180,7 @@ const species_type = {
 
     5:{
       value:'Embryo',
-      name:'Embryo(EM)'
+      name:'Embryo'
     },
     6:{
 
@@ -195,13 +195,13 @@ const species_type = {
    
     8:{
       value: "Cardiac",
-      name: 'Cardiac(CAR)',
+      name: 'Cardiac',
       // color: 'green'
     },
 
     9:{
       value: "Kidney",
-      name: 'Kidney(KID)',
+      name: 'Kidney',
       // color: 'green'
     },
 
@@ -388,7 +388,7 @@ export default {
 
           },
           {
-            title: 'Experiment Type',
+            title: 'Experiment type',
             key: 'experiment_type',
             filter: {
               type: 'Input'
@@ -473,7 +473,7 @@ export default {
           },
 
           {
-              title: 'Experiment Type',
+              title: 'Experiment type',
               key: 'growth_mode',
               width:'120',
               filter: {
@@ -509,7 +509,7 @@ export default {
           //     },
           // },
           {
-            title: 'Omics Type',
+            title: 'Omics type',
             key: 'sequence_type',
             width:'125',
             filter: {
@@ -518,7 +518,7 @@ export default {
             },
           },
           {
-            title: 'Sample Number',
+            title: 'Sample number',
             key: 'sample_number',
             width:'90',
             filter: {

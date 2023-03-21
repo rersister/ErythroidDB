@@ -27,7 +27,7 @@
             </div> -->
 
             <div>
-              <h4>Choose Cell Type:</h4>
+              <h4>Choose cell type:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
               <i-select  clearable placeholder="Pleace select cell type"  @on-change="changedCellType" filterable>        
                 <i-option v-for="(celltype,index) in celltype_list" :key='index' :value="celltype.name">{{ celltype.full_name }}</i-option>
@@ -35,15 +35,15 @@
             </div>
             <Br/>
             <div>
-              <h4>Choose Reported Gene:</h4>
+              <h4>Choose reported gene:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
-              <i-select  clearable placeholder="Pleace select reported gene"  @on-change="changedReportedGene" filterable>        
+              <i-select v-model=searchGene  clearable placeholder="Pleace select reported gene"  @on-change="changedReportedGene" filterable>        
                 <i-option v-for="(reportedGene,index) in reportedGene_list" :key='index' :value="reportedGene.name">{{ reportedGene.name }}</i-option>
               </i-select>
             </div>
             <Br/>
             <div>
-              <h4>Choose Compound Type:</h4>
+              <h4>Choose compound type:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
               <i-select  clearable placeholder="Pleace select compound type"  @on-change="changedComppoundType" filterable>        
                 <i-option v-for="(compound,index) in compound_list" :key='index' :value="compound.name">{{ compound.name }}</i-option>
@@ -51,7 +51,7 @@
             </div>
             <Br/>
             <div>
-              <h4>Choose Disease Type:</h4>
+              <h4>Choose disease type:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
               <i-select   clearable placeholder="Pleace select disease type"  @on-change="changedDiseaseType" filterable>        
                 <i-option v-for="(disease,index) in disease_list" :key='index' :value="disease.name">{{ disease.name }}</i-option>
@@ -59,23 +59,24 @@
             </div>
             <Br/>
             <div>
-              <h4>Choose Species:</h4>
+              <h4>Choose species:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
-              <i-select  clearable placeholder="Pleace select species"  @on-change="changedSpecies" filterable>        
+              <i-select  v-model=searchSpecies clearable placeholder="Pleace select species"  @on-change="changedSpecies" filterable>        
                 <i-option v-for="(species,index) in species_list" :key='index' :value="species.name">{{ species.name }}</i-option>
               </i-select>
             </div>
             <Br/>
             <div>
-              <h4>Choose Tissue:</h4>
+              <h4>Choose tissue:</h4>
+              <!-- searchTissue 为 tissue.name 时才会显示 -->
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
-              <i-select  clearable placeholder="Pleace select tissue"  @on-change="changedTissue" filterable>        
-                <i-option v-for="(tissue,index) in tissue_list" :key='index' :value="tissue.value">{{ tissue.name }}</i-option>
+              <i-select  v-model=searchTissue clearable placeholder="Pleace select tissue"  @on-change="changedTissue" filterable>        
+                <i-option v-for="(tissue,index) in tissue_list" :key='index' :value="tissue.name">{{ tissue.name }}</i-option>
               </i-select>
             </div>
             <Br/>
             <div>
-              <h4>Choose Experiment Type:</h4>
+              <h4>Choose experiment type:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
               <i-select  clearable placeholder="Pleace select experiment type"  @on-change="changedGrowthMode" filterable>        
                 <i-option v-for="(growth_mode,index) in growth_mode_list" :key='index' :value="growth_mode.name">{{growth_mode.name }}</i-option>
@@ -91,7 +92,7 @@
             </div> -->
             <Br/>
             <div>
-              <h4>Choose Omics Type:</h4>
+              <h4>Choose omics type:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
               <i-select  clearable placeholder="Pleace select sequence type"  @on-change="changedSequenceType" filterable>        
                 <i-option v-for="(sequence,index) in sequenceType_list" :key='index' :value="sequence.name">{{ sequence.name }}</i-option>
@@ -227,73 +228,73 @@ const species_type = {
   }
 
 
-  const source_type = {
-    0: {
-      value: "Marrow",
-      name: 'Bone Marrow(BM)'
-    },
-    1: {
-      value: "Cord",
-      name: 'Cord Blood(CB)',
-      // color: 'red'
-    },
-    2: {
-      value: "Peripheral",
-      name: 'Peripheral Blood(PB)',
-      // color: 'green'
-    },
-    3: {
-      value: "Spleen",
-      name: 'Spleen(SP)',
-      // color: 'green'
-    },
+const source_type = {
+  0: {
+    value: "Marrow",
+    name: 'Bone Marrow'
+  },
+  1: {
+    value: "Cord",
+    name: 'Cord Blood',
+    // color: 'red'
+  },
+  2: {
+    value: "Peripheral",
+    name: 'Peripheral Blood',
+    // color: 'green'
+  },
+  3: {
+    value: "Spleen",
+    name: 'Spleen',
+    // color: 'green'
+  },
+
+  4: {
+    value: "Line",
+    name: 'Cell Line',
+    // color: 'green'
+  },
+
+  5:{
+    value:'Embryo',
+    name:'Embryo'
+  },
+  6:{
+
+    value:'Embryonic',
+    name:'Fetus Tissue '
+  },
+
+  7:{
+    value:'Pluripotent',
+    name:'Induced Pluripotent Stem Cells)'
+  },
   
-    4: {
-      value: "Line",
-      name: 'Cell Line',
-      // color: 'green'
-    },
+  8:{
+    value: "Cardiac",
+    name: 'Cardiac',
+    // color: 'green'
+  },
 
-    5:{
-      value:'Embryo',
-      name:'Embryo(EM)'
-    },
-    6:{
+  9:{
+    value: "Kidney",
+    name: 'Kidney',
+    // color: 'green'
+  },
 
-      value:'Embryonic',
-      name:'Fetus Tissue '
-    },
+  10:{
+    value: "other",
+    name: 'Other',
+    // color: 'green'
+  },
 
-    7:{
-      value:'Pluripotent',
-      name:'Induced Pluripotent Stem Cells(iPSC)'
-    },
-   
-    8:{
-      value: "Cardiac",
-      name: 'Cardiac(CAR)',
-      // color: 'green'
-    },
+  11: {
+    value: "all",
+    name: 'All',
+    // color: 'green'
+  },
 
-    9:{
-      value: "Kidney",
-      name: 'Kidney(KID)',
-      // color: 'green'
-    },
-
-    10:{
-      value: "other",
-      name: 'Other',
-      // color: 'green'
-    },
-
-    11: {
-      value: "all",
-      name: 'All',
-      // color: 'green'
-    },
-
-  }
+}
 
 
 const growth_type ={
@@ -358,6 +359,7 @@ export default {
         { id: 4, name: 'About', link: '/about', type: 'ios-navigate' },
       ],
       search:'',
+      searchGene:'',
       table_name:'all_dataset_source_type',
       pageSizeTypeSource:10,
       totalTypeSource:400,
@@ -421,7 +423,7 @@ export default {
           },
 
           {
-              title: 'Experiment Type',
+              title: 'Experiment type',
               key: 'growth_mode',
               width:'120',
               filter: {
@@ -457,7 +459,7 @@ export default {
           //     },
           // },
           {
-            title: 'Omics Type',
+            title: 'Omics type',
             key: 'sequence_type',
             width:'125',
             filter: {
@@ -466,7 +468,7 @@ export default {
             },
           },
           {
-            title: 'Sample Number',
+            title: 'Sample number',
             key: 'sample_number',
             width:'90',
             filter: {
@@ -480,7 +482,7 @@ export default {
       cell_type:'',
       celltype_list:[
       {'name':'HSC',
-            'full_name':'Hematopoietic Stem cells',
+            'full_name':'Hematopoietic Stem Cell',
             'cell_ano':'Hematopoietic stem cells (HSCs) are a rare population of cells residing in the bone marrow (BM) and continuously replenish all mature blood cells throughout the life span.'},
           {'name':'MPP',
             'full_name':'Multipotent Progenitor Cell',
@@ -514,7 +516,7 @@ export default {
           'cell_ano':'Reticulocytes are immature red blood cells that detect if your bone marrow is forming enough red blood cells'},
           {'name':'RBC',
           'full_name':'Red Blood Cell',
-          'cell_ano':'Red blood cell, also called erythrocyte, cellular component of blood, millions of which in the circulation of vertebrates give the blood its characteristic colour and carry oxygen from the lungs to the tissues. The mature human red blood cell is small, round, and biconcave; it appears dumbbell-shaped in profile. '}
+          'cell_ano':'Red blood cell, also called erythrocyte, cellular component of blood, millions of which in the circulation of vertebrates give the blood its characteristic color and carry oxygen from the lungs to the tissues. The mature human red blood cell is small, round, and biconcave; it appears dumbbell-shaped in profile. '}
         ],
       reported_gene:'',
       reportedGene_list:[],
@@ -530,11 +532,11 @@ export default {
               {name:'Iron',
                 full_name:'Iron',
                 'cell_ano':' '},
-              {name:'IDH2 inhibitor',
-              full_name:'Isocitrate dehydrogenase 2(IDH2) mutant-specific inhibitor',
+              {name:'IDH2 inhibitors',
+              full_name:'Isocitrate dehydrogenase 2(IDH2) mutant-specific inhibitors',
               'cell_ano':''},
-              {'name':'BET bromodomain inhibitor',
-              'full_name':'BET bromodomain inhibitor',
+              {'name':'BET bromodomain inhibitors',
+              'full_name':'BET bromodomain inhibitors',
               'cell_ano':''},
               
               {name:'PPAR-α agonists',
@@ -562,20 +564,20 @@ export default {
                 'full_name':'Fanconi anemia',
                 'cell_ano':''},
               //红细胞缺陷  贫血
-              {name:'Diamond-Blackfan anaemia',  
-                'full_name':'Diamond-Blackfan anaemia',
+              {name:'Diamond-Blackfan anemia',  
+                'full_name':'Diamond-Blackfan anemia',
                 'cell_ano':''},
               // 贫血
-              {name:'Epo-resistant anaemias',
-                'full_name':'Epo-resistant anaemias',
+              {name:'Epo-resistant anemia',
+                'full_name':'Epo-resistant anemia',
                 'cell_ano':' '},
               //  贫血
               {name:'Aplastic anemia',
               'full_name':'Aplastic anemia',
               'cell_ano':' '},
 
-              {name:'Sickle cell',
-                'full_name':'Sickle cell',
+              {name:'Sickle cell anemia',
+                'full_name':'Sickle cell anemia',
                 'cell_ano':' '},
 
               //地中海贫血
@@ -590,6 +592,7 @@ export default {
 
       ],
       species:'',
+      searchSpecies:'',
       species_list:[
         {
           value: "Homo",
@@ -607,24 +610,25 @@ export default {
         }
       ],
       tissue:'',
+      searchTissue:'',
       tissue_list:[ 
         {
         value: "Marrow",
-        name: 'Bone Marrow(BM)'
+        name: 'Bone Marrow'
       },
       {
       value: "Cord",
-      name: 'Cord Blood(CB)',
+      name: 'Cord Blood',
       // color: 'red'
     },
     {
       value: "Peripheral",
-      name: 'Peripheral Blood(PB)',
+      name: 'Peripheral Blood',
       // color: 'green'
     },
     {
       value: "Spleen",
-      name: 'Spleen(SP)',
+      name: 'Spleen',
       // color: 'green'
     },
   
@@ -636,7 +640,7 @@ export default {
 
       {
       value:'Embryo',
-      name:'Embryo(EM)'
+      name:'Embryo'
     },
     {
 
@@ -646,18 +650,18 @@ export default {
 
       {
       value:'Pluripotent',
-      name:'Induced Pluripotent Stem Cells(iPSC)'
+      name:'Induced Pluripotent Stem Cells'
     },
    
       {
       value: "Cardiac",
-      name: 'Cardiac(CAR)',
+      name: 'Cardiac',
       // color: 'green'
     },
 
       {
       value: "Kidney",
-      name: 'Kidney(KID)',
+      name: 'Kidney',
       // color: 'green'
     },
 
@@ -672,11 +676,11 @@ export default {
       growth_mode_list:[
             {
               value: "vitro",
-              name: 'vitro'
+              name: 'in vitro'
             },
             {
               value: "vivo",
-              name: 'vivo',
+              name: 'in vivo',
               // color: 'red'
             },
       ],
@@ -971,19 +975,17 @@ export default {
     },
 
     mockTableDataByKeyParam(keyParam){
-
        var _this = this;
        getDatasetDataByKeyParam(_this.table_name,_this.currentPageTypeSource,_this.pageSizeTypeSource,keyParam).then(res =>{
-
           // _this.spinShowTypeSource = false                    
             let datas = res.data
+            // alert(datas)
             // console.info(datas.list)
             _this.datasetsTypeSource = datas.list                  
             _this.totalTypeSource = datas.total;
-
        })
-
     },
+
     getDatasetByMultiInput(){
       var _this = this;
       var select = []
@@ -1059,17 +1061,80 @@ export default {
       _this.sequence = sequence
       this.getDatasetByMultiInput()
     },
+
     getReportedGeneList(){
 
       getDatasetGene().then(res=>{
-          
-              
+
               let _this = this
               var data = res.data
               var gData = data.gData
               _this.reportedGene_list = gData
+              // indexOf("GSE") > -1)
+              // alert(this.$route.params.KeyName)
+              // console.log(gData)
+              // if ( gData.indexOf(this.$route.params.KeyName) > -1){
+
+              //     this.searchGene =  this.$route.params.KeyName 
+              // }
+              // for(var j = 0;j < nodes.length;j ++){
+              //   if (categories[i] === nodes[j].category && 1 === nodes[j].c_f){
+              //     subnodes.push(nodes[j])
+              //   }
+              // }
+              for(var j =0;j< gData.length;j++){
+                // alert(gData[j].name)
+                // alert(gData[j].name === this.$route.params.KeyName)
+                if(gData[j].name === this.$route.params.KeyName){
+                  this.searchGene =  this.$route.params.KeyName 
+                  _this.reported_gene =  this.$route.params.KeyName 
+                }
+              }
+
+              // for(var j=0;j< this.species_list.length;j++){
+              //   if(this.species_list[j].name ===this.$route.params.KeyName ){
+              //     this.searchSpecies=this.$route.params.KeyName 
+              //   }
+              // }
+
+              for(var j=0;j< this.tissue_list.length;j++){
+                // console.log( this.tissue_list[j])
+                if(this.tissue_list[j].name == this.$route.params.KeyName ){
+                  // alert('yes')
+                  _this.searchTissue=this.$route.params.KeyName 
+                  // alert(_this.searchTissue)
+                  _this.tissue = this.$route.params.KeyName
+                }
+                // console.log('Induced Pluripotent Stem Cells' =='Induced Pluripotent Stem Cells')
+                  //统一home 搜索款和 Search 页面的搜索 
+                if(this.$route.params.KeyName.indexOf(this.tissue_list[j].name) >-1 ){
+                    this.searchTissue=this.$route.params.KeyName 
+                }
+              }
+
+              
+              // tissue_list
+              for(var j=0;j< this.species_list.length;j++){
+
+                if(this.species_list[j].name === this.$route.params.KeyName ){
+                  this.searchSpecies=this.$route.params.KeyName
+                  _this.species = this.$route.params.KeyName
+                }
+
+                //统一home 搜索款和 Search 页面的搜索 
+                if(this.$route.params.KeyName.indexOf(this.species_list[j].name) >-1 ){
+                  this.searchSpecies= this.$route.params.KeyName 
+                  _this.species = this.$route.params.KeyName
+                }
+
+              }
+
+           
+
         })
 
+       
+    
     }
       
   },
@@ -1080,9 +1145,7 @@ export default {
     },
   },
   created() {
-      // this.mockTableData();
-      this.mockTableDataTypeSource()
-      this.getReportedGeneList()
+     
 
 
   },
@@ -1090,10 +1153,20 @@ export default {
     console.log('==============')
     
      if ( this.$route.params.KeyName != undefined){
-      //  alert(this.$route.params.KeyName)
+        // alert(this.$route.params.KeyName)
         this.mockTableDataByKeyParam(this.$route.params.KeyName)
+        this.getReportedGeneList()
+
+
+     }else{
+
+         // this.mockTableData();
+        this.mockTableDataTypeSource()
+        this.getReportedGeneList()
 
      }
+
+
   },
 
 }

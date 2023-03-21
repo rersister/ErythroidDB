@@ -2,7 +2,7 @@
     <div class="lay_out">
         <div>
          
-            <h1 class="my_h1">Expression Profile ({{orga_name}})</h1>
+            <h1 class="my_h1">Expression Profile (Organism: {{orga_name}})</h1>
             <!-- <h1 class="my_h1">Expression Profiling ({{selectList[0]}})</h1> -->
             </Br>
             <Row>
@@ -64,51 +64,43 @@ import {getAllDevExpreBulkData,getAllDevType,getAllDevGene} from '@/api/erythroi
 import VuePlotly from '@statnett/vue-plotly'
 
 const source_dict = [
-    {
+   {
       value: "BM_vitro",
-      name: 'Bone Marrow(in vitro)'
-    },
-    {
-      value: "BM_vivo",
-      name: 'Bone Marrow(in vivo)'
+      name: 'Bone Marrow (in vitro)'
     },
     {
       value: "CB_vivo",
-      name: 'Cord Blood(in vivo)',
+      name: 'Cord Blood (in vivo)',
       // color: 'red'
     },
      {
       value: "CB_vitro",
-      name: 'Cord Blood(in vitro)',
+      name: 'Cord Blood (in vitro)',
       // color: 'green'
     },
      {
       value: "PB_vitro",
-      name: 'Peripheral Blood(in vitro)',
+      name: 'Peripheral Blood (in vitro)',
       // color: 'green'
     },
-    {
+     {
       value: "FL_vitro",
-      name: 'Fetal Liver(in vitro)',
-      // color: 'green'
-    },
-    {
-      value: "FL_vivo",
-      name: 'Fetal Liver(in vivo)',
+      name: 'Fetal Liver (in vitro)',
       // color: 'green'
     },
      {
       value: "PB_vivo",
-      name: 'Peripheral Blood(in vivo)',
+      name: 'Peripheral Blood (in vivo)',
       // color: 'green'
     },
     {
       value: "iPSC_vitro",
-      name: 'Induced Pluripotent Stem Cells(in vitro)',
+      name: 'Induced Pluripotent Stem Cells (in vitro)',
       // color: 'green'
     },
     
   ]
+
 
 export default {
     name:"AllExpression",
@@ -348,7 +340,7 @@ export default {
                     }
 
                     let layout1 = {
-                        title:  this.searchVitroGene +' expression level ('+ this.cell_source+')',
+                        title:  this.searchVitroGene +' expression level (Source: '+ this.cell_source+')',
                         // autosize:true,
                         yaxis: {
                             
@@ -376,7 +368,7 @@ export default {
 
                     };
                     let layout = {
-                        title:  this.searchGene +' expression level ('+ this.selectList[1]+')',
+                        title:  this.searchGene +' expression level (Source: '+ this.selectList[1]+')',
                         bargap: 0.25,
                         yaxis: {
                             
@@ -467,7 +459,7 @@ export default {
                     });
 
                     let layout = {
-                        title:  this.searchGene +' expression level ('+ cell_source_full_name+')',
+                        title:  this.searchGene +' expression level (Source: '+ cell_source_full_name+')',
                         bargap: 0.25,
                         yaxis: {
                             
@@ -481,7 +473,7 @@ export default {
                             gridwidth: 1,
                             zerolinecolor: 'rgb(255, 255, 255)',
                             zerolinewidth: 2,
-                            title:"Normalized Value",
+                            title:"Normalized value",
                         },
                         xaxis:{
 
@@ -540,7 +532,7 @@ export default {
                             this.vivo_data.push(result);
                         }
                         let layout = {
-                            title:  this.searchGene +' expression level ('+ this.selectList[0]+')',
+                            title:  this.searchGene +' expression level (Source: '+ this.selectList[0]+')',
                             bargap: 0.25,
                             yaxis: {
                                 
@@ -607,7 +599,7 @@ export default {
                     }
 
                     let layout1 = {
-                        title:  this.searchVitroGene +' expression level ('+ this.vitro_source+')',
+                        title:  this.searchVitroGene +' expression level (Source: '+ this.vitro_source+')',
                         // autosize:true,
                         yaxis: {
                             
@@ -635,7 +627,7 @@ export default {
 
                     };
                     let layout = {
-                        title:  this.searchGene +' expression level ('+ this.selectList[1]+')',
+                        title:  this.searchGene +' expression level (Source: '+ this.selectList[1]+')',
                         bargap: 0.25,
                         yaxis: {
                             
@@ -734,7 +726,7 @@ export default {
                     gridwidth: 1,
                     zerolinecolor: 'rgb(255, 255, 255)',
                     zerolinewidth: 2,
-                    title:"Normalized Value"
+                    title:"Normalized value"
                 },
                 xaxis:{
 

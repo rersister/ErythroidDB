@@ -1,17 +1,17 @@
 <template>
 <div>
     <br/>
-	<h1 class="my_h1">Difference Analysis</h1>
+	<h1 class="my_h1">Differential Analysis</h1>
     <br>
 	<div>
 		<Row>
         	<i-form :label-width="120">
 				<i-col span="8">
-					<Form-item label="Contrasts Group: ">                                                  
-						<i-select  clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup">        
+					<Form-item label="Comparison group: ">                                                  
+						<i-select v-model="contrastsGroup" clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup">        
 							<i-option v-for="(group,index) in contrasts_group" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
-                        <span>eg: </span>
+                        <!-- <span>eg: </span> -->
 					</Form-item>
 				</i-col>
                 <i-col span="12">
@@ -35,7 +35,13 @@
         <Row>
             <Col span="12">
                 <!-- 数据查询分子名 -->
-                <span>Input Gene Symbol:</span>
+                <span>Input gene symbol:</span>
+                <!-- <i-select style="width:80%"
+                                v-model=specif_name   
+                                @on-change="search_value($event)"  filterable>        
+							    <i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
+				</i-select>
+                <Button class='button_mystyle' @click="searchDiffDataSetByKeyName($event)" >Search</Button> -->
                 <Input search enter-button="Search"  @on-search="searchDiffDataSetByKeyName($event)" :placeholder="search_placeholder"/>                         
             </Col>                                                                                                                                                       
         </Row>
@@ -168,7 +174,7 @@ export default {
 				},
 			},
 			{
-				title: 'PValue',
+				title: 'P-value',
 				key: 'P.Value',
                 "sortable": true,
 				filter: {
@@ -343,7 +349,7 @@ export default {
                             y: datas.no_signifcant.adj_P_Val,
                             mode: 'markers',
                             type: 'scatter',
-                            name: 'Not Signifcant',
+                            name: 'Not signifcant',
                             text: datas.no_signifcant.genes,
                             marker: { size: 4 }
                         },            
@@ -360,13 +366,16 @@ export default {
                 ]
 
                 this.diff_data = data
-                    
+                const capitalizedFirst = this.Dgrowth_mode[0].toUpperCase();
+                const rest = this.Dgrowth_mode.slice(1);
+                var myCagrowth_type = capitalizedFirst + rest 
+
                 var diff_layout={ 
                    
-                    title:'Difference Analysis of ' + diffgroup +'( '+this.series+';Source:' + this.Dsource + ";Growth Mode:"+ this.Dgrowth_mode +')',
+                    title:'Differential analysis of ' + diffgroup  +' ('+this.series+ "; Experiment type: "+ myCagrowth_type +')',
 
                 //    subtitle: {
-                //             text: 'Data Souce:' + this.series
+                //         title:' ('+this.series+'; Source:' + this.Dsource + "; Experiment type: "+ myCagrowth_type +')',
                 //     },
                     xaxis: {
                         title:'Log2(FC)',
@@ -420,8 +429,34 @@ export default {
 
 <style>
 
+.button_mystyle{
+    background:#a85557!important;
+    color: #fff!important;
+    border-color:#a85557!important;
+    margin-top:5px;
+}
 
+.ivu-input-search {
+    cursor: pointer;
+    padding: 0 16px!important;
+    background: #870909!important;
+    color: #fff!important;
+    border-color: #870909!important;
+    transition: all .2s ease-in-out;
+    position: relative;
+    z-index: 2;
+}
 
+.ivu-input-search {
+    cursor: pointer;
+    padding: 0 16px!important;
+    background: #870909!important;
+    color: #fff!important;
+    border-color: #870909!important;
+    transition: all .2s ease-in-out;
+    position: relative;
+    z-index: 2;
+}
 
 </style>
 

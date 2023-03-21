@@ -1,42 +1,42 @@
 <template>
 <div>
 	<br>
-	<h1 class="my_h1">Integrated Single Cell Visualization</h1>
+	<h1 class="my_h1">Visualization</h1>
 	<br>
 	<div>
 		<Row :gutter="2">
         	<i-form :label-width="120">
 				<i-col span="6">
-					<Form-item label="Plot Size: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedPlotSize"  filterable>        
+					<Form-item label="Plot size: ">                                                  
+						<i-select v-model="plotSize" :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedPlotSize"  filterable>        
 							<i-option v-for="(value,index) in plotSize_list" :key='index' :value="value.name">{{ value.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
 				<i-col span="6">
 					<Form-item label="View by: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedViewMethod"  filterable>        
+						<i-select v-model="if3D" :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedViewMethod"  filterable>        
 							<i-option v-for="(method,index) in viewMethod_list" :key='index' :value="method.name">{{ method.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
 				<i-col span="6">
-					<Form-item label="Visual Method: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Select view method"  @on-change="changedVisaulMethod"  filterable>        
+					<Form-item label="Visual method: ">                                                  
+						<i-select v-model="VisaulMethod" :model.sync="showByGroup" clearable placeholder="Select view method"  @on-change="changedVisaulMethod"  filterable>        
 							<i-option v-for="(method,index) in VisaulMethod_list" :key='index' :value="method.name">{{ method.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
 				<i-col span="8">
 					<Form-item label="Group: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedSource"  filterable>        
+						<i-select v-model="source" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedSource"  filterable>        
 							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
 				<i-col span="8">
 					<Form-item label="Color by: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedGroup"  filterable>        
+						<i-select v-model="group" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedGroup"  filterable>        
 							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
@@ -67,22 +67,22 @@
 		<Row :gutter="4">
         	<i-form :label-width="120">
 				<i-col span="6">
-					<Form-item label="Plot Size: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedPlotSize2"  filterable>        
+					<Form-item label="Plot size: ">                                                  
+						<i-select v-model="plotSize2" :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedPlotSize2"  filterable>        
 							<i-option v-for="(value,index) in plotSize_list" :key='index' :value="value.name">{{ value.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
 				<i-col span="8">
 					<Form-item label="Group: ">                                                  
-						<i-select :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup2"  filterable>        
+						<i-select v-model="source2" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup2"  filterable>        
 							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
 				<i-col span="8">
 					<Form-item label="Feature name: ">
-						<Input search enter-button="Search" @on-search="getFeatureByName($event)" placeholder="Please input gene symbol"/>
+						<Input v-model="feature_name" search enter-button="Search" @on-search="getFeatureByName($event)" placeholder="Please input gene symbol"/>
 					</Form-item>
 				</i-col>
 				
@@ -98,7 +98,7 @@
 
 	<!-- <router-link to="/Dataset_service">
             <div style="text-align:right;font-size:calc((30/1920) * 100vw);">
-                <!-- <img width="20%" height="10%" src="@/assets/img/red_sys.jpg"> -->
+               <img width="20%" height="10%" src="@/assets/img/red_sys.jpg"> -->
                 <!-- <h3>Back To Dataset Service</h3> -->
                 <!-- <p>Sample: 
                     <count-to :end="68" count-class="count-style"/>                                                              
@@ -176,7 +176,7 @@ export default {
 				},
 				{
 					id:'2',
-					name:"Phase"
+					name:"phase"
 				}
 				],
 			group:'',
@@ -257,6 +257,7 @@ export default {
 	methods:{
 		getFeatureByName(feature_name){
 			let _this = this
+			this.feature_name = feature_name
 			this.getFeaturePlot(this.table_name,this.source2,feature_name)
 
 		},
@@ -282,6 +283,7 @@ export default {
 				
 				var featurename = datas.featurename
 				this.searchVivoGene = featurename
+				this.feature_name = featurename
 				var xData = datas.x_list
 				var yData =datas.y_list
 				var zData = datas.feature_list
@@ -304,7 +306,7 @@ export default {
 				this.Feature_data.push(result);
 				
 				let layout = {
-					title:  this.searchVivoGene +' expression level'+ "(Organism:"+ this.orga_name + ";group:"+ source2 +")",
+					title:  this.searchVivoGene +' expression level'+ " (Organism: "+ this.orga_name + "; Group: "+ source2 +")",
 					xaxis: {
 						// range: [ 0.75, 5.25 ],
                         title:'UMAP 1',
@@ -396,7 +398,7 @@ export default {
 
 					var TSNE_layout={ 
 						
-						title: tmp_title+ '	Plot' + "(Organism:"+ this.orga_name + ";group:"+ source+")",
+						title: tmp_title+ '	plot' + " (Organism: "+ this.orga_name + "; Group: "+ source+")",
 						scene:{
 							xaxis: {
 								// range: [ 0.75, 5.25 ],
@@ -445,7 +447,7 @@ export default {
 					
 					var TSNE_layout={ 
 						
-						title: tmp_title+ '	Plot' + "(Organism:"+ this.orga_name + ";group:"+ source+")",
+						title: tmp_title+ '	plot' + " (Organism: "+ this.orga_name + "; Group: "+ source+")",
 						xaxis: {
 							// range: [ 0.75, 5.25 ],
 							title:xtitle,
@@ -560,7 +562,12 @@ export default {
 							}
 				}) 
 				//series,source,col,if3D,VisualM)
-				this.getTsneChart(series,data[0].source_g,'phase','2D','UMAP')
+				this.if3D = '2D'
+				this.source=data[0].source_g
+				this.VisaulMethod = 'UMAP'
+				this.group='celltype'
+				this.getTsneChart(series,data[0].source_g,'celltype','2D','UMAP')
+				this.source2=data[0].source_g
 				this.getFeaturePlot(series,datas[0].source_g,'needFind')
 
 

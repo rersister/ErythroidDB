@@ -1,12 +1,12 @@
 <template>
 <div class="lay_out">
-	<h1 class="my_h1">Single Cell Cluster's Difference analysis</h1>
+	<h1 class="my_h1">Single Cell Cluster's Differential Analysis</h1>
 	<div>
 		<Row>
 			<i-form :label-width="120">
 				<i-col span="10">
 					<Form-item label="Data source: ">                                                  
-						<i-select  clearable placeholder="Pleace select cell source"  @on-change="changedDataSource"  filterable>        
+						<i-select v-model="source" clearable placeholder="Pleace select cell source"  @on-change="changedDataSource"  filterable>        
 							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 						</i-select>
 					</Form-item>

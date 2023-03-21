@@ -18,7 +18,7 @@
         </div>
         <!-- Expression profiling -->
         <div class="row_choice">
-          <span class="h4_title">Experiment Type:&emsp;</span>
+          <span class="h4_title">Experiment type:&emsp;</span>
           <RadioGroup v-model="DataType_val" class="myOption"  @on-change="changeExperimentType($event)">
             <Radio
               class="myOption"
@@ -33,7 +33,7 @@
         
 
         <div class="row_choice">
-          <span class="h4_title">Sequence Type: &emsp;</span>
+          <span class="h4_title">Sequence type: &emsp;</span>
           <RadioGroup v-model="SequType_val" class="myOption" @on-change="changeSequnceType($event)">
             <Radio
               class="myOption"
@@ -241,7 +241,7 @@
     </div>
 
     <div class="row_choice">
-              Samples({{totalRow}}) And Group:
+              Samples ({{totalRow}}) and group:
                         <Table  stripe
                             :type="true"
                             :model.sync="search"
@@ -330,36 +330,36 @@ const sample_numbers = {
 const source_dict = [
    {
       value: "BM_vitro",
-      name: 'Bone Marrow(in vitro)'
+      name: 'Bone Marrow (in vitro)'
     },
     {
       value: "CB_vivo",
-      name: 'Cord Blood(in vivo)',
+      name: 'Cord Blood (in vivo)',
       // color: 'red'
     },
      {
       value: "CB_vitro",
-      name: 'Cord Blood(in vitro)',
+      name: 'Cord Blood (in vitro)',
       // color: 'green'
     },
      {
       value: "PB_vitro",
-      name: 'Peripheral Blood(in vitro)',
+      name: 'Peripheral Blood (in vitro)',
       // color: 'green'
     },
      {
       value: "FL_vitro",
-      name: 'Fetal Liver(in vitro)',
+      name: 'Fetal Liver (in vitro)',
       // color: 'green'
     },
      {
       value: "PB_vivo",
-      name: 'Peripheral Blood(in vivo)',
+      name: 'Peripheral Blood (in vivo)',
       // color: 'green'
     },
     {
       value: "iPSC_vitro",
-      name: 'Induced Pluripotent Stem Cells(in vitro)',
+      name: 'Induced Pluripotent Stem Cells (in vitro)',
       // color: 'green'
     },
     
@@ -437,7 +437,7 @@ export default {
           },
         },
         {
-          title: 'Development Type',
+          title: 'Development type',
           key: 'source',
           filter: {
             type: 'Input',
@@ -524,7 +524,7 @@ export default {
         {
           id:1,
           value: 'sc',
-          label: 'Single Cell',
+          label: 'Single cell',
         },
       ],
       ifcompare: '',
@@ -546,11 +546,11 @@ export default {
             value: 'all_Expression',
           },
           {
-            label: 'Principal Component',
+            label: 'Principal Component Analysis',
             value: 'all_Clutser',
           },
           {
-            label: 'Difference Analysis',
+            label: 'Differential Analysis',
             value: 'all_Diff',
           },
           {
@@ -625,7 +625,7 @@ export default {
           },
         },
         {
-          title: 'Cell Type',
+          title: 'Cell type',
           key: 'cell_type',
           // width:100,
           filter: {
@@ -644,7 +644,7 @@ export default {
             }
         },
         {
-          title: 'Experiment Type',
+          title: 'Experiment type',
           width :120,
           key: 'growth_mode',
           filter: {
@@ -714,7 +714,7 @@ export default {
       
    
       if( "" == this.exper ){
-                this.$Message.info('please select Experiment Type', 10);
+                this.$Message.info('please select experiment type', 10);
                 return
       }
 
@@ -724,7 +724,7 @@ export default {
       // }
 
       if( "" == this.curentSequnceType ){
-                this.$Message.info('please select Sequence type', 10);
+                this.$Message.info('please select sequence type', 10);
                 return
       }
 
@@ -794,11 +794,9 @@ export default {
                             })
                         }
                     });
-                
-                    
-                
                 })
-                 this.SourceList =dev_group_type_list
+
+                this.SourceList =dev_group_type_list
             })
 
 
@@ -959,11 +957,11 @@ export default {
             value: 'all_Expression',
           },
           {
-            label: 'Principal Component',
+            label: 'Principal Component Analysis',
             value: 'all_Clutser',
           },
           {
-            label: 'Difference Analysis',
+            label: 'Differential Analysis',
             value: 'all_Diff',
           },
           {
@@ -1068,11 +1066,11 @@ export default {
             value: 'all_Expression',
           },
           {
-            label: 'Principal Component',
+            label: 'Principal Component Analysis',
             value: 'all_Clutser',
           },
           {
-            label: 'Difference Analysis',
+            label: 'Differential Analysis',
             value: 'all_Diff',
           },
           {
@@ -1142,7 +1140,7 @@ export default {
               value: 'all_Expression',
             },
             {
-              label: 'Principal Component',
+              label: 'Principal Component Analysis',
               value: 'all_Clutser',
             },
 
@@ -1159,11 +1157,11 @@ export default {
             value: 'all_Expression',
           },
           {
-            label: 'Principal Component',
+            label: 'Principal Component Analysis',
             value: 'all_Clutser',
           },
           {
-            label: 'Difference Analysis',
+            label: 'Differential Analysis',
             value: 'all_Diff',
           },
           {
@@ -1221,17 +1219,17 @@ export default {
       
    
       if( "" == this.exper ){
-                this.$Message.info('please select Experiment Type', 10);
+                this.$Message.info('please select experiment type', 10);
                 return
       }
 
       if( "" == this.deve ){
-                this.$Message.info('please select Development type', 10);
+                this.$Message.info('please select development type', 10);
                 return
       }
 
       if( "" == this.curentSequnceType ){
-                this.$Message.info('please select Sequence type', 10);
+                this.$Message.info('please select sequence type', 10);
                 return
       }
 
