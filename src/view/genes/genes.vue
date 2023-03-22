@@ -194,8 +194,8 @@ const species_type = {
     },
    
     8:{
-      value: "Cardiac",
-      name: 'Cardiac',
+      value: "Heart",
+      name: 'Heart',
       // color: 'green'
     },
 

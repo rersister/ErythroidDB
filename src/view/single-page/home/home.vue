@@ -324,8 +324,8 @@ export default {
                 },
                 
                 {
-                    value: "Cardiac",
-                    name: 'Cardiac',
+                    value: "Heart",
+                    name: 'Heart',
                     // color: 'green'
                 },
 
