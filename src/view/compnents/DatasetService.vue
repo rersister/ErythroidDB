@@ -9,6 +9,10 @@
         >
       </Row>
 
+      <br>
+     
+
+
       <div class="card"  v-if="ifshowAnalContent">
         <h3 class="h3_title">Analysis:</h3>
         <!-- <Row :gutter="16" style="background:#eee;padding:20px">
@@ -18,7 +22,7 @@
             v-for="(AnalyzeType, index) in AnalyzeTypeList"
             @click="analClick(index)"
             :key="index"
-            :class="{active:currentAnalIndex===index}"
+            :class="{myactive:currentAnalIndex===index}"
           >
             <div @click="changeDom(AnalyzeType.link)">
               <span class="servetitle">{{ AnalyzeType.name }}</span>
@@ -28,7 +32,12 @@
        
       
       </div>
+
+
+      
+
     </div>
+
     <Rna v-if="childDom == 'RNA_Expression'" />
     <PCA v-if="childDom == 'PCA'" />
     <DiffAnalysis v-if="childDom == 'Diff_analysis'" />
@@ -41,11 +50,44 @@
     <ClusterDiffTrajectory v-if="childDom == 'ClusterDiffTrajectory'" />
     <ScInterraction v-if="childDom == 'ScInterraction'" />
     <ScCommunication v-if="childDom == 'ScCommunication'" />
+
+    <div v-if=ifcellAnno class="card" >
+        <!-- 单细胞页面才显示的 细胞注释信息 -->
+        <h3 class="h3_title">Cell annotation information： </h3>
+        
+        <br>
+        <Row>
+                <Table 
+                class="my-tableStyle"
+                :columns="cellAnnoCols" 
+                :data="cellAnnoData" 
+                size="small" 
+                disabled-hover="True"
+                ref="table"></Table>
+                <!-- <Spin size="large" fix v-if="spinShowSampleSource"></Spin> -->
+                <!-- <div style="margin: 10px;overflow: hidden">               
+                    <div style="float: right;">
+                        <Page :total="totalRow"  
+                        :current="currentPage" 
+                        :page-size="pageSize" 
+                        show-elevator 
+                        show-total
+                        show-sizer
+                        @on-change="handleCurrentChange" 
+                        @on-page-size-change="handleSizeChange">
+                        </Page>                   
+                    </div>
+                </div> -->
+
+        </Row> 
+    </div>
+
   </div>
 </template>
 
 <script>
 import { getDatasetSequenceType } from '@/api/datasetService'
+import {getSCCellAnnoInfo } from '@/api/erythdataset'
 import Rna from './RNA_Expression.vue'
 import PCA from './PCA.vue'
 import DiffAnalysis from './Diff_analysis.vue'
@@ -85,6 +127,56 @@ export default {
       visualize_site: '',
       series: this.$store.state.app.CurrentPageToken,
       currentAnalIndex:-1,
+      cellAnnoCols:[
+                            {
+                                title: 'Cell type abbreviation',
+                                key: 'refPaper_name',
+                                "sortable": true,
+                                filter: {
+                                type: 'Input'
+                                },
+                                // fixed: 'left',
+                                // width:200,
+                                // render: (h, params) => {  
+                                //     if (params.row.gid.indexOf("GSM") > -1){
+                                //         return h('div', [
+                                //         h('a', {                               
+                                //                 attrs:{                              
+                                //                 href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.gid,
+                                //                 target:'_blank',                    
+                                //                 },    
+                                //             },params.row.gid)
+                                //         ])
+                                //     }if(params.row.gid.indexOf("EGAD") > -1){
+                                //         return h('div', [
+                                //         h('a', {                               
+                                //                 attrs:{                              
+                                //                 href:'https://web2.ega-archive.org/datasets/'+params.row.gid.split('_')[0],
+                                //                 target:'_blank',
+
+                                //                 },    
+                                //             },params.row.gid)
+                                //         ])
+
+                                //     } else{
+                                //         return h('div',params.row.gid)
+                                
+                                //     }  
+                                // }   
+
+                                
+                            },
+                            {
+                                title: 'Cell type abbreviation',
+                                key: 'full_cell_name',
+                                "sortable": true,
+                                width:400,
+
+                            },
+                           
+                        
+                ],  
+      cellAnnoData:[],
       AnalyzeTypeList: [
         {
           name: 'Expression Profile',
@@ -108,6 +200,7 @@ export default {
         // },
       ],
       childDom: '',
+      ifcellAnno: false,
     }
   },
   methods: {
@@ -124,6 +217,19 @@ export default {
     getVisHref() {
       return this.visualize_site
     },
+
+    mockScAnnoTableData(series){
+  
+      getSCCellAnnoInfo(series).then( res=>{
+          let datas = res.data
+          // console.info(datas.list)
+          this.cellAnnoData = datas.list                  
+          // _this.totalRow = datas.total;
+         
+        })
+    },
+
+
     getDatasetSequenceType() {
       
       console.log(this.$store.state.app.CurrentPageToken)
@@ -188,6 +294,9 @@ export default {
                     link: 'ScCommunication',
                   },
                 ]
+
+                this.ifcellAnno = true
+                this.mockScAnnoTableData(this.$store.state.app.CurrentPageToken)
               }
             } else {
               this.ifshowAnalContent = true
@@ -358,126 +467,13 @@ export default {
             }
 
           }
-          // else {
-          //               if (data.sequencing_type.indexOf('Single Cell') > -1) {
-          //                 if (data.visualize_site != null) {
-          //                   this.ifshowvis = true
-          //                 } else {
-          //                   this.ifshowAnalContent = true
-          //                   //  如果时单细胞数据，单细胞数据所提供的数据分析功能
-          //                   this.AnalyzeTypeList = [
-          //                     {
-          //                       name: 'PCA & Feature',
-          //                       link: 'PlotTSNE',
-          //                     },
-
-          //                     // {
-          //                     // 	name:"Single Cell Feature Plot",
-          //                     // 	link:'FeaturePlot'
-          //                     // },
-          //                     {
-          //                       name: 'Markers & Enrich',
-          //                       link: 'ClusterMarker',
-          //                     },
-          //                     // {
-          //                     // 	name:"Cluster's Enrich Analyze",
-          //                     // 	link:"ClusterEnrichGO"
-          //                     // },
-          //                     {
-          //                       name: 'Differential & Enrich',
-          //                       link: 'sc_Diffanal',
-          //                     },
-          //                     // {
-          //                     // 	name:"Cluster's Differential Enrich Analyze",
-          //                     // 	link:"ClusterDiffEnrichAnal"
-          //                     // },
-          //                     // trajectory Cluster's
-          //                     {
-          //                       name: 'Differentiation Trajectory',
-          //                       link: 'ClusterDiffTrajectory',
-          //                     },
-          //                     // Single Cell Interraction
-          //                     {
-          //                       name: 'Cell-Cell Interraction',
-
-          //                       link: 'ScInterraction',
-          //                     },
-          //                     // Single Cell Communication
-          //                     {
-          //                       name: 'Cell-Cell Communication',
-
-          //                       link: 'ScCommunication',
-          //                     },
-          //                   ]
-          //                 }
-          //               } else {
-          //                 this.ifshowAnalContent = true
-          //                 var _this = this
-          //                 let experiment_type_list = data.experiment_type.split(',')
-          //                 // alert(data.experiment_type.indexOf("Expression profiling"))
-          //                 if (data.experiment_type.indexOf('Expression profiling') >= 0) {
-          //                   //alert(data.sequencing_type)
-          //                   if (data.sequencing_type.indexOf('Bulk') >= 0) {
-          //                     this.AnalyzeTypeList = [
-          //                       {
-          //                         name: 'Expression Profile',
-          //                         link: 'RNA_Expression',
-          //                       },
-          //                       {
-          //                         name: 'Principal Components',
-          //                         link: 'PCA',
-          //                       },
-          //                       // {
-          //                       //  name: 'Differential Analysis',
-          //                       //  link: 'Diff_analysis',
-          //                       //},
-          //                       //{
-          //                       //  name: 'Enrichment Analysis',
-          //                       //  link: 'EnrichGO',
-          //                       //},
-          //                       // {
-          //                       //   name: 'ClusterGrammer',
-          //                       //   link: 'ClustGram',
-          //                       // },
-          //                     ]
-          //                   } else {
-          //                     this.AnalyzeTypeList = [
-          //                       {
-          //                         name: 'Difference analysis',
-          //                         link: 'Diff_analysis',
-          //                       },
-          //                       {
-          //                         name: 'Enrichment Analysis',
-          //                         link: 'EnrichGO',
-          //                       },
-          //                       {
-          //                         name: 'Single Cell t_SNE',
-          //                         link: 'PlotTSNE',
-          //                       },
-          //                       {
-          //                         name: 'Single Cell Feature Plot',
-          //                         link: 'FeaturePlot',
-          //                       },
-          //                     ]
-          //                   }
-          //                 }
-          //                 // (data.exalertperiment_type.indexOf("SNP genotyping"))
-          //                 // if(data.experiment_type.indexOf("SNP genotyping")>=0){
-
-          //                 // 	this.AnalyzeTypeList = [ {
-          //                 // 			name:'Expression profiling',
-          //                 // 			link:'RNA_Expression'
-          //                 // 		},
-          //                 // 	]
-          //                 // }
-          //               }
-
-
-          // }
+          
           
         }
       )
     },
+
+
   },
   mounted() {
     this.getDatasetSequenceType()
@@ -522,7 +518,7 @@ export default {
   color: azure;
 }
 
-.active{
+.myactive{
   background:#a85557;
   color: azure;
 }

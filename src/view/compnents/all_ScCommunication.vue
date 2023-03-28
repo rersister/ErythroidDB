@@ -258,9 +258,10 @@ export default {
                 let datas = res.data  
 				console.log(datas)
 				var data =   datas 
-				       
+				   
+				// 显示通路名字时，替换 'TGFb' 为 'TGFβ'
 				datas.forEach(key => this.sigName_list.push({
-                    name:key
+                    name:key.replace('TGFb','TGFβ')
 				})) 
 				// alert(this.sigName_list)
 				this.getCellChartHotMap(this.table_name,this.source,datas[0])
@@ -323,7 +324,7 @@ export default {
 					});
 					var option = {
 						title: {
-							text: sigName + ' signaling pathway'+" (Organism: "+ this.orga_name + "; Group: "+ this.source+")",
+							text: sigName.replace('TGFb','TGFβ') + ' signaling pathway'+" (Organism: "+ this.orga_name + "; Group: "+ this.source+")",
 							subtext: this.table_name +" "+ source,
 							top: 'top',
 							//left: 'left'
@@ -389,7 +390,7 @@ export default {
 				}];
 				
 				var layout = {
-					title: sigName +' signaling pathway network' +" (Organism: "+ this.orga_name + "; Group: "+ this.source+")",
+					title: sigName.replace('TGFb','TGFβ') +' signaling pathway network' +" (Organism: "+ this.orga_name + "; Group: "+ this.source+")",
 
 					xaxis: {
 							title:'Cell type',		
@@ -511,7 +512,7 @@ export default {
 					},
 					series: [
 						{
-							name:  sigName + ' pathway network',
+							name:  sigName.replace('TGFb','TGFβ') + ' pathway network',
 							// data: [107, 31, 635, 203, 2]
 							data:data.seriData
 						}
@@ -577,7 +578,14 @@ export default {
 
 		},
 		changedSigName(sigName){
+			
+
 			this.siName = sigName
+			
+			if (sigName.indexOf('TGFβ')>0){
+				sigName.replace('TGFβ','TGFb')
+			}
+
 			
 			this.getCellChartHotMap(this.table_name,this.source,sigName)
 			// this.getCellChartView(this.source,pName);

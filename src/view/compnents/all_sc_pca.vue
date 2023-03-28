@@ -193,8 +193,8 @@ export default {
 				{'name':'8'},
 				{'name':'10'},
 				],
-			plotSize:'2',
-			plotSize2:'2',
+			plotSize:'4',
+			plotSize2:'4',
 			VisaulMethod_list:[
 				{'name':'PCA'},
 				{'name':'tSNE'},

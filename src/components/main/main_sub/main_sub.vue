@@ -1,16 +1,6 @@
 <template>
   <div class="my_out">
-    <Header>
-      <Col span="12">
-                            <!-- 数据查询分子名 -->
-                    </br>
-                    </br>
-                    </br>
-                    </br>
-                    Input gene/tissue/dataset id/organism name:
-                    <Input search enter-button="Search"  @on-search="searchDataSetByKeyName($event)" :placeholder="search_placeholder"/>                         
-      </Col> 
-    </Header>
+   
     <body class="my_body">
       
       <div class="my_Row">
@@ -1071,11 +1061,11 @@ export default {
               var gData = data.gData
               _this.reportedGene_list = gData
               // indexOf("GSE") > -1)
-              // alert(this.$route.params.KeyName)
+              // alert(this.$route.query.KeyName)
               // console.log(gData)
-              // if ( gData.indexOf(this.$route.params.KeyName) > -1){
+              // if ( gData.indexOf(this.$route.query.KeyName) > -1){
 
-              //     this.searchGene =  this.$route.params.KeyName 
+              //     this.searchGene =  this.$route.query.KeyName 
               // }
               // for(var j = 0;j < nodes.length;j ++){
               //   if (categories[i] === nodes[j].category && 1 === nodes[j].c_f){
@@ -1084,31 +1074,31 @@ export default {
               // }
               for(var j =0;j< gData.length;j++){
                 // alert(gData[j].name)
-                // alert(gData[j].name === this.$route.params.KeyName)
-                if(gData[j].name === this.$route.params.KeyName){
-                  this.searchGene =  this.$route.params.KeyName 
-                  _this.reported_gene =  this.$route.params.KeyName 
+                // alert(gData[j].name === this.$route.query.KeyName)
+                if(gData[j].name === this.$route.query.KeyName){
+                  this.searchGene =  this.$route.query.KeyName 
+                  _this.reported_gene =  this.$route.query.KeyName 
                 }
               }
 
               // for(var j=0;j< this.species_list.length;j++){
-              //   if(this.species_list[j].name ===this.$route.params.KeyName ){
-              //     this.searchSpecies=this.$route.params.KeyName 
+              //   if(this.species_list[j].name ===this.$route.query.KeyName ){
+              //     this.searchSpecies=this.$route.query.KeyName 
               //   }
               // }
 
               for(var j=0;j< this.tissue_list.length;j++){
                 // console.log( this.tissue_list[j])
-                if(this.tissue_list[j].name == this.$route.params.KeyName ){
+                if(this.tissue_list[j].name == this.$route.query.KeyName ){
                   // alert('yes')
-                  _this.searchTissue=this.$route.params.KeyName 
+                  _this.searchTissue=this.$route.query.KeyName 
                   // alert(_this.searchTissue)
-                  _this.tissue = this.$route.params.KeyName
+                  _this.tissue = this.$route.query.KeyName
                 }
                 // console.log('Induced Pluripotent Stem Cells' =='Induced Pluripotent Stem Cells')
                   //统一home 搜索款和 Search 页面的搜索 
-                if(this.$route.params.KeyName.indexOf(this.tissue_list[j].name) >-1 ){
-                    this.searchTissue=this.$route.params.KeyName 
+                if(this.$route.query.KeyName.indexOf(this.tissue_list[j].name) >-1 ){
+                    this.searchTissue=this.$route.query.KeyName 
                 }
               }
 
@@ -1116,15 +1106,15 @@ export default {
               // tissue_list
               for(var j=0;j< this.species_list.length;j++){
 
-                if(this.species_list[j].name === this.$route.params.KeyName ){
-                  this.searchSpecies=this.$route.params.KeyName
-                  _this.species = this.$route.params.KeyName
+                if(this.species_list[j].name === this.$route.query.KeyName ){
+                  this.searchSpecies=this.$route.query.KeyName
+                  _this.species = this.$route.query.KeyName
                 }
 
                 //统一home 搜索款和 Search 页面的搜索 
-                if(this.$route.params.KeyName.indexOf(this.species_list[j].name) >-1 ){
-                  this.searchSpecies= this.$route.params.KeyName 
-                  _this.species = this.$route.params.KeyName
+                if(this.$route.query.KeyName.indexOf(this.species_list[j].name) >-1 ){
+                  this.searchSpecies= this.$route.query.KeyName 
+                  _this.species = this.$route.query.KeyName
                 }
 
               }
@@ -1144,17 +1134,18 @@ export default {
       this.setBreadCrumb(newRoute)
     },
   },
+
   created() {
      
-
+        this.$route.query
 
   },
   mounted() {
     console.log('==============')
-    
-     if ( this.$route.params.KeyName != undefined){
-        // alert(this.$route.params.KeyName)
-        this.mockTableDataByKeyParam(this.$route.params.KeyName)
+    // alert(this.$route.query.KeyName)
+    if ( this.$route.query.KeyName != undefined){
+        
+        this.mockTableDataByKeyParam(this.$route.query.KeyName)
         this.getReportedGeneList()
 
 
@@ -1175,15 +1166,16 @@ export default {
 <style lang="less">
 @import '../../../css/page.min.css';
 
-  .my_out{
-    min-width: 1400px;
-    margin-top:50px;
+
+  .my_out {
+      min-width: 1400px;
+      margin-top: 70px;
   }
 
-  .my_body{
-    height:100%;
-    width:100%;
-    padding:100px 20px 100px;
+  .my_body {
+    height: 100%;
+    width: 100%;
+    padding: 60px 0px 100px;
   }
 
   .my_Row{

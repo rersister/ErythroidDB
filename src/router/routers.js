@@ -120,7 +120,13 @@ export default [
                 meta: { title: "About" },
                 component: resolve => require(['@/view/single-page/about'], resolve)
             },
-
+            // {
+            //     path :'/Search',
+            //     name:'Search',
+            //     meta: { title: "Search" },
+            //     component: resolve => require(['@/components/main/main_sub'], resolve)
+                
+            // },
 
         ]
     },
@@ -128,9 +134,24 @@ export default [
     {
         path :'/Search',
         name:'Search',
+        redirect: '/main_sub',
+        component: Main,
         meta: { title: "Search" },
-        component: resolve => require(['@/components/main/main_sub'], resolve)
-        
+        // component: resolve => require(['@/components/main/main_sub'], resolve)
+        children: [
+            {
+                path: '/main_sub',
+                name: 'main_sub',
+                meta: {
+                    hideInMenu: true,
+                    title: 'main_sub',
+
+                },
+                component: () =>
+                    import ('@/components/main/main_sub'),
+            },
+            
+        ]
     },
     
     {

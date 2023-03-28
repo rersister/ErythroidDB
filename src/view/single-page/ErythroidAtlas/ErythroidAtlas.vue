@@ -196,7 +196,7 @@
           v-for="(item,index) in analList"
           @click="analClick(item)"
           :key="index"
-          :class="{active:currentAnalIndex===item.value}"
+          :class="{myactive:currentAnalIndex===item.value}"
         >
           <div @click="changeDom(item.value)">
             <span class="servetitle">{{ item.label }}</span>
@@ -265,6 +265,8 @@
                             </div>
                         </div>      
     </div>
+    
+
 
   </div>
 </template>
@@ -1357,7 +1359,7 @@ export default {
   color: azure;
 }
 
-.active{
+.myactive{
   background:#a85557;
   color: azure;
 }

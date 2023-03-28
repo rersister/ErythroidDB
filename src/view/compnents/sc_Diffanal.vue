@@ -250,23 +250,23 @@ export default {
 				}
 
 			},
-			{
-				title: 'pct.1',
-				key: 'pct.1',
-				"sortable": true,
-				filter: {
-				type: 'Input'
-				}
+			// {
+			// 	title: 'pct.1',
+			// 	key: 'pct.1',
+			// 	"sortable": true,
+			// 	filter: {
+			// 	type: 'Input'
+			// 	}
 
-			},
-			{
-				title: 'pct.2',
-				key: 'pct.2',
-				"sortable": true,
-				filter: {
-				type: 'Input'
-				},
-			},
+			// },
+			// {
+			// 	title: 'pct.2',
+			// 	key: 'pct.2',
+			// 	"sortable": true,
+			// 	filter: {
+			// 	type: 'Input'
+			// 	},
+			// },
 			{
 				title: 'p_val_adj',
 				key: 'p_val_adj',

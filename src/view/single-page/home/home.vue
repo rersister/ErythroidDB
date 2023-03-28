@@ -435,9 +435,14 @@ export default {
         searchByKeyWord(){
              router.push({
                 name: 'Search',
-                params: {
+                //  会丢失数据
+                // params: {
+                //     KeyName: this.InputKeyName,
+                // },
+
+                query:{
                     KeyName: this.InputKeyName,
-                },
+                }
             })
         },
 

@@ -99,6 +99,18 @@ export const getSampleGroupPageDataset = (series,currentPage,pageSize) => {
 	})
 }
 
+// getSCCellAnnoInfo 
+export const getSCCellAnnoInfo = (series) => {
+	return axios.request({
+	  url: 'public/getSCCellAnnoInfo',
+	  data: { 
+		'series':series,
+		
+	},
+	  method: 'post',
+	})
+}
+
 
 
 // getSCDiffPageDataset

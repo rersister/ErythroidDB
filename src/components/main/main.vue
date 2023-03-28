@@ -2,9 +2,11 @@
   <div>
     <Header>
     </Header>
-    <body>
+
+
+    <body v-if="ifshow_bread">
       <div class="bigd-container bodyStyle">
-        <div class="layout">
+        <div class="layout" >
           <!-- <div class='header'>
                             <div class="layout-logo">EryDB: Erythroid Database</div>                  
                             <div class="layout-nav"> 
@@ -31,6 +33,8 @@
                 </div>
               </Card>
             </Content>
+
+            <br>
             <Footer class="layout-footer-center"
               >
               <!-- <span class="my_footer">
@@ -42,252 +46,270 @@
                 >
                 All Rights Reserved.</span> -->
 
-              </Footer>
+            </Footer>
           </Content>
 
           <!-- </Layout> -->
         </div>
       </div>
-    </body>
-    <footer class="bigd-footer" style="font-family: Arial">
-      <div class="bigd-container">
-        <div class="bigd-panel bigd-panel-default">
-          <div class="bigd-panel-body">
-            <div class="bigd-row">
-              <div class="bigd-col-md-2">
-                <a href="https://bigd.big.ac.cn/"
-                  ><img
-                    src="https://bigd.big.ac.cn/cdn/image/CNCB-NGDC.png"
-                    class="bigd-img-responsive"
-                    style="margin-top: calc((15/1920) * 100vw);"
-                /></a>
-                <ul class="bigd-list-unstyled">
-                  <li><a href="https://bigd.big.ac.cn/about">About NGDC</a></li>
-                  <li><a href="https://bigd.big.ac.cn/people">People</a></li>
-                  <li><a href="https://bigd.big.ac.cn/mission">Mission</a></li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/board">Advisory Board</a>
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/structure"
-                      >Organizational Structure</a
-                    >
-                  </li>
-                  <li><a href="https://bigd.big.ac.cn/history">History</a></li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/annual-report"
-                      >Annual Reports</a
-                    >
-                  </li>
-                </ul>
-              </div>
 
-              <div class="bigd-col-md-2">
-                <h3>Research & Resources</h3>
-                <ul class="bigd-list-unstyled">
-                  <li>
-                    <a href="https://bigd.big.ac.cn/databases">Databases</a>
-                  </li>
-                  <li><a href="https://bigd.big.ac.cn/tools">Tools</a></li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/standards">Standards</a>
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/research"
-                      >Topics & Projects</a
-                    >
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/publications"
-                      >Publications</a
-                    >
-                  </li>
-                </ul>
-              </div>
+      
+   
 
-              <div class="bigd-col-md-2">
-                <h3>Featured</h3>
-                <ul class="bigd-list-unstyled">
-                  <li>
-                    <a
-                      href="https://bigd.big.ac.cn/databasecommons"
-                      target="_blank"
-                      >Database Commons</a
-                    >
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/ewas" target="_blank"
-                      >EWAS Atlas</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="https://bigd.big.ac.cn/gsa"
-                      target="_blank"
-                      title="Genome Sequence Archive"
-                      >GSA</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="https://bigd.big.ac.cn/gvm"
-                      target="_blank"
-                      title="Genome Variation Map"
-                      >GVM</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="http://ic4r.org"
-                      target="_blank"
-                      title="Information Commons for Rice"
-                      >IC4R</a
-                    >
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/idog" target="_blank"
-                      >iDog</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="https://bigd.big.ac.cn/methbank"
-                      target="_blank"
-                      title="Methylation DataBank"
-                      >MethBank</a
-                    >
-                  </li>
-                </ul>
-              </div>
-
-              <div class="bigd-col-md-2">
-                <h3>Conferences & Education</h3>
-                <ul class="bigd-list-unstyled">
-                  <li>
-                    <a href="https://bigd.big.ac.cn/conference">Conferences</a>
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/education">Education</a>
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/training">Training</a>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="bigd-col-md-2">
-                <h3>Alliance & Collaboration</h3>
-                <ul class="bigd-list-unstyled">
-                  <li>
-                    <a href="https://bigd.big.ac.cn/bhbd-alliance">BHBD</a>
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/partners">Partners</a>
-                  </li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/collaborations"
-                      >Collaborations</a
-                    >
-                  </li>
-                  <li><a href="https://bigd.big.ac.cn/funding">Funding</a></li>
-                  <li>
-                    <a href="https://bigd.big.ac.cn/contact">Contact Us</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <hr class="footer-hr" />
-            <div class="bigd-row">
-              <div class="bigd-col-md-7">
-                <p class="bigd-text-muted">
-                  &copy; year National Genomics Data Center,
-                  <span
-                    ><a href="http://english.big.cas.cn" target="_blank"
-                      >China National Center for Bioinformation / Beijing
-                      Institute of Genomics</a
-                    ></span
-                  >,
-                  <span
-                    ><a href="http://english.cas.cn" target="_blank"
-                      >Chinese Academy of Sciences</a
-                    ></span
-                  ><br />
-                  No.1 Beichen West Road, Chaoyang District, Beijing 100101,
-                  China<br />
-                  <span
-                    ><a href="bigd_sitepolicies"
-                      >Policies and Disclaimers</a
-                    ></span
-                  >
-                </p>
-                <p class="bigd-text-muted">
-                  <span
-                    ><a
-                      rel="license"
-                      target="_blank"
-                      href="http://creativecommons.org/licenses/by/3.0/cn/"
-                    >
-                      <img
-                        alt="Creative Commons License"
-                        style="border-width:0;height: calc((15/1920) * 100vw)"
-                        src="https://bigd.big.ac.cn/static/image/cc.png"/></a
-                  ></span>
-                  This work is licensed under a
-                  <span
-                    ><a
-                      rel="license"
-                      href="http://creativecommons.org/licenses/by/3.0/cn/"
-                      target="_blank"
-                      >Creative Commons Attribution 3.0 China Mainland
-                      License</a
-                    ><br /><a
-                      href="http://www.beian.miit.gov.cn"
-                      target="_blank"
-                      >京ICP备10050270号</a
-                    ></span
-                  >
-                </p>
-              </div>
-              <div class="bigd-col-md-5">
-                <div class="pull-right">
-                  <ul class="bigd-list-inline">
+      <footer class="bigd-footer" style="font-family: Arial">
+        <div class="bigd-container">
+          <div class="bigd-panel bigd-panel-default">
+            <div class="bigd-panel-body">
+              <div class="bigd-row">
+                <div class="bigd-col-md-2">
+                  <a href="https://bigd.big.ac.cn/"
+                    ><img
+                      src="https://bigd.big.ac.cn/cdn/image/CNCB-NGDC.png"
+                      class="bigd-img-responsive"
+                      style="margin-top: calc((15/1920) * 100vw);"
+                  /></a>
+                  <ul class="bigd-list-unstyled">
+                    <li><a href="https://bigd.big.ac.cn/about">About NGDC</a></li>
+                    <li><a href="https://bigd.big.ac.cn/people">People</a></li>
+                    <li><a href="https://bigd.big.ac.cn/mission">Mission</a></li>
                     <li>
-                      <a href="http://english.big.cas.cn" target="_blank"
-                        ><img
-                          src="https://bigd.big.ac.cn/static/image/big_logo.png"
-                          style="width: calc((32/1920) * 100vw)"
-                      /></a>
+                      <a href="https://bigd.big.ac.cn/board">Advisory Board</a>
                     </li>
                     <li>
-                      <a href="http://www.picb.ac.cn/picb" target="_blank"
-                        ><img
-                          src="https://bigd.big.ac.cn/static/image/picb.png"
-                          style="height: calc((32/1920) * 100vw);"
-                      /></a>
+                      <a href="https://bigd.big.ac.cn/structure"
+                        >Organizational Structure</a
+                      >
                     </li>
+                    <li><a href="https://bigd.big.ac.cn/history">History</a></li>
                     <li>
-                      <a href="http://english.ibp.cas.cn/" target="_blank"
-                        ><img
-                          src="https://bigd.big.ac.cn/static/image/ibp.png"
-                          style="height: calc((32/1920) * 100vw);"
-                      /></a>
-                    </li>
-                    <li>
-                      <a href="http://english.cas.cn/" target="_blank"
-                        ><img
-                          src="https://bigd.big.ac.cn/static/image/cas.png"
-                          style="height: calc((32/1920) * 100vw);"
-                      /></a>
+                      <a href="https://bigd.big.ac.cn/annual-report"
+                        >Annual Reports</a
+                      >
                     </li>
                   </ul>
+                </div>
+
+                <div class="bigd-col-md-2">
+                  <h3>Research & Resources</h3>
+                  <ul class="bigd-list-unstyled">
+                    <li>
+                      <a href="https://bigd.big.ac.cn/databases">Databases</a>
+                    </li>
+                    <li><a href="https://bigd.big.ac.cn/tools">Tools</a></li>
+                    <li>
+                      <a href="https://bigd.big.ac.cn/standards">Standards</a>
+                    </li>
+                    <li>
+                      <a href="https://bigd.big.ac.cn/research"
+                        >Topics & Projects</a
+                      >
+                    </li>
+                    <li>
+                      <a href="https://bigd.big.ac.cn/publications"
+                        >Publications</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="bigd-col-md-2">
+                  <h3>Featured</h3>
+                  <ul class="bigd-list-unstyled">
+                    <li>
+                      <a
+                        href="https://bigd.big.ac.cn/databasecommons"
+                        target="_blank"
+                        >Database Commons</a
+                      >
+                    </li>
+                    <li>
+                      <a href="https://bigd.big.ac.cn/ewas" target="_blank"
+                        >EWAS Atlas</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://bigd.big.ac.cn/gsa"
+                        target="_blank"
+                        title="Genome Sequence Archive"
+                        >GSA</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://bigd.big.ac.cn/gvm"
+                        target="_blank"
+                        title="Genome Variation Map"
+                        >GVM</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="http://ic4r.org"
+                        target="_blank"
+                        title="Information Commons for Rice"
+                        >IC4R</a
+                      >
+                    </li>
+                    <li>
+                      <a href="https://bigd.big.ac.cn/idog" target="_blank"
+                        >iDog</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="https://bigd.big.ac.cn/methbank"
+                        target="_blank"
+                        title="Methylation DataBank"
+                        >MethBank</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="bigd-col-md-2">
+                  <h3>Conferences & Education</h3>
+                  <ul class="bigd-list-unstyled">
+                    <li>
+                      <a href="https://bigd.big.ac.cn/conference">Conferences</a>
+                    </li>
+                    <li>
+                      <a href="https://bigd.big.ac.cn/education">Education</a>
+                    </li>
+                    <li>
+                      <a href="https://bigd.big.ac.cn/training">Training</a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="bigd-col-md-2">
+                  <h3>Alliance & Collaboration</h3>
+                  <ul class="bigd-list-unstyled">
+                    <li>
+                      <a href="https://bigd.big.ac.cn/bhbd-alliance">BHBD</a>
+                    </li>
+                    <li>
+                      <a href="https://bigd.big.ac.cn/partners">Partners</a>
+                    </li>
+                    <li>
+                      <a href="https://bigd.big.ac.cn/collaborations"
+                        >Collaborations</a
+                      >
+                    </li>
+                    <li><a href="https://bigd.big.ac.cn/funding">Funding</a></li>
+                    <li>
+                      <a href="https://bigd.big.ac.cn/contact">Contact Us</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <hr class="footer-hr" />
+              <div class="bigd-row">
+                <div class="bigd-col-md-7">
+                  <p class="bigd-text-muted">
+                    &copy; year National Genomics Data Center,
+                    <span
+                      ><a href="http://english.big.cas.cn" target="_blank"
+                        >China National Center for Bioinformation / Beijing
+                        Institute of Genomics</a
+                      ></span
+                    >,
+                    <span
+                      ><a href="http://english.cas.cn" target="_blank"
+                        >Chinese Academy of Sciences</a
+                      ></span
+                    ><br />
+                    No.1 Beichen West Road, Chaoyang District, Beijing 100101,
+                    China<br />
+                    <span
+                      ><a href="bigd_sitepolicies"
+                        >Policies and Disclaimers</a
+                      ></span
+                    >
+                  </p>
+                  <p class="bigd-text-muted">
+                    <span
+                      ><a
+                        rel="license"
+                        target="_blank"
+                        href="http://creativecommons.org/licenses/by/3.0/cn/"
+                      >
+                        <img
+                          alt="Creative Commons License"
+                          style="border-width:0;height: calc((15/1920) * 100vw)"
+                          src="https://bigd.big.ac.cn/static/image/cc.png"/></a
+                    ></span>
+                    This work is licensed under a
+                    <span
+                      ><a
+                        rel="license"
+                        href="http://creativecommons.org/licenses/by/3.0/cn/"
+                        target="_blank"
+                        >Creative Commons Attribution 3.0 China Mainland
+                        License</a
+                      ><br /><a
+                        href="http://www.beian.miit.gov.cn"
+                        target="_blank"
+                        >京ICP备10050270号</a
+                      ></span
+                    >
+                  </p>
+                </div>
+                <div class="bigd-col-md-5">
+                  <div class="pull-right">
+                    <ul class="bigd-list-inline">
+                      <li>
+                        <a href="http://english.big.cas.cn" target="_blank"
+                          ><img
+                            src="https://bigd.big.ac.cn/static/image/big_logo.png"
+                            style="width: calc((32/1920) * 100vw)"
+                        /></a>
+                      </li>
+                      <li>
+                        <a href="http://www.picb.ac.cn/picb" target="_blank"
+                          ><img
+                            src="https://bigd.big.ac.cn/static/image/picb.png"
+                            style="height: calc((32/1920) * 100vw);"
+                        /></a>
+                      </li>
+                      <li>
+                        <a href="http://english.ibp.cas.cn/" target="_blank"
+                          ><img
+                            src="https://bigd.big.ac.cn/static/image/ibp.png"
+                            style="height: calc((32/1920) * 100vw);"
+                        /></a>
+                      </li>
+                      <li>
+                        <a href="http://english.cas.cn/" target="_blank"
+                          ><img
+                            src="https://bigd.big.ac.cn/static/image/cas.png"
+                            style="height: calc((32/1920) * 100vw);"
+                        /></a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </body>
+
+    <Content class="my_content" v-if="ifshow_content">
+            <header-bar></header-bar>
+
+            <Content>
+             
+                <div>
+                  <router-view />
+                  <Back-top></Back-top>
+                </div>
+            
+            </Content>
+    </Content>
+
   </div>
 </template>
 <script>
@@ -307,6 +329,12 @@ export default {
     Header,
    
   },
+  // props:{
+       
+  //       ifshow_bread:Boolean,
+  //       ifshow_content:Boolean,
+      
+  // },
   data() {
     return {
       values: [
@@ -322,6 +350,9 @@ export default {
         { id: 4, name: 'About', link: '/about', type: 'ios-navigate' },
       ],
       current_index: -1,
+      ifshow_bread: false,
+      ifshow_content: true,
+
     }
   },
   computed: {
@@ -344,8 +375,19 @@ export default {
 
   watch: {
     $route(newRoute) {
+      // alert(newRoute.name)
+      //  当为 search 页面时， 不需要 bread 的body 样式
+      if(newRoute.name == 'main_sub'  ){
+        // alert('yes')
+        this.ifshow_bread = false
+        this.ifshow_content = true
+      }else{
+        this.ifshow_bread = true
+        this.ifshow_content =  false
+      }
       this.setBreadCrumb(newRoute)
     },
+
   },
   mounted() {
     // 设置初始语言
@@ -432,7 +474,7 @@ body {
 }
 .layout-logo{
     color: #870909;
-    width: 800px;
+    width: 900px;
     min-width: 300px;
     height: 50px;
     /* background: #5b6270; */

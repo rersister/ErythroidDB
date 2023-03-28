@@ -62,7 +62,7 @@
             </h1>
             <br>
             <p class="p_text" id="Home">
-                EryDB was developed as an open-access and comprehensive database dedicated to the collection, integration, analysis, and visualization of transcriptomic data for erythropoiesis and diseases related to it. Currently, the database contains expertly curated quality-assured data of 3,802 samples and 1,167,800 single cells derived from 94 public studies of three species (Homo sapiens, Mus musculus, and Danio rerio), nine tissue types, and seven diseases. EryDB allows users to not only browse molecular features of erythropoiesis among tissues and species, but also to perform computational analyses of single-cell and bulk RNA-seq data, thus serving as a convenient platform for customized queries and analyses.                                                     
+                EryDB was developed as an open-access and comprehensive database dedicated to the collection, integration, analysis, and visualization of transcriptomic data for erythropoiesis and erythroid-related diseases. Currently, the database contains expertly curated quality-assured data of 3,802 samples and 1,167,800 single cells derived from 106 public studies of three species (Homo sapiens, Mus musculus, and Danio rerio), nine tissue types, and seven diseases. EryDB allows users to not only browse molecular features of erythropoiesis among tissues and species, but also to perform computational analyses of single-cell and bulk RNA-seq data, thus serving as a convenient platform for customized queries and analyses.                                                     
             </p>
         </div>
 
@@ -79,8 +79,8 @@
             </p>
           
             <!-- <p class="img_c"><img width="80%" src="@/assets/img/help_homePage.svg" alt="img"></p> -->
-            <p class="img_c"><img width="100%" src="@/assets/img/help_homePage.png" alt="img"></p>
-
+            <!-- <p class="img_c"><img width="100%" src="@/assets/img/help_homePage.png" alt="img"></p> -->
+            <p class="img_c"><img width="100%" src="@/assets/img/help_homePage.jpg" alt="img"></p>
             <!-- test_home.png -->
             <!-- <p class="img_c"><img width="100%" src="@/assets/img/test_home.png" alt="img"></p> -->
 
@@ -222,7 +222,8 @@
                 This panel represents basic details of this dataset including the 
                 dataset id, organism, tissue, growth mode, development type, experiment type, study’s citation id and so on.
             </p> -->
-            <p class="img_c"><img width="100%" src="@/assets/img/help_datasetDetial.png" alt="img"></p>
+            <!-- <p class="img_c"><img width="100%" src="@/assets/img/help_datasetDetial.png" alt="img"></p> -->
+            <p class="img_c"><img width="100%" src="@/assets/img/help_datasetDetial_test.png" alt="img"></p>
 
             <br>
             <br>

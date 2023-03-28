@@ -201,10 +201,13 @@ export default {
                 let datas = res.data  
 				console.log(datas)
 				var data =   datas 
-				       
+				
+				
 				datas.forEach(key => this.sigName_list.push({
-                    name:key
+                    name:key.replace('TGFb','TGFβ')
 				})) 
+
+
 				// alert(this.sigName_list)
 				this.siName = this.sigName_list[0].name
 				this.getCellChartHotMap(this.series,this.source,datas[0])
@@ -266,7 +269,7 @@ export default {
 					});
 					var option = {
 						title: {
-							text: sigName + ' signaling pathway',
+							text: sigName.replace('TGFb','TGFβ') + ' signaling pathway',
 							subtext: this.series +" "+ source,
 							top: 'top',
 							//left: 'left'
@@ -332,7 +335,7 @@ export default {
 				}];
 				
 				var layout = {
-					title: sigName +' signaling pathway network'  +' (' + this.series +'; Group: ' + source +')',
+					title: sigName.replace('TGFb','TGFβ') +' signaling pathway network'  +' (' + this.series +'; Group: ' + source +')',
 
 					xaxis: {
 							title:'Cell type',		
@@ -361,9 +364,11 @@ export default {
 			// var sig_pattern = 'outgoing'
 			var sig_pattern = pName 
 			getCellChatSigData(this.series,dev_type,sig_pattern).then(res=>{
-			 	console.log(res.data)
-		
+
+				console.log('back sig pattern')
+				
 			 	var data = res.data
+				console.log(data.netSigCell)
 			 	var option_1 = {
 			 				title: {
 			 					text: 'Communication ('+pName +') patterns' +' (' + this.series +'; Group: ' + dev_type +')', 
@@ -375,10 +380,12 @@ export default {
 			 					keys: ['from', 'to', 'weight'],
 			 					data: data.netSigCell,
 			 					type: 'sankey',
-			 					name: 'Sankey demo series'
+			 					name: dev_type
 			 				}],
 				}
 			    this.Cell_Chart_RiverCell = option_1
+				console.log('test')
+				console.log(data.netSigPath)
 				var option_2 = {
 			 				title: {
 			 					text: 'Communication ('+pName +') signals'  +' (' + this.series +'; Group: ' + dev_type +')',
@@ -390,7 +397,7 @@ export default {
 			 					keys: ['from', 'to', 'weight'],
 			 					data: data.netSigPath,
 			 					type: 'sankey',
-			 					name: 'Sankey demo series'
+			 					name: dev_type
 			 				}],
 				}
 				this.Cell_Chart_RiverPath = option_2
@@ -463,7 +470,7 @@ export default {
 					},
 					series: [
 						{
-							name:  sigName + ' pathway network',
+							name:  sigName.replace('TGFb','TGFβ') + ' pathway network',
 							// data: [107, 31, 635, 203, 2]
 							data:data.seriData
 						}
@@ -528,13 +535,20 @@ export default {
 			
 
 		},
+
+
 		changedSigName(sigName){
+			// alert(sigName)
 			this.siName = sigName
-			
-			this.getCellChartHotMap(this.series,this.source,sigName)
+			//  在查询前替换成旧的 信号名
+			if (sigName.indexOf('TGFβ')>0){
+				sigName.replace('TGFβ','TGFb')
+			}
+
+			this.getCellChartHotMap(this.series,this.source,siName)
 			// this.getCellChartView(this.source,pName);
 			// this.geteSigPathNet_chart(this.series,this.source,sigName);
-			this.getCellChartRcontri(this.series,this.source,sigName);
+			this.getCellChartRcontri(this.series,this.source,siName);
 			
 		},
 

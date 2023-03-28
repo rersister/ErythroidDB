@@ -105,7 +105,7 @@ export default {
 			series:this.$store.state.app.CurrentPageToken,
 			source:'',
 			source2:'',
-			traCol:'',
+			traCol:'celltype',
 			group_type_list : [ 
 				// {
 				// 	id:"0",
@@ -186,7 +186,7 @@ export default {
 				datas.forEach(key => this.group_type_list.push({
                     name:key
 				}))
-				this.traCol = this.group_type_list[0].name
+				// this.traCol = this.group_type_list[0].name
 			})
 		},
 		getPseudoPlot(series,source2){
@@ -264,13 +264,12 @@ export default {
                 let datas = res.data  
 				console.log(datas)
 				var data =   datas 
-				
-				
+
 				// console.log(_this.colnames[0]) 
 				this.source = data[0].source_g
 				this.source2 = data[0].source_g     
 				datas.forEach(function (group) {
-					
+
 					console.log(group.source_g)
 
 					_this.data_source_list.push({
@@ -281,6 +280,7 @@ export default {
 
 				this.getPseudoPlot(this.series,data[0].source_g)
 				this.getTraCol(this.series,data[0].source_g)
+				this.traCol = 'celltype'
 				this.getTraChart(this.series,data[0].source_g,'celltype')
 				
              

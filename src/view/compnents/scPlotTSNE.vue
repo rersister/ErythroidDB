@@ -187,8 +187,8 @@ export default {
 				{'name':'8'},
 				{'name':'10'},
 				],
-			plotSize:'2',
-			plotSize2:'2',
+			plotSize:'4',
+			plotSize2:'4',
 			VisaulMethod_list:[
 				{'name':'PCA'},
 				{'name':'tSNE'},
@@ -487,9 +487,7 @@ export default {
                 let datas = res.data  
 				console.log()
 				console.log(datas)
-
 				var data =   datas 
-				       
 				datas.forEach(function (group) {
 
 							_this.data_source_list.push({

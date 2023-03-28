@@ -190,7 +190,7 @@ export default {
 						title: {
 							text: 'Les Miserables',
 							subtext: 'Circular layout',
-							top: 'bottom',
+							top: 'top',
 							left: 'right'
 						},
 						tooltip: {},

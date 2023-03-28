@@ -22,7 +22,7 @@
                         <Col span="19">{{organism}}</Col> 
                     </Row>
                     <Row>
-                        <Col span="5"><strong>Source:</strong></Col>
+                        <Col span="5"><strong>Tissue:</strong></Col>
                         <Col span="19">{{tissue}}</Col> 
                     </Row>
                     <Row>
@@ -118,6 +118,7 @@
                     
                     </Row> 
 
+                   
                     <!-- Datase Service 内容 -->
                     <Content>
                         <Card >                            
@@ -300,9 +301,9 @@ export default {
 
                             },
                             {
-                                title: 'Source',  //和dataset 里的source 一致
+                                title: 'Tissue',  //和dataset 里的source 一致
                                 key: 'tissue',
-                                width:120,
+                                // width:120,
                                 "sortable": true,
                                 filter: {
                                 type: 'Input'
@@ -320,7 +321,7 @@ export default {
                             {
                                 title: 'Cell type',
                                 key: 'cell_type',
-                                width:120,
+                                // width:120,
                                 "sortable": true,
                                 // filter: {
                                 //     type: 'Select',
@@ -328,10 +329,10 @@ export default {
                                 // },
                             },
                             {
-                                title: 'Tissue', // 细胞来源时间，分选等信息
+                                title: 'Source', // 细胞来源时间，分选等信息
                                 key: 'source',
                                 "sortable": true,
-                                width:120,
+                                // width:120,
                                 // filter: {
                                 //     type: 'Select',
                                 //     option: P_Value_range
@@ -339,8 +340,9 @@ export default {
                             },
 
                             {
-                                title: 'Growth mode',
+                                title: 'Experiment type',
                                 key: 'growth_mode',
+                                width:102,
                                 filter: {
                                     type: 'Input',
                                 },
@@ -352,7 +354,7 @@ export default {
                             {
                                 title: 'Development  type',
                                 key: 'development_type',
-                                width:115,
+                                width:102,
                                 filter: {
                                     type: 'Input',
                                 },
@@ -364,13 +366,15 @@ export default {
                             {
                                 title: 'Group',
                                 key: 'group',
+                                width:90,
                                 "sortable": true,
                                 // filter: {
                                 //     type: 'Select',
                                 //     option: P_Value_range
                                 // },
                             },
-                ],   
+                ],
+                  
                 sampleData:[], 
                 source:'', 
                 spinShowSampleSource:true,  
@@ -402,6 +406,7 @@ export default {
                 samples:'',
                 samples_count:'',
                 ifSub:false,
+             
                 subseries:'',
                 platforms:'',
                 citations:'',
