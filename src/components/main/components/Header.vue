@@ -156,7 +156,7 @@ export default{
 
   .layout-logo{
     color: #870909;
-    width: 800px;
+    width: 900px;
     min-width: 300px;
     height: 50px;
     /* background: #5b6270; */

@@ -26,11 +26,15 @@ export default {
 
 
         CurrentPageToken:'',
+
+        NewRouteName:'',
     },
     getters: {
         menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access),
 
     },
+
+
     mutations: {
 
         setBreadCrumb(state, route) {
@@ -47,12 +51,17 @@ export default {
             state.local = lang
         },
 
-        //存储用户浏览页面状态Token 
+        //存储用户浏览页面状态Token  dataset id
         setCurrentPageToken(state, CPageToken) {
             localSave('CurrentPageToken', CPageToken)
             state.CurrentPageToken = CPageToken
         },
 
+        //存储用户浏览Search 页面状态Token  用于页面样式变化
+        setNewRouteName(state,NewRouteName){
+            localSave('NewRouteName', NewRouteName)
+            state.NewRouteName = NewRouteName
+        }
 
     }
 

@@ -448,14 +448,14 @@ export default {
 
         intoDataSet(dataset_id){               
         
-         // alert(data.dataset);
-        console.log(dataset_id)
-        this.setCurrentPageToken(dataset_id)
-        router.push({
-           name: "Dataset_detail",
-           params: {
-             dataset : dataset_id,
-           }
+            // alert(data.dataset);
+            console.log(dataset_id)
+            this.setCurrentPageToken(dataset_id)
+            router.push({
+            name: "Dataset_detail",
+            params: {
+                dataset : dataset_id,
+            }
         
          });
 

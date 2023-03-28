@@ -350,8 +350,8 @@ export default {
         { id: 4, name: 'About', link: '/about', type: 'ios-navigate' },
       ],
       current_index: -1,
-      ifshow_bread: false,
-      ifshow_content: true,
+      ifshow_bread: true,
+      ifshow_content: false,
 
     }
   },
@@ -359,12 +359,25 @@ export default {
     local() {
       return this.$store.state.app.local
     },
+
+    
+    
   },
 
   // 当前位置的item
   methods: {
-    ...mapMutations(['setLocal', 'setBreadCrumb', 'setHomeRoute']),
+    ...mapMutations(['setLocal', 'setBreadCrumb', 'setHomeRoute','setNewRouteName']),
 
+    getCurentStyle(newRouteName){
+      if(newRouteName == 'main_sub'  ){
+        // alert('yes')
+        this.ifshow_bread = false
+        this.ifshow_content = true
+      }else{
+        this.ifshow_bread = true
+        this.ifshow_content =  false
+    }
+    },
     cg_current_index(index) {
       this.current_index = index
     },
@@ -376,7 +389,10 @@ export default {
   watch: {
     $route(newRoute) {
       // alert(newRoute.name)
+
       //  当为 search 页面时， 不需要 bread 的body 样式
+      this.setNewRouteName(newRoute.name)
+
       if(newRoute.name == 'main_sub'  ){
         // alert('yes')
         this.ifshow_bread = false
@@ -404,6 +420,10 @@ export default {
     const { name, params, query, meta } = this.$route
 
     this.setBreadCrumb(this.$route)
+
+    // 根据保存的newRouteName 判断条件样式
+    this.getCurentStyle(this.$store.state.app.NewRouteName)
+
 
     // $(document).ready(function() {
     //   // prependHeaderSection();

@@ -178,6 +178,7 @@ export default {
   },
   methods: {
     ...mapMutations(['setCurrentPageToken']),
+    
     onChange(selection){
       const selectList = selection.map((e) => {
         return e.dataset_id

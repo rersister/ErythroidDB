@@ -1153,7 +1153,7 @@ export default {
 
          // this.mockTableData();
         this.mockTableDataTypeSource()
-        this.getReportedGeneList()
+        // this.getReportedGeneList()
 
      }
 
