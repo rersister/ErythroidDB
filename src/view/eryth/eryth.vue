@@ -39,6 +39,7 @@
           <div> 
             <!-- dataset 展示页 FilterTableForAllDateSet -->
             
+            <!-- 此component 获得的参数 能 在 下一个div 中获得吗？ searchTypeSource  -->
             <FilterTableForAllDateSet 
                   :model.sync="search"
                   :v-model="search"
@@ -403,17 +404,17 @@ export default {
           'full_name':'Burst-Forming Unit -Erythroid'},
           {'name':'CFU-E',
           'full_name':'Colony-Forming Unit – Erythroid'},
-          {'name':'ProE',
+          {'name':'Pro-E',
           'full_name':'The Proerythroblast Stage'},
           // {'name':'EB',
           // 'full_name':'Erythroblast'},
           // {'name':'EarlyBasoE',
           // 'full_name':'Early Basophilic Erythroblast'},
-          {'name':'BasoE',
+          {'name':'Baso-E',
           'full_name':'Basophilic Erythroblast'},
-          {'name':'PolyE',
+          {'name':'Poly-E',
           'full_name':'Polychromatophilic Erythroblast'},
-          {'name':'OrthoE',
+          {'name':'Ortho-E',
           'full_name':'Orthochromatic Erythroblast'},
           {'name':'Retic',
           'full_name':'Reticulocyte'},
@@ -638,12 +639,31 @@ export default {
 
 
         ],
-
+        datasetFilter:{},
       }
 
     },
     methods:{
 
+      searchDatasetByFilter(searchTypeSource){
+
+          var _this = this
+          searchDatasetTypeSource(searchTypeSource, _this.currentPageTypeSource,_this.pageSizeTypeSource,_this.cell_name).then( res=>{
+              
+              _this.spinShowTypeSource = false                    
+              let datas = res.data
+              if (datas.signal === 0){
+                // 0 表示无相关数据
+                this.$Message.info('No related datasets',15);
+
+              }else{
+                _this.datasetsTypeSource = datas.list                  
+                _this.totalTypeSource = datas.total;
+              }
+              
+          })
+
+      },
      
       mockTableData () {
         var _this = this;      
@@ -732,13 +752,20 @@ export default {
           this.tableColumns = this.getTable2Columns();
       },
 
-   
+      
+      //需要带着参数查询
       handleCurrentChangeTypeSource(val){
           // alert('chenge')
           // console.log(`当前页: ${val}`);
           var _this = this; 
           _this.currentPageTypeSource = val;
-          this.mockTableDataTypeSource()
+          // alert(this.datasetFilter)
+          if (this.datasetFilter.length = 0){
+            this.mockTableDataTypeSource()
+          }else{
+            this.searchDatasetByFilter(_this.datasetFilter)
+          }
+         
       },
       handleSizeChange(val){
           // console.log(`每页 ${val} 条`);
@@ -747,12 +774,18 @@ export default {
 
       },
       
+      //需要带着参数查询
       handleSizeChangeTypeSource(val){
         // console.log(`每页 ${val} 条`);
         var _this = this; 
         _this.pageSizeTypeSource = val;
         // alert('chenge')
-        this.mockTableDataTypeSource()
+        if (this.datasetFilter.length = 0){
+          this.mockTableDataTypeSource()
+        }else{
+          this.searchDatasetByFilter(_this.datasetFilter)
+        }
+        
       },
 
       /**
@@ -775,19 +808,13 @@ export default {
             _this.total = datas.total;
         })
       },
+
+   
       onSearch_datasetTypeSource(searchTypeSource){
 
+
         var _this = this
-        // alert('jinlai')
-        // alert(Object.keys(searchTypeSource))
-        // var keys = Object.keys(searchTypeSource)
-        // alert(typeof(keys))
         // alert(searchTypeSource)
-        // if ( keys.replace(/\s*/g,'').length.length === 0 === 0 ){
-        //     // alert('yes')  输入了空值
-        //     this.$Message.info('Please check your input of  ' + key,15);
-        //     return;
-        // }
         for (let key in searchTypeSource){
           // alert(key)
           // alert(searchTypeSource[key])
@@ -798,10 +825,12 @@ export default {
             this.$Message.info('Please check your input   ');
             return;
           }else{
-            // alert('no')  不输入空
+            // alert('I am value')
+            // alert(value)  //不输入空
             // alert(value.replace(/\s*/g,'').length) + key,15
-            if (value.replace(/\s*/g,'').length.length === 0){
-                this.$Message.info('Please check your input of  ' );
+            // value.replace(/\s*/g,'').length === 0
+            if (value.length === 0){
+                this.$Message.info('Please check your input' );
                 this.load();
                 return;
             }else{
@@ -810,23 +839,15 @@ export default {
            
           }
         }
-        searchDatasetTypeSource(searchTypeSource, _this.currentPageTypeSource,_this.pageSizeTypeSource,_this.cell_name).then( res=>{
-            
-            _this.spinShowTypeSource = false                    
-            let datas = res.data
-            if (datas.signal === 0){
-              // 0 表示无相关数据
-              this.$Message.info('No related datasets',15);
 
-            }else{
-              _this.datasetsTypeSource = datas.list                  
-              _this.totalTypeSource = datas.total;
-            }
-            
-        })
+        _this.datasetFilter = searchTypeSource
 
+        this.searchDatasetByFilter(searchTypeSource)
+        
 
       },
+
+      
       sdataSetByCellName(){
       
         // this.mockTableDataTypeSourceByCell()
@@ -890,16 +911,16 @@ export default {
           'full_name':'Colony-Forming Unit-Erythroid',
           'cell_ano':'A CFU-E cell, which has a lesser proliferative capacity than a BFU-E cell, requires the presence of erythropoietin as a stimulatory factor. '},
 
-          {'name':'ProE',
+          {'name':'Pro-E',
           'full_name':'Proerythroblast',
           'cell_ano':'The proerythroblast is a large cell with deep blue cytoplasm, high nucleus-to-cytoplasm ratio, and prominent nucleoli. Subsequent to proerythroblasts, nucleoli are no longer seen.'},
-          {'name':'BasoE',
+          {'name':'Baso-E',
           'full_name':'Basophilic Erythroblast',
           'cell_ano':'Basophilic erythroblast is a nucleated precursor in the erythrocytic series, preceding the polychromatophilic erythroblast and following the proerythroblast; the cytoplasm is basophilic, the nucleus is large with clumped chromatin, and the nucleoli have disappeared. It is also called basophilic normoblast.'},
-          {'name':'PolyE',
+          {'name':'Poly-E',
           'full_name':'Polychromatophilic Erythroblast',
           'cell_ano':'The nucleus is intensely heterochromatic, and the cytoplasm is now a characteristic lilac color. The basophilia is due to the cytoplasmic ribosomes, and the acidophilia is due to the increase in the amount of hemoglobin being synthesized by the ribosomes. This is the last stage during which cell division occurs.'},
-          {'name':'OrthoE',
+          {'name':'Ortho-E',
           'full_name':'Orthochromatic Erythroblast',
           'cell_ano':'In an orthochromatic erythroblast, the nucleus has shrunk and become darker and the growing concentration of hemoglobin turns the cytoplasm pink. '},
           {'name':'Retic',
@@ -980,22 +1001,22 @@ export default {
                                               "itemStyle":orangeColer,
                                               "children": [
                                                   {
-                                                      "name": "ProE", 
+                                                      "name": "Pro-E", 
                                                       "itemStyle":pinkColer,
                                                       "children": [
                                                           {
-                                                              "name": "BasoE", 
+                                                              "name": "Baso-E", 
                                                               "itemStyle":redColer,
                                                               "children":[
                                                                 // {"name":"EarlyBasoE","itemStyle":redColer },
                                                                 // {"name":"LateBasoE","itemStyle":redColer},
                                                                 // {"name":"PolyE","itemStyle":redColer},
                                                                 {
-                                                                  "name":"PolyE",
+                                                                  "name":"Poly-E",
                                                                   "itemStyle":redColer,
                                                                   "children": [
                                                                       {
-                                                                        "name":"OrthoE",
+                                                                        "name":"Ortho-E",
                                                                         "itemStyle":redColer,
                                                                         "children":[
                                                                           {

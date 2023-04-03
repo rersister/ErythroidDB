@@ -3,7 +3,7 @@
     <div class="lay_out">
             <Row>
 				<!--<i-col span="12"> -->
-					<h1 class="my_h1">Single Cell  Interaction Atlas</h1> 
+					<h1 class="my_h1">Single Cell Interaction Atlas</h1> 
 					</br>
 					<i-form :label-width="120">
 						<i-col span="10">
@@ -57,7 +57,9 @@
 
             <Row>
 					<div>
-						<div id="Net_view" style="width: 100%;height:400%; text-aglign:center"></div>
+					<!-- </br> -->
+						<div id="Net_view" style="width: 120%;height:500%; text-aglign:center" ></div>
+					<!-- </br> -->
 					</div>
 			</Row>
         
@@ -282,7 +284,7 @@ export default {
 					});
 					var option = {
 						title: {
-							text: 'Top 40 factor of '+ comm_type +" (Organism: "+ this.orga_name + "; Group: "+ this.source+")",
+							text: 'Top 40 ligand-receptor of '+ comm_type +" (Organism: "+ this.orga_name + "; Group: "+ this.source+")",
 							subtext: 'Circular layout',
 							top: 'bottom',
 							left: 'left'
@@ -303,6 +305,8 @@ export default {
 								circular: {
 									rotateLabel: true
 								},
+								radius: '0',
+        						center:['80%','60%'],
 								data: nodes_chart,
 								links: links,
 								categories: categories_chart,
@@ -394,7 +398,7 @@ export default {
 						animationEasingUpdate: 'quinticInOut',
 						series: [
 							{
-								name: 'Top 40 factor of '+ comm_type ,
+								name: 'Top 40 ligand-receptor of '+ comm_type ,
 								type: 'graph',
 								layout: 'circular',
 								circular: {
@@ -473,6 +477,7 @@ export default {
 			this.source = source
 			// alert(this.table_name)
 			// this.getdiff_group(this.table_name)
+			this.getNetView(this.table_name,source,this.comm_type)
 		},
 		changedSourceGroup2(source){
 			this.source2 = source

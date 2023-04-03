@@ -28,7 +28,7 @@
 	
 	<div>
 		<br>
-		<h1 class="my_h1">Differentiation Trajectory</h1>
+		<h1 class="my_h1">Differentiation Trajectory </h1>
 		<br>
 		<Row>
         	<i-form :label-width="120">
@@ -285,6 +285,7 @@ export default {
 			let _this = this  
 			this.source = source
             this.getTraCol(this.table_name,source)
+			this.getTraChart(this.table_name,this.source,this.traCol)
             
 		},
 		changedShowGroup2(source){

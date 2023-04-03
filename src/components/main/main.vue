@@ -389,10 +389,8 @@ export default {
   watch: {
     $route(newRoute) {
       // alert(newRoute.name)
-
       //  当为 search 页面时， 不需要 bread 的body 样式
       this.setNewRouteName(newRoute.name)
-
       if(newRoute.name == 'main_sub'  ){
         // alert('yes')
         this.ifshow_bread = false
@@ -421,7 +419,20 @@ export default {
 
     this.setBreadCrumb(this.$route)
 
+    // 如果直接访问 main_sub 需要更改默认样式
+    this.setNewRouteName(this.$route.name)
+      if(this.$route.name == 'main_sub'  ){
+        // alert('yes')
+        this.ifshow_bread = false
+        this.ifshow_content = true
+      }else{
+        this.ifshow_bread = true
+        this.ifshow_content =  false
+      }
+
     // 根据保存的newRouteName 判断条件样式
+    // alert(this.$route.name)
+
     this.getCurentStyle(this.$store.state.app.NewRouteName)
 
 

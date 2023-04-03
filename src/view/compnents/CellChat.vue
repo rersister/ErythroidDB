@@ -4,7 +4,7 @@
 
     <div class="lay_out">      <!-- enrichGO analysis -->  
 
-        <h1 class="my_h1">Single Cell Interaction Atlas</h1> 
+        <h1 class="my_h1">Single Cell Interaction Atlas 11</h1> 
         <div>
             <Row>
                 <Col span="12">
@@ -276,7 +276,7 @@ export default {
 			}];
 			
 			var layout = {
-				title: 'TGFb signaling pathway network',
+				title: 'TGFb signaling pathway',
 			}
 			this.CellChartHotMap_data = data
 			this.CellChartHotMap_layout = layout

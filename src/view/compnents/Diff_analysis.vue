@@ -13,6 +13,7 @@
 						</i-select>
                         <!-- <span>eg: </span> -->
 					</Form-item>
+                    
 				</i-col>
                 <i-col span="12">
                     <div style="margin-left: 4px; ">
@@ -36,6 +37,7 @@
             <Col span="12">
                 <!-- 数据查询分子名 -->
                 <span>Input gene symbol:</span>
+                
                 <!-- <i-select style="width:80%"
                                 v-model=specif_name   
                                 @on-change="search_value($event)"  filterable>        
@@ -70,9 +72,9 @@
                       </Page>                   
                   </div>
             </div>
-            <Button type="primary" size="large" @click="exportData(1)"><Icon type="ios-download-outline"></Icon>Download</Button>
-
 		</Row>
+        <Button type="primary" size="large" @click="exportData(1)"><Icon type="ios-download-outline"></Icon>Download</Button>
+
 	</div>
 
 
@@ -289,7 +291,9 @@ export default {
 
             if( "" == $event ){
 				this.$Message.info('Please input gene symbol', 10);
-				return 
+                this.mockTableData(this.series,this.currentPage,this.pageSize,this.contrastsGroup)
+				return
+
             } 
 
             _this.spinShowTypeSource = true, 
@@ -381,7 +385,7 @@ export default {
                         title:'Log2(FC)',
                     },
                      yaxis: {
-                       title:'-Log2(adj.P.Val)'
+                       title:'-Log2(P-value)'
                     },
 
                 }         

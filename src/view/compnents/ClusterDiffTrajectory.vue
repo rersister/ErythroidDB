@@ -9,7 +9,7 @@
 				
 				<i-col span="8">
 					<Form-item label="Group: ">                                                  
-						<i-select v-model="source2" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup2"  filterable>        
+						<i-select v-model="source" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup"  filterable>        
 							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 						</i-select>
 					</Form-item>
@@ -32,7 +32,7 @@
         	<i-form :label-width="120">
 				<i-col span="8">
 					<Form-item label="Group: ">                                                  
-						<i-select v-model="source" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup"  filterable>        
+						<i-select v-model="source2" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup2"  filterable>        
 							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
 						</i-select>
 					</Form-item>
@@ -240,14 +240,19 @@ export default {
 		changedShowGroup(source){
 			let _this = this  
 			this.source = source
-            this.getTraCol(this.series,source)
-            
+            // this.getTraCol(this.series,source)
+            this.getPseudoPlot(this.series,source)
 		},
+
 		changedShowGroup2(source){
+			// alert('I am herere')
 			let _this = this  
 			this.source2 = source
-			// this.getTraCol(this.series,source)
-			this.getPseudoPlot(this.series,source)
+			this.getTraCol(this.series,source)  
+			// 更新  Trajectory 图
+			this.getTraChart(this.series,source,this.traCol)
+
+			// this.getPseudoPlot(this.series,source)
 		},
 		changedTraChart(group){
 			console.log(group)

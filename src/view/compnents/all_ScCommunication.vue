@@ -231,14 +231,17 @@ export default {
 	
 				this.source = data[0].source_g
 				datas.forEach(function (group) {
-					// if (group.if_anal === 'yes'){
+
+					// 不加入 人整合的 PBMC 组 细胞数量少无 交互分析
+					var key_group = group.source_g
+					if (key_group.indexOf('PBMC') != 0 ){
 								console.log(group.source_g)
 
 								_this.data_source_list.push({
 									name:group.source_g
 								})
 								
-							// }
+					}
 				}) 
 				
 				var pName = 'incoming'
@@ -390,7 +393,7 @@ export default {
 				}];
 				
 				var layout = {
-					title: sigName.replace('TGFb','TGFβ') +' signaling pathway network' +" (Organism: "+ this.orga_name + "; Group: "+ this.source+")",
+					title: sigName.replace('TGFb','TGFβ') +' signaling pathway' +" (Organism: "+ this.orga_name + "; Group: "+ this.source+")",
 
 					xaxis: {
 							title:'Cell type',		
@@ -481,7 +484,7 @@ export default {
 					yAxis: {
 						min: 0,
 						title: {
-							text: 'Relative contribution',
+							text: '',
 							align: 'high'
 						},
 						labels: {
@@ -501,9 +504,9 @@ export default {
 					},
 					legend: {
 						layout: 'vertical',
-						align: 'right',
-						verticalAlign: 'top',
-						x: -40,
+						align: 'left',
+						verticalAlign: 'bottom',
+						x: 0,
 						y: 1,
 						floating: true,
 						borderWidth: 1,
@@ -512,7 +515,7 @@ export default {
 					},
 					series: [
 						{
-							name:  sigName.replace('TGFb','TGFβ') + ' pathway network',
+							name:  sigName.replace('TGFb','TGFβ') + ' pathway ',
 							// data: [107, 31, 635, 203, 2]
 							data:data.seriData
 						}

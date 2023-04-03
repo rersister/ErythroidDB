@@ -5,27 +5,26 @@
 	<div>
 		<Row>
 			<i-form :label-width="120">
-				<!-- <i-col span="10">
-					<Form-item label="Data source: ">                                                  
-						<i-select  clearable placeholder="Pleace select cell source"  @on-change="changedDataSource">        
-							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
-						</i-select>
+				
+                
+					<Form-item label="Comparison cluster: "> 
+						<i-col span="16">                                                 
+							<i-select v-model="group"  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart"  filterable>        
+								<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
+							</i-select>
+						</i-col>
+
+						<i-col span="24">
+						<!-- margin-left: 4px;  -->
+						<div style="word-break: break-word; ">
+						<span >
+							e.g, Basophilic_basal_bone_marrow-VS-Basophilic_fetal_liver  means the Basophilic_basal_bone_marrow group versus the Basophilic_fetal_liver group
+						</span>
+					</div>
+					</i-col>
 					</Form-item>
-				</i-col> -->
-                <i-col span="12">
-					<Form-item label="Comparison cluster: ">                                                  
-						<i-select v-model="group"  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart"  filterable>        
-							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
-						</i-select>
-					</Form-item>
-				</i-col>
-				<i-col span="12">
-                    <div style="margin-left: 4px; ">
-					<span>
-						e.g, Basophilic_basal_bone_marrow-VS-Basophilic_fetal_liver means the Basophilic_basal_bone_marrow group versus the Basophilic_fetal_liver group
-					</span>
-				</div>
-                </i-col>
+				
+				
 			</i-form>
         </Row>
  		
@@ -99,7 +98,7 @@
 						</i-select>
 					</Form-item>
 				</i-col> -->
-                <i-col span="8">
+                <i-col span="12">
 					<!-- Comparison Group: -->
 					<Form-item label="Comparison cluster: ">                                                  
 						<i-select  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart2"  filterable>        
@@ -107,9 +106,7 @@
 						</i-select>
 					</Form-item>
 				</i-col>
-				<i-col span="8">
-                                            
-                
+				<i-col span="12">
 					<Form-item label="Enrichment type: ">
 						<i-select :model.sync="enrichGroup" clearable  placeholder="Pleace select Enrichment Type" @on-change="changeEnrichType"  filterable>                    
 							<i-option v-for="(goType,index) in goTypeList" :key='index' :value="goType.value">{{ goType.name }}</i-option>
@@ -233,7 +230,7 @@ export default {
 				// }
 			},
 			{
-				title: 'p_val',
+				title: 'P-val',
 				key: 'p_val',
 				"sortable": true,
 				filter: {
@@ -242,7 +239,7 @@ export default {
 
 			},
 			{
-				title: 'avg_logFC',
+				title: 'avLogFC',
 				key: 'avg_logFC',
 				"sortable": true,
 				filter: {
@@ -268,7 +265,7 @@ export default {
 			// 	},
 			// },
 			{
-				title: 'p_val_adj',
+				title: 'P-adj.val',
 				key: 'p_val_adj',
 				"sortable": true,
 				filter: {
@@ -437,7 +434,7 @@ export default {
 						yaxis: {
 							// showgrid: TRUE,
                             title:{
-                                    text: ' Term [-log10(p.adjust)]',
+                                    text: 'Pathway term',
                                     position:'top',
                                     standoff: 40,
                                     yanchor:'top',
@@ -622,7 +619,7 @@ export default {
                         title:'Log2(FC)',
                     },
                      yaxis: {
-                       title:'-Log2(adj.P.Val)'
+                       title:'-Log2(P-value)'
                     },
 
                 }         
@@ -681,6 +678,9 @@ export default {
 			// alert(table_name)
 			if( "" == $event ){
 				this.$Message.info('Please input gene symbol', 10);
+				//
+				this.mockTableData(this.series,this.currentPage,this.pageSize,this.group) 
+              
 				return 
             } 
 			var _this = this;      
@@ -698,7 +698,7 @@ export default {
 					_this.diffData = datas.list                  
 					_this.totalRow = datas.total;
 				}else{
-
+					this.$Message.info('No related datasets',15);
 				}
 				
 			})

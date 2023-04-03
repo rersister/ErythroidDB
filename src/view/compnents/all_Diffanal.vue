@@ -66,7 +66,7 @@
                       </Page>                   
                   </div>
             </div>
-			<Button type="primary" size="large" @click="exportData(1)"><Icon type="ios-download-outline"></Icon>Download</Button>
+			<Button type="primary" size="large" @click="exportExcel"><Icon type="ios-download-outline"></Icon>Download</Button>
 			</Br>
 		</Row>
 	</div>
@@ -83,6 +83,8 @@ import FilterTable from '../compnents/FilterTable';
 import VuePlotly from '@statnett/vue-plotly'
 import {getdiffGroup,getDiffData} from '@/api/erythdataservice'
 import {getDatasetTypeSource,getDiffPageDataset,searchDiffDatasetByParms} from '@/api/erythdataset'
+import {export_json_to_excel} from '@/assets/js/Export2Excel'
+
 
 const  P_Value_range = {
     0: {
@@ -177,27 +179,27 @@ export default {
 				title: 'logFC',
 				key: 'logFC',
 				"sortable": true,
-				filter: {
-				type: 'Input'
-				}
+				// filter: {
+				// type: 'Input'
+				// }
 
 			},
 			{
 				title: 'AveExpr',
 				key: 'logCPM',
 				"sortable": true,
-				filter: {
-				type: 'Input'
-				}
+				// filter: {
+				// type: 'Input'
+				// }
 
 			},
 			{
 				title: 'adj.P.Val',
 				key: 'FDR',
 				"sortable": true,
-				filter: {
-				type: 'Input'
-				},
+				// filter: {
+				// type: 'Input'
+				// },
 			},
 			{
 				title: 'P.Value',
@@ -297,25 +299,36 @@ export default {
             })
 		},
 
-		exportData(type){
-                if (type === 1) {
-                    this.$refs.table.exportCsv({
-                        filename: 'diff_data'
-                    });
-                }else if (type === 2) {
-                    this.$refs.table.exportCsv({
-                        filename: '排序和过滤后的数据',
-                        original: false
-                    });
-                }else if (type === 3) {
-                    this.$refs.table.exportCsv({
-                        filename: '自定义数据',
-                        columns: this.columns8.filter((col, index) => index < 4),
-                        data: this.data7.filter((data, index) => index < 4)
-                    });
-                }
-                  
-        },
+		formatJson(filterVal,tableData){
+			return tableData.map((v)=>{
+				// console.log('v:')
+				// console.log(v)
+				return filterVal.map((j) =>{
+					// console.log(v[j])
+					return v[j]
+				})
+
+			})
+
+		},
+		exportExcel(){
+				const tHeader = ['Symbol','logFC','AveExpr','adj.P.Val','P.Value']
+				const filterVal = ['SYMBOL','logFC','logCPM','FDR','P.Value']
+				const filename = 'diff-data'
+				// console.log('exportExcell')
+				// console.log(this.diffData)   //  this.diffData 只是 diffData当前页，应该不止当前页
+				// const tableData = JSON.stringify(this.diffData)
+				const data = this.formatJson(filterVal,this.diffData)
+				// console.log(data )
+
+				export_json_to_excel({
+					header: tHeader,
+					data,
+					filename
+				})
+
+		
+		},
       
 		getdiff_group(table_name){
             let contrasts_group_type_list = []
@@ -376,7 +389,7 @@ export default {
                         title:'Log2(FC)',
                     },
                      yaxis: {
-                       title:'-Log2(adj.P.Val)'
+                       title:'-Log2(P-value)'
                     },
 
                 }         
@@ -475,6 +488,8 @@ export default {
 	.lay_out{
         margin: 2% 2%  2% 2%;
     }
-
+	.ivu-table-border td, .ivu-table-border th {
+    	/* border-right: 1px solid #e8eaec; */  
+	}
 </style>
 

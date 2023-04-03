@@ -10,11 +10,13 @@
                             <span class="h4_title" >Input gene symbol:</span>
                             <i-select style="width:80%"
                                 v-model=specif_name   
-                                @on-change="search_value($event)"  filterable>        
+                                @on-change="searchItemByName($event)" 
+                                @on-search="searchItemByName($event)"  
+                                filterable>        
 							    <i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
 					        </i-select>
                             <!-- <Input class='my_class_input' v-on:input="search_value($event)"  :placeholder="search_placeholder"/>                          -->
-                            <Button class='button_mystyle' @click="searchItemByName" >Search</Button>
+                            <!-- <Button class='button_mystyle' @click="searchItemByName" >Search</Button> -->
                         </Col>                                                                                                                                                       
                 </Row>       
                 <br>     
@@ -191,12 +193,13 @@ export default {
             // alert(inpute_v)
             this.inpute_v = inpute_v
         },
-		searchItemByName(){
 
+
+		searchItemByName(inpute_v){
            let _this = this
            _this.ShowitemInfoTip = false
         
-           var micvalue = _this.inpute_v
+           var micvalue = inpute_v
         //    alert(micvalue)
            this.specif_name = micvalue
            this.getSpecifExpreOptionsByName(this.series,this.dataType,micvalue)
@@ -376,11 +379,11 @@ export default {
                         // link:"http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=MT2A"
                         link:"http://www.ensembl.org/Homo_sapiens/Gene/Summary?g="+ _this.specif_name
                     },
-                    {
-                        name:"EBI",
-                        // link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=MT2A"
-                        link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=" + _this.specif_name
-                    },
+                    // {
+                    //     name:"EBI",
+                    //     // link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=MT2A"
+                    //     link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=" + _this.specif_name
+                    // },
                     {
                         name:"OMIM",
                         // link:"https://omim.org/search/?search=MT2A"
@@ -391,10 +394,10 @@ export default {
                         // link:"http://cancer.sanger.ac.uk/cosmic/gene/analysis?ln=MT2A"
                         link:"http://cancer.sanger.ac.uk/cosmic/gene/analysis?ln=" + _this.specif_name
                     },
-                     {
-                        name:"HPA",
-                        link:"http://www.proteinatlas.org/ENSG00000125148-MT2A/tissue"
-                    },
+                    //  {
+                    //     name:"HPA",
+                    //     link:"http://www.proteinatlas.org/ENSG00000125148-MT2A/tissue"
+                    // },
                     {
                         name:"DrugBank",
                         // link:"https://www.drugbank.ca/unearth/q?query=MT2A&searcher=targets"
@@ -421,11 +424,11 @@ export default {
                         // link:"http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=MT2A"
                         link:"http://www.ensembl.org/Homo_sapiens/Gene/Summary?g="+ _this.specif_name
                     },
-                    {
-                        name:"EBI",
-                        // link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=MT2A"
-                        link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=" + _this.specif_name
-                    },
+                    // {
+                    //     name:"EBI",
+                    //     // link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=MT2A"
+                    //     link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=" + _this.specif_name
+                    // },
                     {
                         name:"OMIM",
                         // link:"https://omim.org/search/?search=MT2A"
@@ -436,10 +439,10 @@ export default {
                         // link:"http://cancer.sanger.ac.uk/cosmic/gene/analysis?ln=MT2A"
                         link:"http://cancer.sanger.ac.uk/cosmic/gene/analysis?ln=" + _this.specif_name
                     },
-                     {
-                        name:"HPA",
-                        link:"http://www.proteinatlas.org/ENSG00000125148-MT2A/tissue"
-                    },
+                    //  {
+                    //     name:"HPA",
+                    //     link:"http://www.proteinatlas.org/ENSG00000125148-MT2A/tissue"
+                    // },
                     {
                         name:"DrugBank",
                         // link:"https://www.drugbank.ca/unearth/q?query=MT2A&searcher=targets"
@@ -465,11 +468,11 @@ export default {
                         // link:"http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=MT2A"
                         link:"http://www.ensembl.org/Homo_sapiens/Gene/Summary?g="+ _this.specif_name
                     },
-                    {
-                        name:"EBI",
-                        // link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=MT2A"
-                        link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=" + _this.specif_name
-                    },
+                    // {
+                    //     name:"EBI",
+                    //     // link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=MT2A"
+                    //     link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=" + _this.specif_name
+                    // },
                     {
                         name:"OMIM",
                         // link:"https://omim.org/search/?search=MT2A"
@@ -480,10 +483,10 @@ export default {
                         // link:"http://cancer.sanger.ac.uk/cosmic/gene/analysis?ln=MT2A"
                         link:"http://cancer.sanger.ac.uk/cosmic/gene/analysis?ln=" + _this.specif_name
                     },
-                     {
-                        name:"HPA",
-                        link:"http://www.proteinatlas.org/ENSG00000125148-MT2A/tissue"
-                    },
+                    //  {
+                    //     name:"HPA",
+                    //     link:"http://www.proteinatlas.org/ENSG00000125148-MT2A/tissue"
+                    // },
                     {
                         name:"DrugBank",
                         // link:"https://www.drugbank.ca/unearth/q?query=MT2A&searcher=targets"

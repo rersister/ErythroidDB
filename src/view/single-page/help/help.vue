@@ -676,11 +676,10 @@ export default {
 /* 导航栏的样式 */
 .navs {
     position: fixed;
-    top: 125px;
-    left: 10px;
+    top: 170px;
+    left: 5px;
     background-color: #efefef;
     cursor: pointer;
-
 }
 
 

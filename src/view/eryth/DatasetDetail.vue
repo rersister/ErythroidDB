@@ -112,10 +112,6 @@
                                     </Page>                   
                                 </div>
                             </div>
-                        
-                        
-                     
-                    
                     </Row> 
 
                    
@@ -875,11 +871,11 @@ export default {
                         // link:"http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=MT2A"
                         link:"http://www.ensembl.org/Homo_sapiens/Gene/Summary?g="+ _this.specif_name
                     },
-                    {
-                        name:"EBI",
-                        // link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=MT2A"
-                        link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=" + _this.specif_name
-                    },
+                    // {
+                    //     name:"EBI",
+                    //     // link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=MT2A"
+                    //     link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=" + _this.specif_name
+                    // },
                     {
                         name:"OMIM",
                         // link:"https://omim.org/search/?search=MT2A"
@@ -890,14 +886,14 @@ export default {
                         // link:"http://cancer.sanger.ac.uk/cosmic/gene/analysis?ln=MT2A"
                         link:"http://cancer.sanger.ac.uk/cosmic/gene/analysis?ln=" + _this.specif_name
                     },
-                     {
-                        name:"HPA",
-                        link:"http://www.proteinatlas.org/ENSG00000125148-MT2A/tissue"
-                    },
+                    // {
+                    //     name:"HPA",
+                    //     link:"http://www.proteinatlas.org/ENSG00000125148-MT2A/tissue"
+                    // },
                     {
                         name:"DrugBank",
                         // link:"https://www.drugbank.ca/unearth/q?query=MT2A&searcher=targets"
-                        link:"https://www.drugbank.ca/unearth/q?query="+_this.specif_name+"&searcher=targets"
+                        link:"https://go.drugbank.com/unearth/q?searcher=bio_entities&query="+_this.specif_name
                     },
                 )
 
@@ -920,11 +916,11 @@ export default {
                         // link:"http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=MT2A"
                         link:"http://www.ensembl.org/Homo_sapiens/Gene/Summary?g="+ _this.specif_name
                     },
-                    {
-                        name:"EBI",
-                        // link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=MT2A"
-                        link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=" + _this.specif_name
-                    },
+                    // {
+                    //     name:"EBI",
+                    //     // link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=MT2A"
+                    //     link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=" + _this.specif_name
+                    // },
                     {
                         name:"OMIM",
                         // link:"https://omim.org/search/?search=MT2A"
@@ -935,14 +931,14 @@ export default {
                         // link:"http://cancer.sanger.ac.uk/cosmic/gene/analysis?ln=MT2A"
                         link:"http://cancer.sanger.ac.uk/cosmic/gene/analysis?ln=" + _this.specif_name
                     },
-                     {
-                        name:"HPA",
-                        link:"http://www.proteinatlas.org/ENSG00000125148-MT2A/tissue"
-                    },
+                    //  {
+                    //     name:"HPA",
+                    //     link:"http://www.proteinatlas.org/ENSG00000125148-MT2A/tissue"
+                    // },
                     {
                         name:"DrugBank",
                         // link:"https://www.drugbank.ca/unearth/q?query=MT2A&searcher=targets"
-                        link:"https://www.drugbank.ca/unearth/q?query="+_this.specif_name+"&searcher=targets"
+                        link:"https://go.drugbank.com/unearth/q?searcher=bio_entities&query="+_this.specif_name
                     },
                 )
 
@@ -964,11 +960,11 @@ export default {
                         // link:"http://www.ensembl.org/Homo_sapiens/Gene/Summary?g=MT2A"
                         link:"http://www.ensembl.org/Homo_sapiens/Gene/Summary?g="+ _this.specif_name
                     },
-                    {
-                        name:"EBI",
-                        // link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=MT2A"
-                        link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=" + _this.specif_name
-                    },
+                    // {
+                    //     name:"EBI",
+                    //     // link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=MT2A"
+                    //     link:"hhttp://www.ebi.ac.uk/gxa/query?geneQuery=" + _this.specif_name
+                    // },
                     {
                         name:"OMIM",
                         // link:"https://omim.org/search/?search=MT2A"
@@ -979,14 +975,14 @@ export default {
                         // link:"http://cancer.sanger.ac.uk/cosmic/gene/analysis?ln=MT2A"
                         link:"http://cancer.sanger.ac.uk/cosmic/gene/analysis?ln=" + _this.specif_name
                     },
-                     {
-                        name:"HPA",
-                        link:"http://www.proteinatlas.org/ENSG00000125148-MT2A/tissue"
-                    },
+                    //  {
+                    //     name:"HPA",
+                    //     link:"http://www.proteinatlas.org/ENSG00000125148-MT2A/tissue"
+                    // },
                     {
                         name:"DrugBank",
                         // link:"https://www.drugbank.ca/unearth/q?query=MT2A&searcher=targets"
-                        link:"https://www.drugbank.ca/unearth/q?query="+_this.specif_name+"&searcher=targets"
+                        link:"https://go.drugbank.com/unearth/q?searcher=bio_entities&query="+_this.specif_name
                     },
                 )
 

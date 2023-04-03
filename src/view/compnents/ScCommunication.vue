@@ -335,7 +335,7 @@ export default {
 				}];
 				
 				var layout = {
-					title: sigName.replace('TGFb','TGFβ') +' signaling pathway network'  +' (' + this.series +'; Group: ' + source +')',
+					title: sigName.replace('TGFb','TGFβ') +' signaling pathway'  +' (' + this.series +'; Group: ' + source +')',
 
 					xaxis: {
 							title:'Cell type',		
@@ -439,7 +439,7 @@ export default {
 					yAxis: {
 						min: 0,
 						title: {
-							text: 'Relative contribution',
+							text: '',
 							align: 'high'
 						},
 						labels: {
@@ -470,7 +470,7 @@ export default {
 					},
 					series: [
 						{
-							name:  sigName.replace('TGFb','TGFβ') + ' pathway network',
+							name:  sigName.replace('TGFb','TGFβ') + ' pathway ',
 							// data: [107, 31, 635, 203, 2]
 							data:data.seriData
 						}
@@ -538,17 +538,17 @@ export default {
 
 
 		changedSigName(sigName){
-			// alert(sigName)
+			// alert(sigName.indexOf('TGFβ'))
 			this.siName = sigName
 			//  在查询前替换成旧的 信号名
-			if (sigName.indexOf('TGFβ')>0){
-				sigName.replace('TGFβ','TGFb')
+			if (sigName.indexOf('TGFβ')>-1){
+				sigName=sigName.replace('TGFβ','TGFb')
 			}
 
-			this.getCellChartHotMap(this.series,this.source,siName)
+			this.getCellChartHotMap(this.series,this.source,sigName)
 			// this.getCellChartView(this.source,pName);
 			// this.geteSigPathNet_chart(this.series,this.source,sigName);
-			this.getCellChartRcontri(this.series,this.source,siName);
+			this.getCellChartRcontri(this.series,this.source,sigName);
 			
 		},
 

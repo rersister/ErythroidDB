@@ -209,7 +209,7 @@ export default {
 
                         var layout = {
                             // "("+this.series+'('+ this.source+')'+')',  没有副标题，把标题设置简短
-                            title:'GO ('+ this.goType + ') enrichment of ' + this.contrGroupOfEnrich+ '\n'
+                            title:this.goType + ' enrichment of ' + this.contrGroupOfEnrich+ '\n'
                                 +' ('+this.series+ "; Experiment type: "+ myCagrowth_type +')',
                             
                             // bargap: 0.25,
@@ -222,7 +222,7 @@ export default {
                             yaxis: {
                                 // showgrid: TRUE,
                                 title:{
-                                        text: 'GO term [-log10(p.adjust)]',
+                                        text: 'Pathway term',
                                         position:'top',
                                         standoff: 40,
                                         yanchor:'top',

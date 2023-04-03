@@ -16,7 +16,7 @@
 						<i-select v-model="colorby" style="width:70%" clearable placeholder="Pleace select cell group"  @on-change="changedClustChart($event)"  filterable>        
 							<i-option   v-for="group in group_type_list" :value="group.value">{{ group.name }}</i-option>
 						</i-select>
-                        <Button type="primary" @click="getPCAByKey($event)" >Search</Button>
+                        <!-- <Button type="primary" @click="getPCAByKey($event)" >Search</Button> -->
 				</Col>
 			</i-form>
         </Row>
@@ -243,6 +243,7 @@ export default {
       changeCellSource($event){
             // alert($event)
             this.cell_source = $event
+            this.getPCAByKey()
       },
 
       getPCAByKey(){
@@ -255,13 +256,16 @@ export default {
       },
 	  changedClustChart(value){
         //   alert(value)
-          let _this = this
-          this.group_type_list.forEach(function(item){
-              if(item.name == value){
-                  _this.colorby = item.value
-              }
+        let _this = this
+        this.group_type_list.forEach(function(item){
+            if(item.name == value){
+                _this.colorby = item.value
+            }
 
-          })
+        })
+        this.getPCAByKey()
+
+
         //   alert(_this.colorby)
         //var table_name = 'all_'+this.orga +'rna'+'_dev_'+this.sequ_type+'cluster'
         

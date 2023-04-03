@@ -17,18 +17,18 @@
                     <i-select v-model="searchGene" placeholder="Please input gene symbol" clearable style="width:80%" @on-change='changeGsymbol($event)'  filterable>
                         <i-option v-for="item in GeneList" :value="item.value" >{{ item.label }}</i-option>
                     </i-select>
-                    <Button type="primary" @click="searchBygene($event)" >Search</Button>
+                    <!-- <Button type="primary" @click="searchBygene($event)" >Search</Button> -->
                 </Col>
 
             </Row>
             </Br>
-            <div>
-                <Row>					
-                    <!-- tsne 图 -->			
-                    <!-- <Spin size="large" fix v-if="spinShow1"></Spin> -->
-                    <vue-plotly id='vivoE_chart' :autoResize="ifResize" :data="vivo_data" :layout="vivo_layout" :options="vivo_options"/>
-                </Row>
-            </div>
+            
+            <Row>					
+                <!-- tsne 图 在这里使用不起效果，不知道为啥 bug ,先不使用-->			
+                <Spin size="large" fix v-if="spinShow1"></Spin>
+                <vue-plotly  :autoResize="ifResize" :data="vivo_data" :layout="vivo_layout" :options="vivo_options"/>
+            </Row>
+            
         </div>
         <div v-show="ifShow">
             <!-- <h1 class="my_h1" v-show="ifShow" >Expression profiling ({{selectList[1]}})</h1> -->
@@ -118,6 +118,7 @@ export default {
     data(){
         return{
            orga_name:'',
+           spinShow1:false,
            ifShow: false,
            ifResize:true,
            ifResize2:true,
@@ -295,6 +296,7 @@ export default {
         searchVivtroBygene($event){
             // alert(this.vitro_source)
             // alert($event)
+            let _this = this
             this.searchVitroGene = $event
             if( "" == this.vitro_source ){
                 this.$Message.info('please select source', 10);
@@ -311,7 +313,7 @@ export default {
                 if (datas.signal == 0){
                     // alert(datas.message)
                     this.$Message.info("Please check your input(no such gene)", 10);
-                    this.spinShow4 = false
+                    this.spinShow1 = false
                     
                 }else{
                     // alert(datas.xData)
@@ -336,37 +338,12 @@ export default {
                             }
                         };
                         // alert(this.vivo_data)
+                        this.spinShow1 = false
                         this.vitro_data.push(result);
+                        
                     }
 
-                    let layout1 = {
-                        title:  this.searchVitroGene +' expression level (Source: '+ this.cell_source+')',
-                        // autosize:true,
-                        yaxis: {
-                            
-                            autorange: true,
-                            rangemode :"normal",
-                            // range: list(0,20), 
-                            showgrid: true,
-                            zeroline: true,
-                            // dtick: 5,
-                            gridcolor: 'rgb(255, 255, 255)',
-                            gridwidth: 1,
-                            zerolinecolor: 'rgb(255, 255, 255)',
-                            zerolinewidth: 2
-                        },
-                        margin: {
-                                l: 40,
-                                r: 30,
-                                b: 80,
-                                t: 100
-                            },
-                        paper_bgcolor: 'rgb(243, 243, 243)',
-                        plot_bgcolor: 'rgb(243, 243, 243)',
-                        showlegend: false,
-                        
-
-                    };
+                   
                     let layout = {
                         title:  this.searchGene +' expression level (Source: '+ this.selectList[1]+')',
                         bargap: 0.25,
@@ -401,6 +378,7 @@ export default {
 
         changeGsymbol($event){
             this.searchGene= $event
+            this.searchBygene()
         },
 
         searchBygene(){
@@ -496,170 +474,12 @@ export default {
         
         },
        
-        searchSelect1(val,searchGene){
-
-            getAllDevExpreBulkData(val,searchGene).then( res =>{
-                    let datas = res.data
-                    console.log(res.data)
-                    if (datas.signal == 0){
-                        // alert(datas.message)
-                        this.$Message.info("Please check your input(no such gene)", 10);
-                        this.spinShow4 = false
-                        
-                    }else{
-                        // alert(datas.xData)
-                        // alert(datas.yData)
-                        this.vivo_data = []
-                        var xData = datas.xData
-                        var yData =datas.yData
-                        for ( var i = 0; i < xData.length; i ++ ) {
-                            var result = {
-                                type: 'box',
-                                y: yData[i],
-                                name: xData[i],
-                                boxpoints: 'all',
-                                jitter: 0.5,
-                                whiskerwidth: 0.2,
-                                fillcolor: 'cls',
-                                marker: {
-                                    size: 2
-                                },
-                                line: {
-                                    width: 1
-                                }
-                            };
-                            // alert(this.vivo_data)
-                            this.vivo_data.push(result);
-                        }
-                        let layout = {
-                            title:  this.searchGene +' expression level (Source: '+ this.selectList[0]+')',
-                            bargap: 0.25,
-                            yaxis: {
-                                
-                                autorange: true,
-                                rangemode :"normal",
-                                // range: list(0,20), 
-                                showgrid: true,
-                                zeroline: true,
-                                // dtick: 5,
-                                gridcolor: 'rgb(255, 255, 255)',
-                                gridwidth: 1,
-                                zerolinecolor: 'rgb(255, 255, 255)',
-                                zerolinewidth: 2
-                            },
-                            margin: {
-                                    l: 40,
-                                    r: 30,
-                                    b: 80,
-                                    t: 100
-                                },
-                                paper_bgcolor: 'rgb(243, 243, 243)',
-                                plot_bgcolor: 'rgb(243, 243, 243)',
-                                showlegend: false
-                        };
-                        this.vivo_layout = layout
-                    }
-
-                })
-
-        },
-        searchSelect2(val,searchGene){
-            getAllDevExpreBulkData(val,searchGene).then( res =>{
-                let datas = res.data
-                console.log(res.data)
-                if (datas.signal == 0){
-                    // alert(datas.message)
-                    this.$Message.info("Please check your input(no such gene)", 10);
-                    this.spinShow4 = false
-                    
-                }else{
-                    // alert(datas.xData)
-                    // alert(datas.yData)
-                    this.vitro_data = []
-                    var xData = datas.xData
-                    var yData =datas.yData
-                    for ( var i = 0; i < xData.length; i ++ ) {
-                        var result = {
-                            type: 'box',
-                            y: yData[i],
-                            name: xData[i],
-                            boxpoints: 'all',
-                            jitter: 0.5,
-                            whiskerwidth: 0.2,
-                            fillcolor: 'cls',
-                            marker: {
-                                size: 2
-                            },
-                            line: {
-                                width: 1
-                            }
-                        };
-                        // alert(this.vivo_data)
-                        this.vitro_data.push(result);
-                    }
-
-                    let layout1 = {
-                        title:  this.searchVitroGene +' expression level (Source: '+ this.vitro_source+')',
-                        // autosize:true,
-                        yaxis: {
-                            
-                            autorange: true,
-                            rangemode :"normal",
-                            // range: list(0,20), 
-                            showgrid: true,
-                            zeroline: true,
-                            // dtick: 5,
-                            gridcolor: 'rgb(255, 255, 255)',
-                            gridwidth: 1,
-                            zerolinecolor: 'rgb(255, 255, 255)',
-                            zerolinewidth: 2
-                        },
-                        margin: {
-                                l: 40,
-                                r: 30,
-                                b: 80,
-                                t: 100
-                            },
-                        paper_bgcolor: 'rgb(243, 243, 243)',
-                        plot_bgcolor: 'rgb(243, 243, 243)',
-                        showlegend: false,
-                        
-
-                    };
-                    let layout = {
-                        title:  this.searchGene +' expression level (Source: '+ this.selectList[1]+')',
-                        bargap: 0.25,
-                        yaxis: {
-                            
-                            autorange: true,
-                            rangemode :"normal",
-                            // range: list(0,20), 
-                            showgrid: true,
-                            zeroline: true,
-                            // dtick: 5,
-                            gridcolor: 'rgb(255, 255, 255)',
-                            gridwidth: 1,
-                            zerolinecolor: 'rgb(255, 255, 255)',
-                            zerolinewidth: 2
-                        },
-                        margin: {
-                                l: 40,
-                                r: 30,
-                                b: 80,
-                                t: 100
-                            },
-                            paper_bgcolor: 'rgb(243, 243, 243)',
-                            plot_bgcolor: 'rgb(243, 243, 243)',
-                            showlegend: false
-                    };
-                    this.vitro_layout = layout
-                }
-
-            })
-        },
+     
+       
         changeCellSource($event){
             // alert($event)
             this.cell_source = $event
+            this.searchBygene()
         },
         changeVivtroCellSource($event){
            this.vitro_source = $event
@@ -673,82 +493,8 @@ export default {
                 }
                 return value;
         },
-        gettpmE_chart(){
-            
-            var xData = ['MEP<br>', 'BFU-E<br>',
-                'CFU-E<br>', 'pro-E<br>',
-                'early<br>basophilic', 'late<br>basophilic',
-                'polychromatic<br>', 'orthochromatic<br>',
-                'reticulocyte<br>'];
-
-            var yData = [
-                    this.$options.methods.getrandom(30 ,10),
-                    this.$options.methods.getrandom(30, 20),
-                    this.$options.methods.getrandom(30, 25),
-                    this.$options.methods.getrandom(30, 40),
-                    this.$options.methods.getrandom(30, 45),
-                    this.$options.methods.getrandom(30, 30),
-                    this.$options.methods.getrandom(30, 20),
-                    this.$options.methods.getrandom(30, 15),
-                    this.$options.methods.getrandom(30, 43),
-                ];
-            var colors = ['rgba(93, 164, 214, 0.5)', 'rgba(255, 144, 14, 0.5)', 'rgba(44, 160, 101, 0.5)', 'rgba(255, 65, 54, 0.5)', 'rgba(207, 114, 255, 0.5)', 'rgba(127, 96, 0, 0.5)', 'rgba(255, 140, 184, 0.5)', 'rgba(79, 90, 117, 0.5)', 'rgba(222, 223, 0, 0.5)'];
-
-           
-
-            for ( var i = 0; i < xData.length; i ++ ) {
-                var result = {
-                    type: 'box',
-                    y: yData[i],
-                    name: xData[i],
-                    boxpoints: 'all',
-                    jitter: 0.5,
-                    whiskerwidth: 0.2,
-                    fillcolor: 'cls',
-                    marker: {
-                        size: 2
-                    },
-                    line: {
-                        width: 1
-                    }
-                };
-                this.tpmE_data.push(result);
-            }
-
-            let layout = {
-                title: 'AAGAB expression level (CB)',
-                yaxis: {
-                    autorange: true,
-                    showgrid: true,
-                    zeroline: true,
-                    dtick: 5,
-                    gridcolor: 'rgb(255, 255, 255)',
-                    gridwidth: 1,
-                    zerolinecolor: 'rgb(255, 255, 255)',
-                    zerolinewidth: 2,
-                    title:"Normalized value"
-                },
-                xaxis:{
-
-                    title:"Group"
-                },
-
-                margin: {
-                    l: 40,
-                    r: 30,
-                    b: 80,
-                    t: 100
-                },
-                paper_bgcolor: 'rgb(243, 243, 243)',
-                plot_bgcolor: 'rgb(243, 243, 243)',
-                showlegend: false
-            };
-
-            this.tpmE_layout = layout
-           
-
-
-        },
+        
+      
 
       
          

@@ -15,7 +15,17 @@
 					</i-col>
 					<i-col span="12">
 						<Form-item label="Add feature: ">
-							<Input search enter-button="Add" @on-search="addFeatureByName($event)" placeholder="Please input gene symbol"/>
+							<i-select 
+								enter-button="Search" 
+								style="width:80%"  
+								v-model=InputKeyName
+								@on-search="addFeatureByName($event)"  
+								placeholder="Please input gene symbol"  
+								@on-change="addFeatureByName($event)"  filterable>        
+									<i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
+							</i-select>
+							<!-- <Button type="primary" @click="addFeatureByName($event)" >Add</Button> -->
+							<!-- <Input search enter-button="Add" @on-search="addFeatureByName($event)" placeholder="Please input gene symbol"/> -->
 						</Form-item>
 					</i-col>
 				
@@ -38,7 +48,7 @@
 		<br>		
 		<Row :gutter="16">		     
 			<i-form :label-width="120">
-				<i-col span="10"> 
+				<i-col span="12"> 
 					<Form-item label="Enrichment cluster: ">                                                  
 						<i-select  v-model="group" :model.sync="showByGroup" clearable placeholder="Pleace select cluster group"  @on-change="changedEnrichChart"  filterable>        
 							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
@@ -46,7 +56,7 @@
 					</Form-item>
 				</i-col>
 
-				<i-col span="10">
+				<i-col span="12">
                                             
                 
 					<Form-item label="Enrichment type: ">
@@ -70,14 +80,16 @@
 
 
 
-
 </div>
     
 </template>
 
 <script>
 import VuePlotly from '@statnett/vue-plotly'
-import {getFeatureBygroup,getTsneDataCol,getTsneGroup,getClusterMarker,getClusterEncihGroup,getClusterEnrichData} from '@/api/erythdataservice'
+import {getFeatureBygroup,getTsneDataCol,getTsneGroup,getClusterMarker,
+	getClusterEncihGroup,getClusterEnrichData} from '@/api/erythdataservice'
+import {getAllSCFeatureKeyWords} from '@/api/erythdataset'
+
 export default {
 	name:"ClusterMarker",
 	components:{
@@ -86,6 +98,8 @@ export default {
 	},
 	data(){
 		return{
+			keyWords_list:[
+            ],
 			ifResize:true,
 			ClusterHotMapMarkerdata:[],
 			enrich_data:[],
@@ -135,7 +149,7 @@ export default {
 			},
 
 			ClusterHotMapMarker_layout:{
-				title: 'Identity features for each cluster',
+					title: 'Identity features for each cluster (' +this.series+'; Group: ' + this.source+')',
 					xaxis: {
 						// range: [ 0.75, 5.25 ],
                         title:'Cell cluster',
@@ -192,11 +206,27 @@ export default {
 		}
 	},
 	methods:{
-		
+
+		getAllscFeature(series,source){
+
+			getAllSCFeatureKeyWords(series,source).then(res=>{
+
+				let mykeyWord_list = res.data.keywords
+				this.keyWords_list = mykeyWord_list
+
+			})
+
+
+			// this.keyWords_list.push()
+
+		},
+
+
+
 		addFeatureByName(feature_name){
 			var _this = this
-			console.log("feature_name")
-			console.log(feature_name)
+			// console.log("feature_name")
+			// console.log(feature_name)
 			if (typeof this.source == 'undefined' ){
 				
 				this.$Message.info('Please select data source firstly', 10);
@@ -209,9 +239,11 @@ export default {
 					
 				}else{
 					_this.spinShow1 = true
-					getFeatureBygroup(this.series,this.source,feature_name).then(res => {
+					// this.x_list 把细胞分群的顺序传入，以便返回的值和目前的顺序一致 
+					getFeatureBygroup(this.series,this.source,feature_name,this.x_list).then(res => {
 					
 					let datas = res.data
+					console.log("getFeatureBygroup")
 					console.log(datas.col_list)
 
 					if (datas.col_list===0){
@@ -235,7 +267,7 @@ export default {
 							hoverongaps: false
 						}];
 						var layout = {
-								title: 'Identity features for each cluster',
+							    title: 'Identity features for each cluster (' +this.series+'; Group: ' + this.source+')',
 								autosize: false,
 								
 								xaxis: {
@@ -249,24 +281,24 @@ export default {
 								},
 								yaxis: {
 									// range: [0, 8],
-								title:'Feature name'
-								},title: 'Identity features for each cluster',
-					xaxis: {
-						// range: [ 0.75, 5.25 ],
-                        title:'Cell cluster',
-						tickmode: 'array',
-						automargin: true,
-						titlefont: { size:15},
+									title:'Feature name'
+								},
+								title: 'Identity features for each cluster (' +this.series+'; Group: ' + source+')',
+								xaxis: {
+									// range: [ 0.75, 5.25 ],
+									title:'Cell cluster',
+									tickmode: 'array',
+									automargin: true,
+									titlefont: { size:15},
+								},
 
-                    },
-                    yaxis: {
-						// range: [0, 8],
-                       title:'Feature name',
-					   tickmode: 'array',
-					   automargin: true,
-					   titlefont: { size:15},
-					},
-								
+								yaxis: {
+									// range: [0, 8],
+									title:'Feature name',
+									tickmode: 'array',
+									automargin: true,
+									titlefont: { size:15},
+								},
 							}
 							
 						_this.ClusterHotMapMarker_layout = layout
@@ -291,7 +323,7 @@ export default {
 							hoverongaps: false
 						}];
 						var layout = {
-								title: 'Identity features for each cluster',
+							    title: 'Identity features for each cluster (' +this.series+'; Group: ' + this.source+')',
 								xaxis: {
 									// range: [ 0.75, 5.25 ],
 									title:'Cell cluster',
@@ -324,7 +356,7 @@ export default {
 		},
 
 		reFeatureByName(){
-			console.log('feature_name')
+			// console.log('feature_name')
 			var _this = this
 			// _this.spinShow1 = true
 
@@ -335,8 +367,8 @@ export default {
 			var  y_list = this.y_list
 
 			var x_list = this.x_list
-			console.log(this.y_list)
-			console.log(this.z_list)
+			// console.log(this.y_list)
+			// console.log(this.z_list)
 			var data = [{
 					// z: [[1, null, 30, 50, 1], [20, 1, 60, 80, 30], [30, 60, 1, -10, 20]],
 					z:z_list,
@@ -349,7 +381,7 @@ export default {
 				}];
 
 			var layout = {
-					title: 'Identity features for each cluster',
+				    title: 'Identity features for each cluster (' +this.series+'; Group: ' + this.source+')',
 					xaxis: {
 						// range: [ 0.75, 5.25 ],
                         title:'Cell cluster',
@@ -382,7 +414,7 @@ export default {
         },
 		
 		changedEnrichChart(group){
-            console.log(group)
+            // console.log(group)
             
 			if (typeof group === 'undefined' ){
 				
@@ -414,9 +446,9 @@ export default {
             getClusterEnrichData(this.series,this.source,this.group,this.enrichType).then(res =>{ 
                 // alert(res.datas)
                 let datas = res.data 
-				console.log("====")
-                console.log(datas.log_p_adjust)
-				console.log(datas.Description)
+				// console.log("====")
+                // console.log(datas.log_p_adjust)
+				// console.log(datas.Description)
  
 				var data = [{
 				
@@ -437,7 +469,7 @@ export default {
 						zeroline: false
 					},
 					yaxis: {
-						title: ' Term [-log10(p.adjust)]',
+						title: ' Pathway term',
 						showline: false,
 						tickmode: 'array',
 					    automargin: true,
@@ -456,9 +488,9 @@ export default {
 		getEnrichGroup(series,source){
 			
             getClusterEncihGroup(series,source).then(res => {
-				console.log("enrich group")
+				// console.log("enrich group")
                 let datas = res.data
-				console.log(datas)
+				// console.log(datas)
 				this.group_type_list= []
 				this.group = datas[0]
                 datas.forEach(key => this.group_type_list.push({
@@ -473,7 +505,7 @@ export default {
 			let _this = this
 			getTsneDataCol(series,source).then(res =>{
 				let datas = res.data  
-				console.log(datas)
+				// console.log(datas)
 				_this.colnames = datas
 				this.group_type_list = []  
 				
@@ -495,6 +527,7 @@ export default {
 				this.source = source
 				// this.getFeaturePlot(this.series,source)
 				this.source2 = source
+				this.getAllscFeature(this.series,this.source)
 				this.getMarkerChart(this.series,this.source)
 				// this.pcaMeta(this.series,source)
 				this.getEnrichGroup(this.series,this.source)
@@ -594,13 +627,13 @@ export default {
 
 				let _this = this
                 let datas = res.data  
-				console.log(datas)
+				// console.log(datas)
 				var data =   datas 
 				this.source = data[0].source_g
 				this.source2 = data[0].source_g     
 				datas.forEach(function (group) {
 					
-						console.log(group.source_g)
+						// console.log(group.source_g)
 
 						_this.data_source_list.push({
 							name:group.source_g
@@ -609,6 +642,7 @@ export default {
 				}) 
 				_this.group_type_list.push({name:'all'})
 				// alert(data[0].source_g)
+				this.getAllscFeature(this.series,data[0].source_g)
 				this.getMarkerChart(this.series,data[0].source_g)
 				this.getEnrichGroup(this.series,data[0].source_g)
 

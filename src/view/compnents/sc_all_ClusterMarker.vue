@@ -15,8 +15,20 @@
 						</Form-item>
 					</i-col>
 					<i-col span="12">
+						
 						<Form-item label="Add feature: ">
-							<Input search enter-button="Add" @on-search="addFeatureByName($event)" placeholder="Please input gene symbol"/>
+							<i-select 
+								enter-button="Search" 
+								style="width:80%"  
+								v-model=InputKeyName
+								@on-search="addFeatureByName($event)"  
+								placeholder="Please input gene symbol"  
+								@on-change="addFeatureByName($event)"  filterable>        
+									<i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
+							</i-select>
+
+
+							<!-- <Input search enter-button="Add" @on-search="addFeatureByName($event)" placeholder="Please input gene symbol"/> -->
 						</Form-item>
 					</i-col>
 				
@@ -80,6 +92,9 @@
 <script>
 import VuePlotly from '@statnett/vue-plotly'
 import {getFeatureBygroup,getTsneDataCol,getTsneGroup,getClusterMarker,getClusterEncihGroup,getClusterEnrichData} from '@/api/erythdataservice'
+import {getAllSCFeatureKeyWords} from '@/api/erythdataset'
+
+
 export default {
 	name:"sc_all_ClusterMarker",
 	components:{
@@ -97,6 +112,8 @@ export default {
 
 	data(){
 		return{
+			keyWords_list:[
+            ],
 			ifResize:true,
 			ClusterHotMapMarkerdata:[],
 			enrich_data:[],
@@ -237,7 +254,16 @@ export default {
         
     },
 	methods:{
-		
+		getAllscFeature(series,source){
+
+			getAllSCFeatureKeyWords(series,source).then(res=>{
+
+				let mykeyWord_list = res.data.keywords
+				this.keyWords_list = mykeyWord_list
+
+			})
+		},
+
 		addFeatureByName(feature_name){
 			var _this = this
 			console.log("feature_name")
@@ -254,7 +280,7 @@ export default {
 					
 				}else{
 					_this.spinShow1 = true
-					getFeatureBygroup(this.table_name,this.source,feature_name).then(res => {
+					getFeatureBygroup(this.table_name,this.source,feature_name,this.x_list).then(res => {
 					
 					let datas = res.data
 					console.log(datas.col_list)
@@ -481,7 +507,7 @@ export default {
 						zeroline: false
 					},
 					yaxis: {
-						title: ' Term [-log10(p.adjust)]',
+						title: 'Pathway term',
 						showline: false,
 						tickmode: 'array',
 					    automargin: true,
@@ -659,6 +685,7 @@ export default {
 				}) 
 
 				// alert(data[0].source_g)
+				this.getAllscFeature(this.table_name,data[0].source_g)
 				this.getMarkerChart(this.table_name,data[0].source_g)
 				this.getEnrichGroup(this.table_name,data[0].source_g)
 

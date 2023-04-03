@@ -250,7 +250,7 @@ export const getPseudoData = (series,source) => {
 }
 
 // addFeatureByName
-export const getFeatureBygroup = (series,source,feature_name)=>{
+export const getFeatureBygroup = (series,source,feature_name,cluster_list)=>{
 	return axios.request({
 
 		url:'public/getFeatureBygroup',
@@ -258,6 +258,7 @@ export const getFeatureBygroup = (series,source,feature_name)=>{
 			series: series,
 			source:source,
 			feature_name:feature_name,
+			cluster_list:cluster_list,
 		},
 		method:'post',
 	})

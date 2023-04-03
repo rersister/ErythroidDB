@@ -4,7 +4,7 @@
 
     <div class="lay_out">      <!-- enrichGO analysis -->  
 
-        <h1 class="my_h1">Single Cell Interaction Atlas</h1> 
+        <h1 class="my_h1">Single Cell Interaction Atlas </h1> 
         <div>
             <Row>
                 <Col span="12">
@@ -50,7 +50,7 @@
 			<Row> 
 					<!-- <Spin size="large" fix v-if="spinShow2"></Spin>              -->
 				<!-- <vue-plotly :autoResize="ifResize" :data="enrichGO_data" :layout="enrichGO_layout" :options="enrichGO_options"/> -->
-				<div id="LRPlot_view" style="width: 100%;height:600%; text-aglign:center"></div>
+				<div id="LRPlot_view" style="width: 30%;height:200%; text-aglign:center"></div>
 
 			</Row> 
 		</div>

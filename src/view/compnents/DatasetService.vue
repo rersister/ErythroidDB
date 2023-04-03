@@ -109,7 +109,6 @@ export default {
     EnrichGO,
     ClustGram,
     scPlotTSNE,
-    
     ClusterMarker,
     Diff_analysis,
     sc_Diffanal,
@@ -167,7 +166,7 @@ export default {
                                 
                             },
                             {
-                                title: 'Cell type abbreviation',
+                                title: 'Cell name full name',
                                 key: 'full_cell_name',
                                 "sortable": true,
                                 width:400,

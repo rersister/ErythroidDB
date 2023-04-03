@@ -240,6 +240,37 @@
 
     </div>
 
+    <div v-if=ifcellAnno class="row_choice" >
+        <!-- 单细胞页面才显示的 细胞注释信息 -->
+        <h3 class="h3_title">Cell annotation information： </h3>
+        
+        <br>
+        <Row>
+                <Table 
+                class="my-tableStyle"
+                :columns="cellAnnoCols" 
+                :data="cellAnnoData" 
+                size="small" 
+                disabled-hover="True"
+                ref="table"></Table>
+                <!-- <Spin size="large" fix v-if="spinShowSampleSource"></Spin> -->
+                <!-- <div style="margin: 10px;overflow: hidden">               
+                    <div style="float: right;">
+                        <Page :total="totalRow"  
+                        :current="currentPage" 
+                        :page-size="pageSize" 
+                        show-elevator 
+                        show-total
+                        show-sizer
+                        @on-change="handleCurrentChange" 
+                        @on-page-size-change="handleSizeChange">
+                        </Page>                   
+                    </div>
+                </div> -->
+
+        </Row> 
+    </div>
+
     <div class="row_choice">
               Samples ({{totalRow}}) and group:
                         <Table  stripe
@@ -275,6 +306,7 @@
 // Datatest
 import FilterTable from '../../compnents/FilterTable'
 import { getDatatest } from '@/api/erythdataservice'
+import {getSCCellAnnoInfo } from '@/api/erythdataset'
 import { getallDevSampleGroup,getAllDevType } from '@/api/erythroidAtlas'
 import router from '@/router'
 import { mapMutations } from 'vuex'
@@ -475,6 +507,57 @@ export default {
           },
         },
       ],
+      cellAnnoData:[],
+      cellAnnoCols:[
+                            {
+                                title: 'Cell type abbreviation',
+                                key: 'refPaper_name',
+                                "sortable": true,
+                                filter: {
+                                type: 'Input'
+                                },
+                                // fixed: 'left',
+                                // width:200,
+                                // render: (h, params) => {  
+                                //     if (params.row.gid.indexOf("GSM") > -1){
+                                //         return h('div', [
+                                //         h('a', {                               
+                                //                 attrs:{                              
+                                //                 href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.gid,
+                                //                 target:'_blank',                    
+                                //                 },    
+                                //             },params.row.gid)
+                                //         ])
+                                //     }if(params.row.gid.indexOf("EGAD") > -1){
+                                //         return h('div', [
+                                //         h('a', {                               
+                                //                 attrs:{                              
+                                //                 href:'https://web2.ega-archive.org/datasets/'+params.row.gid.split('_')[0],
+                                //                 target:'_blank',
+
+                                //                 },    
+                                //             },params.row.gid)
+                                //         ])
+
+                                //     } else{
+                                //         return h('div',params.row.gid)
+                                
+                                //     }  
+                                // }   
+
+                                
+                            },
+                            {
+                                title: 'Cell name full name',
+                                key: 'full_cell_name',
+                                "sortable": true,
+                                width:400,
+
+                            },
+                           
+                        
+      ],
+      ifcellAnno: false,
       anal_value:'',
       Orga_val:'hs',
       DataType_val:'ep',
@@ -583,7 +666,7 @@ export default {
             type: 'Input',
           },
           fixed: 'left',
-          width:120,
+          width:140,
           render: (h, params) => {            
               if (params.row.gid.indexOf("GSE") > -1){
                   return h('div', [
@@ -697,6 +780,17 @@ export default {
     // selectChange(data) {
     //   this.selectList = data
     // },
+    mockScAnnoTableData(series){
+      getSCCellAnnoInfo(series).then( res=>{
+          let datas = res.data
+          // console.info(datas.list)
+          this.cellAnnoData = datas.list                  
+          // _this.totalRow = datas.total;
+        
+        })
+    },
+
+
     analClick(item){
       // alert(item.value)
       this.currentAnalIndex = item.value
@@ -741,13 +835,13 @@ export default {
       var table_name =
         'all_' +
         this.orga +
-        '_ep_' +
-      this.curentSequnceType 
+        '_ep_' + this.curentSequnceType 
       this.table_name = table_name
       if (table_name.indexOf('all_mm_ep_sc') > -1){
 					// alert('change')
 					this.table_name = 'CRA002445'
 				}
+
       this.getAllDevType(this.table_name)
       this.mockTableData(this.table_name, this.currentPage, this.pageSize)
 
@@ -946,13 +1040,12 @@ export default {
         // alert('mockTableData')
         this.mockTableData(this.table_name, this.currentPage, this.pageSize)
       
-        
-
       }
       
      
 
       if (this.curentSequnceType == 'bulk') {
+        
         this.analList = [
           {
             label: 'Expression Profile',
@@ -971,10 +1064,11 @@ export default {
             value: 'all_Enrich',
           },
         ]
+
+        this.changeDom(this.currentAnalIndex)
+        this.changeDom(this.currentAnalIndex)
       } else {
-        // alert(this.orga)
-        // if ( this.orga == 'hs'){
-          this.analList = [
+        this.analList = [
           {
             label: 'Visualization & Feature',
             value: 'scPCA',
@@ -1005,21 +1099,16 @@ export default {
 
 
         ]
+        this.mockScAnnoTableData(this.table_name)
 
-        // }else{
-        //   this.analList = []
-        // }
-        // orga:this.orga,
-        // exper:this.exper,
-        // deve:this.deve,
-        // sequnceType:this.curentSequnceType
-        // this.mockTableData(this.table_name, this.currentPage, this.pageSize)
-       
+        this.changeDom(this.currentAnalIndex)
+        this.changeDom(this.currentAnalIndex)
+        this.changeDom(this.currentAnalIndex)
         
       }
 
-      this.changeDom(this.currentAnalIndex)
-      this.changeDom(this.currentAnalIndex)
+     
+      // this.changeDom(this.currentAnalIndex)
     },
 
     changeExperimentType($value){
@@ -1037,8 +1126,9 @@ export default {
 					this.table_name = 'CRA002445'
 				}
         this.getAllDevType(this.table_name)
+
         this.mockTableData(this.table_name, this.currentPage, this.pageSize)
-        // this.changeDom(this.anal_value)
+
       }
     },
     changeSequnceType($value) {
@@ -1082,9 +1172,8 @@ export default {
         ]
         this.currentAnalIndex='all_Expression'
       } else {
-        // alert(this.orga)
-        // if ( this.orga == 'hs'){
-          this.analList = [
+       
+        this.analList = [
           {
             label: 'Visualization & Feature',
             value: 'scPCA',
@@ -1115,9 +1204,11 @@ export default {
 
 
         ]
-
+        this.ifcellAnno = true
         this.currentAnalIndex='scPCA'
-       
+
+        this.mockScAnnoTableData(this.table_name)
+
         
       }
 
@@ -1132,9 +1223,6 @@ export default {
       this.ifcompare = $value
       if ($value == '1') {
 
-        // if (this.selectList.length !=  2) {
-        //   return this.$Message.info('Select two at most')
-        // }
 
         this.analList = [
             {

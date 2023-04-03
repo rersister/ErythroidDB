@@ -365,6 +365,7 @@ export default {
             filter: {
               type: 'Input'
             },
+            width:'140',
             fixed: 'left',
             // render: (h, params) => {            
             //   if (params.row.dataset_id.indexOf("GSE") > -1){
@@ -396,6 +397,7 @@ export default {
           {
             title: 'Species',
             key: 'organism',
+            width:'130',
             filter: {
               type: 'Select',
               option: species_type
@@ -489,16 +491,16 @@ export default {
           {'name':'CFU-E',
           'full_name':'Colony-Forming Unit-Erythroid',
           'cell_ano':'A CFU-E cell, which has a lesser proliferative capacity than a BFU-E cell, requires the presence of erythropoietin as a stimulatory factor. '},
-          {'name':'ProE',
+          {'name':'Pro-E',
           'full_name':'Proerythroblast',
           'cell_ano':'The proerythroblast is a large cell with deep blue cytoplasm, high nucleus-to-cytoplasm ratio, and prominent nucleoli. Subsequent to proerythroblasts, nucleoli are no longer seen.'},
           {'name':'BasoE',
           'full_name':'Basophilic Erythroblast',
           'cell_ano':'Basophilic erythroblast is a nucleated precursor in the erythrocytic series, preceding the polychromatophilic erythroblast and following the proerythroblast; the cytoplasm is basophilic, the nucleus is large with clumped chromatin, and the nucleoli have disappeared. It is also called basophilic normoblast.'},
-          {'name':'PolyE',
+          {'name':'Poly-E',
           'full_name':'Polychromatophilic Erythroblast',
           'cell_ano':'The nucleus is intensely heterochromatic, and the cytoplasm is now a characteristic lilac color. The basophilia is due to the cytoplasmic ribosomes, and the acidophilia is due to the increase in the amount of hemoglobin being synthesized by the ribosomes. This is the last stage during which cell division occurs.'},
-          {'name':'OrthoE',
+          {'name':'Ortho-E',
           'full_name':'Orthochromatic Erythroblast',
           'cell_ano':'In an orthochromatic erythroblast, the nucleus has shrunk and become darker and the growing concentration of hemoglobin turns the cytoplasm pink. '},
           {'name':'Retic',
@@ -787,14 +789,16 @@ export default {
         // console.log(`当前页: ${val}`);
         var _this = this; 
         _this.currentPageTypeSource = val;
-        this.mockTableDataTypeSource()
+        // this.mockTableDataTypeSource()
+        this.getDatasetByMultiInput()
     },
     handleSizeChangeTypeSource(val){
       // console.log(`每页 ${val} 条`);
       var _this = this; 
       _this.pageSizeTypeSource = val;
       // alert('chenge')
-      this.mockTableDataTypeSource
+      // this.mockTableDataTypeSource
+      this.getDatasetByMultiInput()
     },  
 
     intoDataSet(data, index, event) {
@@ -895,58 +899,7 @@ export default {
     searchItemByName(){
       
     },
-    onSearch_datasetTypeSource(searchTypeSource){
-
-        var _this = this
-        // alert('jinlai')
-        // alert(Object.keys(searchTypeSource))
-        // var keys = Object.keys(searchTypeSource)
-        // alert(typeof(keys))
-        // alert(searchTypeSource)
-        // if ( keys.replace(/\s*/g,'').length.length === 0 === 0 ){
-        //     // alert('yes')  输入了空值
-        //     this.$Message.info('Please check your input of  ' + key,15);
-        //     return;
-        // }
-        for (let key in searchTypeSource){
-          // alert(key)
-          // alert(searchTypeSource[key])
-          var value = searchTypeSource[key]
-          // alert(typeof(value))
-          if ( typeof(value) === 'object'){
-            // alert('yes')  输入了空值  HSPC  
-            this.$Message.info('Please check your input   ');
-            return;
-          }else{
-            // alert('no')  不输入空
-            // alert(value.replace(/\s*/g,'').length) + key,15
-            if (value.replace(/\s*/g,'').length.length === 0){
-                this.$Message.info('Please check your input of  ' );
-                this.load();
-                return;
-            }else{
-              continue;
-            }
-           
-          }
-        }
-        searchDatasetTypeSource(searchTypeSource, _this.currentPageTypeSource,_this.pageSizeTypeSource,_this.cell_name).then( res=>{
-            
-            _this.spinShowTypeSource = false                    
-            let datas = res.data
-            if (datas.signal === 0){
-              // 0 表示无相关数据
-              this.$Message.info('No related datasets',15);
-
-            }else{
-              _this.datasetsTypeSource = datas.list                  
-              _this.totalTypeSource = datas.total;
-            }
-            
-        })
-
-
-    },
+   
 
     mockTableDataTypeSource(){
 
@@ -991,6 +944,7 @@ export default {
         sequence_type:this.sequence
       })
       // alert(select)
+
       getDatasetDataByMultiInput(_this.table_name,_this.currentPageTypeSource,_this.pageSizeTypeSource,select).then(res =>{
 
           // _this.spinShowTypeSource = false                    
@@ -1153,7 +1107,7 @@ export default {
 
          // this.mockTableData();
         this.mockTableDataTypeSource()
-        // this.getReportedGeneList()
+        this.getReportedGeneList()
 
      }
 
@@ -1175,7 +1129,7 @@ export default {
   .my_body {
     height: 100%;
     width: 100%;
-    padding: 60px 0px 100px;
+    padding: 60px 20px 100px;
   }
 
   .my_Row{
@@ -1189,14 +1143,27 @@ export default {
 
   }
 
+  .ivu-table-cell {
+    padding-left: 18px;
+    padding-right: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  
+    box-sizing: border-box;
+    word-break: break-word !important;;
+  }
 
-  .my_col{
+  
+
+
+  .my_col {
     border: 1px solid gainsboro;
     padding: 5px;
     width: 300px;
     float: left;
     margin-right: 20px;
-    margin-left: 20px;
+    margin-left: 10px;
   }
 
   .my_colRight{

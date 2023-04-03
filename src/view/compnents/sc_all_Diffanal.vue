@@ -38,7 +38,13 @@
                   :columns="diffCols">
             </filter-table> -->
 			
-			<Table :columns="diffCols" :data="diffData" size="small" ref="table"></Table>
+			<filter-table id="outExcel"
+				@on-search="onSearch_diff"
+				:columns="diffCols" 
+				:data="diffData" 
+				size="small" 
+				ref="table">
+			</filter-table>
 			<div style="margin: 10px;overflow: hidden">               
                   <div style="float: right;">
                       <Page :total="totalRow"  
@@ -52,7 +58,7 @@
                       </Page>                   
                   </div>
             </div>
-			<Button type="primary" size="large" @click="exportData(1)"><Icon type="ios-download-outline"></Icon>Download</Button>
+			<Button type="primary" size="large" @click="exportExcel"><Icon type="ios-download-outline"></Icon>Download</Button>
 			
 		</Row>
 	</div>
@@ -61,7 +67,7 @@
 		<h1 class="my_h1">Single Cell Cluster's Enrichment Analysis</h1>
 		<br>
 		<Row>
-			<i-form :label-width="120">
+			<i-form :label-width="120">group
 				<!-- <i-col span="8">
 					<Form-item label="Data source: ">                                                  
 						<i-select  clearable placeholder="Pleace select cell source"  @on-change="changedDataSource2">        
@@ -110,7 +116,9 @@
 import FilterTable from '../compnents/FilterTable';
 import VuePlotly from '@statnett/vue-plotly'
 import {getdiffGroup,getTsneGroup,getSCClusterDiff,getSCEnrichContrastGroup,getSCDiffContrastGroup,getScDiffEnrich} from '@/api/erythdataservice'
-import {getDatasetTypeSource,getSCDiffPageDataset} from '@/api/erythdataset'
+import {getDatasetTypeSource,getSCDiffPageDataset,searchDiffDatasetByParms} from '@/api/erythdataset'
+import {export_json_to_excel} from '@/assets/js/Export2Excel'
+
 
 const  P_Value_range = {
     0: {
@@ -202,21 +210,21 @@ export default {
 				// }
 			},
 			{
-				title: 'p_val',
+				title: 'P.val',
 				key: 'p_val',
 				"sortable": true,
-				filter: {
-				type: 'Input'
-				}
+				// filter: {
+				// type: 'Input'
+				// }
 
 			},
 			{
-				title: 'avg_logFC',
+				title: 'avgLogFC',
 				key: 'avg_logFC',
 				"sortable": true,
-				filter: {
-				type: 'Input'
-				}
+				// filter: {
+				// type: 'Input'
+				// }
 
 			},
 			// {
@@ -237,7 +245,7 @@ export default {
 			// 	},
 			// },
 			{
-				title: 'p_val_adj',
+				title: 'P.val.adj',
 				key: 'p_val_adj',
 				"sortable": true,
 				filter: {
@@ -336,25 +344,56 @@ export default {
            })
 		},
 
-		exportData(type){
-                if (type === 1) {
-                    this.$refs.table.exportCsv({
-                        filename: 'diff_data'
-                    });
-                }else if (type === 2) {
-                    this.$refs.table.exportCsv({
-                        filename: '排序和过滤后的数据',
-                        original: false
-                    });
-                }else if (type === 3) {
-                    this.$refs.table.exportCsv({
-                        filename: '自定义数据',
-                        columns: this.columns8.filter((col, index) => index < 4),
-                        data: this.data7.filter((data, index) => index < 4)
-                    });
-                }
+		formatJson(filterVal,tableData){
+			return tableData.map((v)=>{
+				// console.log('v:')
+				// console.log(v)
+				return filterVal.map((j) =>{
+					// console.log(v[j])
+					return v[j]
+				})
+
+			})
+
+		},
+		exportExcel(){
+				const tHeader = ['Symbol','P.val','avgLogFC','P.val.adj']
+				const filterVal = ['symbol','p_val','avg_logFC','p_val_adj']
+				const filename = 'diff-data'
+				console.log('exportExcell')
+				console.log(this.diffData)   //  this.diffData 只是 diffData当前页，应该不止当前页
+				// const tableData = JSON.stringify(this.diffData)
+				const data = this.formatJson(filterVal,this.diffData)
+				console.log(data )
+
+				export_json_to_excel({
+					header: tHeader,
+					data,
+					filename
+				})
+
+		
+		},
+
+		// exportData(type){
+        //         if (type === 1) {
+        //             this.$refs.table.exportCsv({
+        //                 filename: 'diff_data'
+        //             });
+        //         }else if (type === 2) {
+        //             this.$refs.table.exportCsv({
+        //                 filename: '排序和过滤后的数据',
+        //                 original: false
+        //             });
+        //         }else if (type === 3) {
+        //             this.$refs.table.exportCsv({
+        //                 filename: '自定义数据',
+        //                 columns: this.columns8.filter((col, index) => index < 4),
+        //                 data: this.data7.filter((data, index) => index < 4)
+        //             });
+        //         }
                   
-        },
+        // },
 		changedDiffChart(group){
             console.log(group)
 			this.group = group
@@ -445,7 +484,7 @@ export default {
 						yaxis: {
 							// showgrid: TRUE,
                             title:{
-                                    text: ' Term [-log10(p.adjust)]',
+                                    text: ' Pathway term',
                                     position:'top',
                                     standoff: 40,
                                     yanchor:'top',
@@ -525,7 +564,7 @@ export default {
 
 		},
 
-        onSearch_diff(searchKeyVal){
+		onSearch_diff(searchKeyVal){
         	var _this = this
         
 			for (let key in searchKeyVal){
@@ -550,19 +589,25 @@ export default {
 				
 				}
         	}
-        	searchDatasetByParms(searchKeyVal, _this.currentPage,_this.pageSize).then( res=>{
+        	searchDiffDatasetByParms(this.table_name,searchKeyVal, _this.currentPage,_this.pageSize,this.group).then( res=>{
             
 				_this.spinShowTypeSource = false                    
-				let datas = res.data
+                let datas = res.data
+				console.log('searchDiffDatasetByParms')
+                console.log(datas)
 				if (datas.signal === 1){
-					this.$Message.info('No related datasets',15);
+                    // 有值
+                    // alert("有值")
+                   _this.diffData = datas.list                  
+				   _this.totalRow = datas.total;
+					
 
 				}else{
-					_this.datasets = datas.list                  
-					_this.total = datas.total;
+					this.$Message.info('No related datasets',15);
 				}
-			})
+            })
 		},
+
 
 
       
@@ -628,7 +673,7 @@ export default {
                         title:'Log2(FC)',
                     },
                      yaxis: {
-                       title:'-Log2(adj.P.Val)'
+                       title:'-Log2(P-value)'
                     },
 
                 }         
@@ -727,5 +772,8 @@ export default {
         margin: 2% 2%  2% 2%;
     }
 
+	.ivu-table-border td, .ivu-table-border th {
+    	/* border-right: 1px solid #e8eaec; */  
+	}
 </style>
 

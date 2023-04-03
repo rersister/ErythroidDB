@@ -210,7 +210,7 @@ export default {
 						yaxis: {
 							// showgrid: TRUE,
                             title:{
-                                    text: 'GO Term [-log10(p.adjust)]',
+                                    text: 'Pathway term',
                                     position:'top',
                                     standoff: 40,
                                     yanchor:'top',

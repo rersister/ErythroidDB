@@ -3,7 +3,7 @@
     <div class="lay_out">
             <Row>
 				<!--<i-col span="12"> -->
-					<h1 class="my_h1">Single Cell  Interaction Atlas</h1> 
+					<h1 class="my_h1">Single Cell Interaction Atlas</h1> 
 					</br>
 					<i-form :label-width="120">
 						<i-col span="10">
@@ -58,7 +58,7 @@
             <Row>
 					<!-- <button id="download" @click="download">Download </button> -->
 					<div>
-						<div id="Net_view" style="width: 100%;height:400%; text-aglign:center"></div>
+						<div id="Net_view" style="width:100%;height:300%; text-aglign:center;margin:0 auto;"></div>
 					</div>
 					
 			</Row>
@@ -255,7 +255,7 @@ export default {
 					var option = {
 
 						title: {
-							text: 'Top 40 factor of '+ comm_type +' ('+this.series + '; Group: '+this.source+ ')',
+							text: 'Top 40 ligand-receptor pairs of '+ comm_type +' ('+this.series + '; Group: '+this.source+ ')',
 							// subtext: 'Circular layout',
 							// top: 'bottom',
 							left: 'center'
@@ -269,7 +269,8 @@ export default {
 									excludeComponents:['toolbox'],
 									pixelRatio:2,
 									// type:'svg',
-									name:'inter_image'
+									name:'inter_image',
+									
 								}
 							}
 
@@ -292,7 +293,12 @@ export default {
 							}),
 							bottom:'0px'
 						}],
+						// //半径大小
+						
 
+						
+
+						
 						
 						animationDurationUpdate: 1500,
 						animationEasingUpdate: 'quinticInOut',
@@ -318,7 +324,10 @@ export default {
 								// 	color: 'source',
 								// 	curveness: 0.3,
 								// 	width:1
-								// }
+								// } 
+								// 设置半径大小不起作用
+								// center: ['50%','50%'],
+								// radius: [[50]],
 							}
 						]
 					};
@@ -413,7 +422,7 @@ export default {
 						animationEasingUpdate: 'quinticInOut',
 						series: [
 							{
-								name: 'Top 40 factor of '+ comm_type ,
+								name: 'Top 40 ligand-receptor pairs of '+ comm_type ,
 								type: 'graph',
 								layout: 'circular',
 								circular: {
@@ -486,13 +495,15 @@ export default {
 			this.getLRPlot_chart(dataset_name,this.source,comm_type)
 
 		},
+
 		changedSourceGroup(source){
 			// alert(sourceGroup)
 			// this.table_name = 'all_rna_dev_bulk_' + sourceGroup
 			this.source = source
-			// alert(this.table_name)
-			// this.getdiff_group(this.table_name)
+			var dataset_name = this.series 
+			this.getNetView(dataset_name,this.source,this.comm_type)
 		},
+
 		changedSourceGroup2(source){
 			this.source2 = source
 		}
@@ -500,44 +511,28 @@ export default {
     },
     mounted(){
 		this.getDataSourceList(this.series)
-		// this.getdiff_group(this.table_name);
-
-		// this.getLRPlot_chart(this.dataset_name,this.comm_type);
-
-		// this.getNetView(this.dataset_name,this.comm_type);
-		
-		//this.getCellSource()
-
 
 		var myChartContainer = document.getElementById('Net_view')
-		//var myChartContainer2 = document.getElementById('LRPlot_view')
+		
 		// 获取自适应的高度和宽度
 		var resizeMyChartContainer = function() {
 			// console.log("----")
-			myChartContainer.style.height = window.innerHeight * 0.85 + 'px';
-			myChartContainer.style.width = window.innerWidth * 0.75+ 'px';
-			//myChartContainer2.style.height = window.innerHeight * 0.85 + 'px';
-			//myChartContainer2.style.width = window.innerWidth * 0.45+ 'px';
+			myChartContainer.style.height = window.innerHeight * 0.8 + 'px';
+			myChartContainer.style.width = window.innerWidth * 0.7+ 'px';
 		};
 
 		// 设置容器高和宽
 		resizeMyChartContainer();
-
 		var myChart = this.$echarts.init(myChartContainer);
-		//var myChart2 = this.$echarts.init(myChartContainer2);
 
 		let option = {};
-        //let option2 = {};
+
         myChart.setOption(option);
-		//myChart2.setOption(option2);
-		
 		window.onresize = ()=>{
 	　　　　//调用methods中的事件
 			resizeMyChartContainer();
 			console.log('==')
 			myChart.resize()
-			//myChart2.resize()
-			// _this.pageResize();
 		}
 
 	}

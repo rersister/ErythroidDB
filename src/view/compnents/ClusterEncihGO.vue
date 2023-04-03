@@ -101,7 +101,7 @@ export default {
                     // },
                     tooltip: {
                         trigger: 'axis',
-                        formatter: "GO Term : {b} <br/> -log10(p.adjust) : {c}"
+                        formatter: "Pathway term : {b} <br/> -log10(p.adjust) : {c}"
                     },
                     grid: {
                         left: '3%',
@@ -121,7 +121,7 @@ export default {
                         }
                     },
                     yAxis: {
-                        name:"GO Term [-log10(p.adjust)]",
+                        name:"Pathway term",
                        
                         type: 'category',
                         axisLine: {onZero: false},
@@ -149,7 +149,7 @@ export default {
                     
                     series: [
                         {
-                            name: 'GO Term and -log10(p.adjust)',
+                            name: 'Pathway term and -log10(p.adjust)',
                             type: 'bar',
                             smooth: true,
                             barCategoryGap: 2,

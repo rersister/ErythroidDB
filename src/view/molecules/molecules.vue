@@ -635,12 +635,33 @@ export default {
 
 
         ],
+
+       datasetFilter:{},
       }
 
     },
     methods:{
 
-     
+      searchDatasetByFilter(searchTypeSource){
+        var _this = this
+        searchDatasetTypeSource(searchTypeSource, _this.currentPageTypeSource,_this.pageSizeTypeSource,_this.cell_name).then( res=>{
+            
+            _this.spinShowTypeSource = false                    
+            let datas = res.data
+            if (datas.signal === 0){
+              // 0 表示无相关数据
+              this.$Message.info('No related datasets',15);
+
+            }else{
+              _this.datasetsTypeSource = datas.list                  
+              _this.totalTypeSource = datas.total;
+            }
+            
+        })
+
+      },
+
+
       mockTableData () {
         var _this = this;      
         _this.spinShow = true, 
@@ -741,14 +762,22 @@ export default {
           // console.log(`当前页: ${val}`);
           var _this = this; 
           _this.currentPageTypeSource = val;
-          this.mockTableDataTypeSource()
+          if (this.datasetFilter.length = 0){
+            this.mockTableDataTypeSource()
+          }else{
+            this.searchDatasetByFilter(_this.datasetFilter)
+          }
       },
       handleSizeChangeTypeSource(val){
         // console.log(`每页 ${val} 条`);
         var _this = this; 
         _this.pageSizeTypeSource = val;
         // alert('chenge')
-        this.mockTableDataTypeSource
+        if (this.datasetFilter.length = 0){
+            this.mockTableDataTypeSource()
+          }else{
+            this.searchDatasetByFilter(_this.datasetFilter)
+        }
       },
 
       /**
@@ -772,54 +801,36 @@ export default {
         })
       },
       onSearch_datasetTypeSource(searchTypeSource){
-
-        var _this = this
-        // alert('jinlai')
-        // alert(Object.keys(searchTypeSource))
-        // var keys = Object.keys(searchTypeSource)
-        // alert(typeof(keys))
-        // alert(searchTypeSource)
-        // if ( keys.replace(/\s*/g,'').length.length === 0 === 0 ){
-        //     // alert('yes')  输入了空值
-        //     this.$Message.info('Please check your input of  ' + key,15);
-        //     return;
-        // }
-        for (let key in searchTypeSource){
-          // alert(key)
-          // alert(searchTypeSource[key])
-          var value = searchTypeSource[key]
-          // alert(typeof(value))
-          if ( typeof(value) === 'object'){
-            // alert('yes')  输入了空值  HSPC  
-            this.$Message.info('Please check your input   ');
-            return;
-          }else{
-            // alert('no')  不输入空
-            // alert(value.replace(/\s*/g,'').length) + key,15
-            if (value.replace(/\s*/g,'').length.length === 0){
-                this.$Message.info('Please check your input of  ' );
-                this.load();
-                return;
+          var _this = this
+          // alert(searchTypeSource)
+          for (let key in searchTypeSource){
+            // alert(key)
+            // alert(searchTypeSource[key])
+            var value = searchTypeSource[key]
+            // alert(typeof(value))
+            if ( typeof(value) === 'object'){
+              // alert('yes')  输入了空值  HSPC  
+              this.$Message.info('Please check your input   ');
+              return;
             }else{
-              continue;
+              // alert('I am value')
+              // alert(value)  //不输入空
+              // alert(value.replace(/\s*/g,'').length) + key,15
+              // value.replace(/\s*/g,'').length === 0
+              if (value.length === 0){
+                  this.$Message.info('Please check your input' );
+                  this.load();
+                  return;
+              }else{
+                continue;
+              }
+            
             }
-           
           }
-        }
-        searchDatasetTypeSource(searchTypeSource, _this.currentPageTypeSource,_this.pageSizeTypeSource,_this.cell_name).then( res=>{
-            
-            _this.spinShowTypeSource = false                    
-            let datas = res.data
-            if (datas.signal === 0){
-              // 0 表示无相关数据
-              this.$Message.info('No related datasets',15);
 
-            }else{
-              _this.datasetsTypeSource = datas.list                  
-              _this.totalTypeSource = datas.total;
-            }
-            
-        })
+          _this.datasetFilter = searchTypeSource
+
+          this.searchDatasetByFilter(searchTypeSource)
 
 
       },
@@ -1018,8 +1029,8 @@ export default {
     mounted(){
       this.drawCellTypeChart()
       var myChartContainer = document.getElementById('cell_type_show_view')
-
-	  // 获取自适应的高度和宽度
+	    
+      // 获取自适应的高度和宽度
       var resizeMyChartContainer = function() {
         // console.log("----")
         myChartContainer.style.height = window.innerHeight * 0.3 + 'px';

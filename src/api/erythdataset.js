@@ -216,6 +216,33 @@ export const getDatasetKeyWords = () =>{
 	  })
 }
 
+// getAllSCFeatureKeyWords
+export const getAllSCFeatureKeyWords = (series,group) =>{
+	return axios.request({
+		url: 'public/getAllSCFeatureKeyWords',
+		data: { 
+			'series':series,
+			'group':group
+
+	  	},
+		method: 'post',
+	  })
+}
+
+// getAllSCFeatureKeyWordsSplitCell
+export const getAllSCFeatureKeyWordsSplitCell = (series,group) =>{
+	return axios.request({
+		url: 'public/getAllSCFeatureKeyWordsSplitCell',
+		data: { 
+			'series':series,
+			'group':group
+	  	},
+		method: 'post',
+	  })
+}
+
+
+
 export const searchDataset = (datasetName,search,pageIndex,pageSize)=>{
 	return axios.request({
 		url: 'public/getPageDataSetsByParms',
