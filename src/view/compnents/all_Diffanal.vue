@@ -45,20 +45,36 @@
 		</Row>
 		</Br>
 		<Row>
+            <Col span="12">
+                <!-- 数据查询分子名 -->
+                <span>Input gene symbol:</span>
+                
+                <!-- <i-select style="width:80%"
+                                v-model=specif_name   
+                                @on-change="search_value($event)"  filterable>        
+							    <i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
+				</i-select>
+                <Button class='button_mystyle' @click="searchDiffDataSetByKeyName($event)" >Search</Button> -->
+                <Input search enter-button="Search"  @on-search="searchDiffDataSetByKeyName($event)" :placeholder="search_placeholder"/>                         
+            </Col>                                                                                                                                                       
+        </Row>
+        <br/>
+		<Row>
 			
 			<Spin size="large" fix v-if="spinShowTypeSource"></Spin>
-			<filter-table 
-                  @on-search="onSearch_diff"
+			<Table 
+
                   :data="diffData"
                   :columns="diffCols"
+				  v-on:on-sort-change="onSortTable" 
 				  ref="table">
-            </filter-table>
+			</Table>
+
 			<div style="margin: 10px;overflow: hidden">               
                   <div style="float: right;">
                       <Page :total="totalRow"  
                       :current="currentPage" 
                       :page-size="pageSize" 
-                      show-elevator 
                       show-total
                       show-sizer
                       @on-change="handleCurrentChange" 
@@ -82,7 +98,9 @@
 import FilterTable from '../compnents/FilterTable';
 import VuePlotly from '@statnett/vue-plotly'
 import {getdiffGroup,getDiffData} from '@/api/erythdataservice'
-import {getDatasetTypeSource,getDiffPageDataset,searchDiffDatasetByParms} from '@/api/erythdataset'
+import {getDiffPageDataset,getDiffPageDatasetByGene,
+	getDiffPageDatasetBySort,
+    getDiffPageDatasetBySortGene} from '@/api/erythdataset'
 import {export_json_to_excel} from '@/assets/js/Export2Excel'
 
 
@@ -159,7 +177,7 @@ export default {
 			{
 				title: 'Symbol',
 				key: 'SYMBOL',
-				"sortable": true,
+				// "sortable": true,
 				filter: {
 					type: 'Input'
 				},
@@ -194,7 +212,7 @@ export default {
 
 			},
 			{
-				title: 'adj.P.Val',
+				title: 'adj.P.value',
 				key: 'FDR',
 				"sortable": true,
 				// filter: {
@@ -202,7 +220,7 @@ export default {
 				// },
 			},
 			{
-				title: 'P.Value',
+				title: 'P.value',
 				key: 'P.Value',
 				"sortable": true,
 				filter: {
@@ -213,6 +231,9 @@ export default {
 			],
 			orga:this.$route.params.orga,
             sequ_type:this.$route.params.sequ_type,
+			sortableKey:'',
+            sortableOrder:'',
+			inputGenePat:'',
 		}
 	},
 	watch:{
@@ -237,6 +258,10 @@ export default {
                     this.orga_name = 'Mus musculus'
                 }
 
+				if(val[0].orga == 'dr'){
+                    this.orga_name = 'Danio rerio'
+                }
+				
                 // if (val.length > 1) {
                 //     alert(val)
                     // this.ifShow = true
@@ -256,47 +281,82 @@ export default {
     },
 
 	methods:{
-        onSearch_diff(searchKeyVal){
-        	var _this = this
-        
-			for (let key in searchKeyVal){
-				// alert(key)
-				// alert(searchKeyVal[key])
-				var value = searchKeyVal[key]
-				// alert(typeof(value))
-				if ( typeof(value) === 'object'){
-					// alert('yes')  输入了空值
-					this.$Message.info('Please check your input of  ' + key,15);
-					return;
-				}else{
-					// alert('no')  不输入空
-					// alert(value.replace(/\s*/g,'').length)
-					if (value.replace(/\s*/g,'').length.length === 0){
-						this.$Message.info('Please check your input of  ' + key,15);
-						this.load();
-						return;
-					}else{
-					continue;
-					}
-				
-				}
-        	}
-        	searchDiffDatasetByParms(this.table_name,searchKeyVal, _this.currentPage,_this.pageSize,this.contrastsGroup).then( res=>{
-            
+		searchDiffDataSetByKeyName($event){
+            var _this = this;      
+
+            if( "" == $event ){
+				this.$Message.info('Please input gene symbol', 10);
+                this.mockTableData(this.table_name,this.currentPage,this.pageSize,this.contrastsGroup)
+				return
+
+            } 
+            _this.spinShowTypeSource = true, 
+            _this.inputGenePat = $event
+			getDiffPageDatasetByGene($event,this.table_name,this.currentPage,this.pageSize,this.contrastsGroup).then( res=>{
+
 				_this.spinShowTypeSource = false                    
-                let datas = res.data
-                console.log(datas)
-				if (datas.signal === 1){
-                    // 有值
-                    // alert("有值")
-                   _this.diffData = datas.list                  
-				   _this.totalRow = datas.total;
-					
+				let datas = res.data
+                // console.log(datas)
+				if (datas.signal == 1){
+
+					// console.info(datas.list)
+					_this.diffData = datas.list                  
+					_this.totalRow = datas.total;
+				}else{
+                   
+				}
+				
+			})
+		
+
+        },
+
+		onSortTable ({ column, key, order }) {
+            // console.log('onSortTable')
+            // console.log(key)
+            // console.log(order)
+            // console.log(column)
+            this.sortableKey = key
+            this.sortableOrder = order
+            // this.changeColumn = { key, order }
+            this.handleSortTable()
+        },
+		handleSortTable(){
+
+				if(this.sortableOrder === 'normal'){
+					return
+				}else{
+					var _this = this;      
+				_this.spinShowTypeSource = true
+				// alert(this.inputGenePat)
+				if( "" == this.inputGenePat ){
+					getDiffPageDatasetBySort(this.sortableKey,this.sortableOrder,this.table_name,this.currentPage,this.pageSize,this.contrastsGroup).then( res=>{
+						_this.spinShowTypeSource = false                    
+						let datas = res.data
+						if (datas.signal == 1){
+							_this.diffData = datas.list                  
+							_this.totalRow = datas.total;
+						}else{
+						}
+					})
 
 				}else{
-					this.$Message.info('No related datasets',15);
+					getDiffPageDatasetBySortGene(this.inputGenePat,this.sortableKey,this.sortableOrder,this.table_name,this.currentPage,this.pageSize,this.contrastsGroup).then( res=>{
+						_this.spinShowTypeSource = false                    
+						let datas = res.data
+						if (datas.signal == 1){
+							_this.diffData = datas.list                  
+							_this.totalRow = datas.total;
+						}else{
+						}
+					})
 				}
-            })
+
+				}
+
+
+
+
 		},
 
 		formatJson(filterVal,tableData){
@@ -389,7 +449,7 @@ export default {
                         title:'Log2(FC)',
                     },
                      yaxis: {
-                       title:'-Log2(P-value)'
+                       title:'-Log10(P value)'
                     },
 
                 }         

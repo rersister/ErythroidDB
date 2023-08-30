@@ -55,7 +55,6 @@
                       <Page :total="totalTypeSource"  
                       :current="currentPageTypeSource" 
                       :page-size="pageSizeTypeSource" 
-                      show-elevator 
                       show-total
                       show-sizer
                       @on-change="handleCurrentChangeTypeSource" 
@@ -148,8 +147,35 @@ const sample_numbers = {
       // color: 'green'
     },
 
-  };
+};
 
+const cell_numbers = {
+    0: {
+      value: "1-1000",
+      name: '1-1,000'
+    },
+    1: {
+      value: "1000-10000",
+      name: '1,000-10,000',
+      // color: 'red'
+    },
+    3: {
+      value: "10000-20000",
+      name: '10,000-20,000',
+      // color: 'green'
+    },
+    4: {
+      value: ">10000",
+      name: '>10,000',
+      // color: 'green'
+    },
+    5: {
+      value: "all",
+      name: 'All',
+      // color: 'green'
+    },
+
+};
 
 const species_type = {
     0: {
@@ -248,11 +274,11 @@ const species_type = {
 const growth_type ={
    0: {
       value: "vitro",
-      name: 'vitro'
+      name: 'In vitro'
     },
     1: {
       value: "vivo",
-      name: 'vivo',
+      name: 'In vivo',
       // color: 'red'
     },
     3: {
@@ -568,9 +594,10 @@ export default {
             key: 'organism',
             filter: {
               type: 'Select',
-              option: species_type
+              option: species_type,
+              className:'table_Orga',
             },
-
+            className:'table_Orga'
           },
           {
               title: 'Tissue',//来源 dataset 里的source
@@ -588,8 +615,10 @@ export default {
               width:'120',
               filter: {
                   type: 'Select',
-                  option: growth_type
+                  option: growth_type,
+                  className:'table_Orga',
               },
+              className:'table_Orga'
           },
           // {
           //     title: 'Development Type',
@@ -636,7 +665,15 @@ export default {
               option: sample_numbers
             },
           },
-
+          {
+            title: 'Cell number',
+            key: 'cell_number',
+            width:'90',
+            filter: {
+              type: 'Select',
+              option: cell_numbers
+            },
+          },
 
         ],
         datasetFilter:{},
@@ -648,7 +685,7 @@ export default {
       searchDatasetByFilter(searchTypeSource){
 
           var _this = this
-          searchDatasetTypeSource(searchTypeSource, _this.currentPageTypeSource,_this.pageSizeTypeSource,_this.cell_name).then( res=>{
+          searchDatasetTypeSource(searchTypeSource, _this.currentPageTypeSource,_this.pageSizeTypeSource,_this.cell_name,'celltype').then( res=>{
               
               _this.spinShowTypeSource = false                    
               let datas = res.data
@@ -1174,6 +1211,7 @@ export default {
     },
     created() {
       // this.mockTableData();
+      // 得到表格数据 
       this.mockTableDataTypeSource()
 
 

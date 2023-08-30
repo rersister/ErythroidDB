@@ -101,7 +101,7 @@ export default {
                     // },
                     tooltip: {
                         trigger: 'axis',
-                        formatter: "Pathway term : {b} <br/> -log10(p.adjust) : {c}"
+                        formatter: "Pathway term : {b} <br/> -Log10(P value) : {c}"
                     },
                     grid: {
                         left: '3%',
@@ -110,7 +110,7 @@ export default {
                         containLabel: true
                     },
                     xAxis: {
-                        name:"-log10(p.adjust)",
+                        name:"-Log10(P value)",
                         nameLocation:'center',
                         type: 'value',
                         splitLine: {
@@ -149,7 +149,7 @@ export default {
                     
                     series: [
                         {
-                            name: 'Pathway term and -log10(p.adjust)',
+                            name: 'Pathway term',
                             type: 'bar',
                             smooth: true,
                             barCategoryGap: 2,

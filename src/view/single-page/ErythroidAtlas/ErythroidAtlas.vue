@@ -5,11 +5,11 @@
         <div class="row_choice">
           <span class="h4_title">Organism:&emsp;</span>
           <RadioGroup v-model="Orga_val" class="myOption" @on-change="changeOrgaType($event)">
-            <Radio
+            <Radio 
+              style="font-style:italic;"
               class="myOption"
               v-for="(item, i) in OrgaList"
               :label="item.value"
-
               :key="i"
             >
               <span class="myOption">{{ item.label }}</span>
@@ -118,73 +118,13 @@
         </div> -->
         
         <div>
-          <!-- dataset 展示页 FilterTableForAllDateSet -->
-          <!-- <FilterTableForAllDateSet
-            :model.sync="search"
-            :v-model="search"
-            @on-search="onSearch_datasetTypeSource"
-            :data="datasetsTypeSource"
-            :columns="tAdatasetTypeSourceColumns"
-            @select="selectChange"
-            :type="true"
-          >
-          </FilterTableForAllDateSet> -->
-          <!-- <Spin size="large" fix v-if="spinShowTypeSource"></Spin> -->
-
-          <!-- <div style="margin: 10px;overflow: hidden">
-            <div style="float: right;">
-              <Page
-                :total="totalTypeSource"
-                :current="currentPageTypeSource"
-                :page-size="pageSizeTypeSource"
-                show-elevator
-                show-total
-                show-sizer
-                @on-change="handleCurrentChangeTypeSource"
-                @on-page-size-change="handleSizeChangeTypeSource"
-              >
-              </Page>
-            </div>
-          </div> -->
+        
         </div>
       
-        
-        <!-- <div class="row_choice">
-          <span>Samples and Groups:</span>
-          <RadioGroup class="myOption" @on-change="changeAnalType($event)">
-            <Radio
-              class="myOption"
-              v-for="item in ifCompareList"
-              :label="item.value"
-              :key="item.value"
-            >
-              <span class="myOption">{{ item.label }}</span>
-            </Radio>
-          </RadioGroup>
-        </div> -->
-
-        
-          <!-- <Dropdown
-            placement="bottom-start"
-            @on-change="changeAnalType($event)"
-          >
-            <a href="javascript:void(0)">
-              Dataset-2:
-              <Icon type="ios-arrow-down"></Icon>
-            </a>
-            <DropdownMenu slot="list">
-              <DropdownItem
-                v-for="(item, i) in ifCompareList"
-                :key="i"
-                :label="item.value"
-                >{{ item.label }}</DropdownItem
-              >
-            </DropdownMenu>
-          </Dropdown> -->
-          
-
+      
           
       <div class="row_choice">
+        <span>*Tip: After reselecting the above options, analysis needs to be reselected as well.</span>
         <Row :gutter="16" style="background:#eee;padding:20px">
           <h3 class="h3_title">Analysis:</h3>
         </Row>
@@ -271,6 +211,7 @@
         </Row> 
     </div>
 
+    
     <div class="row_choice">
               Samples ({{totalRow}}) and group:
                         <Table  stripe
@@ -287,7 +228,6 @@
                                 <Page :total="totalRow"  
                                 :current="currentPage" 
                                 :page-size="pageSize" 
-                                show-elevator 
                                 show-total
                                 show-sizer
                                 @on-change="handleCurrentChange" 
@@ -311,10 +251,7 @@ import { getallDevSampleGroup,getAllDevType } from '@/api/erythroidAtlas'
 import router from '@/router'
 import { mapMutations } from 'vuex'
 import FilterTableForAllDateSet from '../../compnents/FilterTableForAllDateSet'
-import {
-  getDatasetTypeSource,
-  searchDatasetTypeSource,
-} from '@/api/erythdataset'
+import {getDatasetTypeSource,} from '@/api/erythdataset'
 import All from '@/view/compnents/all_Expression.vue'
 import AllClutser from '@/view/compnents/all_Cluster.vue'
 import AllDiff from '@/view/compnents/all_Diffanal.vue'
@@ -367,6 +304,11 @@ const source_dict = [
       name: 'Bone Marrow (in vitro)'
     },
     {
+      value: "BM_vivo",
+      name: 'Bone Marrow (in vivo)'
+    },
+
+    {
       value: "CB_vivo",
       name: 'Cord Blood (in vivo)',
       // color: 'red'
@@ -381,11 +323,18 @@ const source_dict = [
       name: 'Peripheral Blood (in vitro)',
       // color: 'green'
     },
-     {
+    {
       value: "FL_vitro",
       name: 'Fetal Liver (in vitro)',
       // color: 'green'
     },
+
+    {
+      value: "FL_vivo",
+      name: 'Fetal Liver (in vivo)',
+      // color: 'green'
+    },
+
      {
       value: "PB_vivo",
       name: 'Peripheral Blood (in vivo)',
@@ -395,6 +344,10 @@ const source_dict = [
       value: "iPSC_vitro",
       name: 'Induced Pluripotent Stem Cells (in vitro)',
       // color: 'green'
+    },
+    {
+        value: "Em_vivo",
+        name: 'Embryos (in vivo)',
     },
     
   ]
@@ -469,6 +422,7 @@ export default {
           filter: {
             type: 'Input',
           },
+          className:'table_Orga'
         },
         {
           title: 'Development type',
@@ -476,6 +430,7 @@ export default {
           filter: {
             type: 'Input',
           },
+          className:'table_Orga'
         },
         {
           title: 'Title',
@@ -564,7 +519,7 @@ export default {
       SequType_val:'bulk',
       currentAnalIndex:'all_Expression',//记录状态变化
       search: '',
-      SourceList:[],
+
       ifShow: false,
       currentPage: 1,
       currentPageTypeSource: 1,
@@ -598,6 +553,13 @@ export default {
           value: 'mm',
           label: 'Mus musculus',
         },
+        {
+          id:1,
+          value: 'dr',
+          label: 'Danio rerio',
+        }
+        
+
       ],
       curentSequnceType: 'bulk',
       typeList: [
@@ -660,7 +622,7 @@ export default {
       totalRow: 400,
       sgroupCols: [
         {
-          title: 'Gid',
+          title: 'Dataset',
           key: 'gid',
           filter: {
             type: 'Input',
@@ -694,7 +656,7 @@ export default {
             }
         },
         {
-          title: 'Sid',
+          title: 'Sample name',
           key: 'sample_name',
           width:100,
           filter: {
@@ -708,6 +670,8 @@ export default {
           filter: {
             type: 'Input',
           },
+          className:'table_Orga'
+
         },
         {
           title: 'Cell type',
@@ -735,6 +699,7 @@ export default {
           filter: {
             type: 'Input',
           },
+          className:'table_Orga'
           // filter: {
           //     type: 'Select',
           //     option: P_Value_range
@@ -801,7 +766,7 @@ export default {
       // alert("kai shi")
       // alert(this.orga)
       var _this = this
-      var select = []
+      
       // alert(this.orga)
       if( "" == this.orga ){
                 this.$Message.info('please select Organism', 10);
@@ -824,13 +789,7 @@ export default {
                 return
       }
 
-
-      select.push({
-        orga:this.orga,
-        exper:this.exper,
-        deve:this.deve,
-        sequnceType:this.curentSequnceType
-      })
+      
 
       var table_name =
         'all_' +
@@ -840,20 +799,31 @@ export default {
       if (table_name.indexOf('all_mm_ep_sc') > -1){
 					// alert('change')
 					this.table_name = 'CRA002445'
-				}
+			}
 
-      this.getAllDevType(this.table_name)
+      if (table_name.indexOf('all_dr_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'GSE152982'
+			}
+
+      // this.getAllDevType(this.table_name)
       this.mockTableData(this.table_name, this.currentPage, this.pageSize)
 
+      var select = []
+      select.push({
+        orga:this.orga,
+        exper:this.exper,
+        deve:this.deve,
+        sequnceType:this.curentSequnceType
+      })
       this.selectList = select
-
-
-
-      if (this.dom !== name) {
-        _this.dom = name
-      } else {
-        _this.dom= ''
-      }
+     
+      _this.dom = name
+      // if (this.dom !== name) {
+      //   _this.dom = name
+      // } else {
+      //   _this.dom= ''
+      // }
 
 
     },
@@ -898,57 +868,7 @@ export default {
 
     },
 
-    onSearch_datasetTypeSource(searchTypeSource) {
-      var _this = this
-      // alert('jinlai')
-      // alert(Object.keys(searchTypeSource))
-      // var keys = Object.keys(searchTypeSource)
-      // alert(typeof(keys))
-      // alert(searchTypeSource)
-      // if ( keys.replace(/\s*/g,'').length.length === 0 === 0 ){
-      //     // alert('yes')  输入了空值
-      //     this.$Message.info('Please check your input of  ' + key,15);
-      //     return;
-      // }
-      for (let key in searchTypeSource) {
-        // alert(key)
-        // alert(searchTypeSource[key])
-        var value = searchTypeSource[key]
-        // alert(typeof(value))
-        if (typeof value === 'object') {
-          // alert('yes')  输入了空值  HSPC
-          this.$Message.info('Please check your input   ')
-          return
-        } else {
-          // alert('no')  不输入空
-          // alert(value.replace(/\s*/g,'').length) + key,15
-          if (value.replace(/\s*/g, '').length.length === 0) {
-            this.$Message.info('Please check your input of  ')
-            this.load()
-            return
-          } else {
-            continue
-          }
-        }
-      }
-      searchDatasetTypeSource(
-        searchTypeSource,
-        _this.currentPageTypeSource,
-        _this.pageSizeTypeSource,
-        _this.cell_name
-      ).then((res) => {
-        _this.spinShowTypeSource = false
-        let datas = res.data
-        if (datas.signal === 0) {
-          // 0 表示无相关数据
-          this.$Message.info('No related datasets', 15)
-        } else {
-          _this.datasetsTypeSource = datas.list
-          _this.totalTypeSource = datas.total
-        }
-      })
-    },
-
+  
     changePge() {
     mockTableData
        this.mockTableData(this.table_name, this.currentPage, this.pageSize)
@@ -1025,90 +945,120 @@ export default {
       // alert($value)
       var _this = this
       this.orga = $value
-      
+      this.currentAnalIndex = ''
       if(this.orga != "" & this.curentSequnceType != "" ){
+        // alert(' change sample table')
         var table_name =
                       'all_' +
                       this.orga +
                       '_ep_' +
                       this.curentSequnceType 
         this.table_name = table_name
+
+
         if (table_name.indexOf('all_mm_ep_sc') > -1){
 					// alert('change')
 					this.table_name = 'CRA002445'
+          // this.currentAnalIndex='FeaturePlot'
+
 				}
+
+        if (table_name.indexOf('all_dr_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'GSE152982'
+          // this.currentAnalIndex='Diffanal'
+			  }
+
         // alert('mockTableData')
         this.mockTableData(this.table_name, this.currentPage, this.pageSize)
-      
+        if (this.curentSequnceType.indexOf('bulk')> -1) {
+            // alert(table_name)
+            this.analList = [
+              {
+                label: 'Expression Profile',
+                value: 'all_Expression',
+              },
+              {
+                label: 'Principal Component Analysis',
+                value: 'all_Clutser',
+              },
+              {
+                label: 'Differential Analysis',
+                value: 'all_Diff',
+              },
+              {
+                label: 'Enrichment Analysis',
+                value: 'all_Enrich',
+              },
+            ]
+            // this.currentAnalIndex='all_Expression'
+            this.ifcellAnno = false
+            
+            // this.changeDom(this.currentAnalIndex)
+        }else{
+          
+            this.analList = [
+              {
+                label: 'Visualization & Feature',
+                value: 'scPCA',
+              },
+              {
+                label: "Marker & Enrichment",
+                value: 'FeaturePlot',
+              },
+
+              {
+                  label:"Difference & Enrichment",
+                  value:'Diffanal'
+              },
+
+              {
+                  label:"Differentiation Trajectory",
+                  value:'ClusterDiffTrajectory'
+              },
+              {
+                  label:"Cell-Cell Interaction",
+                  value:'ScInterraction'
+              },
+
+              {
+                  label:"Cell-Cell Communication",
+                  value:'ScCommunication'
+              }
+
+
+            ]
+            this.ifcellAnno = true
+            // this.currentAnalIndex='scPCA'
+
+            this.mockScAnnoTableData(this.table_name)
+            // alert('changeDom')
+            // alert(this.table_name)
+            // this.dom= ''
+            // this.changeDom('')
+            // this.currentAnalIndex 必须和上一次不一样，才能真正的 changeDom ,
+            // this.changeDom(this.currentAnalIndex)
+            // this.changeDom(this.currentAnalIndex)
+
+            // this.changeDom(this.currentAnalIndex)
+            // var select = []
+            // select.push({
+            //   orga:$value,
+            //   exper:this.exper,
+            //   deve:this.deve,
+            //   sequnceType:this.curentSequnceType
+            // })
+            // this.selectList = select
+            // this.dom = this.currentAnalIndex
+            
+        }
+
       }
       
      
-
-      if (this.curentSequnceType == 'bulk') {
-        
-        this.analList = [
-          {
-            label: 'Expression Profile',
-            value: 'all_Expression',
-          },
-          {
-            label: 'Principal Component Analysis',
-            value: 'all_Clutser',
-          },
-          {
-            label: 'Differential Analysis',
-            value: 'all_Diff',
-          },
-          {
-            label: 'Enrichment Analysis',
-            value: 'all_Enrich',
-          },
-        ]
-
-        this.changeDom(this.currentAnalIndex)
-        this.changeDom(this.currentAnalIndex)
-      } else {
-        this.analList = [
-          {
-            label: 'Visualization & Feature',
-            value: 'scPCA',
-          },
-          {
-            label: "Marker & Enrichment",
-            value: 'FeaturePlot',
-          },
-
-          {
-              label:"Difference & Enrichment",
-              value:'Diffanal'
-          },
-
-          {
-              label:"Differentiation Trajectory",
-              value:'ClusterDiffTrajectory'
-          },
-          {
-              label:"Cell-Cell Interaction",
-              value:'ScInterraction'
-          },
-
-          {
-              label:"Cell-Cell Communication",
-              value:'ScCommunication'
-          }
-
-
-        ]
-        this.mockScAnnoTableData(this.table_name)
-
-        this.changeDom(this.currentAnalIndex)
-        this.changeDom(this.currentAnalIndex)
-        this.changeDom(this.currentAnalIndex)
-        
-      }
-
-     
+      this.dom =''
       // this.changeDom(this.currentAnalIndex)
+
     },
 
     changeExperimentType($value){
@@ -1125,7 +1075,11 @@ export default {
 					// alert('change')
 					this.table_name = 'CRA002445'
 				}
-        this.getAllDevType(this.table_name)
+        if (table_name.indexOf('all_dr_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'GSE152982'
+			  }
+        // this.getAllDevType(this.table_name)
 
         this.mockTableData(this.table_name, this.currentPage, this.pageSize)
 
@@ -1133,9 +1087,11 @@ export default {
     },
     changeSequnceType($value) {
       // alert($value)
-      this.curentSequnceType = $value
-
-      if(this.orga != "" & this.curentSequnceType != "" ){
+      let _this = this
+      _this.curentSequnceType = $value
+      this.currentAnalIndex = ''
+      // alert(_this.curentSequnceType)
+      if(this.orga != "" & _this.curentSequnceType != "" ){
         var table_name =
                       'all_' +
                       this.orga +
@@ -1146,75 +1102,83 @@ export default {
 					// alert('change')
 					this.table_name = 'CRA002445'
 				}
-        this.getAllDevType(this.table_name)
+
+        if (table_name.indexOf('all_dr_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'GSE152982'
+			  }
+        // this.getAllDevType(this.table_name)
         this.mockTableData(this.table_name, this.currentPage, this.pageSize)
-      
-      }
+        if (this.curentSequnceType.indexOf('bulk')> -1) {
+            this.analList = [
+              {
+                label: 'Expression Profile',
+                value: 'all_Expression',
+              },
+              {
+                label: 'Principal Component Analysis',
+                value: 'all_Clutser',
+              },
+              {
+                label: 'Differential Analysis',
+                value: 'all_Diff',
+              },
+              {
+                label: 'Enrichment Analysis',
+                value: 'all_Enrich',
+              },
+            ]
+            // this.currentAnalIndex='all_Expression'
+            this.ifcellAnno = false
+          }else {
+          
+            this.analList = [
+              {
+                label: 'Visualization & Feature',
+                value: 'scPCA',
+              },
+              {
+                label: "Marker & Enrichment",
+                value: 'FeaturePlot',
+              },
 
-      if (this.curentSequnceType == 'bulk') {
-        this.analList = [
-          {
-            label: 'Expression Profile',
-            value: 'all_Expression',
-          },
-          {
-            label: 'Principal Component Analysis',
-            value: 'all_Clutser',
-          },
-          {
-            label: 'Differential Analysis',
-            value: 'all_Diff',
-          },
-          {
-            label: 'Enrichment Analysis',
-            value: 'all_Enrich',
-          },
-        ]
-        this.currentAnalIndex='all_Expression'
-      } else {
-       
-        this.analList = [
-          {
-            label: 'Visualization & Feature',
-            value: 'scPCA',
-          },
-          {
-            label: "Marker & Enrichment",
-            value: 'FeaturePlot',
-          },
+              {
+                  label:"Difference & Enrichment",
+                  value:'Diffanal'
+              },
 
-          {
-              label:"Difference & Enrichment",
-              value:'Diffanal'
-          },
+              {
+                  label:"Differentiation Trajectory",
+                  value:'ClusterDiffTrajectory'
+              },
+              {
+                  label:"Cell-Cell Interaction",
+                  value:'ScInterraction'
+              },
 
-          {
-              label:"Differentiation Trajectory",
-              value:'ClusterDiffTrajectory'
-          },
-          {
-              label:"Cell-Cell Interaction",
-              value:'ScInterraction'
-          },
-
-          {
-              label:"Cell-Cell Communication",
-              value:'ScCommunication'
-          }
+              {
+                  label:"Cell-Cell Communication",
+                  value:'ScCommunication'
+              }
 
 
-        ]
-        this.ifcellAnno = true
-        this.currentAnalIndex='scPCA'
+            ]
+            this.ifcellAnno = true
+            // this.currentAnalIndex='scPCA'
 
-        this.mockScAnnoTableData(this.table_name)
+            this.mockScAnnoTableData(this.table_name)
 
         
+        }
+
+
       }
 
-      this.changeDom(this.currentAnalIndex)
-      this.changeDom(this.currentAnalIndex)
-      this.changeDom(this.currentAnalIndex)
+     
+      this.dom =''
+      // this.changeDom(this.currentAnalIndex)
+      // this.changeDom(this.currentAnalIndex)
+      // this.changeDom(this.currentAnalIndex)
       
     },
 
@@ -1287,7 +1251,12 @@ export default {
 					// alert('change')
 					this.table_name = 'CRA002445'
 				}
-        this.getAllDevType(this.table_name)
+        if (table_name.indexOf('all_dr_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'GSE152982'
+			  }
+
+        // this.getAllDevType(this.table_name)
         this.mockTableData(this.table_name, this.currentPage, this.pageSize)
       }
 
@@ -1340,8 +1309,13 @@ export default {
       if (table_name.indexOf('all_mm_ep_sc') > -1){
 					// alert('change')
 					this.table_name = 'CRA002445'
-				}
-      this.getAllDevType(this.table_name)
+			}
+      if (table_name.indexOf('all_dr_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'GSE152982'
+			}
+
+      // this.getAllDevType(this.table_name)
 
       this.mockTableData(this.table_name, this.currentPage, this.pageSize)
 

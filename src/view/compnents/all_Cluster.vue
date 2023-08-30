@@ -64,6 +64,11 @@ const source_dict = [
       name: 'Bone Marrow (in vitro)'
     },
     {
+      value: "BM_vivo",
+      name: 'Bone Marrow (in vivo)'
+    },
+
+    {
       value: "CB_vivo",
       name: 'Cord Blood (in vivo)',
       // color: 'red'
@@ -78,11 +83,18 @@ const source_dict = [
       name: 'Peripheral Blood (in vitro)',
       // color: 'green'
     },
-     {
+    {
       value: "FL_vitro",
       name: 'Fetal Liver (in vitro)',
       // color: 'green'
     },
+
+    {
+      value: "FL_vivo",
+      name: 'Fetal Liver (in vivo)',
+      // color: 'green'
+    },
+
      {
       value: "PB_vivo",
       name: 'Peripheral Blood (in vivo)',
@@ -93,9 +105,12 @@ const source_dict = [
       name: 'Induced Pluripotent Stem Cells (in vitro)',
       // color: 'green'
     },
+    {
+        value: "Em_vivo",
+        name: 'Embryos (in vivo)',
+    },
     
   ]
-
 export default {
     name:"all_Cluster",
     components:{
@@ -189,7 +204,10 @@ export default {
                 if(val[0].orga == 'mm'){
                     this.orga_name = 'Mus musculus'
                 }
-
+                // alert(val[0].orga)
+                if(val[0].orga == 'dr'){
+                    this.orga_name = 'Danio rerio'
+                }
 
                 // if (val.length > 1) {
                 //     alert(val)
@@ -209,6 +227,7 @@ export default {
         
     },
 	methods:{
+
       getAllDevType(table_name){
             let dev_group_type_list = []
             // this.table_name = 'all_hs_ep_bulk'
@@ -216,7 +235,9 @@ export default {
 			// alert(table_name)
             getAllDevType(table_name).then(res =>{
                 let datas = res.data 
-                //console.log(datas)  
+                // 得到不同分化体系名字
+                console.log('dev_type')
+                console.log(datas)  
                 datas.forEach(key =>{ 
                     
                     source_dict.forEach(element => {

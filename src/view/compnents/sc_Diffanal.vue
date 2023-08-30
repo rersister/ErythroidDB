@@ -66,13 +66,19 @@
             </filter-table> -->
 			
 
-			<Table :columns="diffCols" :data="diffData" size="small" ref="table"></Table>
+			<Table 
+				:columns="diffCols" 
+				:data="diffData" 
+				size="small"
+				v-on:on-sort-change="onSortTable" 
+				ref="table">
+			</Table>
+
 			<div style="margin: 10px;overflow: hidden">               
                   <div style="float: right;">
                       <Page :total="totalRow"  
                       :current="currentPage" 
                       :page-size="pageSize" 
-                      show-elevator 
                       show-total
                       show-sizer
                       @on-change="handleCurrentChange" 
@@ -138,7 +144,10 @@
 import FilterTable from '../compnents/FilterTable';
 import VuePlotly from '@statnett/vue-plotly'
 import {getdiffGroup,getTsneGroup,getSCClusterDiff,getSCEnrichContrastGroup,getSCDiffContrastGroup,getScDiffEnrich} from '@/api/erythdataservice'
-import {getDatasetTypeSource,getSCDiffPageDatasetByGene,getSCDiffPageDataset} from '@/api/erythdataset'
+import {getDatasetTypeSource,getSCDiffPageDatasetByGene,
+	getSCDiffPageDatasetBySortGene,
+	getSCDiffPageDatasetBySort,
+	getSCDiffPageDataset} from '@/api/erythdataset'
 
 const  P_Value_range = {
     0: {
@@ -210,70 +219,73 @@ export default {
 	
 			diffData:[],
 			diffCols:[
-			{
-				title: 'Symbol',
-				key: 'symbol',
-				"sortable": true,
-				filter: {
-				type: 'Input'
+				{
+					title: 'Symbol',
+					key: 'symbol',
+					// "sortable": "custom",
+					filter: {
+						type: 'Input'
+					},
+					fixed: 'left',
+					// render: (h, params) => {                        
+					// return h('div', [
+					// 	h('a', {                               
+					// 		attrs:{                              
+					// 			href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id
+
+					// 		},    
+					// 	},params.row.dataset_id)
+					// 	])
+					// }
 				},
-				fixed: 'left',
-				// render: (h, params) => {                        
-				// return h('div', [
-				// 	h('a', {                               
-				// 		attrs:{                              
-				// 			href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id
+				{
+					title: 'P-value',
+					key: 'p_val',
+					"sortable": 'custom',
+					filter: {
+					type: 'Input'
+					}
 
-				// 		},    
-				// 	},params.row.dataset_id)
-				// 	])
-				// }
-			},
-			{
-				title: 'P-val',
-				key: 'p_val',
-				"sortable": true,
-				filter: {
-				type: 'Input'
-				}
-
-			},
-			{
-				title: 'avLogFC',
-				key: 'avg_logFC',
-				"sortable": true,
-				filter: {
-				type: 'Input'
-				}
-
-			},
-			// {
-			// 	title: 'pct.1',
-			// 	key: 'pct.1',
-			// 	"sortable": true,
-			// 	filter: {
-			// 	type: 'Input'
-			// 	}
-
-			// },
-			// {
-			// 	title: 'pct.2',
-			// 	key: 'pct.2',
-			// 	"sortable": true,
-			// 	filter: {
-			// 	type: 'Input'
-			// 	},
-			// },
-			{
-				title: 'P-adj.val',
-				key: 'p_val_adj',
-				"sortable": true,
-				filter: {
-					type: 'Select',
-					option: P_Value_range
 				},
-			},
+				{
+					title: 'avLogFC',
+					key: 'avg_logFC',
+					"sortable":'custom',
+					filter: {
+					type: 'Input'
+					}
+
+				},
+				// {
+				// 	title: 'pct.1',
+				// 	key: 'pct.1',
+				// 	"sortable": true,
+				// 	filter: {
+				// 	type: 'Input'
+				// 	}
+
+				// },
+				// {
+				// 	title: 'pct.2',
+				// 	key: 'pct.2',
+				// 	"sortable": true,
+				// 	filter: {
+				// 	type: 'Input'
+				// 	},
+				// },
+				{
+					title: 'P-adj.val',
+					key: 'p_val_adj',
+					"sortable": 'custom',
+					filter: {
+						type: 'Select',
+						option: P_Value_range
+					},
+				},
 			],
+			sortableKey:'',
+			sortableOrder:'',
+			inputGenePat:'',
 			group_type_list:['all'],
 			group_type_list2:[],
 			group:'',
@@ -294,6 +306,17 @@ export default {
 		}
 	},
 	methods:{
+		onSortTable ({ column, key, order }) {
+            // console.log('onSortTable')
+            console.log(key)
+            console.log(order)
+            // console.log(column)
+            this.sortableKey = key
+            this.sortableOrder = order
+            // this.changeColumn = { key, order }
+            this.handleSortTable()
+        },
+
 
 		getDataSourceList(series){
 
@@ -426,7 +449,7 @@ export default {
 						title: 'Enrichment ('+this.enrichType +')' +' of ' + group2 +'('+this.series +')', 
                        
                         xaxis: {
-							title:'-log10(p.adjust)',
+							title:'-Log10(P value)',
 							// showgrid : TRUE,
 							gridcolor: 'rgb(243, 243, 243)',
 							gridwidth: 1,
@@ -556,28 +579,6 @@ export default {
 		},
 
 
-      
-		// getdiff_group(table_name){
-        //     let contrasts_group_type_list = []
-        //     let enrich_group_list = []
-		// 	let _this = this
-		// 	// alert(table_name)
-        //     getdiffGroup(table_name).then(res =>{
-        //         let datas = res.data 
-        //         console.log(datas)  
-        //         datas.forEach(key => contrasts_group_type_list.push({
-        //             name:key
-        //         }))
-        //         this.contrasts_group = contrasts_group_type_list
-		// 		this.getdiff_chart(table_name,datas[0])
-		// 		this.mockTableData(table_name,this.currentPage,this.pageSize)
-        //         // enrichGroup = datas[0].split('-')[0]
-        //         // goType = 'CC'
-               
-        //     })
-		// },
-		
-
 		getdiff_chart(){
 
 			let _this = this
@@ -619,7 +620,7 @@ export default {
                         title:'Log2(FC)',
                     },
                      yaxis: {
-                       title:'-Log2(P-value)'
+                       title:'-Log10(P value)'
                     },
 
                 }         
@@ -672,7 +673,44 @@ export default {
 				
 			})
 		},
-		
+
+		handleSortTable(){
+
+			if(this.sortableOrder === 'normal'){
+				return
+			}else{
+				var _this = this;      
+			_this.spinShowTypeSource = true
+			if( "" == this.inputGenePat ){
+				getSCDiffPageDatasetBySort(this.sortableKey,this.sortableOrder,this.series,this.currentPage,this.pageSize,this.group).then( res=>{
+					_this.spinShowTypeSource = false                    
+					let datas = res.data
+					if (datas.signal == 1){
+						_this.diffData = datas.list                  
+						_this.totalRow = datas.total;
+					}else{
+					}
+				})
+
+			}else{
+				getSCDiffPageDatasetBySortGene(this.inputGenePat,this.sortableKey,this.sortableOrder,this.series,this.currentPage,this.pageSize,this.group).then( res=>{
+					_this.spinShowTypeSource = false                    
+					let datas = res.data
+					if (datas.signal == 1){
+						_this.diffData = datas.list                  
+						_this.totalRow = datas.total;
+					}else{
+					}
+				})
+			}
+
+			}
+
+
+
+
+		},
+
 		searchSCDiffDataSetByKeyName($event){
 			//  table_name  含有 source 信息
 			// alert(table_name)
@@ -686,7 +724,7 @@ export default {
 			var _this = this;      
             _this.spinShowTypeSource = true, 
             // alert("==")
-		
+			_this.inputGenePat = $event
 			getSCDiffPageDatasetByGene($event,this.series,this.currentPage,this.pageSize,this.group).then( res=>{
 
 				_this.spinShowTypeSource = false                    

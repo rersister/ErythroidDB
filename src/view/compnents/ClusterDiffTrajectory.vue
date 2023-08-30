@@ -40,7 +40,7 @@
 				<i-col span="8">
 					<Form-item label="Color by: ">                                                  
 						<i-select v-model="traCol"  :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedTraChart"  filterable>        
-							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
+							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.value">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
@@ -106,17 +106,25 @@ export default {
 			source:'',
 			source2:'',
 			traCol:'celltype',
-			group_type_list : [ 
-				// {
-				// 	id:"0",
-				// 	name:"Sample's Source "
-				// },
-				// {
-				// 	id:'1',
-				// 	name:"Cell Cluster"
-				// }
-				
+			group_type_list: [ 
+				{
+					id:"0",
+					name:"Original identity",
+					value:"orig.ident"
+					
+				},
+				{
+					id:'1',
+					name:"Cell type",
+					value:"celltype"
+				},
+				{
+					id:'2',
+					name:"Phase",
+					value:"Phase"
+				}
 				],
+
 			data_source_list:[],
 			colnames:[],
 
@@ -182,10 +190,12 @@ export default {
 				let datas = res.data  
 				console.log(datas)
 				_this.colnames = datas
-				this.group_type_list = []  
-				datas.forEach(key => this.group_type_list.push({
-                    name:key
-				}))
+				// let mygroup_type_list = []  
+				// datas.forEach(key => mygroup_type_list.push({
+                //     name:key
+				// }))
+
+				// this.group_type_list = mygroup_type_list 
 				// this.traCol = this.group_type_list[0].name
 			})
 		},

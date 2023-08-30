@@ -56,7 +56,6 @@
                       <Page :total="totalTypeSource"  
                       :current="currentPageTypeSource" 
                       :page-size="pageSizeTypeSource" 
-                      show-elevator 
                       show-total
                       show-sizer
                       @on-change="handleCurrentChangeTypeSource" 
@@ -152,6 +151,33 @@ const sample_numbers = {
 
   };
 
+  const cell_numbers = {
+    0: {
+      value: "1-1000",
+      name: '1-1,000'
+    },
+    1: {
+      value: "1000-10000",
+      name: '1,000-10,000',
+      // color: 'red'
+    },
+    3: {
+      value: "10000-20000",
+      name: '10,000-20,000',
+      // color: 'green'
+    },
+    4: {
+      value: ">10000",
+      name: '>10,000',
+      // color: 'green'
+    },
+    5: {
+      value: "all",
+      name: 'All',
+      // color: 'green'
+    },
+
+};
 
 const species_type = {
     0: {
@@ -249,11 +275,11 @@ const source_type = {
 const growth_type ={
    0: {
       value: "vitro",
-      name: 'vitro'
+      name: 'In vitro'
     },
     1: {
       value: "vivo",
-      name: 'vivo',
+      name: 'In vivo',
       // color: 'red'
     },
     3: {
@@ -387,37 +413,36 @@ export default {
     data(){
       return {
         cell_type_list:[
-
-            {'name':'TRβ agonists',
+              {'name':'TRβ agonists',
                 'full_name':'Thyroid Hormone Receptor(TRβ)  Agonists',
                 'cell_ano':''},
               {'name':'ERBB inhibitors',
                 'full_name':'Epidermal Growth Factor Receptor Inhibitors',
                 'cell_ano':''},
-              {'name':'iron',
+              {'name':'Iron',
                 'full_name':'Iron',
                 'cell_ano':' '},
               {'name':'IDH2 inhibitors',
-              'full_name':'Isocitrate Dehydrogenase 2(IDH2) Mutant-specific Inhibitors',
+              'full_name':'Isocitrate Dehydrogenase 2(IDH2) Mutant-specific Inhibitor',
               'cell_ano':''},
               {'name':'BET bromodomain inhibitors',
-              'full_name':'BET bromodomain inhibitors',
+              'full_name':'BET Bromodomain Inhibitors',
               'cell_ano':''},
-              
               {'name':'PPAR-α agonists',
               'full_name':'Peroxisome Proliferator-activated Receptor α(PPAR-α) Agonists',
               'cell_ano':''},
-              {'name':'HbF inducers',
-              'full_name':'Heterogeneity of Fetal Hemoglobin (HbF) Activation',
+              {'name':'HbF regulators',
+              'full_name':'Fetal Hemoglobin (HbF) Regulators',
               'cell_ano':''},
               
-              {'name':'erythropoietin',
+              {'name':'Erythropoietin',
               'full_name':'Erythropoietin',
               'cell_ano':''},
 
-              {'name':'corticosteroids',
+              {'name':'Corticosteroids',
               'full_name':'Corticosteroids',
               'cell_ano':''},
+             
         ],
         search:'',
         current_cellname:'Epidermal growth factor receptor inhibitors',
@@ -435,96 +460,8 @@ export default {
         datasets: [],
         datasetsTypeSource:[],
         datasetname :'Development',
-        tableColumns: [
-          {
-            title: 'Dataset',
-            key: 'dataset',
-            filter: {
-              type: 'Input'
-            },
-            fixed: 'left',
-            render: (h, params) => {    
-              if (params.row.dataset.indexOf("GSE") > -1){
-                  return h('div', [
-                  h('a', {                               
-                        attrs:{                              
-                          href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset,
-                          target:'_blank',
-                        },    
-                    },params.row.dataset)
-                  ])
-              }else{
-                return h('div',params.row.dataset)
-              
-              }
-            }
-
-          },
-          {
-            title: 'Title',
-            key: 'title',
-            filter: {
-              type: 'Input'
-            }
-
-          },
-          {
-            title: 'PubMed',
-            key: 'citations',
-            filter: {
-              type: 'Input'
-            },
-            render: (h, params) => {
-              let citations =  params.row.citation.split(",")
-              let render = []
-            
-              for (let cita in citations){
-                    render.push(h('a', {
-                      style: {
-                            marginRight: '5px'
-                      },
-                      attrs:{                              
-                        href:'https://www.ncbi.nlm.nih.gov/pubmed/'+citations[cita],
-                        target:'_blank',
-                      },    
-                  }, citations[cita]))
-              }
-              return h('div', render)
-            }
-
-          },
-          {
-            title: 'Experiment type',
-            key: 'experiment_type',
-            filter: {
-              type: 'Input'
-            },
-          },
-          {
-            title: 'Sequence type',
-            key: 'sequencing_type',
-            filter: {
-              type: 'Input'
-            },
-          },
-          {
-            title: 'Status',
-            key: 'status',
-            filter: {
-              type: 'Input'
-            },
-          },
-          {
-            title: 'Sample number',
-            key: 'sample_numbers',
-            filter: {
-              type: 'Select',
-              option: sample_numbers
-            },
-          },
-         
-        ],
-       tAdatasetTypeSourceColumns:[
+        
+        tAdatasetTypeSourceColumns:[
           {
             title: 'Dataset',
             key: 'dataset_id',
@@ -566,6 +503,7 @@ export default {
               type: 'Select',
               option: species_type
             },
+            className:'table_Orga'
 
           },
           {
@@ -586,6 +524,7 @@ export default {
                   type: 'Select',
                   option: growth_type
               },
+              className:'table_Orga'
           },
           // {
           //     title: 'Development Type',
@@ -632,7 +571,15 @@ export default {
               option: sample_numbers
             },
           },
-
+          {
+            title: 'Cell number',
+            key: 'cell_number',
+            width:'90',
+            filter: {
+              type: 'Select',
+              option: cell_numbers
+            },
+          },
 
         ],
 
@@ -644,7 +591,7 @@ export default {
 
       searchDatasetByFilter(searchTypeSource){
         var _this = this
-        searchDatasetTypeSource(searchTypeSource, _this.currentPageTypeSource,_this.pageSizeTypeSource,_this.cell_name).then( res=>{
+        searchDatasetTypeSource(searchTypeSource, _this.currentPageTypeSource,_this.pageSizeTypeSource,_this.cell_name,'compound').then( res=>{
             
             _this.spinShowTypeSource = false                    
             let datas = res.data
@@ -748,10 +695,7 @@ export default {
           this.mockTableData();
       },
 
-      changeTableColumns () {
-          this.tableColumns = this.getTable2Columns();
-      },
-
+     
       handleCurrentChange(val) {
           // console.log(`当前页: ${val}`);
           this.currentPage = val;
@@ -866,39 +810,7 @@ export default {
 
           }
 
-          var cell_type_list = cell_type_list=[
-
-              {'name':'TRβ Agonists',
-                'full_name':'Thyroid Hormone Receptor(TRβ)  Agonists',
-                'cell_ano':''},
-              {'name':'ERBB Inhibitors',
-                'full_name':'Epidermal Growth Factor Receptor Inhibitors',
-                'cell_ano':''},
-              {'name':'Iron',
-                'full_name':'Iron',
-                'cell_ano':' '},
-              {'name':'IDH2 Inhibitor',
-              'full_name':'Isocitrate Dehydrogenase 2(IDH2) Mutant-specific Inhibitor',
-              'cell_ano':''},
-              {'name':'BET bromodomain inhibitor',
-              'full_name':'BET bromodomain inhibitor',
-              'cell_ano':''},
-              {'name':'PPAR-α Agonists',
-              'full_name':'Peroxisome Proliferator-activated Receptor α(PPAR-α) Agonists',
-              'cell_ano':''},
-              {'name':'HbF Inducers',
-              'full_name':'Heterogeneity of Fetal Hemoglobin (HbF) Activation',
-              'cell_ano':''},
-              
-              {'name':'Erythropoietin',
-              'full_name':'Erythropoietin',
-              'cell_ano':''},
-
-              {'name':'Corticosteroids',
-              'full_name':'Corticosteroids',
-              'cell_ano':''},
-             
-        ]
+          var cell_type_list = this.cell_type_list
           cell_type_list.forEach(element => {
             if(element.name == name){
               // alert(_this.cell_name)
@@ -994,7 +906,7 @@ export default {
                                     'color': '#a79594'
                                 },
                     },
-                    { value: 1, name: 'HbF inducers',
+                    { value: 1, name: 'HbF regulators',
                       'itemStyle': {
                         
                                     'color': '#e2b5b4'

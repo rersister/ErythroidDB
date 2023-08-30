@@ -136,14 +136,17 @@ export default {
                 this.getdiff_group(this.table_name);
 
                 this.getdiff_group(this.table_name);
-				                if (val[0].orga == 'hs'){
+                
+				 if (val[0].orga == 'hs'){
                     this.orga_name = 'Homo sapiens'
 
                 }
                 if(val[0].orga == 'mm'){
                     this.orga_name = 'Mus musculus'
                 }
-                
+                if(val[0].orga == 'dr'){
+                    this.orga_name = 'Danio rerio'
+                }
             },
             immediate:true
         },
@@ -204,7 +207,7 @@ export default {
 						title:'GO '+ 'enrichment of ' + this.contrastsGroup,
                         bargap: 0.25,
                         xaxis: {
-							title:'-log10(p.adjust)',
+							title:'-Log10(P value)',
 							// showgrid : TRUE,
 						},
 						yaxis: {

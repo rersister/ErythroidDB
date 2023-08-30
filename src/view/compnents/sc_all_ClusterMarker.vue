@@ -41,6 +41,7 @@
 		<div>
 			<Spin size="large" fix v-if="spinShow1"></Spin>
 			<vue-plotly  :data="ClusterHotMapMarkerdata" :layout="ClusterHotMapMarker_layout" :options="ClusterHotMapMarker_option"/>
+			
 		</div>
 		</Row>
 	</div>
@@ -116,6 +117,7 @@ export default {
             ],
 			ifResize:true,
 			ClusterHotMapMarkerdata:[],
+
 			enrich_data:[],
 			enrichType:'CC',
 			goTypeList:[
@@ -138,6 +140,18 @@ export default {
 
                 ],
 			ClusterHotMapMarker_option:{
+				responsive: true,
+				displaylogo: false,
+                toImageButtonOptions: {
+                    format: 'svg', // one of png, svg, jpeg, webp
+                    filename: 'sc_cluster_image',
+                    // height: 500,
+                    // width: 700,
+                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                }
+
+			},
+			ClusterMarkerBubbles_option:{
 				responsive: true,
 				displaylogo: false,
                 toImageButtonOptions: {
@@ -179,6 +193,7 @@ export default {
 					   titlefont: { size:15},
 					},
 			},
+
 			enrich_layout:{},
 			spinShow2:'true',
 			enrichShow:false,
@@ -227,6 +242,14 @@ export default {
 					// alert('change')
 					this.table_name = 'CRA002445'
 				}
+				if (table_name.indexOf('all_dr_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'GSE152982'
+			  	}
+				  
+				if(val[0].orga == 'dr'){
+                    this.orga_name = 'Danio rerio'
+                }
                 if (val[0].orga == 'hs'){
                     this.orga_name = 'Homo sapiens'
 
@@ -294,6 +317,7 @@ export default {
 						
 						var  y_list = this.y_list
 						var x_list = this.x_list
+						
 						var data = [{
 							// z: [[1, null, 30, 50, 1], [20, 1, 60, 80, 30], [30, 60, 1, -10, 20]],
 							z:z_list,
@@ -338,12 +362,13 @@ export default {
 					   titlefont: { size:15},
 					},
 								
-							}
+						}
 							
 						_this.ClusterHotMapMarker_layout = layout
 						this.ClusterHotMapMarkerdata = data
 						_this.spinShow1 = false
 
+						
 
 					}else{
 						this.z_list.push(datas.col_list)
@@ -502,7 +527,7 @@ export default {
 				var layout = {
 					title: 'Enrichment'+" ("+this.enrichType+") of "  + " (Organism: "+ this.orga_name + "; Group: "+ this.source+")",
 					xaxis: {
-						title: '-log10(p.adjust)',
+						title: '-Log10(P value)',
 						showgrid: false,
 						zeroline: false
 					},
@@ -650,7 +675,9 @@ export default {
 				this.ClusterHotMapMarkerdata = data
 
                 _this.spinShow1 = false
-            })   
+            })  
+			
+
 		},
 
 	
@@ -664,10 +691,9 @@ export default {
 			this.getFeaturePlot(this.table_name,this.source,feature_name)
 
 		},
+
 		getDataSourceList(series){
-
 			getTsneGroup(series).then(res =>{
-
 				let _this = this
                 let datas = res.data  
 				console.log(datas)

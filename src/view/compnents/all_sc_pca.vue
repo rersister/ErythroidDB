@@ -37,7 +37,7 @@
 				<i-col span="8">
 					<Form-item label="Color by: ">                                                  
 						<i-select v-model="group" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedGroup"  filterable>        
-							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
+							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.value">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
@@ -190,15 +190,19 @@ export default {
 			group_type_list: [ 
 				{
 					id:"0",
-					name:"orig.ident"
+					name:"Original identity",
+					value:"orig.ident"
+					
 				},
 				{
 					id:'1',
-					name:"celltype"
+					name:"Cell type",
+					value:"celltype"
 				},
 				{
 					id:'2',
-					name:"phase"
+					name:"Phase",
+					value:"Phase"
 				}
 				],
 			group:'',
@@ -242,13 +246,21 @@ export default {
                     val[0].sequnceType 
 
 				
-
+				// alert(table_name)
                 this.table_name = table_name
 
 				if (table_name.indexOf('all_mm_ep_sc') > -1){
 					// alert('change')
 					this.table_name = 'CRA002445'
 				}
+				if (table_name.indexOf('all_dr_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'GSE152982'
+			  	}
+				  
+				if(val[0].orga == 'dr'){
+                    this.orga_name = 'Danio rerio'
+                }
 
                 if (val[0].orga == 'hs'){
                     this.orga_name = 'Homo sapiens'
@@ -257,6 +269,7 @@ export default {
                 if(val[0].orga == 'mm'){
                     this.orga_name = 'Mus musculus'
                 }
+				
 
 
                 // if (val.length > 1) {

@@ -13,7 +13,7 @@
                                  <p class="p_text" slot="content">
                                     EryDB is a web-accessible erythropoiesis-related database of transcriptome profiles that contains expertly curated, quality-assured, and pre-analyzed datasets for
                                     three species and nine sources, 
-                                    totaling 3,802 samples and 1,167,800 single cells. 
+                                    totaling 3,803 samples and 1,187,119 single cells. 
                                 </p>
 
                         </Panel>
@@ -44,7 +44,7 @@
                         </CarouselItem>
 
                         <CarouselItem>
-                            <div class="demo-carousel"><a class="my_nolink"><img width="90%" src="../../../../src/assets/img/disease_home.png" alt="img"></a></div>
+                            <div class="demo-carousel"><a class="my_nolink"><img width="80%" src="../../../../src/assets/img/disease_home.png" alt="img"></a></div>
                         </CarouselItem>
                         <!-- <CarouselItem>
                             <!-- FLB000002  <button @click="intoDataSet('FLB000002')"  style="{cursor='hand'}" >  </button>
@@ -64,7 +64,7 @@
                     </br>
                     </br>
                     </br>
-                    <span >Input Reported Gene/Tissue/Dataset ID/Organism Name:</span>
+                    <span >Input Reported Gene/Tissue/Dataset ID/Organism Name/PMID:</span>
                     <!-- :model.sync="showByGroup"  -->
                     <i-select 
                         enter-button="Search" 
@@ -73,7 +73,7 @@
                         @on-search="searchDataSetByKeyName($event)"  
                         :placeholder="search_placeholder"  
                         @on-change="searchDataSetByKeyName($event)"  filterable>        
-							<i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
+							<i-option v-for="(keyWord,index) in keyWords_list" :key='index' :value="keyWord.value">{{ keyWord.name }}</i-option>
 					</i-select>
                     <Button type="primary" @click="searchByKeyWord()" >Search</Button>
                     <!-- <Input  filterable search enter-button="Search"    @on-search="searchDataSetByKeyName($event)" :placeholder="search_placeholder"/>                          -->
@@ -218,7 +218,7 @@
                                 
                                 <div class='count_div'>
                                     <p  class='h3_title'>Type Number
-                                        <count-to :end="7" count-class="count-style"/>                                                              
+                                        <count-to :end="5" count-class="count-style"/>                                                              
                                     </p>
                                 </div>
                         </Card>
@@ -314,7 +314,7 @@ export default {
                 },
                 {
 
-                    value:'Embryonic',
+                    value:'Embryonic ',
                     name:'Fetus Tissue '
                 },
 
@@ -400,7 +400,8 @@ export default {
                 console.log(mykeyWord_list)
                 this.source_type.forEach(element => {
                     mykeyWord_list.push({
-                        name:element.name
+                        name:element.name,
+                        value:element.value
                     })
                 })    
                 console.log('after')
@@ -427,6 +428,7 @@ export default {
         searchDataSetByKeyName(InputKeyName){
             let _this = this
             _this.InputKeyName = InputKeyName
+            // 输送 的是 value
             // alert(InputKeyName)
            
 
@@ -600,5 +602,7 @@ export default {
         height: 15%;
         width: 15%;
     }
+    
+  
 
 </style>

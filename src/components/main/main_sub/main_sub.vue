@@ -51,14 +51,14 @@
             <div>
               <h4>Choose species:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
-              <i-select  v-model=searchSpecies clearable placeholder="Pleace select species"  @on-change="changedSpecies" filterable>        
-                <i-option v-for="(species,index) in species_list" :key='index' :value="species.name">{{ species.name }}</i-option>
+              <i-select style="font-style:italic;" v-model=searchSpecies clearable placeholder="Pleace select species"  @on-change="changedSpecies" filterable>        
+                <i-option style="font-style:italic;" v-for="(species,index) in species_list" :key='index' :value="species.name">{{ species.name }}</i-option>
               </i-select>
             </div>
             <Br/>
             <div>
               <h4>Choose tissue:</h4>
-              <!-- searchTissue 为 tissue.name 时才会显示 -->
+              <!-- searchTissue 为 value 里的值时  才会显示 -->
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
               <i-select  v-model=searchTissue clearable placeholder="Pleace select tissue"  @on-change="changedTissue" filterable>        
                 <i-option v-for="(tissue,index) in tissue_list" :key='index' :value="tissue.name">{{ tissue.name }}</i-option>
@@ -68,8 +68,8 @@
             <div>
               <h4>Choose experiment type:</h4>
               <!-- <Input enter-button="Search"   :placeholder="search_placeholder"/>     -->
-              <i-select  clearable placeholder="Pleace select experiment type"  @on-change="changedGrowthMode" filterable>        
-                <i-option v-for="(growth_mode,index) in growth_mode_list" :key='index' :value="growth_mode.name">{{growth_mode.name }}</i-option>
+              <i-select style="font-style:italic;" clearable placeholder="Pleace select experiment type"  @on-change="changedGrowthMode" filterable>        
+                <i-option style="font-style:italic;" v-for="(growth_mode,index) in growth_mode_list" :key='index' :value="growth_mode.name">{{growth_mode.name }}</i-option>
               </i-select>
             </div>
             <!-- <Br/>
@@ -104,13 +104,13 @@
 
            
               <!-- <Spin size="large" fix v-if="spinShowTypeSource"></Spin> -->
-                 
+              <!--  show-elevator  -->
               <div style="margin: 10px;overflow: hidden">               
                     <div style="float: right;">
                         <Page :total="totalTypeSource"  
                         :current="currentPageTypeSource" 
                         :page-size="pageSizeTypeSource" 
-                        show-elevator 
+                       
                         show-total
                         show-sizer
                         @on-change="handleCurrentChangeTypeSource" 
@@ -193,7 +193,33 @@ const sample_numbers = {
 
   };
 
+  const cell_numbers = {
+    0: {
+      value: "1-1000",
+      name: '1-1,000'
+    },
+    1: {
+      value: "1000-10000",
+      name: '1,000-10,000',
+      // color: 'red'
+    },
+    3: {
+      value: "10000-20000",
+      name: '10,000-20,000',
+      // color: 'green'
+    },
+    4: {
+      value: ">10000",
+      name: '>10,000',
+      // color: 'green'
+    },
+    5: {
+      value: "all",
+      name: 'All',
+      // color: 'green'
+    },
 
+};
 const species_type = {
     0: {
       value: "Homo",
@@ -251,7 +277,7 @@ const source_type = {
   },
   6:{
 
-    value:'Embryonic',
+    value:'Embryonic ',
     name:'Fetus Tissue '
   },
 
@@ -290,11 +316,11 @@ const source_type = {
 const growth_type ={
    0: {
       value: "vitro",
-      name: 'vitro'
+      name: 'In vitro'
     },
     1: {
       value: "vivo",
-      name: 'vivo',
+      name: 'In vivo',
       // color: 'red'
     },
     3: {
@@ -400,8 +426,12 @@ export default {
             width:'130',
             filter: {
               type: 'Select',
-              option: species_type
+              option: species_type,
+              
             },
+            className:'table_Orga'
+        
+
 
           },
           {
@@ -422,6 +452,7 @@ export default {
                   type: 'Select',
                   option: growth_type
               },
+              className:'table_Orga'
           },
           // {
           //     title: 'Development Type',
@@ -468,7 +499,15 @@ export default {
               option: sample_numbers
             },
           },
-
+          {
+            title: 'Cell number',
+            key: 'cell_number',
+            width:'90',
+            filter: {
+              type: 'Select',
+              option: cell_numbers
+            },
+          },
 
         ],
       cell_type:'',
@@ -568,14 +607,15 @@ export default {
               'full_name':'Aplastic anemia',
               'cell_ano':' '},
 
-              {name:'Sickle cell anemia',
-                'full_name':'Sickle cell anemia',
-                'cell_ano':' '},
+              // 属于 血红蛋白异常
+              // {name:'Sickle cell anemia', 
+              //   'full_name':'Sickle cell anemia',
+              //   'cell_ano':' '},
 
-              //地中海贫血
-              {name:'Thalassemia',
-                'full_name':'Thalassemia',
-                'cell_ano':' '},
+              // //地中海贫血 属于 血红蛋白异常
+              // {name:'Thalassemia',
+              //   'full_name':'Thalassemia',
+              //   'cell_ano':' '},
 
               // 血红蛋白异常
               {name:'Hemoglobinopathies',
@@ -668,11 +708,11 @@ export default {
       growth_mode_list:[
             {
               value: "vitro",
-              name: 'in vitro'
+              name: 'In vitro'
             },
             {
               value: "vivo",
-              name: 'in vivo',
+              name: 'In vivo',
               // color: 'red'
             },
       ],
@@ -938,7 +978,7 @@ export default {
         molecules_type:this.compound_n,
         disease:this.disease_n,
         organism:this.species,
-        source:this.tissue,
+        source:this.tissue,    // 使用tissue 的 value 来进行查询 this.tissue
         growth_mode:this.growth_mode,
         development_type:this.development,
         sequence_type:this.sequence
@@ -984,10 +1024,16 @@ export default {
       _this.species = species
       this.getDatasetByMultiInput()
     },
+    
     changedTissue(tissue){
-      // alert(tissue)
+      // alert(tissue)  输入的是name  实际查询是 使用value 
       let _this = this
-      _this.tissue = tissue
+      for(var j=0;j< this.tissue_list.length;j++){
+                if(tissue.indexOf(this.tissue_list[j].name) >-1 ){
+                   _this.tissue = this.tissue_list[j].value
+                }
+      }
+
       this.getDatasetByMultiInput()
     },
     changedGrowthMode(growth_mode){
@@ -1026,6 +1072,7 @@ export default {
               //     subnodes.push(nodes[j])
               //   }
               // }
+              // reported_gene
               for(var j =0;j< gData.length;j++){
                 // alert(gData[j].name)
                 // alert(gData[j].name === this.$route.query.KeyName)
@@ -1040,19 +1087,22 @@ export default {
               //     this.searchSpecies=this.$route.query.KeyName 
               //   }
               // }
+              
 
               for(var j=0;j< this.tissue_list.length;j++){
                 // console.log( this.tissue_list[j])
-                if(this.tissue_list[j].name == this.$route.query.KeyName ){
+                //  传送过来的是 value , 显示的是 name
+                if(this.tissue_list[j].value == this.$route.query.KeyName ){
                   // alert('yes')
-                  _this.searchTissue=this.$route.query.KeyName 
+                  _this.searchTissue= this.tissue_list[j].name 
                   // alert(_this.searchTissue)
-                  _this.tissue = this.$route.query.KeyName
+                  // 输入查询的是 value
+                  _this.tissue = this.tissue_list[j].value
                 }
                 // console.log('Induced Pluripotent Stem Cells' =='Induced Pluripotent Stem Cells')
                   //统一home 搜索款和 Search 页面的搜索 
-                if(this.$route.query.KeyName.indexOf(this.tissue_list[j].name) >-1 ){
-                    this.searchTissue=this.$route.query.KeyName 
+                if(this.$route.query.KeyName.indexOf(this.tissue_list[j].value) >-1 ){
+                    this.searchTissue=this.tissue_list[j].name
                 }
               }
 
@@ -1099,6 +1149,7 @@ export default {
     // alert(this.$route.query.KeyName)
     if ( this.$route.query.KeyName != undefined){
         
+        // 输送的是 value
         this.mockTableDataByKeyParam(this.$route.query.KeyName)
         this.getReportedGeneList()
 
@@ -1182,6 +1233,10 @@ export default {
   text-align: center;
   clear: both;
 }
+
+.table_Orga{
+        font-style:italic;
+   }
 
 
 </style>

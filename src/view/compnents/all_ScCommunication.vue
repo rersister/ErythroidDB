@@ -193,6 +193,16 @@ export default {
 					// alert('change')
 					this.table_name = 'CRA002445'
 				}
+
+				if (table_name.indexOf('all_dr_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'GSE152982'
+			  	}
+				  
+				if(val[0].orga == 'dr'){
+                    this.orga_name = 'Danio rerio'
+                }
+
                 if (val[0].orga == 'hs'){
                     this.orga_name = 'Homo sapiens'
 
@@ -387,7 +397,7 @@ export default {
 				var data = [{
 					z:datas.zData,
 					x: datas.xData,
-					y: ['sender','receiver','mediator','influencer'],
+					y: ['Sender','Receiver','Mediator','Influencer'],
 					type: 'heatmap',
 					hoverongaps: false
 				}];

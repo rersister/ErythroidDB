@@ -56,7 +56,6 @@
                       <Page :total="totalTypeSource"  
                       :current="currentPageTypeSource" 
                       :page-size="pageSizeTypeSource" 
-                      show-elevator 
                       show-total
                       show-sizer
                       @on-change="handleCurrentChangeTypeSource" 
@@ -149,6 +148,34 @@ const sample_numbers = {
     },
 
   };
+
+const cell_numbers = {
+    0: {
+      value: "1-1000",
+      name: '1-1,000'
+    },
+    1: {
+      value: "1000-10000",
+      name: '1,000-10,000',
+      // color: 'red'
+    },
+    3: {
+      value: "10000-20000",
+      name: '10,000-20,000',
+      // color: 'green'
+    },
+    4: {
+      value: ">10000",
+      name: '>10,000',
+      // color: 'green'
+    },
+    5: {
+      value: "all",
+      name: 'All',
+      // color: 'green'
+    },
+
+};
 
 
 const species_type = {
@@ -247,11 +274,11 @@ const species_type = {
 const growth_type ={
    0: {
       value: "vitro",
-      name: 'vitro'
+      name: 'In vitro'
     },
     1: {
       value: "vivo",
-      name: 'vivo',
+      name: 'In vivo',
       // color: 'red'
     },
     3: {
@@ -417,97 +444,6 @@ export default {
         datasets: [],
         datasetsTypeSource:[],
         datasetname :'Development',
-        tableColumns: [
-          {
-            title: 'Dataset',
-            key: 'dataset',
-            filter: {
-              type: 'Input'
-            },
-            fixed: 'left',
-            render: (h, params) => {    
-              if (params.row.dataset.indexOf("GSE") > -1){
-                  return h('div', [
-                  h('a', {                               
-                        attrs:{                              
-                          href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset,
-                          target:'_blank',
-
-                        },    
-                    },params.row.dataset)
-                  ])
-              }else{
-                return h('div',params.row.dataset)
-              
-              }
-            }
-
-          },
-          {
-            title: 'Title',
-            key: 'title',
-            filter: {
-              type: 'Input'
-            }
-
-          },
-          {
-            title: 'PubMed',
-            key: 'citations',
-            filter: {
-              type: 'Input'
-            },
-            render: (h, params) => {
-              let citations =  params.row.citation.split(",")
-              let render = []
-            
-              for (let cita in citations){
-                    render.push(h('a', {
-                      style: {
-                            marginRight: '5px'
-                      },
-                      attrs:{                              
-                        href:'https://www.ncbi.nlm.nih.gov/pubmed/'+citations[cita],
-                        target:'_blank',
-
-                      },    
-                  }, citations[cita]))
-              }
-              return h('div', render)
-            }
-
-          },
-          {
-            title: 'Experiment type',
-            key: 'experiment_type',
-            filter: {
-              type: 'Input'
-            },
-          },
-          {
-            title: 'Sequence type',
-            key: 'sequencing_type',
-            filter: {
-              type: 'Input'
-            },
-          },
-          {
-            title: 'Status',
-            key: 'status',
-            filter: {
-              type: 'Input'
-            },
-          },
-          {
-            title: 'Sample number',
-            key: 'sample_numbers',
-            filter: {
-              type: 'Select',
-              option: sample_numbers
-            },
-          },
-         
-        ],
         tAdatasetTypeSourceColumns:[
           {
             title: 'Dataset',
@@ -550,6 +486,7 @@ export default {
               type: 'Select',
               option: species_type
             },
+            className:'table_Orga'
 
           },
           {
@@ -570,6 +507,7 @@ export default {
                   type: 'Select',
                   option: growth_type
               },
+              className:'table_Orga'
           },
           // {
           //     title: 'Development Type',
@@ -616,7 +554,15 @@ export default {
               option: sample_numbers
             },
           },
-
+          {
+            title: 'Cell number',
+            key: 'cell_number',
+            width:'90',
+            filter: {
+              type: 'Select',
+              option: cell_numbers
+            },
+          },
 
         ],
         datasetFilter:{},
@@ -627,7 +573,7 @@ export default {
       searchDatasetByFilter(searchTypeSource){
 
       var _this = this
-      searchDatasetTypeSource(searchTypeSource, _this.currentPageTypeSource,_this.pageSizeTypeSource,_this.cell_name).then( res=>{
+      searchDatasetTypeSource(searchTypeSource, _this.currentPageTypeSource,_this.pageSizeTypeSource,_this.cell_name,'disease').then( res=>{
           
           _this.spinShowTypeSource = false                    
           let datas = res.data
@@ -719,9 +665,7 @@ export default {
           this.mockTableData();
       },
 
-      changeTableColumns () {
-          this.tableColumns = this.getTable2Columns();
-      },
+
 
       handleCurrentChange(val) {
           // console.log(`当前页: ${val}`);
@@ -832,63 +776,64 @@ export default {
           // this.cell_name = name
          
           console.log(name)
+          console.log(value)
           if (typeof name === 'undefined' ){
             // 未选择值
             _this.cell_name = 'All'
             // alert(this.cell_name)
           }else{
-            _this.cell_name = name
-            
+            // _this.cell_name = name
+            var cell_type_list = cell_type_list=[
+            // 贫血  
+            {name:'Fanconi anemia', 
+              'full_name':'Fanconi anemia',
+              'cell_ano':'Fanconi anemia'},
+            //红细胞缺陷  贫血
+            {name:'Diamond-Blackfan anemia',  
+              'full_name':'Diamond-Blackfan anemia',
+              'cell_ano':'Diamond-Blackfan anemia'},
+            // 贫血
+            {name:'Epo-resistant anemia',
+              'full_name':'Epo-resistant anemia',
+              'cell_ano':'Epo-resistant anemia'},
+            //  贫血
+            {name:'Aplastic anemia',
+            'full_name':'Aplastic anemia',
+            'cell_ano':'Aplastic anemia'},
+
+            {name:'Hemoglobinopathies (Sickle cell anemia)',
+              'full_name':'Sickle cell anemia',
+              'cell_ano':'Sickle cell anemia'},
+
+            //地中海贫血
+            {name:'Hemoglobinopathies (Thalassemia)',
+              'full_name':'Thalassemia',
+              'cell_ano':'Thalassemia'},
+
+            // 血红蛋白异常
+            {name:'Hemoglobinopathies',
+            'full_name':'Hemoglobinopathies',
+            'cell_ano':'Hemoglobinopathies'},
+            ]
+
+            cell_type_list.forEach(element => {
+            if(element.name == name){
+            // alert(_this.cell_name)
+            // _this.cell_name 
+            var ccn = element.full_name
+            var c_ano = element.cell_ano
+            _this.current_cell_anno = c_ano
+            _this.current_cellname=ccn
+            // 查询的名字
+            _this.cell_name =  c_ano
+            _this.drawCellTypeChart()
+            }
+            });
+
 
           }
 
-          var cell_type_list = cell_type_list=[
-
-         
-              // 贫血  
-              {name:'Fanconi anemia', 
-                'full_name':'Fanconi anemia',
-                'cell_ano':''},
-              //红细胞缺陷  贫血
-              {name:'Diamond-Blackfan anemia',  
-                'full_name':'Diamond-Blackfan anemia',
-                'cell_ano':''},
-              // 贫血
-              {name:'Epo-resistant anemia',
-                'full_name':'Epo-resistant anemia',
-                'cell_ano':' '},
-              //  贫血
-              {name:'Aplastic anemia',
-              'full_name':'Aplastic anemia',
-              'cell_ano':' '},
-
-              {name:'Sickle cell anemia',
-                'full_name':'Sickle cell anemia',
-                'cell_ano':' '},
-
-              //地中海贫血
-              {name:'Thalassemia',
-                'full_name':'Thalassemia',
-                'cell_ano':' '},
-
-              // 血红蛋白异常
-              {name:'Hemoglobinopathies',
-              'full_name':'Hemoglobinopathies',
-              'cell_ano':''},
-        ]
-
-          cell_type_list.forEach(element => {
-            if(element.name == name){
-              // alert(_this.cell_name)
-              // _this.cell_name 
-              var ccn = element.full_name
-              var c_ano = element.cell_ano
-              _this.current_cell_anno = c_ano
-              _this.current_cellname=ccn
-              _this.drawCellTypeChart()
-            }
-          });
-
+        
          
           // console.log(_this.current_cellname)
           
@@ -946,7 +891,7 @@ export default {
                                 'color': '#8c0c0b'
                         },
                   },
-                  { name:'Hemoglobinopathies',value: 2,
+                  { name:'Hemoglobinopathies',value: 3,
                       'itemStyle': {
                                 'color': '#8c0c0b'
                         },
@@ -968,18 +913,18 @@ export default {
                           },
                   },
 
-                  {name:'Sickle cell anemia',value: 1,
-                  'itemStyle': {
-                                  'color': '#8c0c0b'
-                          },
-                  },
+                // {name:'Hemoglobinopathies (Sickle cell anemia)',value: 1,
+                //   'itemStyle': {
+                //                   'color': '#8c0c0b'
+                //           },
+                //   },
 
-                //地中海贫血
-                {name:'Thalassemia',value: 1,
-                  'itemStyle': {
-                                  'color': '#8c0c0b'
-                          },
-                },
+                // //地中海贫血
+                // {name:'Hemoglobinopathies (Thalassemia)',value: 1,
+                //   'itemStyle': {
+                //                   'color': '#8c0c0b'
+                //           },
+                // },
 
              
 

@@ -328,7 +328,7 @@ export default {
                             gridwidth: 1,
                             zerolinecolor: 'rgb(243, 243, 243)',
                             zerolinewidth: 2,
-                            title:"Normalized value",
+                            title:"Expression",
                            
                         },
                         xaxis:{

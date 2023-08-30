@@ -7,7 +7,7 @@
 				<i-col span="10">
 					<Form-item label="Data source: ">                                                  
 						<i-select v-model="source" clearable placeholder="Pleace select cell source"  @on-change="changedDataSource"  filterable>        
-							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
+							<i-option v-for="(source,index) in data_source_lischangedDiffChartgetScDiffEnricht" :key='index' :value="source.name">{{ source.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
@@ -248,7 +248,7 @@ export default {
 						title:'the ('+ this.sourceGroup+ ') enrichment of ' + this.contrastsGroup,
                        
                         xaxis: {
-							title:'-log10(p.adjust)',
+							title:'-Log10(P value)',
 							// showgrid : TRUE,
 						},
 						yaxis: {

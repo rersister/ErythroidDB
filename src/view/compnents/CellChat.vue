@@ -270,7 +270,7 @@ export default {
 					[0.013612703,1,0.074587455,0.037984126,0.054744687,0.177036742],
 				],
 				x: ['Erythrocyte','Monocyte','HSPC','B','NK','T'],
-				y: ['sender','receiver','mediator','influencer'],
+				y: ['Sender','Receiver','Mediator','Influencer'],
 				type: 'heatmap',
 				hoverongaps: false
 			}];

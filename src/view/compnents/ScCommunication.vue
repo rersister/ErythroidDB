@@ -329,7 +329,7 @@ export default {
 				var data = [{
 					z:datas.zData,
 					x: datas.xData,
-					y: ['sender','receiver','mediator','influencer'],
+					y: ['Sender','Receiver','Mediator','Influencer'],
 					type: 'heatmap',
 					hoverongaps: false
 				}];

@@ -214,7 +214,7 @@ export default {
                             
                             // bargap: 0.25,
                             xaxis: {
-                                title:'-log10(p.adjust)',
+                                title:'-Log10(P value)',
                                 // showgrid : TRUE,
                                 gridcolor: 'rgb(243, 243, 243)',
                                 gridwidth: 1,

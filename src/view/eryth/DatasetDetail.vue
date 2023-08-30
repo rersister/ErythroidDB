@@ -19,7 +19,7 @@
                     </Row>
                     <Row>
                         <Col span="5"><strong>Organism:</strong></Col>
-                        <Col span="19">{{organism}}</Col> 
+                        <Col span="19" style="font-style:italic;">{{organism}}</Col> 
                     </Row>
                     <Row>
                         <Col span="5"><strong>Tissue:</strong></Col>
@@ -29,7 +29,7 @@
                         <Col span="5"><strong>Experiment type:</strong></Col>
                         <!-- <Col span="19">{{growth_type}}</Col>  -->
                         <!-- myCagrowth_type -->
-                        <Col span="19">{{myCagrowth_type}}</Col>
+                        <Col span="19"  style="font-style:italic;">{{myCagrowth_type}}</Col>
                     </Row>
                     <!-- <Row>
                         <Col span="5"><strong>Development Type:</strong></Col>
@@ -104,7 +104,6 @@
                                     <Page :total="totalRow"  
                                     :current="currentPage" 
                                     :page-size="pageSize" 
-                                    show-elevator 
                                     show-total
                                     show-sizer
                                     @on-change="handleCurrentChange" 
@@ -240,14 +239,14 @@ export default {
             return {  
                 sampleCols:[
                             {
-                                title: 'Sample ID',
+                                title: 'Accession No',
                                 key: 'gid',
                                 "sortable": true,
                                 filter: {
                                 type: 'Input'
                                 },
                                 fixed: 'left',
-                                width:120,
+                                width:130,
                                 render: (h, params) => {  
                                     if (params.row.gid.indexOf("GSM") > -1){
                                         return h('div', [
@@ -282,7 +281,7 @@ export default {
                                 key: 'sample',
                                 "sortable": true,
                                 filter: {
-                                type: 'Input'
+                                    type: 'Input'
                                 }
 
                             },
@@ -292,9 +291,9 @@ export default {
                                 width:120,
                                 "sortable": true,
                                 filter: {
-                                type: 'Input'
-                                }
-
+                                    type: 'Input'
+                                },
+                                className:'table_Orga'
                             },
                             {
                                 title: 'Tissue',  //和dataset 里的source 一致
@@ -346,19 +345,20 @@ export default {
                                 //     type: 'Select',
                                 //     option: P_Value_range
                                 // },
+                                className:'table_Orga'
                             },
-                            {
-                                title: 'Development  type',
-                                key: 'development_type',
-                                width:102,
-                                filter: {
-                                    type: 'Input',
-                                },
-                                // filter: {
-                                //     type: 'Select',
-                                //     option: P_Value_range
-                                // },
-                            },
+                            // {  不加此列
+                            //     title: 'Development  type',
+                            //     key: 'development_type',
+                            //     width:102,
+                            //     filter: {
+                            //         type: 'Input',
+                            //     },
+                            //     // filter: {
+                            //     //     type: 'Select',
+                            //     //     option: P_Value_range
+                            //     // },
+                            // },
                             {
                                 title: 'Group',
                                 key: 'group',
@@ -1307,7 +1307,9 @@ export default {
        
 
    }
-
+   .table_Orga{
+        font-style:italic;
+   }
   
    
     .detail_style{

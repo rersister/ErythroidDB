@@ -58,7 +58,7 @@
                     <p>Beijing Institute of Genomics</p>
                     <p>Chinese Academy of Sciences</p>
                     <p>(China National Center for Bioinformation)</p>
-                    <p>1 Beichen West Road, Chaoyang District</p>
+                    <p>NO.1 Beichen West Road, Chaoyang District, Beijing 100101, China</p>
                     <p>Beijing 100101, China</p>
                 </Col>
             

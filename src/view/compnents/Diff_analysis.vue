@@ -50,21 +50,20 @@
         <br/>
         <Row>
 
-			<!-- <filter-table 
-                  @on-search="onSearch_diff"
-                  :data="diffData"
-                  :columns="diffCols">
-            </filter-table> -->
-             
-        
-            <Table :columns="diffCols" :data="diffData" size="small" ref="table"></Table>
+            <Table 
+                :columns="diffCols" 
+                :data="diffData" 
+                size="small"
+                v-on:on-sort-change="onSortTable" 
+                ref="table">
+            </Table>
+
             <Spin size="large" fix v-if="spinShowTypeSource"></Spin>
 			<div style="margin: 10px;overflow: hidden">               
                   <div style="float: right;">
                       <Page :total="totalRow"  
                       :current="currentPage" 
                       :page-size="pageSize" 
-                      show-elevator 
                       show-total
                       show-sizer
                       @on-change="handleCurrentChange" 
@@ -88,7 +87,10 @@
 import FilterTable from '../compnents/FilterTable';
 import VuePlotly from '@statnett/vue-plotly'
 import {getdiffGroup,getDiffData,getDatasetSourceInfoData} from '@/api/erythdataservice'
-import {getDatasetTypeSource,getDiffPageDataset,getDiffPageDatasetByGene,searchDiffDatasetByParms} from '@/api/erythdataset'
+import {getDatasetTypeSource,getDiffPageDataset,
+    getDiffPageDatasetByGene,
+    getDiffPageDatasetBySort,
+    getDiffPageDatasetBySortGene} from '@/api/erythdataset'
 
 const  P_Value_range = {
     0: {
@@ -117,6 +119,7 @@ export default {
             Dsource:'',
             Dgrowth_mode:'',
             spinShowTypeSource:true,
+            inputGenePat:'',
 			diff_data: [], 
 			diff_layout: {},              
 			contrasts_group:[],
@@ -139,98 +142,72 @@ export default {
             pageSize: 10,
             table_name:'all_rna_dev_bulk_vivo',
             diffCols:[
-			{
-				title: 'Symbol',
-				key: 'SYMBOL',
-                "sortable": true,
-				filter: {
-				type: 'Input'
-				},
-				fixed: 'left',
-				
-			},
-			{
-				title: 'logFC',
-				key: 'logFC',
-                "sortable": true,
-				filter: {
-				type: 'Input'
-				}
+                {
+                    title: 'Symbol',
+                    key: 'SYMBOL',
+                    // "sortable": true,
+                    // filter: {
+                    //     type: 'Input'
+                    // },
+                    fixed: 'left',
+                    
+                },
+                {
+                    title: 'logFC',
+                    key: 'logFC',
+                    "sortable": 'custom',
+                    filter: {
+                        type: 'Input'
+                    }
 
-			},
-			{
-				title: 'logCPM',
-				key: 'logCPM',
-                "sortable": true,
-				filter: {
-				type: 'Input'
-				}
+                },
+                {
+                    title: 'logCPM',
+                    key: 'logCPM',
+                    "sortable": 'custom',
+                    filter: {
+                        type: 'Input'
+                    }
 
-			},
-			{
-				title: 'FDR',
-				key: 'FDR',
-                "sortable": true,
-				filter: {
-				type: 'Input'
-				},
-			},
-			{
-				title: 'P-value',
-				key: 'P.Value',
-                "sortable": true,
-				filter: {
-					type: 'Select',
-					option: P_Value_range
-				},
-			},
+                },
+                {
+                    title: 'FDR',
+                    key: 'FDR',
+                    "sortable":'custom',
+                    filter: {
+                        type: 'Input'
+                    },
+                },
+                {
+                    title: 'P.value',
+                    key: 'P.Value',
+                    "sortable": 'custom',
+                    filter: {
+                        type: 'Select',
+                        option: P_Value_range
+                    },
+                },
             ],
-            
+            sortableKey:'',
+            sortableOrder:'',
 		}
 	},
 	methods:{
-        onSearch_diff(searchKeyVal){
-        	var _this = this
-			for (let key in searchKeyVal){
-                // alert(key)
-                // alert(searchTypeSource[key])
-                var value = searchKeyVal[key]
-                // alert(typeof(value))
-                if ( typeof(value) === 'object'){
-                    // alert('yes')  输入了空值  HSPC  
-                    this.$Message.info('Please check your input   ');
-                    return;
-                }else{
-                    // alert('no')  不输入空
-                    // alert(value.replace(/\s*/g,'').length) + key,15
-                    if (value.replace(/\s*/g,'').length.length === 0){
-                        this.$Message.info('Please check your input ' );
-                        this.load();
-                        return;
-                    }else{
-                        continue;
-                    }
-                
-                }
-            }
-        	searchDiffDatasetByParms(this.series,searchKeyVal, _this.currentPage,_this.pageSize,this.contrastsGroup).then( res=>{
-            
-				_this.spinShowTypeSource = false                    
-                let datas = res.data
-                // console.log(datas)
-				if (datas.signal === 1){
-                    // 有值
-                    // alert("有值")
-                   _this.diffData = datas.list                  
-				   _this.totalRow = datas.total;
-					
-
-				}else{
-					this.$Message.info('No related datasets',15);
-				}
-            })
-
+       
+        onSortTable ({ column, key, order }) {
+            // console.log('onSortTable')
+            // console.log(key)
+            // console.log(order)
+            // console.log(column)
+            this.sortableKey = key
+            this.sortableOrder = order
+            // this.changeColumn = { key, order }
+            this.handleSortTable()
         },
+
+        
+     
+ 
         exportData(type){
                 if (type === 1) {
                     this.$refs.table.exportCsv({
@@ -286,21 +263,55 @@ export default {
 		
         },  
 
+
+        handleSortTable(){
+
+            if(this.sortableOrder === 'normal'){
+                return
+            }else{
+                var _this = this;      
+            _this.spinShowTypeSource = true
+            if( "" == this.inputGenePat ){
+                getDiffPageDatasetBySort(this.sortableKey,this.sortableOrder,this.series,this.currentPage,this.pageSize,this.contrastsGroup).then( res=>{
+                    _this.spinShowTypeSource = false                    
+                    let datas = res.data
+                    if (datas.signal == 1){
+                        _this.diffData = datas.list                  
+                        _this.totalRow = datas.total;
+                    }else{
+                    }
+			    })
+
+            }else{
+                getDiffPageDatasetBySortGene(this.inputGenePat,this.sortableKey,this.sortableOrder,this.series,this.currentPage,this.pageSize,this.contrastsGroup).then( res=>{
+                    _this.spinShowTypeSource = false                    
+                    let datas = res.data
+                    if (datas.signal == 1){
+                        _this.diffData = datas.list                  
+                        _this.totalRow = datas.total;
+                    }else{
+                    }
+			    })
+            }
+
+            }
+           
+			
+
+
+        },
         searchDiffDataSetByKeyName($event){
             var _this = this;      
 
             if( "" == $event ){
+                _this.inputGenePat = ''
 				this.$Message.info('Please input gene symbol', 10);
                 this.mockTableData(this.series,this.currentPage,this.pageSize,this.contrastsGroup)
 				return
 
             } 
-
             _this.spinShowTypeSource = true, 
-            // alert("==")
-            // alert(contrastsGroup)
-
-            
+            _this.inputGenePat = $event
 			getDiffPageDatasetByGene($event,this.series,this.currentPage,this.pageSize,this.contrastsGroup).then( res=>{
 
 				_this.spinShowTypeSource = false                    
@@ -385,7 +396,7 @@ export default {
                         title:'Log2(FC)',
                     },
                      yaxis: {
-                       title:'-Log2(P-value)'
+                       title:'-Log10(P value)'
                     },
 
                 }         
@@ -408,7 +419,7 @@ export default {
              let _this = this
              getDatasetSourceInfoData(this.series).then(res =>{
                 let datas =res.data
-                console.log(datas)
+                // console.log(datas)
                 _this.Dsource = datas.source
                 _this.Dgrowth_mode = datas.growth_mode
                 

@@ -464,7 +464,7 @@ export default {
 				var layout = {
 					title: 'Enrichment'+" ("+this.enrichType+") of " + this.group+' ('  +this.series+'; Group: '+this.source +')',
 					xaxis: {
-						title: '-log10(p.adjust)',
+						title: '-Log10(P value)',
 						showgrid: false,
 						zeroline: false
 					},

@@ -36,8 +36,8 @@
 				</i-col>
 				<i-col span="8">
 					<Form-item label="Color by: ">                                                  
-						<i-select v-model="group" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedGroup"  filterable>        
-							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
+						<i-select v-model="group" :model.sync="showByGroup" clearable placeholder="Pleace select"  @on-change="changedGroup"  filterable>        
+							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.value">{{ group.name }}</i-option>
 						</i-select>
 					</Form-item>
 				</i-col>
@@ -53,8 +53,8 @@
 			<!-- tsne 图 -->			
 			<Spin size="large" fix v-if="spinShow1"></Spin>
 			<!-- vue-plotly -->
-			<!--<vue-plotly :data="TSNE_data" :layout="TSNE_layout" :options="TSNE_options"/>-->
-			<Plotly  :data="TSNE_data" :layout="TSNE_layout" :config="TSNE_options"></Plotly>
+			<!--<vue-plotly :data="TSNE_data" :layout="TSNE_layout" :config :options="TSNE_options"/> </Plotly>-->
+			<Plotly  :data="TSNE_data" :layout="TSNE_layout" :options="TSNE_options"></Plotly>
 		
 		</Row>
 	</div>
@@ -144,14 +144,14 @@ export default {
 			contrasts_group:[],
 			TSNE_options:{  
 				responsive: true,
-				displaylogo: false,
-                toImageButtonOptions: {
-                    format: 'svg', // one of png, svg, jpeg, webp
-                    filename: 'sc_cluster_image',
-                    // height: 500,
-                    // width: 700,
-                    scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
-                }
+				// displaylogo: false,
+                // toImageButtonOptions: {
+                //     format: 'svg', // one of png, svg, jpeg, webp
+                //     filename: 'sc_cluster_image',
+                //     // height: 500,
+                //     // width: 700,
+                //     scale: 1 // Multiply title/legend/axis/canvas sizes by this factor
+                // }
 
 			},
 			Feature_data:[],
@@ -176,16 +176,19 @@ export default {
 			group_type_list: [ 
 				{
 					id:"0",
-					name:"orig.ident"
+					name:"Original identity",
+					value:"orig.ident"
 					
 				},
 				{
 					id:'1',
-					name:"celltype"
+					name:"Cell type",
+					value:"celltype"
 				},
 				{
 					id:'2',
-					name:"Phase"
+					name:"Phase",
+					value:"Phase"
 				}
 				],
 			group:'',
@@ -328,9 +331,11 @@ export default {
 				//alert(signal)
 
 				if(signal === 'no'){
-					this.$Message.info('this visual is temporary not available,please try other visual method', 50);
-                    _this.spinShow1 = false
-					return
+					// this.$Message.info('This visual(UMAP) is temporary not available,please try other visual method', 50);
+                    // _this.spinShow1 = false
+					// this.VisaulMethod = 'tSNE'
+					// this.getTsneChart(series,source,col,if3D,this.VisaulMethod)
+					// return
 				}
 
 				if (this.VisaulMethod === 'PCA'){

@@ -69,6 +69,11 @@ const source_dict = [
       name: 'Bone Marrow (in vitro)'
     },
     {
+      value: "BM_vivo",
+      name: 'Bone Marrow (in vivo)'
+    },
+
+    {
       value: "CB_vivo",
       name: 'Cord Blood (in vivo)',
       // color: 'red'
@@ -83,11 +88,18 @@ const source_dict = [
       name: 'Peripheral Blood (in vitro)',
       // color: 'green'
     },
-     {
+    {
       value: "FL_vitro",
       name: 'Fetal Liver (in vitro)',
       // color: 'green'
     },
+
+    {
+      value: "FL_vivo",
+      name: 'Fetal Liver (in vivo)',
+      // color: 'green'
+    },
+
      {
       value: "PB_vivo",
       name: 'Peripheral Blood (in vivo)',
@@ -98,9 +110,12 @@ const source_dict = [
       name: 'Induced Pluripotent Stem Cells (in vitro)',
       // color: 'green'
     },
+    {
+        value: "Em_vivo",
+        name: 'Embryos (in vivo)',
+    },
     
   ]
-
 
 export default {
     name:"AllExpression",
@@ -203,7 +218,9 @@ export default {
                 if(val[0].orga == 'mm'){
                     this.orga_name = 'Mus musculus'
                 }
-
+                if(val[0].orga == 'dr'){
+                    this.orga_name = 'Danio rerio'
+                }
                 // if (val.length > 1) {
                 //     alert(val)
                     // this.ifShow = true
@@ -230,7 +247,7 @@ export default {
 			// alert(table_name)
             getAllDevType(table_name).then(res =>{
                 let datas = res.data 
-                //console.log(datas)  
+                console.log(datas)  
                 datas.forEach(key =>{ 
                     // alert(key)
                     source_dict.forEach(element => {
@@ -248,8 +265,7 @@ export default {
                 this.SourceList =dev_group_type_list
 				//this.getdiff_chart(table_name,datas[0])
                 this.cell_source = datas[0]
-                this.searchGene = "GATA1"
-                this.searchBygene("GATA1")
+                
                
             })
 
@@ -264,10 +280,9 @@ export default {
 			// alert(table_name)
             getAllDevGene(table_name).then(res =>{
                 let datas = res.data 
-                //console.log(datas)  
+                console.log('getAllgenes')
+                console.log(datas)  
                 datas.forEach(key =>{ 
-                    
-                     
                     all_gene_list.push({
                             value:key,
                             label:key,
@@ -279,7 +294,8 @@ export default {
                 
                 })
                 this.GeneList = all_gene_list
-
+                this.searchGene = all_gene_list[0].value
+                this.searchBygene()
             })
 
         },
@@ -451,7 +467,7 @@ export default {
                             gridwidth: 1,
                             zerolinecolor: 'rgb(255, 255, 255)',
                             zerolinewidth: 2,
-                            title:"Normalized value",
+                            title:"Expression",
                         },
                         xaxis:{
 

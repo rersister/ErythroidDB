@@ -31,12 +31,7 @@
 		</Br>
 		
 		<Row>
-			<!-- <filter-table 
-                
-                  @on-search="onSearch_diff"
-                  :data="diffData"
-                  :columns="diffCols">
-            </filter-table> -->
+
 			
 			<filter-table id="outExcel"
 				@on-search="onSearch_diff"
@@ -50,7 +45,6 @@
                       <Page :total="totalRow"  
                       :current="currentPage" 
                       :page-size="pageSize" 
-                      show-elevator 
                       show-total
                       show-sizer
                       @on-change="handleCurrentChange" 
@@ -67,7 +61,7 @@
 		<h1 class="my_h1">Single Cell Cluster's Enrichment Analysis</h1>
 		<br>
 		<Row>
-			<i-form :label-width="120">group
+			<i-form :label-width="120">
 				<!-- <i-col span="8">
 					<Form-item label="Data source: ">                                                  
 						<i-select  clearable placeholder="Pleace select cell source"  @on-change="changedDataSource2">        
@@ -288,6 +282,14 @@ export default {
 					// alert('change')
 					this.table_name = 'CRA002445'
 				}
+				if (table_name.indexOf('all_dr_ep_sc') > -1){
+					// alert('change')
+					this.table_name = 'GSE152982'
+			  	}
+				  
+				if(val[0].orga == 'dr'){
+                    this.orga_name = 'Danio rerio'
+                }
                 if (val[0].orga == 'hs'){
                     this.orga_name = 'Homo sapiens'
 
@@ -478,7 +480,7 @@ export default {
 						title: 'Enrichment ('+this.enrichType +')' +' of ' + group2 +' (Organism: '+this.orga_name+')',
                        
                         xaxis: {
-							title:'-log10(p.adjust)',
+							title:'-Log10(P value)',
 							// showgrid : TRUE,
 						},
 						yaxis: {
@@ -673,7 +675,7 @@ export default {
                         title:'Log2(FC)',
                     },
                      yaxis: {
-                       title:'-Log2(P-value)'
+                       title:'-Log10(P value)'
                     },
 
                 }         

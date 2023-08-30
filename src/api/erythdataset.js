@@ -70,7 +70,39 @@ export const getDiffPageDatasetByGene = (gene,table_name,currentPage,pageSize,co
 	  method: 'post',
 	})
 }
+// getDiffPageDatasetBySort
+export const getDiffPageDatasetBySort= (sortableKey,sortableOrder,table_name,currentPage,pageSize,contrastsGroup) => {
+	return axios.request({
+	  url: 'public/getDiffPageDatasetBySort',
+	  data: { 
+		'sortableOrder':sortableOrder,
+		'sortableKey':sortableKey,
+		'table_name':table_name,
+		'pageIndex': currentPage,
+		'pageSize': pageSize,	
+		'contrastsGroup':contrastsGroup,
+	},
+	  method: 'post',
+	})
+}
 
+
+//getDiffPageDatasetBySort(this.sortableKey,this.sortableOrder,this.series,this.currentPage,this.pageSize,this.contrastsGroup)
+export const getDiffPageDatasetBySortGene = (gene,sortableKey,sortableOrder,table_name,currentPage,pageSize,contrastsGroup) => {
+	return axios.request({
+	  url: 'public/getDiffPageDatasetBySortGene',
+	  data: { 
+		'sortableOrder':sortableOrder,
+		'sortableKey':sortableKey,
+		'table_name':table_name,
+		'pageIndex': currentPage,
+		'pageSize': pageSize,	
+		'contrastsGroup':contrastsGroup,
+		'gene':gene,
+	},
+	  method: 'post',
+	})
+}
 
 // getAllSampleNumber
 export const getAllSampleCellNumber = () => {
@@ -142,6 +174,39 @@ export const getSCDiffPageDatasetByGene = (gene,table_name,currentPage,pageSize,
 	})
 }
 
+// getSCDiffPageDatasetBySortGene
+export const getSCDiffPageDatasetBySortGene = (inputGenePat,sortableKey,sortableOrder,table_name,currentPage,pageSize,contrastsGroup) => {
+	return axios.request({
+	  url: 'public/getSCDiffPageDatasetBySortGene',
+	  data: { 
+		'gene':inputGenePat,
+		'sortableKey':sortableKey,
+		'sortableOrder':sortableOrder,
+		'table_name':table_name,
+		'pageIndex': currentPage,
+		'pageSize': pageSize,	
+		'contrastsGroup':contrastsGroup
+	},
+	  method: 'post',
+	})
+}
+
+
+export const getSCDiffPageDatasetBySort = (sortableKey,sortableOrder,table_name,currentPage,pageSize,contrastsGroup) => {
+	return axios.request({
+	  url: 'public/getSCDiffPageDatasetBySort',
+	  data: { 
+	
+		'sortableKey':sortableKey,
+		'sortableOrder':sortableOrder,
+		'table_name':table_name,
+		'pageIndex': currentPage,
+		'pageSize': pageSize,	
+		'contrastsGroup':contrastsGroup
+	},
+	  method: 'post',
+	})
+}
 
 // getDatasetTypeSourceByCell( cell_name,_this.currentPageTypeSource,_this.pageSizeTypeSource )
 export const getDatasetTypeSourceByCell = (cell_name,currentPage,pageSize) => {
@@ -256,7 +321,7 @@ export const searchDataset = (datasetName,search,pageIndex,pageSize)=>{
 	  })	
 }  
 
-export const searchDatasetTypeSource = (searchTypeSource,currentPageTypeSource,pageSizeTypeSource,cell_type)=>{
+export const searchDatasetTypeSource = (searchTypeSource,currentPageTypeSource,pageSizeTypeSource,cell_type,real_cell_type_name)=>{
 	return axios.request({
 		url: 'public/getPageDataSetsTypeSourceByParms',
 		data: { 
@@ -264,7 +329,8 @@ export const searchDatasetTypeSource = (searchTypeSource,currentPageTypeSource,p
 		  'search':searchTypeSource,
 		  'pageIndex': currentPageTypeSource,
 		  'pageSize': pageSizeTypeSource,
-		  'cell_type' :cell_type
+		  'cell_type' :cell_type,
+		  'real_cell_type_name' :real_cell_type_name
 	  },
 		method: 'post',
 	  })
