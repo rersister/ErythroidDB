@@ -9,6 +9,69 @@ export const getDataset = dataset => {
 	}) 
   }
 
+export const getDatasetExpression =dataset => {
+	return axios.request({
+	  url: 'public/getDatasetExpression',
+	  data: {'dataset':dataset},
+	  method: 'post',
+	  contentType: 'application/octet-stream',
+	//   dataType: "binary",
+	  responseType:"arraybuffer"
+	  
+	  //注意 需要规定后台返回文件流格式
+	//   contentType: 'application/json;charset=utf-8',
+    //         // 💢💢💢指定服务器返回的类型,因为我们要返回文件流,所以类型为二进制数据
+    //         dataType: "binary",
+    //         // 💢💢💢原生 XMLHttpRequest 的属性,设置响应类型为blob,接收文件流
+    //         xhrFields: {
+    //             'responseType': 'blob'
+    //         },
+    //         success: function (result, status, xhr) {
+
+    //             // 可通过XMLHttpRequest对象,获取响应头
+    //             console.log(xhr);
+
+    //             // 浏览器兼容
+    //             const download_URL = (window.URL || window.webkitURL).createObjectURL(result);
+
+    //             // 创建a标签,模拟点击下载
+    //             const a_link = document.createElement('a');
+    //             a_link.href = download_URL;
+    //             // 利用了a标签的download属性,指定文件名称
+    //             a_link.download = param.fileName;
+    //             document.body.appendChild(a_link);
+    //             a_link.click();
+
+    //             setTimeout(function () {
+    //                 // 移除内存中的临时文件路径和为下载而创建的a标签
+    //                 URL.revokeObjectURL(download_URL);
+    //                 a_link.remove();
+    //             }, 10000);
+    //         },
+    //         error: function (xhr, textStatus, errorMessage) {
+
+    //             // 从响应头中获取异常信息,如果包含中文的话会乱码因此 后台URLEncoder.encode() + 前台decodeURIComponent() 防止乱码
+    //             const errorInfo = decodeURIComponent(xhr.getResponseHeader("errorInfo"));
+
+    //             // 对错误信息进行展示
+    //             alert(errorInfo);
+    //         }
+
+	}) 
+}
+
+
+export const getDatasetMetaInfo =dataset => {
+	return axios.request({
+		url: 'public/getDatasetMetaInfo',
+		data: {'dataset':dataset},
+		method: 'post',
+		contentType: 'application/octet-stream',
+		responseType:"arraybuffer"
+
+	}) 
+}
+
 //  getDatasetGroup 
 export const getDatasetGroup  = dataset => {
 	return axios.request({
@@ -119,7 +182,6 @@ export const getdiffGroup = (table_name) => {
 
 export const getTsneGroup = (series) => {
 	return axios.request({
-
 		url:'public/getTsneGroup',
 		data:{
 			series: series,
@@ -127,8 +189,21 @@ export const getTsneGroup = (series) => {
 		},
 		method:'post',
 	})
-
 }
+
+export const getGroupSample = (series,group) => {
+	return axios.request({
+		url:'public/getSCGroupSample',
+		data:{
+			series: series,
+			group : group 
+			// showBygroup:showBygroup
+		},
+		method:'post',
+	})
+}
+
+
 // getSigName(this.series,this.source)
 export const getSigName = (series,source) => {
 	return axios.request({
@@ -189,13 +264,14 @@ export const getTraDataCol = (series,group) => {
 
 
 // getTsneData
-export const getTsneData = (series,source,col,if3D,VisualM) => {
+export const getTsneData = (series,source,sample,col,if3D,VisualM) => {
 	return axios.request({
 
 		url:'public/getTsneData',
 		data:{
 			series: series,
 			source:source,
+			sample:sample,
 			col:col,
 			if3D:if3D,
 			VisualM:VisualM
@@ -221,13 +297,14 @@ export const getTraData = (series,source,col) => {
 }
 
 // getFeaturePlot
-export const getFeaturePlot = (series,source,featurename) => {
+export const getFeaturePlot = (series,source,sample,featurename) => {
 	return axios.request({
 
 		url:'public/getFeaturePlot',
 		data:{
 			series: series,
 			source:source,
+			sample:sample,
 			featurename:featurename
 		},
 		method:'post',

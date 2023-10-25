@@ -71,9 +71,11 @@
                 <Spin size="large" fix v-if="spinShow2"></Spin>  
                 <vue-plotly :autoResize="ifResize" :data="enrichGO_data" :layout="enrichGO_layout" :options="enrichGO_options"/>
             <!-- </div>              -->
+            <Button type="primary" size="large" @click="exportData(1)"><Icon type="ios-download-outline"></Icon>Download Data</Button>
+
         </Row> 
         
-					<!-- <Spin size="large" fix v-if="spinShow2"></Spin>              -->
+			<!-- <Spin size="large" fix v-if="spinShow2"></Spin>              -->
 				
 		
 

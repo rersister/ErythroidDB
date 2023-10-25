@@ -228,6 +228,7 @@ export default {
       // alert(data.dataset);
       if(this.type) return;
       this.setCurrentPageToken(data.dataset_id)
+      // this.setCurrentPageToken(data.EryID)
       router.push({
         name: 'Dataset_detail',
         params: {

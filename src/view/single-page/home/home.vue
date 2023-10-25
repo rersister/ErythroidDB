@@ -64,7 +64,7 @@
                     </br>
                     </br>
                     </br>
-                    <span >Input Reported Gene/Tissue/Dataset ID/Organism Name/PMID:</span>
+                    <span>Input Reported Gene/Tissue/Dataset ID/Organism Name/PMID:</span>
                     <!-- :model.sync="showByGroup"  -->
                     <i-select 
                         enter-button="Search" 

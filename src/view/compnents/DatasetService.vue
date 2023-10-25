@@ -14,6 +14,7 @@
 
 
       <div class="card"  v-if="ifshowAnalContent">
+        
         <h3 class="h3_title">Analysis:</h3>
         <!-- <Row :gutter="16" style="background:#eee;padding:20px">
         </Row> -->
@@ -51,6 +52,8 @@
     <ScInterraction v-if="childDom == 'ScInterraction'" />
     <ScCommunication v-if="childDom == 'ScCommunication'" />
 
+
+    <!-- 分析内容列表 -->
     <div v-if=ifcellAnno class="card" >
         <!-- 单细胞页面才显示的 细胞注释信息 -->
         <h3 class="h3_title">Cell annotation information： </h3>

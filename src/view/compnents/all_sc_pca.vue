@@ -3,115 +3,117 @@
 	<br>
 	<h1 class="my_h1">Visualization</h1>
 	<br>
-	<div>
-		<Row :gutter="2">
-        	<i-form :label-width="120">
-				<i-col span="6">
-					<Form-item label="Plot size: ">                                                  
-						<i-select v-model="plotSize" :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedPlotSize"  filterable>        
-							<i-option v-for="(value,index) in plotSize_list" :key='index' :value="value.name">{{ value.name }}</i-option>
-						</i-select>
-					</Form-item>
-				</i-col>
-				<i-col span="6">
-					<Form-item label="View by: ">                                                  
-						<i-select v-model="if3D" :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedViewMethod"  filterable>        
-							<i-option v-for="(method,index) in viewMethod_list" :key='index' :value="method.name">{{ method.name }}</i-option>
-						</i-select>
-					</Form-item>
-				</i-col>
-				<i-col span="6">
-					<Form-item label="Visual method: ">                                                  
-						<i-select v-model="VisaulMethod" :model.sync="showByGroup" clearable placeholder="Select view method"  @on-change="changedVisaulMethod"  filterable>        
-							<i-option v-for="(method,index) in VisaulMethod_list" :key='index' :value="method.name">{{ method.name }}</i-option>
-						</i-select>
-					</Form-item>
-				</i-col>
-				<i-col span="8">
-					<Form-item label="Group: ">                                                  
-						<i-select v-model="source" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedSource"  filterable>        
-							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
-						</i-select>
-					</Form-item>
-				</i-col>
-				<i-col span="8">
-					<Form-item label="Color by: ">                                                  
-						<i-select v-model="group" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedGroup"  filterable>        
-							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.value">{{ group.name }}</i-option>
-						</i-select>
-					</Form-item>
-				</i-col>
-				<i-col span="8">
-					<Form-item>
-					<!-- <i-button  shape="circle" icon="ios-search" @click="getTsneShow">Show</i-button> -->
-					<!-- <Button type="primary" icon="ios-search"  @click="getTsneShow" >Show</Button> -->
-					
-					</Form-item>
-				</i-col>
-			</i-form>
+	<div style="background: white;">
+		<Row :gutter="0">
+			<Col span="16" >
+				<!-- tsne 图 -->			
+				<Spin size="large" fix v-if="spinShow1"></Spin>
+				<Plotly :data="TSNE_data" :layout="TSNE_layout" :options="TSNE_options"></Plotly>
+			</col>	
+			
+			<Col span="6"  >
+				<i-form :label-width="120"  style="margin-top: 60px;">
+
+						<Form-item label="Plot size: ">                                                  
+							<i-select v-model="plotSize" :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedPlotSize"  filterable>        
+								<i-option v-for="(value,index) in plotSize_list" :key='index' :value="value.name">{{ value.name }}</i-option>
+							</i-select>
+						</Form-item>
+
+						<Form-item label="View by: ">                                                  
+							<i-select v-model="if3D" :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedViewMethod"  filterable>        
+								<i-option v-for="(method,index) in viewMethod_list" :key='index' :value="method.name">{{ method.name }}</i-option>
+							</i-select>
+						</Form-item>
+
+						<Form-item label="Visual method: ">                                                  
+							<i-select v-model="VisaulMethod" :model.sync="showByGroup" clearable placeholder="Select view method"  @on-change="changedVisaulMethod"  filterable>        
+								<i-option v-for="(method,index) in VisaulMethod_list" :key='index' :value="method.name">{{ method.name }}</i-option>
+							</i-select>
+						</Form-item>
+
+						<Form-item label="Group: ">                                                  
+							<i-select v-model="source" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedSource"  filterable>        
+								<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
+							</i-select>
+						</Form-item>
+
+						<Form-item label="Sample: ">                                                  
+							<i-select v-model="sample" :model.sync="showBySample" clearable placeholder="Pleace select sample"  @on-change="changedShowSample"  filterable>        
+								<i-option v-for="(sample,index) in group_sample_list" :key='index' :value="sample.name">{{ sample.name }}</i-option>
+							</i-select>
+						</Form-item>
+
+						<Form-item label="Color by: ">                                                  
+							<i-select v-model="group" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedGroup"  filterable>        
+								<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.value">{{ group.name }}</i-option>
+							</i-select>
+						</Form-item>
+			
+				</i-form>
+			</col>
         </Row> 
-		<Row>					
-			<!-- tsne 图 -->			
-			<Spin size="large" fix v-if="spinShow1"></Spin>
-			<!-- vue-plotly -->
-			<!--<vue-plotly :data="TSNE_data" :layout="TSNE_layout" :options="TSNE_options"/>-->
-			<Plotly :data="TSNE_data" :layout="TSNE_layout" :options="TSNE_options"></Plotly>
+					
 		
-		</Row>
 	</div>
 
-	<div>
-		<br>
-		<h1 class="my_h1">Feature Plot</h1>
-		<br>
-		<Row :gutter="4">
-        	<i-form :label-width="120">
-				<i-col span="6">
-					<Form-item label="Plot size: ">                                                  
-						<i-select v-model="plotSize2" :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedPlotSize2"  filterable>        
-							<i-option v-for="(value,index) in plotSize_list" :key='index' :value="value.name">{{ value.name }}</i-option>
-						</i-select>
-					</Form-item>
-				</i-col>
-				<i-col span="8">
-					<Form-item label="Group: ">                                                  
-						<i-select v-model="source2" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup2"  filterable>        
-							<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
-						</i-select>
-					</Form-item>
-				</i-col>
-				
+	<br>
+	<h1 class="my_h1">Feature Plot</h1>
+	<br>
+	<div style="background: white;">
+		
+		<Row :gutter="0">
+			<Col span="16" >
+				<!-- tsne 图 -->			
+				<Spin size="large" fix v-if="spinShow2"></Spin>
+				<vue-plotly :data="Feature_data" :layout="Feature_layout" :options="Feature_options"/>
+			</col>	
 
-				<i-col span="8">
-
-					<Form-item label="Feature name: ">
-						<!-- placeholder="Please input gene symbol" -->
-							<i-select 
-								v-model="feature_name" 
-								enter-button="Search" 
-								style="width:120%"  
-								@on-search="getFeatureByName($event)"  
-								placeholder="Please input gene symbol"  
-								@on-change="getFeatureByName($event)"  filterable>        
-									<i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
+			<Col span="6"  >
+				<i-form :label-width="120"  style="margin-top: 60px;">
+					
+						<Form-item label="Plot size: ">                                                  
+							<i-select v-model="plotSize2" :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedPlotSize2"  filterable>        
+								<i-option v-for="(value,index) in plotSize_list" :key='index' :value="value.name">{{ value.name }}</i-option>
 							</i-select>
-							<!-- <Button type="primary" @click="addFeatureByName($event)" >Add</Button> -->
-							<!-- <Input search enter-button="Add" @on-search="addFeatureByName($event)" placeholder="Please input gene symbol"/> -->
-						
-						<!-- <Input v-model="feature_name" search enter-button="Search" @on-search="getFeatureByName($event)" /> -->
-					</Form-item>
-					<!-- <Form-item label="Feature name: ">
-						<Input v-model="feature_name" search enter-button="Search" @on-search="getFeatureByName($event)" placeholder="Please input gene symbol"/>
-					</Form-item> -->
-				</i-col>
-				
-			</i-form>
+						</Form-item>
+					
+					
+						<Form-item label="Group: ">                                                  
+							<i-select v-model="source2" :model.sync="showByGroup" clearable placeholder="Pleace select cell group"  @on-change="changedShowGroup2"  filterable>        
+								<i-option v-for="(source,index) in data_source_list" :key='index' :value="source.name">{{ source.name }}</i-option>
+							</i-select>
+						</Form-item>
+					
+					
+					
+						<Form-item label="Sample: ">                                                  
+							<i-select v-model="sample2" clearable placeholder="Pleace select cell group"  @on-change="changedShowSample2"  filterable>        
+								<i-option v-for="(sample,index) in group_sample_list2" :key='index' :value="sample.name">{{ sample.name }}</i-option>
+							</i-select>
+						</Form-item>
+
+						<Form-item label="Feature name: ">
+							<!-- placeholder="Please input gene symbol" -->
+								<i-select 
+									v-model="feature_name" 
+									enter-button="Search" 
+									style="width:120%"  
+									@on-search="getFeatureByName($event)"  
+									placeholder="Please input gene symbol"  
+									@on-change="getFeatureByName($event)"  filterable>        
+										<i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
+								</i-select>
+								<!-- <Button type="primary" @click="addFeatureByName($event)" >Add</Button> -->
+								<!-- <Input search enter-button="Add" @on-search="addFeatureByName($event)" placeholder="Please input gene symbol"/> -->
+							
+							<!-- <Input v-model="feature_name" search enter-button="Search" @on-search="getFeatureByName($event)" /> -->
+						</Form-item>
+				</i-form>
+			</col>
         </Row> 
-		<Row>
-			<!-- tsne 图 -->			
-			<Spin size="large" fix v-if="spinShow2"></Spin>
-			<vue-plotly :data="Feature_data" :layout="Feature_layout" :options="Feature_options"/>
-		</Row>
+		
+			
 	</div>
 
 
@@ -133,7 +135,7 @@
 <script>
 import VuePlotly from '@statnett/vue-plotly'
 import {Plotly} from 'vue-plotly'
-import {getTsneGroup,getTsneDataCol,getTsneData,getFeaturePlot} from '@/api/erythdataservice'
+import {getTsneGroup,getTsneDataCol,getTsneData,getFeaturePlot,getGroupSample} from '@/api/erythdataservice'
 import {getAllSCFeatureKeyWordsSplitCell,} from '@/api/erythdataset'
 
 
@@ -158,7 +160,7 @@ export default {
 			orga:'',
             sequ_type:'',
             // table_name:'all_hs_ep_sc_sample_group',
-
+			showBySample:'',
             table_name:'',
 			spinShow1:'true',
 			spinShow2:'true',
@@ -208,6 +210,10 @@ export default {
 			group:'',
 			data_source_list:[],
 			data_source_listF:[],
+			group_sample_list:[],
+			group_sample_list2:[],
+			sample:'',
+			sample2:'',
 			viewMethod_list:[
 				{'name':'2D'},
 				{'name':'3D'}
@@ -304,11 +310,11 @@ export default {
 		getFeatureByName(feature_name){
 			let _this = this
 			this.feature_name = feature_name
-			this.getFeaturePlot(this.table_name,this.source2,feature_name)
+			this.getFeaturePlot(this.table_name,this.source2,this.sample2,feature_name)
 
 		},
 
-		getFeaturePlot(series,source2,feature_name){
+		getFeaturePlot(series,source2,sample2,feature_name){
 
 			let _this = this
 			_this.spinShow2 = true
@@ -319,7 +325,7 @@ export default {
 				return 
             } 
 
-            getFeaturePlot(series,source2,feature_name).then(res =>{
+            getFeaturePlot(series,source2,sample2,feature_name).then(res =>{
 
 				
                 let datas = res.data
@@ -387,14 +393,14 @@ export default {
 		},
 
 
-		getTsneChart(series,source,col,if3D,VisualM){
+		getTsneChart(series,source,sample,col,if3D,VisualM){
 
 			let _this = this
 			_this.spinShow1 = true
 			console.log(this.table_name)
 			// alert(source)
 			
-			getTsneData(series,source,col,if3D,VisualM).then(res =>{
+			getTsneData(series,source,sample,col,if3D,VisualM).then(res =>{
 				let datas = res.data  
 				console.log(datas)
 				
@@ -546,7 +552,8 @@ export default {
 		changedSource(source){
 			let _this = this  
 			this.source= source
-            //this.getTsneCol(this.series,source)
+            //this.getTsneCol(this.table_name,source)
+			this.getGroupSampleData(this.table_name,source)
 			this.getTsneShow()
             
 		},
@@ -571,8 +578,9 @@ export default {
 			// source group
 			let _this = this  
 			this.source2= source
-            // this.getTsneCol(this.series,source)
-			this.getFeaturePlot(this.table_name,this.source2,this.feature_name)
+            // this.getTsneCol(this.table_name,source)
+			this.getGroupSampleData2(this.table_name,source)
+			this.getFeaturePlot(this.table_name,this.source2,this.sample2,this.feature_name)
             
 		},
 		changedGroup(group){
@@ -586,11 +594,60 @@ export default {
 
 		getTsneShow(){
 
-			this.getTsneChart(this.table_name,this.source,this.group,this.if3D,this.VisaulMethod)
+			this.getTsneChart(this.table_name,this.source,this.sample,this.group,this.if3D,this.VisaulMethod)
 		},
 
+		changedShowSample(sample){
+			let _this = this  
+			_this.sample= sample
+            //this.getTsneCol(this.table_name,source)
+			// this.getGroupSampleData(this.table_name,source)
+            this.getTsneShow()
 
+		},
+		changedShowSample2(sample){
+			let _this = this  
+			_this.sample2 = sample
+			this.getFeaturePlot(this.table_name,this.source2,sample,this.feature_name)
 
+		},
+		getGroupSampleData(series,group){
+			let _this = this
+			_this.sample = 'All'
+			_this.group_sample_list = []
+			_this.group_sample_list.push({
+				name:'All'
+			})
+			getGroupSample(series,group).then(res =>{
+				let datas = res.data  
+				console.log()
+				console.log(datas)
+				datas.forEach(function (e_sample) {
+							_this.group_sample_list.push({
+								name:e_sample.sample
+							})
+				}) 
+			})
+		},
+
+		getGroupSampleData2(series,group){
+			let _this = this
+			_this.sample2 = 'All'
+			_this.group_sample_list2 = []
+			_this.group_sample_list2.push({
+				name:'All'
+			})
+			getGroupSample(series,group).then(res =>{
+				let datas = res.data  
+				console.log()
+				console.log(datas)
+				datas.forEach(function (e_sample) {
+							_this.group_sample_list2.push({
+								name:e_sample.sample
+							})
+				}) 
+			})
+		},
 		getDataSourceList(series){
 
 			// alert(series)
@@ -627,14 +684,21 @@ export default {
 							}
 				}) 
 				//series,source,col,if3D,VisualM)
-				this.if3D = '2D'
 				this.source=data[0].source_g
+				
+				// 得到样本列表名称
+				this.getGroupSampleData(this.table_name,this.source)
+				this.getGroupSampleData2(this.table_name,this.source)
+
+
+				this.if3D = '2D'
+				
 				this.VisaulMethod = 'UMAP'
 				this.group='celltype'
-				this.getTsneChart(series,data[0].source_g,'celltype','2D','UMAP')
+				this.getTsneChart(series,data[0].source_g,this.sample,'celltype','2D','UMAP')
 				this.source2=data[0].source_g
 				this.getAllscFeatureSplitCell(series,datas[0].source_g)
-				this.getFeaturePlot(series,datas[0].source_g,'needFind')
+				this.getFeaturePlot(series,datas[0].source_g,this.sample2,'needFind')
 
 
            })

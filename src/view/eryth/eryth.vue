@@ -463,101 +463,12 @@ export default {
         datasets: [],
         datasetsTypeSource:[],
         datasetname :'Development',
-        tableColumns: [
-          {
-            title: 'Dataset',
-            key: 'dataset',
-            filter: {
-              type: 'Input'
-            },
-            fixed: 'left',
-            render: (h, params) => {    
-              if (params.row.dataset.indexOf("GSE") > -1){
-                  return h('div', [
-                  h('a', {                               
-                        attrs:{                              
-                          href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset,
-                          target:'_blank',
-
-                        },    
-                    },params.row.dataset)
-                  ])
-              }else{
-                return h('div',params.row.dataset)
-              
-              }
-            }
-
-          },
-          {
-            title: 'Title',
-            key: 'title',
-            filter: {
-              type: 'Input'
-            }
-
-          },
-          {
-            title: 'PubMed',
-            key: 'citations',
-            filter: {
-              type: 'Input'
-            },
-            render: (h, params) => {
-              let citations =  params.row.citation.split(",")
-              let render = []
-            
-              for (let cita in citations){
-                    render.push(h('a', {
-                      style: {
-                            marginRight: '5px'
-                      },
-                      attrs:{                              
-                        href:'https://www.ncbi.nlm.nih.gov/pubmed/'+citations[cita],
-                        target:'_blank',
-
-                      },    
-                  }, citations[cita]))
-              }
-              return h('div', render)
-            }
-
-          },
-          {
-            title: 'Experiment type',
-            key: 'experiment_type',
-            filter: {
-              type: 'Input'
-            },
-          },
-          {
-            title: 'Sequence type',
-            key: 'sequencing_type',
-            filter: {
-              type: 'Input'
-            },
-          },
-          {
-            title: 'Status',
-            key: 'status',
-            filter: {
-              type: 'Input'
-            },
-          },
-          {
-            title: 'Sample number',
-            key: 'sample_numbers',
-            filter: {
-              type: 'Select',
-              option: sample_numbers
-            },
-          },
-         
-        ],
+       
         tAdatasetTypeSourceColumns:[
           {
             title: 'Dataset',
-            key: 'dataset_id',
+            // key: 'EryID',
+            key:'EryID',
             filter: {
               type: 'Input'
             },
@@ -785,9 +696,7 @@ export default {
           this.mockTableData();
       },
 
-      changeTableColumns () {
-          this.tableColumns = this.getTable2Columns();
-      },
+    
 
       
       //需要带着参数查询

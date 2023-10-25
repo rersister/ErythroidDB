@@ -7,7 +7,7 @@
 		<Row>
         	<i-form :label-width="120">
 				<i-col span="8">
-					<Form-item label="Comparison group: ">                                                  
+					<Form-item label="Comparsion group: ">                                                  
 						<i-select v-model="contrastsGroup" clearable placeholder="Pleace select contrasts group"  @on-change="changedContrGroup">        
 							<i-option v-for="(group,index) in contrasts_group" :key='index' :value="group.name">{{ group.name }}</i-option>
 						</i-select>
@@ -29,7 +29,7 @@
 			<!-- 差异表达 -->			
 			<Spin size="large" fix v-if="spinShow1"></Spin>
 			<vue-plotly :data="diff_data" :layout="diff_layout" :options="diff_options"/>
-		
+            
 		</Row>
 
 
@@ -72,7 +72,7 @@
                   </div>
             </div>
 		</Row>
-        <Button type="primary" size="large" @click="exportData(1)"><Icon type="ios-download-outline"></Icon>Download</Button>
+        <Button type="primary" size="large" @click="exportData(1)"><Icon type="ios-download-outline"></Icon>Download Data</Button>
 
 	</div>
 

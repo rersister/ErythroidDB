@@ -27,6 +27,20 @@ export const getDatasetTypeSource = (table_name,currentPage,pageSize) => {
 	})
 }
 
+// getEryGeneScore
+export const getEryGeneScore = (table_name,currentPage,pageSize) => {
+	return axios.request({
+	  url: 'public/getEryGeneScore',
+	  data: { 
+		'table_name':table_name,
+		'pageIndex': currentPage,
+		'pageSize': pageSize	
+	},
+	  method: 'post',
+	})
+}
+
+
 
 
 //getDataTypeInfo
@@ -349,7 +363,7 @@ export const getDatasetDataByMultiInput=(table_name,currentPageTypeSource,pageSi
 	  })
 }
 
-// getDatasetDataByKeyParam
+// ingetDatasetDataByKeyParam
 export const getDatasetDataByKeyParam = (table_name,currentPage,pageSize,keyParam) => {
 	return axios.request({
 	  url: 'public/getPageDataSetByKeyParam',

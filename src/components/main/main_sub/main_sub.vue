@@ -387,7 +387,8 @@ export default {
       tAdatasetTypeSourceColumns:[
           {
             title: 'Dataset',
-            key: 'dataset_id',
+            // key: 'dataset_id',
+            key:'EryID',
             filter: {
               type: 'Input'
             },
@@ -832,6 +833,7 @@ export default {
         // this.mockTableDataTypeSource()
         this.getDatasetByMultiInput()
     },
+    
     handleSizeChangeTypeSource(val){
       // console.log(`每页 ${val} 条`);
       var _this = this; 
@@ -942,7 +944,6 @@ export default {
    
 
     mockTableDataTypeSource(){
-
         var _this = this;      
         // _this.spinShowTypeSource = true, 
         getDatasetTypeSource(_this.table_name,_this.currentPageTypeSource,_this.pageSizeTypeSource ).then( res=>{

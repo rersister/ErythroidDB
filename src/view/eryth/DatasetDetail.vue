@@ -12,9 +12,13 @@
         <br>
         <!-- dataset description -->
         <Row class='detail_style'>  
-            <Col>
+            <Col>   
                     <Row>
                         <Col span="5"><strong>Dataset:</strong></Col>
+                        <Col span="19"><a :href="getSeriHref()" target="_blank">{{EryID}}</a></Col>                         
+                    </Row>
+                    <Row>
+                        <Col span="5"><strong>Dataset source:</strong></Col>
                         <Col span="19"><a :href="getSeriHref()" target="_blank">{{dataset}}</a></Col>                         
                     </Row>
                     <Row>
@@ -114,10 +118,16 @@
                     </Row> 
 
                    
-                    <!-- Datase Service 内容 -->
+                   
+                    
+
                     <Content>
-                        <Card >                            
-                            <div>                              
+                        
+                        <Card > 
+                                                       
+                            <div>
+                                
+                                
                                 <!-- <router-view/>-->                        
                                 <DatasetService />
                                 <!-- <All /> -->
@@ -125,7 +135,34 @@
                         </Card> 
                     </Content> 
 
+                    <Content>
+                        <Card >
+                            <div class="row_choice" >
+                                <h3 class="h3_title">Download： </h3>
+                                <br>
+                                <Row>
+                                        <!-- Datase Service 内容 -->
+                                    <Col span="8" >
+                                                    
+                                                    <button class="my_button_download" @click="downloadExpression()">
+                                                        <!-- <Spin  fix :show="spinShow1"></Spin> -->
+                                                        Expression</button>
+                                    </col>
+
+                                    <Col span="8" >
+                                        <button class="my_button_download" @click="downloadMetaInfo()">
+                                            <!-- <Spin  fix :show="spinShow1"></Spin> -->
+                                        Meta information</button>
+                                    </col>
+
+                                </Row>
+                            </div>
+                        </Card>
+                    </Content>
+                  
                     <Row> 
+
+                        
                         <Collapse>
                             <Panel name="0">
                                 Data processing
@@ -219,9 +256,10 @@
 import router from '@/router'
 import * as echarts from 'echarts'
 // 示例封装好的axios
+import { getDatasetSequenceType } from '@/api/datasetService'
 import { getDataset,getAllExpreStack,getDatasetGroup,
 getSequenceEchartByTabletype,
-getExpreRange,} from '@/api/erythdataservice'
+getExpreRange,getDatasetExpression,getDatasetMetaInfo } from '@/api/erythdataservice'
 
 import {getSampleGroupPageDataset,} from '@/api/erythdataset'
 import DatasetService from "@/view/compnents/DatasetService.vue"
@@ -383,7 +421,8 @@ export default {
                 enrichGroup:'',           
                 publicPath: process.env.BASE_URL,
                 // 查询信息的展示默认值
-                // value1: '1',           
+                // value1: '1',  
+                EryID:'',         
                 series:'',
                 organism:'',
                 tissue:'',
@@ -462,6 +501,7 @@ export default {
                 SpecifExpreTip:'',
              
                 specif_name:'',
+                // spinShow1:'false',
         }
      },
      
@@ -481,6 +521,134 @@ export default {
             }
          
           });
+        },
+
+        downloadExpression() {
+            let _this = this
+            var fileName = this.dataset;
+            // const fileUrl = '/path/to/' + fileName; // 文件的URL地址
+            // _this.spinShow1 = true
+            this.$Spin.show({
+                    render: (h) => {
+                        return h('div', [
+                            h('Icon', {
+                                'class': 'demo-spin-icon-load',
+                                props: {
+                                    type: 'ios-loading',
+                                    size: 18
+                                }
+                            }),
+                            h('div', 'Dowloding')
+                        ])
+                    }
+            });
+
+            var sequencing_type = 'Bulk'
+            getDatasetSequenceType(this.dataset).then((res) => {
+                let data = res.data
+                console.log('data:')
+                console.log(data)
+                
+                sequencing_type = data.sequencing_type
+                
+            })
+
+            getDatasetExpression(this.dataset).then( response =>{
+
+                if (sequencing_type.indexOf('Single Cell') > -1) {
+                    alert('is sc ')
+                    alert(this.dataset)
+                    var user_fileName = this.dataset + '.sce.rds'
+                    let blob = new Blob([response.data],{ type: 'application/octet-stream' });
+                    if ('msSaveOrOpenBlob' in navigator) {
+                        window.navigator.msSaveOrOpenBlob(blob, user_fileName);
+                    } else {
+                        const elink = document.createElement('a');
+                        elink.download = user_fileName;
+                        elink.style.display = 'none';
+                        elink.href = URL.createObjectURL(blob);
+                        document.body.appendChild(elink);
+                        elink.click();
+                        URL.revokeObjectURL(elink.href);
+                        document.body.removeChild(elink);
+                    }
+
+
+                }else{
+
+                    let blob = new Blob([response.data],{ type: 'application/vnd.ms-excel' });
+                    // if (!fileName) {
+                    //如果后台返回文件名称
+                    //注意一定要和后端协调好返回的数据格式，不然会出现中文乱码问题
+                    // fileName = response.headers['content-disposition'].split('filename=').pop();
+                    // }
+                    var fileName = this.dataset + '_norm_expression.xls'
+                    if ('msSaveOrOpenBlob' in navigator) {
+                        window.navigator.msSaveOrOpenBlob(blob, fileName);
+                    } else {
+                        const elink = document.createElement('a');
+                        elink.download = fileName;
+                        elink.style.display = 'none';
+                        elink.href = URL.createObjectURL(blob);
+                        document.body.appendChild(elink);
+                        elink.click();
+                        URL.revokeObjectURL(elink.href);
+                        document.body.removeChild(elink);
+                    }
+                }
+                this.$Spin.hide()
+
+                
+            })
+            // _this.spinShow1 = false
+            // this.$Loading.finish();
+        },
+
+        downloadMetaInfo(){
+            let _this = this
+            // alert(this.table_name)
+            var fileName = this.dataset;
+            // const fileUrl = '/path/to/' + fileName; // 文件的URL地址
+            // _this.spinShow1 = true
+            this.$Spin.show({
+                    render: (h) => {
+                        return h('div', [
+                            h('Icon', {
+                                'class': 'demo-spin-icon-load',
+                                props: {
+                                    type: 'ios-loading',
+                                    size: 18
+                                }
+                            }),
+                            h('div', 'Dowloding')
+                        ])
+                    }
+            });
+
+            getDatasetMetaInfo(fileName).then( response =>{
+
+                let blob = new Blob([response.data],{ type: 'application/vnd.ms-excel' });
+                //注意一定要和后端协调好返回的数据格式，不然会出现中文乱码问题
+                var userfileName = fileName + '_sample_metaInfo.xls'
+                // alert(userfileName)
+                if ('msSaveOrOpenBlob' in navigator) {
+                    window.navigator.msSaveOrOpenBlob(blob, userfileName);
+                } else {
+                    const elink = document.createElement('a');
+                    elink.download = userfileName;
+                    elink.style.display = 'none';
+                    elink.href = URL.createObjectURL(blob);
+                    document.body.appendChild(elink);
+                    elink.click();
+                    URL.revokeObjectURL(elink.href);
+                    document.body.removeChild(elink);
+                }
+                this.$Spin.hide()
+
+            })
+            // _this.spinShow1 = false
+            // this.$Loading.finish();
+
         },
 
         mockTableData(series,currentPage,pageSize){
@@ -569,6 +737,7 @@ export default {
                 let datas =res.data
                 // console.log(datas)
                 // console.log(datas.series)
+                _this.EryID = datas.EryID
                 _this.series = datas.series
                 _this.organism = datas.organism
                 // 把 datas.growth_type 首字符变大写
@@ -1332,5 +1501,57 @@ export default {
     /* .ivu-table-row{
         cursor:auto !important;
     } */
+
+
+        
+    .my_button_download {
+        border: none;
+        border-radius: 4px;
+        width: 220px;
+        height: 50px;
+        background-color:#eee;
+        color: rgb(12, 1, 1);
+        font-size: 18px;
+    }
+
+    .my_button_download:hover {
+        background:#a85557;
+        color: azure;
+    }
+    
+    .download_div {
+        display: inline-block;
+        border: none;
+        /* border: 1px; */
+        border-color: #eee;
+        border-radius: 4px;
+        text-align: center;
+        transition: all 0.2s ease-in-out;
+        margin-right: 15px;
+        margin-left: 20px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        padding: 0 15px;
+        height: calc((100/ 1920) * 100vw);
+        line-height: calc((100 / 1920) * 100vw);
+        font-size: 18px;
+        /* padding:calc((5/1920) * 100vw) calc((1/1920) * 100vw) calc((1/1920) * 100vw) calc((1/1920) * 100vw); */
+        /* width:calc((250/1920) * 100vw);
+                text-align:center;
+                overflow: hidden;
+                padding:calc((5/1920) * 100vw) calc((5/1920) * 100vw) calc((5/1920) * 100vw) calc((5/1920) * 100vw);
+                background: white;
+                border: 1px;
+                border-color: black;
+                border-radius: 4px;
+                transition: all .2s ease-in-out;
+                position: relative; */
+    }
+
+    .row_choice {
+        margin: 2% 2% 2% 2%;
+    
+    }
+
 </style>
 

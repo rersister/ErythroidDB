@@ -11,11 +11,56 @@
               </span>
             </Row>
             
-            
-            <div ref="chart2" style="width: 800px;height:600px;margin:0 auto;"></div>
-            <!-- <div id="chart2" style="width:100%;height:300%; text-aglign:center"> -->
+            <Row>
 
-            
+              <Col span="18" >
+              <div ref="chart2" style="width: 800px;height:600px;margin:0 auto;"> </div> 
+              <!-- <div id="chart2" style="width:100%;height:300%; text-aglign:center"> -->
+              </Col>
+              
+              <!-- offset="2" -->
+              <Col span="5"  style="padding-top: 40px;">
+                <!-- 基因排序表格   :data="" -->
+                <!-- @on-row-click="intoDataSet" -->
+                <Table id="mytable" 
+                        :columns="tTableGeneScore"
+                        :data="geneScoreData" 
+                        @on-row-click="getEryGene2Dataset"
+                        ref="table">
+                </Table>
+
+                <div style="margin: 10px;overflow: hidden">               
+                    <div style="float: right;">
+                        <Page :total="totalEryGene"  
+                        :current="currentPageEryGene" 
+                        :page-size="pageSizeEryGene" 
+                        show-total
+                        @on-change="handleCurrentChangeEryGeneData" 
+                      >
+                        </Page>                   
+                    </div>
+              </div>
+
+              </Col>  
+              
+            </Row>
+           
+              <!-- <Spin size="large" fix v-if="spinShowTypeSource"></Spin> -->
+              <!--  show-elevator  -->
+              <!-- <div style="margin: 10px;overflow: hidden">               
+                    <div style="float: right;">
+                        <Page :total="totalTypeSource"  
+                        :current="currentPageTypeSource" 
+                        :page-size="pageSizeTypeSource" 
+                       
+                        show-total
+                        show-sizer
+                        @on-change="handleCurrentChangeTypeSource" 
+                        @on-page-size-change="handleSizeChangeTypeSource">
+                        </Page>                   
+                    </div>
+              </div>   -->
+          
 
             <!-- <div id="cell_type_show_view" style="width:100%;height:300%; text-aglign:center"> -->
             <!-- <div>
@@ -89,7 +134,7 @@ import * as echarts from "echarts";
 import "echarts-wordcloud/dist/echarts-wordcloud";
 import "echarts-wordcloud/dist/echarts-wordcloud.min"; 
 import { checkStatus } from '@/libs/util'
-import { getDataset,getDatasetTypeSourceByGene,getDatasetTypeSource,searchDataset,searchDatasetTypeSource,getDatasetGene } from '@/api/erythdataset'
+import { getDataset,getDatasetTypeSourceByGene,getDatasetTypeSource,searchDataset,searchDatasetTypeSource,getDatasetGene,getEryGeneScore } from '@/api/erythdataset'
 import FilterTableForAllDateSet from '../compnents/FilterTableForAllDateSet';
 import { type } from 'os';
 const sample_numbers = {
@@ -303,6 +348,7 @@ export default {
                         },
                 
             ],
+        geneScoreData:[],
         genes_Chart_bubble:{},
         cell_type_list:[
 
@@ -347,19 +393,47 @@ export default {
         spinShowTypeSource:true,
         currentPage: 1,
         currentPageTypeSource:1,
+        currentPageEryGene:1,
         pageSize: 10,
         pageSizeTypeSource:10,
+        pageSizeEryGene:8,
         cell_name:'All',
         total: 400,
-        totalTypeSource:400,
+       
         datasets: [],
         datasetsTypeSource:[],
         datasetname :'Development',
-       
+        
+        totalEryGene:128,
+        totalTypeSource:400,
+        tTableGeneScore:[
+          {
+              title: 'Gene',
+              key: 'gene',
+              filter: {
+                type: 'Select',
+                option: species_type
+              },
+              // className:'table_Orga'
+
+            },
+            {
+                title: 'Score',//来源 dataset 里的source
+                key: 'score',
+                // "sortable": true,
+                filter: {
+                  type: 'Select',
+                  option:source_type
+                }
+            },
+        ],
+
+        
         tAdatasetTypeSourceColumns:[
           {
             title: 'Dataset',
-            key: 'dataset_id',
+            // key: 'dataset_id',
+            key:'EryID',
             filter: {
               type: 'Input'
             },
@@ -523,23 +597,7 @@ export default {
 
             }
             _this.current_cellname= name
-          
-          
-            // cell_type_list.forEach(element => {
-              // if(element.name == name){
-                // alert(_this.cell_name)
-                // _this.cell_name 
-                // var ccn = element.name
-                // var c_ano = element.cell_ano
-                // _this.current_cell_anno = c_ano
-                // _this.current_cellname=ccn
-                // _this.drawCellTypeChart()
-              // }
-            // });
 
-          
-            // console.log(_this.current_cellname)
-            
             this.mockTableDataTypeSourceByGene(this.cell_name)
 
           } );
@@ -577,6 +635,7 @@ export default {
 
               // let dou_live_word_result = this.worddata
               let dou_live_word_result = my_wdata
+              // _this.geneScoreData = my_wdata
               console.log(my_wdata)
               var myoption={
                                   title: {
@@ -614,6 +673,32 @@ export default {
         })
           
       },
+
+      mockTableEryGeneScore(){
+        var _this = this;      
+        // _this.spinShowTypeSource = true, 
+        getEryGeneScore('ery_gene_score',_this.currentPageEryGene,_this.pageSizeEryGene ).then( res=>{
+           
+            // _this.spinShowTypeSource = false                    
+            let datas = res.data
+            // console.info(datas.list)
+            _this.geneScoreData = datas.list                  
+            _this.totalEryGene = datas.total;
+
+        })
+       
+
+      },
+
+      getEryGene2Dataset(data, index, event) {
+        // alert(data.gene);
+        let _this = this
+        _this.current_cellname= data.gene
+        _this.cell_name = data.gene
+        this.mockTableDataTypeSourceByGene(data.gene)
+
+      },
+
 
       mockTableData () {
             var _this = this;      
@@ -706,7 +791,8 @@ export default {
           this.mockTableData()
 
       },
-       handleCurrentChangeTypeSource(val){
+
+      handleCurrentChangeTypeSource(val){
           // console.log(`当前页: ${val}`);
           var _this = this; 
           _this.currentPageTypeSource = val;
@@ -714,7 +800,14 @@ export default {
             this.mockTableDataTypeSource()
           }else{
             this.searchDatasetByFilter(_this.datasetFilter)
-        }
+          }
+      },
+
+      handleCurrentChangeEryGeneData(val){
+        var _this = this; 
+        _this.currentPageEryGene = val;
+        this.mockTableEryGeneScore()
+
       },
 
       handleSizeChangeTypeSource(val){
@@ -1329,6 +1422,9 @@ export default {
       },
     },
     mounted(){
+
+    
+
       // this.drawCellTypeChart()
       this.initCharts() //调用定义词云图方法
 
@@ -1356,6 +1452,8 @@ export default {
         myChart.resize()
         // _this.pageResize();
       }
+
+      
     },
     watched(){
      
@@ -1363,7 +1461,7 @@ export default {
     created() {
       // this.mockTableData();
       this.mockTableDataTypeSource()
-
+      this.mockTableEryGeneScore()
 
 
     },

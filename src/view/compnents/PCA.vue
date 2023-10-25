@@ -11,6 +11,7 @@
 		<!-- 相似性分析 MDS 聚类图-->
 		<Spin size="large" fix v-if="spinShow3"></Spin>
 		<vue-plotly :data="sim_data" :layout="sim_layout" :options="sim_options"/>
+        <Button type="primary" size="large" @click="exportData(1)"><Icon type="ios-download-outline"></Icon>Download Data</Button>
 
 	</Row>
  

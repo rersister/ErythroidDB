@@ -180,6 +180,30 @@
 
     </div>
 
+    <div class="row_choice" >
+      <!-- 数据下载栏目  -->
+      <h3 class="h3_title">Download： </h3>
+      <br>
+        <Row >
+          
+          <Col span="8" >                       
+            <button class="my_button_download" @click="downloadAtlasExpression()">
+                <!-- <Spin  fix :show="spinShow1"></Spin> -->
+                Expression</button>
+          
+          </col>    
+          
+          <Col span="8" >
+            <button class="my_button_download" @click="downloadAtlasMetaInfo()">
+                <!-- <Spin  fix :show="spinShow1"></Spin> -->
+            Meta information</button>
+          </col>
+
+        </Row>
+    </div>
+    <br>
+
+
     <div v-if=ifcellAnno class="row_choice" >
         <!-- 单细胞页面才显示的 细胞注释信息 -->
         <h3 class="h3_title">Cell annotation information： </h3>
@@ -213,7 +237,8 @@
 
     
     <div class="row_choice">
-              Samples ({{totalRow}}) and group:
+      <h3 class="h3_title">Samples ({{totalRow}}) and group:</h3>
+      <br>
                         <Table  stripe
                             :type="true"
                             :model.sync="search"
@@ -245,7 +270,7 @@
 <script>
 // Datatest
 import FilterTable from '../../compnents/FilterTable'
-import { getDatatest } from '@/api/erythdataservice'
+import { getDatatest,getDatasetExpression,getDatasetMetaInfo } from '@/api/erythdataservice'
 import {getSCCellAnnoInfo } from '@/api/erythdataset'
 import { getallDevSampleGroup,getAllDevType } from '@/api/erythroidAtlas'
 import router from '@/router'
@@ -381,7 +406,8 @@ export default {
         },
         {
           title: 'Dataset',
-          key: 'dataset_id',
+          key:'EryID',
+          // key: 'dataset_id',
           filter: {
             type: 'Input',
           },
@@ -623,7 +649,7 @@ export default {
       sgroupCols: [
         {
           title: 'Dataset',
-          key: 'gid',
+          // key: 'gid',
           filter: {
             type: 'Input',
           },
@@ -756,6 +782,7 @@ export default {
     },
 
 
+
     analClick(item){
       // alert(item.value)
       this.currentAnalIndex = item.value
@@ -868,7 +895,197 @@ export default {
 
     },
 
-  
+    downloadAtlasExpression() {
+
+            let _this = this
+            // alert(this.table_name)
+
+            // const fileUrl = '/path/to/' + fileName; // 文件的URL地址
+            // _this.spinShow1 = true
+            this.$Spin.show({
+                    render: (h) => {
+                        return h('div', [
+                            h('Icon', {
+                                'class': 'demo-spin-icon-load',
+                                props: {
+                                    type: 'ios-loading',
+                                    size: 18
+                                }
+                            }),
+                            h('div', 'Dowloding')
+                        ])
+                    }
+            });
+
+            if (this.table_name.indexOf('GSE152982') > -1 || this.table_name.indexOf('CRA002445') > -1 ||  this.table_name.indexOf('all_hs_ep_sc') > -1 ){
+                    alert(this.table_name)
+                    // this.table_name = 'all_dr_ep_sc'
+                    var user_fileName = this.table_name + '.sce.rds'
+
+                    // alert(test)
+                    // this.currentAnalIndex='Diffanal'
+                    // let a = document.createElement('a');
+                    // a.href = `/EryDataset/`+fileName;
+                    if (this.table_name.indexOf('GSE152982') > -1){
+                      // alert('change')
+                      // this.table_name = 'all_dr_ep_sc'
+                      var user_fileName = 'all_dr_ep_sc' + '.sce.rds'
+                      // this.currentAnalIndex='Diffanal'
+                    }
+
+                    // CRA002445
+                    if (this.table_name.indexOf('CRA002445') > -1){
+                      // alert('change')
+                      // this.table_name = 'all_dr_ep_sc'
+                      var user_fileName = 'all_mm_ep_sc' + '.sce.rds'
+                      // this.currentAnalIndex='Diffanal'
+                    }
+                    // 前端提供下载文件不超过  2 G 
+                    // a.download = user_fileName
+                    // a.click();
+                    // this.$Spin.hide()
+                    
+                    getDatasetExpression(this.table_name).then( response =>{
+                      alert('back data')
+                      let blob = new Blob([response.data],{ type: 'application/octet-stream' });
+                      // if (!fileName) {
+                      //如果后台返回文件名称
+                      //注意一定要和后端协调好返回的数据格式，不然会出现中文乱码问题
+                      // fileName = response.headers['content-disposition'].split('filename=').pop();
+
+                      // }
+                      
+                      // var fileName = this.table_name + '_norm_expression.xls'
+                      if ('msSaveOrOpenBlob' in navigator) {
+                          window.navigator.msSaveOrOpenBlob(blob, user_fileName);
+                      } else {
+                          const elink = document.createElement('a');
+                          elink.download = user_fileName;
+                          elink.style.display = 'none';
+                          elink.href = URL.createObjectURL(blob);
+                          document.body.appendChild(elink);
+                          elink.click();
+                          URL.revokeObjectURL(elink.href);
+                          document.body.removeChild(elink);
+                      }
+                      this.$Spin.hide()
+
+              })
+              // _this.spinShow1 = false
+                this.$Loading.finish();
+
+            }else{
+
+              getDatasetExpression(this.table_name).then( response =>{
+                let blob = new Blob([response.data],{ type: 'application/vnd.ms-excel' });
+                // if (!fileName) {
+                //如果后台返回文件名称
+                //注意一定要和后端协调好返回的数据格式，不然会出现中文乱码问题
+                // fileName = response.headers['content-disposition'].split('filename=').pop();
+
+                // }
+                
+                var fileName = this.table_name + '_norm_expression.xls'
+                if ('msSaveOrOpenBlob' in navigator) {
+                    window.navigator.msSaveOrOpenBlob(blob, fileName);
+                } else {
+                    const elink = document.createElement('a');
+                    elink.download = fileName;
+                    elink.style.display = 'none';
+                    elink.href = URL.createObjectURL(blob);
+                    document.body.appendChild(elink);
+                    elink.click();
+                    URL.revokeObjectURL(elink.href);
+                    document.body.removeChild(elink);
+                }
+                this.$Spin.hide()
+
+            })
+            // _this.spinShow1 = false
+              this.$Loading.finish();
+
+            }
+
+
+
+            
+
+
+    },
+
+    downloadAtlasMetaInfo(){
+      let _this = this
+            // alert(this.table_name)
+
+            // const fileUrl = '/path/to/' + fileName; // 文件的URL地址
+            // _this.spinShow1 = true
+            this.$Spin.show({
+                    render: (h) => {
+                        return h('div', [
+                            h('Icon', {
+                                'class': 'demo-spin-icon-load',
+                                props: {
+                                    type: 'ios-loading',
+                                    size: 18
+                                }
+                            }),
+                            h('div', 'Dowloding')
+                        ])
+                    }
+            });
+
+            getDatasetMetaInfo(this.table_name).then( response =>{
+
+
+                let blob = new Blob([response.data],{ type: 'application/vnd.ms-excel' });
+                // if (!fileName) {
+                //如果后台返回文件名称
+                //注意一定要和后端协调好返回的数据格式，不然会出现中文乱码问题
+                // fileName = response.headers['content-disposition'].split('filename=').pop();
+
+                // }
+                
+
+                var fileName = this.table_name + '_sample_metaInfo.xls'
+                if (this.table_name.indexOf('GSE152982') > -1){
+                  // alert('change')
+                  // this.table_name = 'all_dr_ep_sc'
+                  var fileName = 'all_dr_ep_sc' + '_sample_metaInfo.xls'
+                  // this.currentAnalIndex='Diffanal'
+                }
+
+                // CRA002445
+                if (this.table_name.indexOf('CRA002445') > -1){
+                  // alert('change')
+                  // this.table_name = 'all_dr_ep_sc'
+                  var fileName = 'all_mm_ep_sc' + '_sample_metaInfo.xls'
+                  // this.currentAnalIndex='Diffanal'
+                }
+
+
+
+                if ('msSaveOrOpenBlob' in navigator) {
+                    window.navigator.msSaveOrOpenBlob(blob, fileName);
+                } else {
+                    const elink = document.createElement('a');
+                    elink.download = fileName;
+                    elink.style.display = 'none';
+                    elink.href = URL.createObjectURL(blob);
+                    document.body.appendChild(elink);
+                    elink.click();
+                    URL.revokeObjectURL(elink.href);
+                    document.body.removeChild(elink);
+                }
+                this.$Spin.hide()
+
+            })
+            // _this.spinShow1 = false
+            this.$Loading.finish();
+
+    },
+
+
+
     changePge() {
     mockTableData
        this.mockTableData(this.table_name, this.currentPage, this.pageSize)
@@ -1389,6 +1606,23 @@ export default {
   font-size: calc((10 / 1920) * 100vw);
 }
 
+.my_button_download {
+        border: none;
+        border-radius: 4px;
+        width: 220px;
+        height: 50px;
+        background-color:#eee;
+        color: rgb(12, 1, 1);
+        font-size: 18px;
+    }
+
+  .my_button_download:hover {
+      background:#a85557;
+      color: azure;
+  }
+
+
+
 .anal_div {
   display: inline-block;
   background: white;
@@ -1529,6 +1763,8 @@ export default {
   font-size: 18px;
   cursor: pointer;
 }
+
+
 /* .ivu-table-row{
   cursor: pointer !important;
 } */
