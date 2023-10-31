@@ -4,36 +4,45 @@
 	<br>
 	<div>
 		<Row>
-			<i-form :label-width="120">
-				
-                
-					<Form-item label="Comparison cluster: "> 
-						<i-col span="16">                                                 
-							<i-select v-model="group"  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart"  filterable>        
-								<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
-							</i-select>
-						</i-col>
+			<Col span="16" >
+				<!-- 差异表达火山图-->			
+				<Spin size="large" fix v-if="spinShow1"></Spin>
+				<vue-plotly :autoResize="ifResize" :data="diff_data" :layout="diff_layout" :options="diff_options"/>
+			</col>
 
-						<i-col span="24">
-						<!-- margin-left: 4px;  -->
-						<div style="word-break: break-word; ">
-						<span >
-							e.g, Basophilic_basal_bone_marrow-VS-Basophilic_fetal_liver  means the Basophilic_basal_bone_marrow group versus the Basophilic_fetal_liver group
-						</span>
-					</div>
-					</i-col>
-					</Form-item>
-				
-				
-			</i-form>
+			<Col span="8" >  
+				<i-form :label-width="120">
+						<Form-item label="Comparison cluster: "> 
+							                                               
+								<i-select v-model="group"  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart"  filterable>        
+									<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
+								</i-select>
+								<span >
+									e.g, late_basoE-orthoE means the late_basoE  group versus the orthoE group
+								</span>
+						</Form-item>
+						<Form-item label="Absolute Fold Change: ">                                                  
+                            <i-select v-model="foldChange" clearable placeholder="Pleace select change fold"  @on-change="changedFoldChange">        
+                                <i-option v-for="(fc,index) in fold_change" :key='index' :value="fc.value">{{ fc.name }}</i-option>
+                            </i-select>
+							<span >
+									Default value: >= 0
+							</span>
+                        </Form-item>
+
+                        <Form-item label="P value: ">                                                  
+                            <i-select v-model="Pvalue" clearable placeholder="Pleace select change fold"  @on-change="changedPvalue">        
+                                <i-option v-for="(p,index) in PValue_change" :key='index' :value="p.value">{{ p.name }}</i-option>
+                            </i-select>
+							<span >
+									Default value: =< 0.05
+							</span>
+                        </Form-item>
+					
+					
+				</i-form>
+			</col> 
         </Row>
- 		
-		<Row>					
-			<!-- 差异表达 -->			
-			<Spin size="large" fix v-if="spinShow1"></Spin>
-			<vue-plotly :autoResize="ifResize" :data="diff_data" :layout="diff_layout" :options="diff_options"/>
-		
-		</Row>
 		</Br>
 
 		<Row>
@@ -190,6 +199,64 @@ export default {
                     },
 
                 ],
+				foldChange:0,
+            Pvalue:0.05,
+            fold_change:[
+                {
+                        name:'0',
+                        value:'0'
+                },
+                {
+                    name:'>=0.5',
+                    value:'0.5'
+                },
+                {
+                    name:'>=1',
+                    value:'1'
+                },
+                {
+                    name:'>=1.5',
+                    value:'1.5'
+                },
+                {
+                    name:'>=2',
+                    value:'2'
+                },
+
+                {
+                    name:'>=2.5',
+                    value:'2.5'
+                },
+
+                {
+                    name:'>=3',
+                    value:'3'
+
+                },
+            ],
+            PValue_change:[
+                {
+                    name:'=<0.05',
+                    value:'0.05'
+                },
+                {
+                    name:'=<0.01',
+                    value:'0.01'
+                },
+                {
+                    name:'=<0.001',
+                    value:'0.05'
+                },
+                {
+                    name:'=<0.0001',
+                    value:'0.0001'
+                },
+                {
+                    name:'=<0.00001',
+                    value:'0.00001'
+                },
+
+            ],
 			series:this.$store.state.app.CurrentPageToken,
 			ifResize:true,
 			spinShow1:'true',
@@ -368,34 +435,33 @@ export default {
 		changedDiffChart(group){
             console.log(group)
 			this.group = group
-			// alert(this.series)
-			// alert(this.source)
-			// alert(this.group)
-			
-
 			if (typeof group === 'undefined' ){
 				
 				this.group = group
-
 			}else{
 
 				this.group = group
-				this.getdiff_chart(this.series,this.source,group)
+				this.getdiff_chart(this.series,this.group,this.foldChange,this.Pvalue)
 				var table_name = this.series 
 				this.mockTableData(table_name,this.currentPage,this.pageSize,group)
 			}
-
-
-
 		},
+
+		changedFoldChange(fc){
+            let _this = this  
+            _this.foldChange = fc
+            this.getdiff_chart(this.series,this.group,_this.foldChange,this.Pvalue)
+        },
+		changedPvalue(pvalue){
+            let _this = this  
+            _this.Pvalue = pvalue
+            this.getdiff_chart(this.series,this.group,this.foldChange,_this.Pvalue)
+        },
+
 
 		changedDiffChart2(group){
             console.log(group)
 			this.group2 = group
-			// alert(this.series)
-			// alert(this.source)
-			// alert(this.enrichType)
-			// this.getdiff_chart(this.series,this.source,group)
 			this.getdiffEnrich_chart(this.series,group,this.enrichType)
 
 		},
@@ -513,7 +579,8 @@ export default {
 				var table_name = series   // 传过去的table_name 包含 series
 				// var table_name = series
 				// alert(table_name)
-				this.getdiff_chart(this.series,this.source,datas[0])
+				// this.getdiff_chart(this.series,this.source,datas[0])
+				this.getdiff_chart(this.series,this.group,this.foldChange,this.Pvalue)
 				this.mockTableData(table_name,this.currentPage,this.pageSize,datas[0]) 
              
            })
@@ -579,11 +646,11 @@ export default {
 		},
 
 
-		getdiff_chart(){
+		getdiff_chart(series,diffgroup,foldChange,Pvalue){
 
 			let _this = this
 			_this.spinShow1 = true
-            getSCClusterDiff(this.series,this.group).then(res =>{
+            getSCClusterDiff(this.series,this.group,foldChange,Pvalue).then(res =>{
                 let datas = res.data  
                 console.log(datas)             
                 var data = [
@@ -612,7 +679,7 @@ export default {
                     
                 var diff_layout={ 
                    
-                    title:'Differential Analysis of ' + this.group +' ('+this.series +')',
+                    title:'Differential Analysis  <br />' + this.group +' ('+this.series +')',
 					subtitle: {
                             text: 'Data Souce:' + this.series
                     },
@@ -629,25 +696,6 @@ export default {
            })   
 		},
 
-		changedContrGroup(diffgroup){
-			let _this = this  
-			// alert(this.table_name)
-			this.getdiff_chart(this.series,diffgroup)
-			// var table_name = this.series + "_"+this.source
-			var table_name = this.series
-			// alert(table_name)
-			this.mockTableData(table_name,this.currentPage,this.pageSize,diffgroup) 
-			
-            
-		},
-
-		changedSourceGroup(sourceGroup){
-			// alert(sourceGroup)
-			this.table_name = 'all_rna_dev_bulk_' + sourceGroup
-			this.sourceGroup = sourceGroup
-			// alert(this.table_name)
-			// this.getdiff_group(this.table_name)
-		},
 
 	
 		mockTableData(table_name,currentPage,pageSize,group){

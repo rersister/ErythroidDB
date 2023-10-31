@@ -442,7 +442,7 @@ export const getSCEnrichContrastGroup = (series)=>{
 }
 
 // getClusterDiff(this.series,this.source,this.group)
-export const getSCClusterDiff = (series,group)=>{
+export const getSCClusterDiff = (series,group,foldChange,Pvalue)=>{
 	return axios.request({
 
 		url:'public/getSCClusterDiff',
@@ -450,6 +450,9 @@ export const getSCClusterDiff = (series,group)=>{
 			series: series,
 			// source:source,
 			group:group,
+			foldChange:foldChange,
+			Pvalue:Pvalue
+
 		},
 		method:'post',
 	})

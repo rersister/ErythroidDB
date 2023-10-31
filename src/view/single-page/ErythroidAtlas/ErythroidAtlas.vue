@@ -294,7 +294,6 @@ import All from '@/view/compnents/all_Expression.vue'
 import AllClutser from '@/view/compnents/all_Cluster.vue'
 import AllDiff from '@/view/compnents/all_Diffanal.vue'
 import AllEnrich from '@/view/compnents/all_Enrich.vue'
-
 import ScPCA from '@/view/compnents/all_sc_pca.vue'
 import FeaturePlot from '@/view/compnents/sc_all_ClusterMarker.vue'
 import Diffanal from '@/view/compnents/sc_all_Diffanal.vue'
@@ -1024,15 +1023,15 @@ export default {
             
             }else{
               // bulk
-              alert(this.table_name)
-              alert('bulk data expression')
+              // alert(this.table_name)
+              // alert('bulk data expression')
               axios.request({
                             url:"public/getDatasetExpression",
                             data: {'dataset':this.table_name},
                             method: 'post',
                             contentType: 'application/octet-stream',
                             // dataType: "binary",
-                            responseType:"arraybuffer",
+                            responseType:"blob",
                             params:{},
                             // onDownloadProgress 配置该属性代表允许为下载处理进度事件
                             onDownloadProgress: function (progressEvent) {//axios封装的原生获取下载进度的事件，该回调参数progressEvent中包含下载文件的总进度以及当前进度
@@ -1073,8 +1072,8 @@ export default {
                       URL.revokeObjectURL(elink.href);
                       document.body.removeChild(elink);
                        //编译文件完成后，进度条展示为100%100
-                      this.fileDown.percentage =100;
-                      this.fileDown.loadDialogStatus = 'success';//关闭弹窗
+                      _this.fileDown.percentage =100;
+                      _this.fileDown.loadDialogStatus = 'success';//关闭弹窗
 
                   }
 
@@ -1084,8 +1083,33 @@ export default {
 
     downloadAtlasMetaInfo(){
             let _this = this
-
-            getDatasetMetaInfo(this.table_name).then( response =>{
+            _this.fileDown2.percentage = 0
+            // getDatasetMetaInfo(this.table_name).
+            axios.request({
+                            url:"public/getDatasetMetaInfo",
+                            data: {'dataset':this.table_name},
+                            method: 'post',
+                            contentType: 'application/octet-stream',
+                            // dataType: "binary",
+                            responseType:"blob",
+                            params:{},
+                            // onDownloadProgress 配置该属性代表允许为下载处理进度事件
+                            onDownloadProgress: function (progressEvent) {//axios封装的原生获取下载进度的事件，该回调参数progressEvent中包含下载文件的总进度以及当前进度
+                            if (progressEvent.lengthComputable) {
+                                              //属性lengthComputable主要表明总共需要完成的工作量和已经完成的工作是否可以被测量
+                                              //如果lengthComputable为false，就获取不到progressEvent.total和progressEvent.loaded
+                                              let progressBar = Math.round(progressEvent.loaded / progressEvent.total * 100) //实时获取最新下载进度
+                                              if(progressBar >= 99){
+                                                _this.fileDown2.percentage = 99;
+                                                  // this.title = '下载完成，文件正在编译。';
+                                              }else{
+                                                _this.fileDown2.percentage = progressBar;
+                                                  // this.title = '正在下载，请稍等。';
+                                              }
+                              }
+                          }
+              })
+            .then( response =>{
 
 
                 let blob = new Blob([response.data],{ type: 'application/vnd.ms-excel' });
@@ -1126,12 +1150,13 @@ export default {
                     elink.click();
                     URL.revokeObjectURL(elink.href);
                     document.body.removeChild(elink);
+                    _this.fileDown2.percentage =100;
+                    _this.fileDown2.loadDialogStatus = 'success';//关闭弹窗
                 }
-                this.$Spin.hide()
+
 
             })
-            // _this.spinShow1 = false
-            this.$Loading.finish();
+
 
     },
 

@@ -3,32 +3,47 @@
 	<h1 class="my_h1">Single Cell Cluster's Differential Analysis</h1>
 	<div>
 		<Row>
-			<i-form :label-width="120">
-				<i-col span="10">
-					<Form-item label="Data source: ">                                                  
-						<i-select v-model="source" clearable placeholder="Pleace select cell source"  @on-change="changedDataSource"  filterable>        
-							<i-option v-for="(source,index) in data_source_lischangedDiffChartgetScDiffEnricht" :key='index' :value="source.name">{{ source.name }}</i-option>
-						</i-select>
-					</Form-item>
-				</i-col>
-                <i-col span="10">
-					<Form-item label="Contrast group: ">                                                  
-						<i-select  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart"  filterable>        
-							<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
-						</i-select>
-					</Form-item>
-				</i-col>
-			</i-form>
-			
+
+			<Col span="16" >
+			<!-- 差异表达 -->			
+				<Spin size="large" fix v-if="spinShow1"></Spin>
+				<!-- <vue-plotly :autoResize="ifResize" :data="diff_data" :layout="diff_layout" :options="diff_options"/> -->
+				<vue-plotly :autoResize="ifResize" :data="enrichGO_data" :layout="enrichGO_layout" :options="enrichGO_options"/>
+			</col>	
+
+
+			<Col span="8" >
+				<i-form :label-width="120">
+						<Form-item label="Data source: ">                                                  
+							<i-select v-model="source" clearable placeholder="Pleace select cell source"  @on-change="changedDataSource"  filterable>        
+								<i-option v-for="(source,index) in data_source_lischangedDiffChartgetScDiffEnricht" :key='index' :value="source.name">{{ source.name }}</i-option>
+							</i-select>
+						</Form-item>
+						<Form-item label="Contrast group: ">                                                  
+							<i-select  clearable placeholder="Pleace select cluster group"  @on-change="changedDiffChart"  filterable>        
+								<i-option v-for="(group,index) in group_type_list" :key='index' :value="group.name">{{ group.name }}</i-option>
+							</i-select>
+						</Form-item>
+
+						<Form-item label="Absolute Fold Change: ">                                                  
+                            <i-select v-model="foldChange" clearable placeholder="Pleace select change fold"  @on-change="changedFoldChange">        
+                                <i-option v-for="(fc,index) in fold_change" :key='index' :value="fc.value">{{ fc.name }}</i-option>
+                            </i-select>
+                        </Form-item>
+
+                        <Form-item label="P value: ">                                                  
+                            <i-select v-model="Pvalue" clearable placeholder="Pleace select change fold"  @on-change="changedPvalue">        
+                                <i-option v-for="(p,index) in PValue_change" :key='index' :value="p.value">{{ p.name }}</i-option>
+                            </i-select>
+                        </Form-item>
+
+				</i-form>
+			</col> 
         </Row>
  		
-		<Row>					
-			<!-- 差异表达 -->			
-			<Spin size="large" fix v-if="spinShow1"></Spin>
-			<!-- <vue-plotly :autoResize="ifResize" :data="diff_data" :layout="diff_layout" :options="diff_options"/> -->
-			<vue-plotly :autoResize="ifResize" :data="enrichGO_data" :layout="enrichGO_layout" :options="enrichGO_options"/>
+				
+			
 
-		</Row>
 		</Br>
 		
 	</div>
@@ -174,7 +189,7 @@ export default {
 						})
 			
 				}) 
-				alert(_this.data_source_list)
+				// alert(_this.data_source_list)
 				// this.getMarkerChart(this.series,datas[1])
              
            })
@@ -194,6 +209,8 @@ export default {
             this.getContrastGroup(this.series,source)
             
 		},
+
+
 		getContrastGroup(){
 
 			getClusterContrastGroup(this.series,this.source).then(res =>{

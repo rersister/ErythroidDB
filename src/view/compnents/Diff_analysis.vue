@@ -137,7 +137,7 @@ export default {
             Pvalue:0.05,
             fold_change:[
                 {
-                        name:'0',
+                        name:'>=0',
                         value:'0'
                 },
                 {
@@ -478,7 +478,7 @@ export default {
             let _this = this  
 
             _this.contrastsGroup = diffgroup
-            this.getdiff_chart(this.series,diffgroup,_this.foldChange,this.Pvalue)
+            this.getdiff_chart(this.series,diffgroup,this.foldChange,this.Pvalue)
             this.contrastsGroup = diffgroup
             // alert(diffgroup)
             this.mockTableData(this.series,this.currentPage,this.pageSize,diffgroup)
@@ -490,17 +490,11 @@ export default {
             _this.foldChange = fc
             // alert(this.diffgroup)
             this.getdiff_chart(this.series,this.contrastsGroup,_this.foldChange,this.Pvalue)
-            
-            // alert(diffgroup)
-            // this.mockTableData(this.series,this.currentPage,this.pageSize,diffgroup)
-
         },
         changedPvalue(pvalue){
             let _this = this  
             _this.Pvalue = pvalue
             this.getdiff_chart(this.series,this.contrastsGroup,this.foldChange,_this.Pvalue)
-            
-
         },
 
         getDatasetSourceInfo(series){

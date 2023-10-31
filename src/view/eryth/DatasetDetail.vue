@@ -148,12 +148,22 @@
                                             <!-- <Spin  fix :show="spinShow1"></Spin> -->
                                             <Icon type="ios-download-outline"></Icon>
                                             Expression</button>
+                                            <i-progress
+                                            :percent="fileDown.percentage"
+                                            :status="fileDown.loadDialogStatus"
+                                            width="40"
+                                        ></i-progress>
                                     </col>
 
                                     <Col span="8" >
                                         <button class="my_button_download" @click="downloadMetaInfo()">
                                             <Icon type="ios-download-outline"></Icon>
                                         Meta information</button>
+                                        <i-progress
+                                        :percent="fileDown2.percentage"
+                                        :status="fileDown2.loadDialogStatus"
+                                        width="40"
+                                    ></i-progress>
                                     </col>
 
                                 </Row>
@@ -261,7 +271,7 @@ import { getDatasetSequenceType } from '@/api/datasetService'
 import { getDataset,getAllExpreStack,getDatasetGroup,
 getSequenceEchartByTabletype,
 getExpreRange,getDatasetExpression,getDatasetMetaInfo } from '@/api/erythdataservice'
-
+import axios from '@/libs/api.request'
 import {getSampleGroupPageDataset,} from '@/api/erythdataset'
 import DatasetService from "@/view/compnents/DatasetService.vue"
 
@@ -409,7 +419,16 @@ export default {
                                 // },
                             },
                 ],
-                  
+                fileDown: {
+                    loadDialogStatus: false, //弹出框控制的状态
+                    percentage: 0, //进度条的百分比
+                    source: {}, //取消下载时的资源对象
+                },
+                fileDown2: {
+                        loadDialogStatus: false, //弹出框控制的状态
+                        percentage: 0, //进度条的百分比
+                        source: {}, //取消下载时的资源对象
+                },
                 sampleData:[], 
                 source:'', 
                 spinShowSampleSource:true,  
@@ -526,35 +545,43 @@ export default {
 
         downloadExpression() {
             let _this = this
-            var fileName = this.dataset;
-            // const fileUrl = '/path/to/' + fileName; // 文件的URL地址
-            // _this.spinShow1 = true
-            this.$Spin.show({
-                    render: (h) => {
-                        return h('div', [
-                            h('Icon', {
-                                'class': 'demo-spin-icon-load',
-                                props: {
-                                    type: 'ios-loading',
-                                    size: 18
-                                }
-                            }),
-                            h('div', 'Dowloding')
-                        ])
-                    }
-            });
+            _this.fileDown.percentage = 0
 
             var sequencing_type = 'Bulk'
             getDatasetSequenceType(this.dataset).then((res) => {
                 let data = res.data
                 console.log('data:')
                 console.log(data)
-                
                 sequencing_type = data.sequencing_type
                 
             })
 
-            getDatasetExpression(this.dataset).then( response =>{
+            // getDatasetExpression(this.dataset)
+            axios.request({
+                            url:"public/getDatasetExpression",
+                            data: {'dataset':this.dataset},
+                            method: 'post',
+                            contentType: 'application/octet-stream',
+                            // dataType: "binary",
+                            responseType:"blob",
+                            params:{},
+                            // onDownloadProgress 配置该属性代表允许为下载处理进度事件
+                            onDownloadProgress: function (progressEvent) {//axios封装的原生获取下载进度的事件，该回调参数progressEvent中包含下载文件的总进度以及当前进度
+                            if (progressEvent.lengthComputable) {
+                                              //属性lengthComputable主要表明总共需要完成的工作量和已经完成的工作是否可以被测量
+                                              //如果lengthComputable为false，就获取不到progressEvent.total和progressEvent.loaded
+                                              let progressBar = Math.round(progressEvent.loaded / progressEvent.total * 100) //实时获取最新下载进度
+                                              if(progressBar >= 99){
+                                                _this.fileDown.percentage = 99;
+                                                  // this.title = '下载完成，文件正在编译。';
+                                              }else{
+                                                _this.fileDown.percentage = progressBar;
+                                                  // this.title = '正在下载，请稍等。';
+                                              }
+                              }
+                          }
+              })
+            .then( response =>{
 
                 if (sequencing_type.indexOf('Single Cell') > -1) {
                     // alert('is sc ')
@@ -579,9 +606,8 @@ export default {
                         elink.click();
                         URL.revokeObjectURL(elink.href);
                         document.body.removeChild(elink);
+                        
                     }
-
-                    
 
 
                 }else{
@@ -604,14 +630,17 @@ export default {
                         elink.click();
                         URL.revokeObjectURL(elink.href);
                         document.body.removeChild(elink);
+                       
                     }
                 }
-                this.$Spin.hide()
+                
+                //编译文件完成后，进度条展示为100%100
+                _this.fileDown.percentage =100;
+                _this.fileDown.loadDialogStatus = 'success';//关闭弹窗
+
 
                 
             })
-            // _this.spinShow1 = false
-            // this.$Loading.finish();
         },
 
         downloadMetaInfo(){
@@ -620,22 +649,37 @@ export default {
             var fileName = this.dataset;
             // const fileUrl = '/path/to/' + fileName; // 文件的URL地址
             // _this.spinShow1 = true
-            this.$Spin.show({
-                    render: (h) => {
-                        return h('div', [
-                            h('Icon', {
-                                'class': 'demo-spin-icon-load',
-                                props: {
-                                    type: 'ios-loading',
-                                    size: 18
-                                }
-                            }),
-                            h('div', 'Dowloding')
-                        ])
-                    }
-            });
-
-            getDatasetMetaInfo(fileName).then( response =>{
+       
+            // getDatasetMetaInfo(fileName)
+            _this.fileDown2.percentage = 0
+            // getDatasetMetaInfo(this.table_name).
+            axios.request({
+                            url:"public/getDatasetMetaInfo",
+                            data: {'dataset':this.dataset},
+                            method: 'post',
+                            contentType: 'application/octet-stream',
+                            // dataType: "binary",
+                            responseType:"blob",
+                            params:{},
+                            // onDownloadProgress 配置该属性代表允许为下载处理进度事件
+                            onDownloadProgress: function (progressEvent) {//axios封装的原生获取下载进度的事件，该回调参数progressEvent中包含下载文件的总进度以及当前进度
+                            if (progressEvent.lengthComputable) {
+                                              //属性lengthComputable主要表明总共需要完成的工作量和已经完成的工作是否可以被测量
+                                              //如果lengthComputable为false，就获取不到progressEvent.total和progressEvent.loaded
+                                              let progressBar = Math.round(progressEvent.loaded / progressEvent.total * 100) //实时获取最新下载进度
+                                              if(progressBar >= 99){
+                                                _this.fileDown2.percentage = 99;
+                                                  // this.title = '下载完成，文件正在编译。';
+                                              }else{
+                                                _this.fileDown2.percentage = progressBar;
+                                                  // this.title = '正在下载，请稍等。';
+                                              }
+                              }
+                          }
+              })
+            
+            
+            .then( response =>{
 
                 let blob = new Blob([response.data],{ type: 'application/vnd.ms-excel' });
                 //注意一定要和后端协调好返回的数据格式，不然会出现中文乱码问题
@@ -643,6 +687,9 @@ export default {
                 // alert(userfileName)
                 if ('msSaveOrOpenBlob' in navigator) {
                     window.navigator.msSaveOrOpenBlob(blob, userfileName);
+                    //编译文件完成后，进度条展示为100%100
+                    _this.fileDown.percentage =100;
+                    _this.fileDown.loadDialogStatus = 'success';//关闭弹窗
                 } else {
                     const elink = document.createElement('a');
                     elink.download = userfileName;
@@ -652,13 +699,13 @@ export default {
                     elink.click();
                     URL.revokeObjectURL(elink.href);
                     document.body.removeChild(elink);
+                    //编译文件完成后，进度条展示为100%100
+                    
                 }
-                this.$Spin.hide()
-
+                _this.fileDown2.percentage =100;
+                 _this.fileDown2.loadDialogStatus = 'success';//关闭弹窗
+                
             })
-            // _this.spinShow1 = false
-            // this.$Loading.finish();
-
         },
 
         mockTableData(series,currentPage,pageSize){
