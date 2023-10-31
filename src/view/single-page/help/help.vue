@@ -41,7 +41,8 @@
                         <!-- Cell-Cell Communication. -->
                         <li style=" font-size: 14px;"><a href="#CCC">&nbsp;&nbsp;&nbsp;&nbsp;6) Cell-Cell Communication</a></li>
                     <li><a href="#Erythroid"><strong>3. Erythroid Atlas</strong></a></li>
-                    <li><a href="#About"><strong>4. About</strong></a></li>
+                    <li><a href="#Download"><strong>4. Download</strong></a></li>
+                    <li><a href="#About"><strong>5. About</strong></a></li>
                 </div>
             </collapse>
         </ul>
@@ -582,6 +583,64 @@
             
         </div>
 
+
+
+        <br id="Download">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div >
+            <h3 class="h1_title">
+                4. Download
+            </h3>
+            <br>
+            <p class="p_text">
+                Download expression matrix:
+                
+            </p>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_downloadData.png" alt="img"></p>
+            <br>
+            <p class="p_text">
+                At the download module, clicking download expression, you will get the expression the integrated expression matrix;
+                clicking download meta information, you will get the sample meta information about this dataset. 
+            </p>
+
+            <br>
+            <p class="p_text">
+                Download analysis graphs:
+            </p>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_downloadChart.png" alt="img"></p>
+            <br>
+            <p class="p_text">
+               At the results of various analyzes, we provide users with corresponding chart downloads. 
+               Click on the icon "Download plot" in the upper right corner of each analyze chart.
+
+            </p>
+           
+            <br>
+            <p class="p_text">
+                Download results files:
+            </p>
+            <br>
+            <p class="img_c"><img width="80%" src="@/assets/img/help_downloadAnalData.png" alt="img"></p>
+            <br>
+            <p class="p_text">
+                In the bulk RNA-seq data analysis results, we provide users with detailed analysis results files. 
+                Click on the icon "Download Data" in the bottom left corner of each analyze chart.
+                In the single cell RNA-seq data analysis results,the analysis results can be download from the expression (RDS object).
+
+            </p>
+
+        </div>
+
+
+
+
+
         <br id = "About">
         <br>
         <br>
@@ -590,7 +649,7 @@
         <br>
         <div>
             <h3 class="h1_title">
-                4. About 
+                5. About 
             </h3>
             <br>
             <p class="p_text">

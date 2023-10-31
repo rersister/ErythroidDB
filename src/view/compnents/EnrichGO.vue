@@ -71,7 +71,7 @@
                 <Spin size="large" fix v-if="spinShow2"></Spin>  
                 <vue-plotly :autoResize="ifResize" :data="enrichGO_data" :layout="enrichGO_layout" :options="enrichGO_options"/>
             <!-- </div>              -->
-            <Button type="primary" size="large" @click="exportData(1)"><Icon type="ios-download-outline"></Icon>Download Data</Button>
+            <Button type="primary" size="large" @click="exportEnrichData()"><Icon type="ios-download-outline"></Icon>Download Data</Button>
 
         </Row> 
         
@@ -86,7 +86,8 @@
 
 
 <script>
-import {getEnrichData,getdiffGroup,getDatasetGroup,getDatasetSourceInfoData} from '@/api/erythdataservice'
+import {getEnrichData,getdiffGroup,getDatasetGroup,getExportEnrichData,
+    getDatasetSourceInfoData} from '@/api/erythdataservice'
 // import {getAllEnrichData}  from '@/api/erythroidAtlas'
 import VuePlotly from '@statnett/vue-plotly'
 export default {
@@ -321,7 +322,48 @@ export default {
                 _this.Dgrowth_mode = datas.growth_mode
                 
             })
-        }
+        },
+
+        exportEnrichData() {
+            let _this = this
+            this.$Spin.show({
+                    render: (h) => {
+                        return h('div', [
+                            h('Icon', {
+                                'class': 'demo-spin-icon-load',
+                                props: {
+                                    type: 'ios-loading',
+                                    size: 18
+                                }
+                            }),
+                            h('div', 'Dowloding')
+                        ])
+                    }
+            });
+
+            getExportEnrichData(this.series,this.contrGroupOfEnrich,this.goType).then( response =>{
+                let blob = new Blob([response.data],{ type: 'application/vnd.ms-excel' });
+                //如果后台返回文件名称
+                //注意一定要和后端协调好返回的数据格式，不然会出现中文乱码问题
+                var fileName = this.series + '_enrich_data.xls'
+                if ('msSaveOrOpenBlob' in navigator) {
+                    window.navigator.msSaveOrOpenBlob(blob, fileName);
+                } else {
+                    const elink = document.createElement('a');
+                    elink.download = fileName;
+                    elink.style.display = 'none';
+                    elink.href = URL.createObjectURL(blob);
+                    document.body.appendChild(elink);
+                    elink.click();
+                    URL.revokeObjectURL(elink.href);
+                    document.body.removeChild(elink);
+                }
+                this.$Spin.hide()
+
+            })
+            this.$Loading.finish();
+        },
+
     },
     mounted(){
 

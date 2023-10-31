@@ -7,7 +7,34 @@ export const getDataset = dataset => {
 	  data: {'dataset':dataset},
 	  method: 'post',
 	}) 
-  }
+}
+
+
+export const  getPCAData  =dataset => {
+	return axios.request({
+	  url: 'public/getPCAData',
+	  data: {'dataset':dataset},
+	  method: 'post',
+	  contentType: 'application/octet-stream',
+	  responseType:"arraybuffer"
+	}) 
+
+}
+
+export const getExportEnrichData = (series,contrGroupOfEnrich,goType) => {
+	return axios.request({
+
+		url:'public/getExportEnrichData',
+		data:{
+			series: series,
+			diff_group:contrGroupOfEnrich,
+			goType:goType
+		},
+		method: 'post',
+	  contentType: 'application/octet-stream',
+	  responseType:"arraybuffer"
+	})
+}
 
 export const getDatasetExpression =dataset => {
 	return axios.request({
@@ -16,7 +43,7 @@ export const getDatasetExpression =dataset => {
 	  method: 'post',
 	  contentType: 'application/octet-stream',
 	//   dataType: "binary",
-	  responseType:"arraybuffer"
+	  responseType:"arraybuffer",
 	  
 	  //注意 需要规定后台返回文件流格式
 	//   contentType: 'application/json;charset=utf-8',
@@ -443,17 +470,21 @@ export const getScDiffEnrich = (series,group,enrichType)=>{
 	})
 }
 
-export const getDiffData = (series,diff_group) => {
+export const getDiffData = (series,diff_group,foldChange,Pvalue) => {
 	return axios.request({
 
 		url:'public/getDiffData',
 		data:{
 			series: series,
 			diff_group:diff_group,
+			foldChange:foldChange,
+			Pvalue:Pvalue
 		},
 		method:'post',
 	})
 }
+
+
 
 // getEnrichData enrichGroup
 export const getEnrichData = (series,contrGroupOfEnrich,goType) => {

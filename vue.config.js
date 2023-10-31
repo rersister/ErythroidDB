@@ -66,9 +66,16 @@ module.exports = {
 		https: false,
 		
 		// 自动启动浏览器
-		
     open: false,
-    
+
+    // 解决VUE [WDS] DISCONNECTED 错误
+    // Headers: {
+
+    //   'Access-Control-Allow-Origin': '*'
+
+    // },
+    // hotOnly: false,
+    // disableHostCheck: true
 		// proxy: {  不用代理
 
 		// 	"/EryDB/api": {

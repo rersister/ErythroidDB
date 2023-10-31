@@ -144,14 +144,15 @@
                                         <!-- Datase Service 内容 -->
                                     <Col span="8" >
                                                     
-                                                    <button class="my_button_download" @click="downloadExpression()">
-                                                        <!-- <Spin  fix :show="spinShow1"></Spin> -->
-                                                        Expression</button>
+                                        <button class="my_button_download" @click="downloadExpression()">
+                                            <!-- <Spin  fix :show="spinShow1"></Spin> -->
+                                            <Icon type="ios-download-outline"></Icon>
+                                            Expression</button>
                                     </col>
 
                                     <Col span="8" >
                                         <button class="my_button_download" @click="downloadMetaInfo()">
-                                            <!-- <Spin  fix :show="spinShow1"></Spin> -->
+                                            <Icon type="ios-download-outline"></Icon>
                                         Meta information</button>
                                     </col>
 
@@ -556,9 +557,16 @@ export default {
             getDatasetExpression(this.dataset).then( response =>{
 
                 if (sequencing_type.indexOf('Single Cell') > -1) {
-                    alert('is sc ')
-                    alert(this.dataset)
+                    // alert('is sc ')
+                    // alert(this.dataset)
                     var user_fileName = this.dataset + '.sce.rds'
+                    if (this.dataset.indexOf('FLB000005') > -1){
+                      // alert('change')
+                      // this.table_name = 'all_dr_ep_sc'
+                      var user_fileName = 'FLB000005.h5ad'
+                      // this.currentAnalIndex='Diffanal'
+                    }
+
                     let blob = new Blob([response.data],{ type: 'application/octet-stream' });
                     if ('msSaveOrOpenBlob' in navigator) {
                         window.navigator.msSaveOrOpenBlob(blob, user_fileName);
@@ -572,6 +580,8 @@ export default {
                         URL.revokeObjectURL(elink.href);
                         document.body.removeChild(elink);
                     }
+
+                    
 
 
                 }else{

@@ -11,7 +11,7 @@
 		<!-- 相似性分析 MDS 聚类图-->
 		<Spin size="large" fix v-if="spinShow3"></Spin>
 		<vue-plotly :data="sim_data" :layout="sim_layout" :options="sim_options"/>
-        <Button type="primary" size="large" @click="exportData(1)"><Icon type="ios-download-outline"></Icon>Download Data</Button>
+        <Button type="primary" size="large" @click="exportPCAData()"><Icon type="ios-download-outline"></Icon>Download Data</Button>
 
 	</Row>
  
@@ -23,7 +23,7 @@
 
 <script>
 import VuePlotly from '@statnett/vue-plotly'
-import {getsimData,getDatasetSourceInfoData} from '@/api/erythdataservice'
+import {getsimData,getDatasetSourceInfoData,getPCAData} from '@/api/erythdataservice'
 export default {
 	name:"PCA",
 	components:{
@@ -119,7 +119,46 @@ export default {
                 _this.Dgrowth_mode = datas.growth_mode
                 
             })
-        }
+        },
+
+        exportPCAData() {
+            let _this = this
+            this.$Spin.show({
+                    render: (h) => {
+                        return h('div', [
+                            h('Icon', {
+                                'class': 'demo-spin-icon-load',
+                                props: {
+                                    type: 'ios-loading',
+                                    size: 18
+                                }
+                            }),
+                            h('div', 'Dowloding')
+                        ])
+                    }
+            });
+            getPCAData(this.series).then( response =>{
+                let blob = new Blob([response.data],{ type: 'application/vnd.ms-excel' });
+                //如果后台返回文件名称
+                //注意一定要和后端协调好返回的数据格式，不然会出现中文乱码问题
+                var fileName = this.series + '_pca_data.xls'
+                if ('msSaveOrOpenBlob' in navigator) {
+                    window.navigator.msSaveOrOpenBlob(blob, fileName);
+                } else {
+                    const elink = document.createElement('a');
+                    elink.download = fileName;
+                    elink.style.display = 'none';
+                    elink.href = URL.createObjectURL(blob);
+                    document.body.appendChild(elink);
+                    elink.click();
+                    URL.revokeObjectURL(elink.href);
+                    document.body.removeChild(elink);
+                }
+                this.$Spin.hide()
+
+            })
+            this.$Loading.finish();
+        },
 	},
 	
 	mounted (){

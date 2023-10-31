@@ -186,17 +186,30 @@
       <br>
         <Row >
           
-          <Col span="8" >                       
-            <button class="my_button_download" @click="downloadAtlasExpression()">
-                <!-- <Spin  fix :show="spinShow1"></Spin> -->
-                Expression</button>
-          
+          <Col span="8" > 
+            <!-- <div style="text-align: center">                     -->
+              <button class="my_button_download" @click="downloadAtlasExpression()">
+
+                  <Icon type="ios-download-outline"></Icon>
+                  Expression</button>
+                  <i-progress
+                    :percent="fileDown.percentage"
+                    :status="fileDown.loadDialogStatus"
+                    width="40"
+                  ></i-progress>
+            <!-- </div>       -->
           </col>    
           
           <Col span="8" >
             <button class="my_button_download" @click="downloadAtlasMetaInfo()">
                 <!-- <Spin  fix :show="spinShow1"></Spin> -->
+              <Icon type="ios-download-outline"></Icon>    
             Meta information</button>
+              <i-progress
+                      :percent="fileDown2.percentage"
+                      :status="fileDown2.loadDialogStatus"
+                      width="40"
+              ></i-progress>
           </col>
 
         </Row>
@@ -288,6 +301,7 @@ import Diffanal from '@/view/compnents/sc_all_Diffanal.vue'
 import ClusterDiffTrajectory from '@/view/compnents/sc_all_ClusterDiffTrajectory.vue'
 import ScInterraction from '@/view/compnents/all_ScInterraction.vue'
 import ScCommunication from '@/view/compnents/all_ScCommunication.vue'
+import axios from '@/libs/api.request'
 
 
 
@@ -538,6 +552,18 @@ export default {
                            
                         
       ],
+      
+      fileDown: {
+              loadDialogStatus: false, //弹出框控制的状态
+              percentage: 0, //进度条的百分比
+              source: {}, //取消下载时的资源对象
+      },
+      fileDown2: {
+              loadDialogStatus: false, //弹出框控制的状态
+              percentage: 0, //进度条的百分比
+              source: {}, //取消下载时的资源对象
+      },
+
       ifcellAnno: false,
       anal_value:'',
       Orga_val:'hs',
@@ -894,145 +920,170 @@ export default {
 
 
     },
-
+    getRandom(min, max) { //根据最小值和最大值产生一个随机数
+      return Math.round(Math.random() * (max - min) + min);
+    },
     downloadAtlasExpression() {
 
             let _this = this
-            // alert(this.table_name)
+            _this.fileDown.percentage = 0
 
-            // const fileUrl = '/path/to/' + fileName; // 文件的URL地址
-            // _this.spinShow1 = true
-            this.$Spin.show({
-                    render: (h) => {
-                        return h('div', [
-                            h('Icon', {
-                                'class': 'demo-spin-icon-load',
-                                props: {
-                                    type: 'ios-loading',
-                                    size: 18
-                                }
-                            }),
-                            h('div', 'Dowloding')
-                        ])
-                    }
-            });
-
+            // single cell 
             if (this.table_name.indexOf('GSE152982') > -1 || this.table_name.indexOf('CRA002445') > -1 ||  this.table_name.indexOf('all_hs_ep_sc') > -1 ){
-                    alert(this.table_name)
+            
+              alert(this.table_name)
                     // this.table_name = 'all_dr_ep_sc'
-                    var user_fileName = this.table_name + '.sce.rds'
+              // var user_fileName = this.table_name + '.h5ad'
+              var user_fileName = this.table_name + '.sce.rds'
+              if (this.table_name.indexOf('GSE152982') > -1){
 
-                    // alert(test)
-                    // this.currentAnalIndex='Diffanal'
-                    // let a = document.createElement('a');
-                    // a.href = `/EryDataset/`+fileName;
-                    if (this.table_name.indexOf('GSE152982') > -1){
-                      // alert('change')
-                      // this.table_name = 'all_dr_ep_sc'
-                      var user_fileName = 'all_dr_ep_sc' + '.sce.rds'
-                      // this.currentAnalIndex='Diffanal'
-                    }
+                var user_fileName = 'all_dr_ep_sc' + '.sce.rds'
+                // this.currentAnalIndex='Diffanal'
+              }
 
-                    // CRA002445
-                    if (this.table_name.indexOf('CRA002445') > -1){
-                      // alert('change')
-                      // this.table_name = 'all_dr_ep_sc'
-                      var user_fileName = 'all_mm_ep_sc' + '.sce.rds'
-                      // this.currentAnalIndex='Diffanal'
-                    }
-                    // 前端提供下载文件不超过  2 G 
-                    // a.download = user_fileName
-                    // a.click();
-                    // this.$Spin.hide()
+              // CRA002445
+              if (this.table_name.indexOf('CRA002445') > -1){
+                // alert('change')
+                // this.table_name = 'all_dr_ep_sc'
+                var user_fileName = 'all_mm_ep_sc' + '.sce.rds'
+                // this.currentAnalIndex='Diffanal'
+              }
+              // 前端提供下载文件不超过  2 G 
+              // a.download = user_fileName
+              // a.click();
+              // this.$Spin.hide()
                     
-                    getDatasetExpression(this.table_name).then( response =>{
-                      alert('back data')
-                      let blob = new Blob([response.data],{ type: 'application/octet-stream' });
-                      // if (!fileName) {
-                      //如果后台返回文件名称
-                      //注意一定要和后端协调好返回的数据格式，不然会出现中文乱码问题
-                      // fileName = response.headers['content-disposition'].split('filename=').pop();
-
-                      // }
-                      
-                      // var fileName = this.table_name + '_norm_expression.xls'
-                      if ('msSaveOrOpenBlob' in navigator) {
-                          window.navigator.msSaveOrOpenBlob(blob, user_fileName);
-                      } else {
-                          const elink = document.createElement('a');
-                          elink.download = user_fileName;
-                          elink.style.display = 'none';
-                          elink.href = URL.createObjectURL(blob);
-                          document.body.appendChild(elink);
-                          elink.click();
-                          URL.revokeObjectURL(elink.href);
-                          document.body.removeChild(elink);
-                      }
-                      this.$Spin.hide()
-
-              })
-              // _this.spinShow1 = false
-                this.$Loading.finish();
-
-            }else{
-
-              getDatasetExpression(this.table_name).then( response =>{
-                let blob = new Blob([response.data],{ type: 'application/vnd.ms-excel' });
-                // if (!fileName) {
-                //如果后台返回文件名称
-                //注意一定要和后端协调好返回的数据格式，不然会出现中文乱码问题
-                // fileName = response.headers['content-disposition'].split('filename=').pop();
-
-                // }
-                
-                var fileName = this.table_name + '_norm_expression.xls'
-                if ('msSaveOrOpenBlob' in navigator) {
-                    window.navigator.msSaveOrOpenBlob(blob, fileName);
-                } else {
-                    const elink = document.createElement('a');
-                    elink.download = fileName;
-                    elink.style.display = 'none';
-                    elink.href = URL.createObjectURL(blob);
-                    document.body.appendChild(elink);
-                    elink.click();
-                    URL.revokeObjectURL(elink.href);
-                    document.body.removeChild(elink);
-                }
-                this.$Spin.hide()
-
-            })
-            // _this.spinShow1 = false
-              this.$Loading.finish();
-
-            }
+                    
+              axios.request({
+                            url:"public/getDatasetExpression",
+                            data: {'dataset':this.table_name},
+                            method: 'post',
+                            contentType: 'application/octet-stream',
+                            // dataType: "binary",
+                            // responseType:"arraybuffer",
+                            responseType: 'blob',
+                            params:{},
+                            // onDownloadProgress 配置该属性代表允许为下载处理进度事件
+                            onDownloadProgress: function (progressEvent) {//axios封装的原生获取下载进度的事件，该回调参数progressEvent中包含下载文件的总进度以及当前进度
+                            if (progressEvent.lengthComputable) {
+                                              //属性lengthComputable主要表明总共需要完成的工作量和已经完成的工作是否可以被测量
+                                              //如果lengthComputable为false，就获取不到progressEvent.total和progressEvent.loaded
+                                              let progressBar = Math.round(progressEvent.loaded / progressEvent.total * 100) //实时获取最新下载进度
+                                              if(progressBar >= 99){
+                                                _this.fileDown.percentage = 99;
+                                                  // this.title = '下载完成，文件正在编译。';
+                                              }else{
+                                                _this.fileDown.percentage = progressBar;
+                                                  // this.title = '正在下载，请稍等。';
+                                              }
 
 
+                              }
+                          }
+                    })
+                    .then(response =>{
+                          // alert('back data')
+                          const content = response.data;
+                          // alert(content.size)
+                          // if (content.size == 0) {
+                          //   // this.loadClose();
+                          //   this.fileDown.loadDialogStatus = 'wrong';//关闭弹窗
+                          //   return;
+                          // }
+
+                          let blob = new Blob([response.data],{ type: 'application/octet-stream' });
+                          // if (!fileName) {
+                          //如果后台返回文件名称
+                          //注意一定要和后端协调好返回的数据格式，不然会出现中文乱码问题
+                          // fileName = response.headers['content-disposition'].split('filename=').pop();
+
+                          // }
+                          
+                          // var fileName = this.table_name + '_norm_expression.xls'
+                          if ('msSaveOrOpenBlob' in navigator) {
+                              window.navigator.msSaveOrOpenBlob(blob, user_fileName);
+                          } else {
+                              
+
+                              const elink = document.createElement('a');
+                              elink.download = user_fileName;
+                              elink.style.display = 'none';
+                              elink.href = URL.createObjectURL(blob);
+                              document.body.appendChild(elink);
+                              elink.click();
+                              URL.revokeObjectURL(elink.href);
+                              document.body.removeChild(elink);
+                              //编译文件完成后，进度条展示为100%100
+                              this.fileDown.percentage =100;
+                              this.fileDown.loadDialogStatus = 'success';//关闭弹窗
+                          }
+                    })
 
             
+            
+            
+            }else{
+              // bulk
+              alert(this.table_name)
+              alert('bulk data expression')
+              axios.request({
+                            url:"public/getDatasetExpression",
+                            data: {'dataset':this.table_name},
+                            method: 'post',
+                            contentType: 'application/octet-stream',
+                            // dataType: "binary",
+                            responseType:"arraybuffer",
+                            params:{},
+                            // onDownloadProgress 配置该属性代表允许为下载处理进度事件
+                            onDownloadProgress: function (progressEvent) {//axios封装的原生获取下载进度的事件，该回调参数progressEvent中包含下载文件的总进度以及当前进度
+                            if (progressEvent.lengthComputable) {
+                                              //属性lengthComputable主要表明总共需要完成的工作量和已经完成的工作是否可以被测量
+                                              //如果lengthComputable为false，就获取不到progressEvent.total和progressEvent.loaded
+                                              let progressBar = Math.round(progressEvent.loaded / progressEvent.total * 100) //实时获取最新下载进度
+                                              if(progressBar >= 99){
+                                                _this.fileDown.percentage = 99;
+                                                  // this.title = '下载完成，文件正在编译。';
+                                              }else{
+                                                _this.fileDown.percentage = progressBar;
+                                                  // this.title = '正在下载，请稍等。';
+                                              }
+                              }
+                          }
+              })
+              .then( response =>{
+                  let blob = new Blob([response.data],{ type: 'application/vnd.ms-excel' });
+                  alert('I am back ')
+                  // if (!fileName) {
+                  //如果后台返回文件名称
+                  //注意一定要和后端协调好返回的数据格式，不然会出现中文乱码问题
+                  // fileName = response.headers['content-disposition'].split('filename=').pop();
 
+                  // }
+                  
+                  var fileName = this.table_name + '_norm_expression.xls'
+                  if ('msSaveOrOpenBlob' in navigator) {
+                      window.navigator.msSaveOrOpenBlob(blob, fileName);
+                  } else {
+                      const elink = document.createElement('a');
+                      elink.download = fileName;
+                      elink.style.display = 'none';
+                      elink.href = URL.createObjectURL(blob);
+                      document.body.appendChild(elink);
+                      elink.click();
+                      URL.revokeObjectURL(elink.href);
+                      document.body.removeChild(elink);
+                       //编译文件完成后，进度条展示为100%100
+                      this.fileDown.percentage =100;
+                      this.fileDown.loadDialogStatus = 'success';//关闭弹窗
 
+                  }
+
+            })
+            }
     },
 
     downloadAtlasMetaInfo(){
-      let _this = this
-            // alert(this.table_name)
-
-            // const fileUrl = '/path/to/' + fileName; // 文件的URL地址
-            // _this.spinShow1 = true
-            this.$Spin.show({
-                    render: (h) => {
-                        return h('div', [
-                            h('Icon', {
-                                'class': 'demo-spin-icon-load',
-                                props: {
-                                    type: 'ios-loading',
-                                    size: 18
-                                }
-                            }),
-                            h('div', 'Dowloding')
-                        ])
-                    }
-            });
+            let _this = this
 
             getDatasetMetaInfo(this.table_name).then( response =>{
 
@@ -1160,7 +1211,9 @@ export default {
     },
     changeOrgaType($value){
       // alert($value)
-      var _this = this
+      // var _this = this
+      let _this = this
+      _this.fileDown.percentage = 0
       this.orga = $value
       this.currentAnalIndex = ''
       if(this.orga != "" & this.curentSequnceType != "" ){
@@ -1279,6 +1332,8 @@ export default {
     },
 
     changeExperimentType($value){
+      let _this = this
+      _this.fileDown.percentage = 0
       this.exper = $value
 
       if(this.orga != "" & this.curentSequnceType != "" ){
@@ -1306,6 +1361,7 @@ export default {
       // alert($value)
       let _this = this
       _this.curentSequnceType = $value
+       _this.fileDown.percentage = 0
       this.currentAnalIndex = ''
       // alert(_this.curentSequnceType)
       if(this.orga != "" & _this.curentSequnceType != "" ){
