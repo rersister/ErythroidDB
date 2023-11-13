@@ -363,7 +363,6 @@ export default {
                 },
                 InputKeyName:'',
                 active:'',
-                
                 search_placeholder:'GATA1/Bone Marrow/GSE102182/Homo sapiens'
             }
         },
@@ -428,10 +427,6 @@ export default {
         searchDataSetByKeyName(InputKeyName){
             let _this = this
             _this.InputKeyName = InputKeyName
-            // 输送 的是 value
-            // alert(InputKeyName)
-           
-
         },
 
         searchByKeyWord(){

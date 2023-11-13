@@ -61,64 +61,8 @@
         </div> -->
 
         </div>
-
-        <!-- <div class="row_choice">
-          <span>Cell source:</span>
-          <RadioGroup
-            class="myOption"
-            @on-change="changeDevelopmentType($event)"
-          >
-            <Radio
-              class="myOption"
-              v-for="(item, i) in CellSourceList"
-              :label="item.value"
-              :key="i"
-            >
-              <span class="myOption">{{ item.label }}</span>
-            </Radio>
-          </RadioGroup>
-        </div> -->
-
-        <!-- <div class="row_choice">
-              <a href="javascript:void(0)">
-                Dataset:
-                <Icon type="ios-arrow-down"></Icon>
-              </a>
-              <!-- <Select v-model="Datase2" style="width:200px">
-                <Option
-                  v-for="item in ifCompareList"
-                  :value="item.value"
-                  :key="item.value"
-                  >{{ item.label }}</Option
-                >
-              </Select> 
-              <Select v-model="selectList" multiple style="width:400px">
-                <Option
-                  v-for="(item, i) in datasetsTypeSource"
-                  :value="item.dataset_id"
-                  :key="i"
-                  >{{ item.dataset_id }}</Option
-                >
-              </Select>
-        </div> -->
-
-        <!-- Whether to compare data sets -->
-        <!-- <div class="row_choice">
-          <span>Whether to compare datasets?</span>
-          <RadioGroup class="myOption" @on-change="if2compare($event)">
-            <Radio
-              class="myOption"
-              v-for="item in ifCompareList"
-              :label="item.value"
-              :key="item.value"
-            >
-              <span class="myOption">{{ item.label }}</span>
-            </Radio>
-          </RadioGroup>
-        </div> -->
-        
         <div>
-        
+
         </div>
       
       
@@ -418,7 +362,7 @@ export default {
           fixed: 'left',
         },
         {
-          title: 'Dataset',
+          title: 'Dataset ID',
           key:'EryID',
           // key: 'dataset_id',
           filter: {
@@ -673,7 +617,7 @@ export default {
       totalRow: 400,
       sgroupCols: [
         {
-          title: 'Dataset',
+          title: 'Dataset ID',
           // key: 'gid',
           filter: {
             type: 'Input',
@@ -930,7 +874,7 @@ export default {
             // single cell 
             if (this.table_name.indexOf('GSE152982') > -1 || this.table_name.indexOf('CRA002445') > -1 ||  this.table_name.indexOf('all_hs_ep_sc') > -1 ){
             
-              alert(this.table_name)
+              // alert(this.table_name)
                     // this.table_name = 'all_dr_ep_sc'
               // var user_fileName = this.table_name + '.h5ad'
               var user_fileName = this.table_name + '.sce.rds'
@@ -1051,7 +995,7 @@ export default {
               })
               .then( response =>{
                   let blob = new Blob([response.data],{ type: 'application/vnd.ms-excel' });
-                  alert('I am back ')
+                  // alert('I am back ')
                   // if (!fileName) {
                   //如果后台返回文件名称
                   //注意一定要和后端协调好返回的数据格式，不然会出现中文乱码问题
@@ -1209,11 +1153,7 @@ export default {
 
     },
 
-    onSearch_Allsample() {
-      // 根据筛选输入框的值进行筛选
 
-
-    },
 
     handleSizeChange(val) {
       this.pageSize = val

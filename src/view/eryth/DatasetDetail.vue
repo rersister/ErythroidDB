@@ -14,7 +14,7 @@
         <Row class='detail_style'>  
             <Col>   
                     <Row>
-                        <Col span="5"><strong>Dataset:</strong></Col>
+                        <Col span="5"><strong>Dataset ID:</strong></Col>
                         <Col span="19"><a :href="getSeriHref()" target="_blank">{{EryID}}</a></Col>                         
                     </Row>
                     <Row>

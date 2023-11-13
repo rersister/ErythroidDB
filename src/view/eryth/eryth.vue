@@ -22,10 +22,22 @@
           
           <!-- 用表格展示 根据细胞分析搜索的数据集 -->
           <Row>
-            <h1 class='h1_title' >Datasets Include Cells of  {{cell_name}}
+            <!--  {{cell_name}} -->
+            <h1 class='h1_title' >Datasets include Cells of 
               <!-- <i-button  shape="circle" icon="ios-search" @click="changedCellType"></i-button> -->
               <!-- <i-button class="my_reset_button"  shape="circle"  @click="resetCellType">Reset</i-button> -->
+              <i-select 
+                        enter-button="Search" 
+                        style="width:20%"  
+                        v-model=InputKeyName
+                        @on-search="searchDataSetByKeyName($event)"  
+                        :placeholder="search_placeholder"  
+                        @on-change="searchDataSetByKeyName($event)"  filterable>        
+							  <i-option v-for="(keyWord,index) in cell_type_list" :key='index' :value="keyWord.name">{{ keyWord.name }}</i-option>
+					    </i-select>
               <Button type="primary"  @click="resetCellType" >Reset</Button>
+
+
            </h1>
             <!-- <Col span='12'>
                     <i-select :model.sync="cell_name" placeholder="Select cell source" clearable style="width:80%" @on-change='changedCellType'>
@@ -447,6 +459,7 @@ export default {
           {'name':'RBC',
           'full_name':'Red Blood Cell '}
         ],
+        InputKeyName:'',
         search:'',
         current_cellname:'Hematopoietic Stem cells',
         current_cell_anno:'',
@@ -466,38 +479,13 @@ export default {
        
         tAdatasetTypeSourceColumns:[
           {
-            title: 'Dataset',
+            title: 'Dataset ID',
             // key: 'EryID',
             key:'EryID',
             filter: {
               type: 'Input'
             },
-            fixed: 'left',
-            // render: (h, params) => {            
-            //   if (params.row.dataset_id.indexOf("GSE") > -1){
-            //       return h('div', [
-            //       h('a', {                               
-            //             attrs:{                              
-            //               href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id,
-            //               target:'_blank',  
-            //             },    
-            //         },params.row.dataset_id)
-            //       ])
-            //   }else{
-            //     return h('div',params.row.dataset_id)
-              
-            //   }     
-
-            //   // return h('div', [
-            //   //   h('a', {                               
-            //   //         attrs:{                              
-            //   //           href:'https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc='+params.row.dataset_id
-
-            //   //         },    
-            //   //     },params.row.dataset_id)
-            //   //   ])
-
-            // }
+            fixed: 'left'
           },
           //organism
           {
@@ -531,16 +519,6 @@ export default {
               },
               className:'table_Orga'
           },
-          // {
-          //     title: 'Development Type',
-          //     key: 'development_type',
-          //    width:'130',
-          //     filter: {
-          //         type: 'Select',
-          //         option: development_type
-          //     },
-          // },
-        
           {
             title: 'Title',
             key: 'title',
@@ -549,15 +527,6 @@ export default {
             }
 
           },
-          // {
-          //   title: 'Omics Data Type',
-          //   key: 'experiment_type',
-          //   width:'120',
-          //   filter: {
-          //         type: 'Select',
-          //         option: experiment_type
-          //     },
-          // },
           {
             title: 'Omics type',
             key: 'sequence_type',
@@ -612,7 +581,14 @@ export default {
           })
 
       },
-     
+
+      searchDataSetByKeyName(InputKeyName){
+            let _this = this
+            _this.InputKeyName = InputKeyName
+            _this.cell_name = InputKeyName
+            this.mockTableDataTypeSourceByCell(_this.cell_name)
+      },
+
       mockTableData () {
         var _this = this;      
         _this.spinShow = true, 
@@ -688,7 +664,9 @@ export default {
       },
 
       resetCellType(){
+
         this.cell_name = 'All'
+        this.InputKeyName = ''
         this.mockTableDataTypeSourceByCell(this.cell_name)
       },
       changePge(){
@@ -821,10 +799,11 @@ export default {
           if (typeof name === 'undefined' ){
             // 未选择值
             _this.cell_name = 'All'
+            _this.InputKeyName = 'All'
             // alert(this.cell_name)
           }else{
             _this.cell_name = name
-            
+            _this.InputKeyName =  name
           }
 
          

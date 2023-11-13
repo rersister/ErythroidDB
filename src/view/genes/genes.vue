@@ -13,22 +13,27 @@
             
             <Row>
 
+              <!-- 基因词云 -->
               <Col span="18" >
-              <div ref="chart2" style="width: 800px;height:600px;margin:0 auto;"> </div> 
-              <!-- <div id="chart2" style="width:100%;height:300%; text-aglign:center"> -->
+                  <div ref="chart2" style="width: 800px;height:600px;margin:0 auto;"> </div> 
               </Col>
               
+              <!-- 基因权重表格  -->
               <!-- offset="2" -->
               <Col span="5"  style="padding-top: 40px;">
+                <!-- 权重表搜索框 -->
+                <!-- 数据查询分子名 -->
+                <span>Input gene symbol:</span>
+                <Input search enter-button="Search"  @on-search="searchtTableGeneScorePageByKeyName($event)" :placeholder="search_placeholder"/>  
+                <br>
                 <!-- 基因排序表格   :data="" -->
-                <!-- @on-row-click="intoDataSet" -->
                 <Table id="mytable" 
                         :columns="tTableGeneScore"
                         :data="geneScoreData" 
                         @on-row-click="getEryGene2Dataset"
                         ref="table">
                 </Table>
-
+                <!-- 分页导航 -->
                 <div style="margin: 10px;overflow: hidden">               
                     <div style="float: right;">
                         <Page :total="totalEryGene"  
@@ -45,36 +50,25 @@
               
             </Row>
            
-              <!-- <Spin size="large" fix v-if="spinShowTypeSource"></Spin> -->
-              <!--  show-elevator  -->
-              <!-- <div style="margin: 10px;overflow: hidden">               
-                    <div style="float: right;">
-                        <Page :total="totalTypeSource"  
-                        :current="currentPageTypeSource" 
-                        :page-size="pageSizeTypeSource" 
-                       
-                        show-total
-                        show-sizer
-                        @on-change="handleCurrentChangeTypeSource" 
-                        @on-page-size-change="handleSizeChangeTypeSource">
-                        </Page>                   
-                    </div>
-              </div>   -->
           
-
-            <!-- <div id="cell_type_show_view" style="width:100%;height:300%; text-aglign:center"> -->
-            <!-- <div>
-              <highcharts class='bubble_container'  :options='genes_Chart_bubble'></highcharts>  
-            </div> -->
-         
-          
-          <!-- 用表格展示 根据细胞分析搜索的数据集 -->
           </br>  
        
+          <!-- 用表格展示 根据搜索得到的数据集 -->
           <Row>
-            <h1 class='h1_title' >Datasets Related to  {{cell_name}}
+            <!--  {{cell_name}} -->
+            <h1 class='h1_title' >Datasets related to 
               <!-- <i-button  shape="circle" icon="ios-search" @click="changedGene"></i-button> -->
               <!-- <i-button  class="my_reset_button" shape="circle"  @click="resetCellType">Reset</i-button> -->
+              <i-select 
+                        enter-button="Search" 
+                        style="width:20%"  
+                        v-model=InputKeyName
+                        @on-search="searchDataSetByKeyName($event)"  
+                        :placeholder="search_placeholder"  
+                        @on-change="searchDataSetByKeyName($event)"  filterable>        
+							  <i-option v-for="(keyWord,index) in my_gene_allList" :key='index' :value="keyWord.name">{{ keyWord.name }}</i-option>
+					    </i-select>
+
               <Button type="primary"  @click="resetCellType" >Reset</Button>
                     
             </h1>
@@ -134,7 +128,9 @@ import * as echarts from "echarts";
 import "echarts-wordcloud/dist/echarts-wordcloud";
 import "echarts-wordcloud/dist/echarts-wordcloud.min"; 
 import { checkStatus } from '@/libs/util'
-import { getDataset,getDatasetTypeSourceByGene,getDatasetTypeSource,searchDataset,searchDatasetTypeSource,getDatasetGene,getEryGeneScore } from '@/api/erythdataset'
+import { getDataset,getDatasetTypeSourceByGene,getDatasetTypeSource,searchDataset,
+  searchDatasetTypeSource,
+  getDatasetGene,getEryGeneScore,getEryGeneScoreByKeyName } from '@/api/erythdataset'
 import FilterTableForAllDateSet from '../compnents/FilterTableForAllDateSet';
 import { type } from 'os';
 const sample_numbers = {
@@ -337,7 +333,7 @@ export default {
     data(){
       return {
         //定义需要展示的词语和数值（数值越大，字体会越大）
-          worddata:[
+        worddata:[
                         {
                             name: "Java",
                             value: 2300
@@ -348,7 +344,9 @@ export default {
                         },
                 
             ],
+        search_placeholder:'Please input gene',
         geneScoreData:[],
+        my_gene_allList:[],
         genes_Chart_bubble:{},
         cell_type_list:[
 
@@ -396,10 +394,10 @@ export default {
         currentPageEryGene:1,
         pageSize: 10,
         pageSizeTypeSource:10,
-        pageSizeEryGene:8,
+        pageSizeEryGene:6,
         cell_name:'All',
         total: 400,
-       
+        InputKeyName:'',
         datasets: [],
         datasetsTypeSource:[],
         datasetname :'Development',
@@ -431,7 +429,7 @@ export default {
         
         tAdatasetTypeSourceColumns:[
           {
-            title: 'Dataset',
+            title: 'Dataset ID',
             // key: 'dataset_id',
             key:'EryID',
             filter: {
@@ -590,10 +588,11 @@ export default {
             if (typeof name === 'undefined' ){
               // 未选择值
               _this.cell_name = 'All'
+              _this.InputKeyName = ''
               // alert(this.cell_name)
             }else{
               _this.cell_name = name
-              
+              _this.InputKeyName = name
 
             }
             _this.current_cellname= name
@@ -609,7 +608,7 @@ export default {
               var data = res.data
               var color =[]
                 
-              var my_wdata = []
+              var my_wdata = []  //所有基因
               
               var gData = data.gData
               var mData =data.mData
@@ -669,6 +668,7 @@ export default {
                                   }]
 
               }
+              this.my_gene_allList = my_wdata
               myChart2.setOption(myoption)
         })
           
@@ -686,8 +686,31 @@ export default {
             _this.totalEryGene = datas.total;
 
         })
-       
+      },
 
+      searchtTableGeneScorePageByKeyName($event){
+        let _this = this;      
+
+        if( "" == $event ){
+            // _this.inputGenePat = ''
+        this.$Message.info('Please input gene symbol', 10);
+            
+            this.mockTableEryGeneScore()
+            return
+
+        } 
+        _this.spinShowTypeSource = true, 
+        // _this.inputGenePat = $event
+        getEryGeneScoreByKeyName($event,'ery_gene_score',this.currentPageEryGene,this.pageSizeEryGene)
+        .then( res=>{
+                              
+            let datas = res.data
+            console.info(datas.list)
+            _this.geneScoreData = datas.list                  
+            _this.totalEryGene = datas.total;
+            // alert(datas.total)
+           
+        })
       },
 
       getEryGene2Dataset(data, index, event) {
@@ -695,6 +718,7 @@ export default {
         let _this = this
         _this.current_cellname= data.gene
         _this.cell_name = data.gene
+        _this.InputKeyName = data.gene
         this.mockTableDataTypeSourceByGene(data.gene)
 
       },
@@ -774,9 +798,18 @@ export default {
 
       },
       resetCellType(){
-        this.cell_name = 'All'
+        // this.cell_name = 'All'
+        let _this = this
+        _this.InputKeyName = ''
+        _this.cell_name = 'All'
         this.mockTableDataTypeSourceByGene(this.cell_name)
         
+      },
+      searchDataSetByKeyName(InputKeyName){
+            let _this = this
+            _this.InputKeyName = InputKeyName
+            _this.cell_name = InputKeyName
+            this.mockTableDataTypeSourceByGene(_this.cell_name)
       },
 
       changePge(){

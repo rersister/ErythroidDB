@@ -16,21 +16,18 @@
 
 			<Col span="8" >
 				<i-form :label-width="120">
-					<!-- <i-col span="6"> -->
 						<Form-item label="Plot size: ">                                                  
 							<i-select  v-model="plotSize" :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedPlotSize"  filterable>        
 								<i-option v-for="(value,index) in plotSize_list" :key='index' :value="value.name">{{ value.name }}</i-option>
 							</i-select>
 						</Form-item>
-					<!-- </i-col> -->
-					<!-- <i-col span="6"> -->
+					
 						<Form-item label="View by: ">                                                  
 							<i-select  v-model="if3D" :model.sync="showByGroup" clearable placeholder="Select"  @on-change="changedViewMethod"  filterable>        
 								<i-option v-for="(method,index) in viewMethod_list" :key='index' :value="method.name">{{ method.name }}</i-option>
 							</i-select>
 						</Form-item>
-					<!-- </i-col> -->
-					<!-- <i-col span="6"> -->
+					
 						<Form-item label="Visual method: ">                                                  
 							<i-select v-model='VisaulMethod' :model.sync="showByGroup" clearable placeholder="Select view method"  @on-change="changedVisaulMethod"  filterable>        
 								<i-option v-for="(method,index) in VisaulMethod_list" :key='index' :value="method.name">{{ method.name }}</i-option>
@@ -487,9 +484,11 @@ export default {
 		},
 		changedShowSample(sample){
 			let _this = this  
+			
 			_this.sample= sample
             //this.getTsneCol(this.series,source)
 			// this.getGroupSampleData(this.series,source)
+			alert(this.sample)
             this.getTsneShow()
 
 		},

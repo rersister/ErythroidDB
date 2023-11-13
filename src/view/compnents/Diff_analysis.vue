@@ -47,13 +47,6 @@
             <Col span="12">
                 <!-- 数据查询分子名 -->
                 <span>Input gene symbol:</span>
-                
-                <!-- <i-select style="width:80%"
-                                v-model=specif_name   
-                                @on-change="search_value($event)"  filterable>        
-							    <i-option v-for="(value,index) in keyWords_list" :key='index' :value="value.name">{{ value.name }}</i-option>
-				</i-select>
-                <Button class='button_mystyle' @click="searchDiffDataSetByKeyName($event)" >Search</Button> -->
                 <Input search enter-button="Search"  @on-search="searchDiffDataSetByKeyName($event)" :placeholder="search_placeholder"/>                         
             </Col>                                                                                                                                                       
         </Row>
@@ -370,7 +363,7 @@ export default {
 
         },
         searchDiffDataSetByKeyName($event){
-            var _this = this;      
+            let _this = this;      
 
             if( "" == $event ){
                 _this.inputGenePat = ''
@@ -396,9 +389,10 @@ export default {
 				}
 				
 			})
-		
 
         },
+
+
 		getdiff_group(series){
             let contrasts_group_type_list = []
             let enrich_group_list = []

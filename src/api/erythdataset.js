@@ -40,7 +40,18 @@ export const getEryGeneScore = (table_name,currentPage,pageSize) => {
 	})
 }
 
-
+export const getEryGeneScoreByKeyName = (keyname,table_name,currentPage,pageSize) => {
+	return axios.request({
+	  url: 'public/getEryGeneScoreByKeyName',
+	  data: { 
+		'keyname':keyname,
+		'table_name':table_name,
+		'pageIndex': currentPage,
+		'pageSize': pageSize	
+	},
+	  method: 'post',
+	})
+}
 
 
 //getDataTypeInfo

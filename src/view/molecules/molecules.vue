@@ -2,7 +2,7 @@
       <div>
 
             <h1 class='h1_title' > 
-              Compounds Related to Erythroid  Differentiation and Development
+             Compounds Related to Erythroid  Differentiation and Development
             </h1>
           
             <Row>
@@ -25,9 +25,19 @@
           </br> 
           </br> 
           <Row>
-            <h1 class='h1_title' >Datasets Related to  {{cell_name}}
+            <!-- {{ cell_name }} -->
+            <h1 class='h1_title' >Datasets related to  
               <!-- <i-button  shape="circle" icon="ios-search" @click="changedCompundsType"></i-button> -->
               <!-- <i-button class="my_reset_button"  shape="circle"  @click="resetCellType">Reset</i-button> -->
+              <i-select 
+                        enter-button="Search" 
+                        style="width:20%"  
+                        v-model=InputKeyName
+                        @on-search="searchDataSetByKeyName($event)"  
+                        :placeholder="search_placeholder"  
+                        @on-change="searchDataSetByKeyName($event)"  filterable>        
+							  <i-option v-for="(keyWord,index) in cell_type_list" :key='index' :value="keyWord.name">{{ keyWord.name }}</i-option>
+					    </i-select>
               <Button type="primary"  @click="resetCellType" >Reset</Button>
             </h1>
             <!-- <Col span='12'>
@@ -445,6 +455,7 @@ export default {
              
         ],
         search:'',
+        InputKeyName:'',
         current_cellname:'Epidermal growth factor receptor inhibitors',
         current_cell_anno:'',
         table_name:'all_dataset_source_type',
@@ -463,7 +474,7 @@ export default {
         
         tAdatasetTypeSourceColumns:[
           {
-            title: 'Dataset',
+            title: 'Dataset ID',
             // key: 'dataset_id',
             key:'EryID',
             filter: {
@@ -590,6 +601,13 @@ export default {
     },
     methods:{
 
+      searchDataSetByKeyName(InputKeyName){
+            let _this = this
+            _this.InputKeyName = InputKeyName
+            _this.cell_name = InputKeyName
+            this.mockTableDataTypeSourceByCompundsType(_this.cell_name)
+      },
+
       searchDatasetByFilter(searchTypeSource){
         var _this = this
         searchDatasetTypeSource(searchTypeSource, _this.currentPageTypeSource,_this.pageSizeTypeSource,_this.cell_name,'compound').then( res=>{
@@ -684,8 +702,12 @@ export default {
 
       },
       resetCellType(){
-        this.cell_name = 'All'
-        this.mockTableDataTypeSourceByCompundsType(this.cell_name)
+        let _this = this
+
+        _this.InputKeyName = ''
+        _this.cell_name = 'All'
+
+        this.mockTableDataTypeSourceByCompundsType(_this.cell_name)
         
 
 
@@ -795,20 +817,18 @@ export default {
         
          // 给图添加点击事件
         myChart.on("click", params=> {
- 
           var name = params.data.name;//点击的节点的name
           var value = params.data.value;//点击的节点的value
           // this.cell_name = name
-         
           console.log(name)
           if (typeof name === 'undefined' ){
             // 未选择值
             _this.cell_name = 'all'
+            _this.InputKeyName = ''
             // alert(this.cell_name)
           }else{
             _this.cell_name = name
-            
-
+            _this.InputKeyName = name
           }
 
           var cell_type_list = this.cell_type_list

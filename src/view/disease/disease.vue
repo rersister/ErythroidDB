@@ -4,7 +4,6 @@
             <h1 class='h1_title' > 
               Diseases related to Erythroid  Differentiation and Development
             </h1>
-          
             <Row>
               <h2 class='h2_title' > {{ current_cellname }} </h2>
               <span>
@@ -12,9 +11,10 @@
               </span>
             </Row>
             
+            
             <div id="cell_type_show_view" style="width:100%;height:300%; text-aglign:center">
               
-              fff
+        
             </div>
          
           
@@ -24,10 +24,23 @@
           </br>  
           </br> 
           </br> 
+          </br> 
+          </br> 
           <Row>
-            <h1 class='h1_title' >Datasets Related to  {{cell_name}}
+            <!-- {{cell_name}} -->
+            <h1 class='h1_title' >Datasets related to  
               <!-- <i-button  shape="circle" icon="ios-search" @click="changedCompundsType"></i-button> -->
               <!-- <i-button class="my_reset_button"  shape="circle"  @click="resetCellType">Reset</i-button> -->
+              <i-select 
+                        enter-button="Search" 
+                        style="width:20%"  
+                        v-model=InputKeyName
+                        @on-search="searchDataSetByKeyName($event)"  
+                        :placeholder="search_placeholder"  
+                        @on-change="searchDataSetByKeyName($event)"  filterable>        
+							  <i-option v-for="(keyWord,index) in cell_type_list" :key='index' :value="keyWord.name">{{ keyWord.name }}</i-option>
+					    </i-select>
+              
               <Button type="primary"  @click="resetCellType" >Reset</Button>
             </h1>
             <!-- <Col span='12'>
@@ -413,20 +426,25 @@ export default {
     components: {FilterTableForAllDateSet},
     data(){
       return {
+        InputKeyName:'',
         cell_type_list:[
 
-           {'name':'Haemolysis',
-                'full_name':'Haemolysis',
+           {'name':'Aplastic anemia',
+                'full_name':'Aplastic anemia',
                 'cell_ano':''},
-              {'name':'Diamond-Blackfan anemia',
-                'full_name':'Diamond-Blackfan anemia',
-                'cell_ano':''},
-              {'name':'Epo-resistant anemia',
-                'full_name':'Epo-resistant anemia',
-                'cell_ano':' '},
-              {'name':'Hemoglobinopathies',
-              'full_name':'Hemoglobinopathies',
-              'cell_ano':''},
+          {'name':'Fanconi anemia',
+            'full_name':'Fanconi anemia',
+            'cell_ano':''},
+          {'name':'Hemoglobinopathies',
+            'full_name':'Hemoglobinopathies',
+            'cell_ano':' '},
+          {'name':'Epo-resistant anemia',
+          'full_name':'Epo-resistant anemia',
+          'cell_ano':''},
+          // Diamond-Blackfan anemia
+          {'name':'Diamond-Blackfan anemia',
+          'full_name':'Diamond-Blackfan anemia',
+          'cell_ano':''},
         ],
         search:'',
         current_cellname:'Diamond-Blackfan anemia',
@@ -446,7 +464,7 @@ export default {
         datasetname :'Development',
         tAdatasetTypeSourceColumns:[
           {
-            title: 'Dataset',
+            title: 'Dataset ID',
             // key: 'dataset_id',
             key:'EryID',
             filter: {
@@ -656,6 +674,13 @@ export default {
 
       },
 
+      searchDataSetByKeyName(InputKeyName){
+            let _this = this
+            _this.InputKeyName = InputKeyName
+            _this.cell_name = InputKeyName
+            this.mockTableDataTypeSourceByCompundsType(_this.cell_name)
+      },
+
       resetCellType(){
         this.cell_name = 'All'
         this.mockTableDataTypeSourceByCompundsType(this.cell_name)
@@ -782,9 +807,10 @@ export default {
             // 未选择值
             _this.cell_name = 'All'
             // alert(this.cell_name)
+            _this.InputKeyName = ''
           }else{
             // _this.cell_name = name
-            var cell_type_list = cell_type_list=[
+            var cell_type_list = [
             // 贫血  
             {name:'Fanconi anemia', 
               'full_name':'Fanconi anemia',
@@ -818,18 +844,21 @@ export default {
             ]
 
             cell_type_list.forEach(element => {
-            if(element.name == name){
-            // alert(_this.cell_name)
-            // _this.cell_name 
-            var ccn = element.full_name
-            var c_ano = element.cell_ano
-            _this.current_cell_anno = c_ano
-            _this.current_cellname=ccn
-            // 查询的名字
-            _this.cell_name =  c_ano
-            _this.drawCellTypeChart()
-            }
+              if(element.name == name){
+                  // alert(_this.cell_name)
+                  // _this.cell_name 
+                  var ccn = element.full_name
+                  var c_ano = element.cell_ano
+                  _this.current_cell_anno = c_ano
+                  _this.current_cellname=ccn
+                  // 查询的名字
+                  _this.cell_name =  c_ano
+                  _this.InputKeyName = c_ano
+                  _this.drawCellTypeChart()
+              }
             });
+
+            // _this.cell_type_list = cell_type_list
 
 
           }
