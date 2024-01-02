@@ -488,7 +488,7 @@ export default {
 			_this.sample= sample
             //this.getTsneCol(this.series,source)
 			// this.getGroupSampleData(this.series,source)
-			alert(this.sample)
+			//alert(this.sample)
             this.getTsneShow()
 
 		},

@@ -13,7 +13,7 @@
                                  <p class="p_text" slot="content">
                                     EryDB is a web-accessible erythropoiesis-related database of transcriptome profiles that contains expertly curated, quality-assured, and pre-analyzed datasets for
                                     three species and nine sources, 
-                                    totaling 3,803 samples and 1,187,119 single cells. 
+                                    totally 3,803 samples and 1,187,119 single cells. 
                                 </p>
 
                         </Panel>

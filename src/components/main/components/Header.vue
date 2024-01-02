@@ -36,9 +36,11 @@
           </div>
         </nav>
         <div class="header">
-          <div class="layout-logo">
-            <img class="moudle_image_header " src="@/assets/img/development_test.png">
-            <span>EryDB v1.00: Erythroid Database</span>
+          <div class="layout-logo"  >
+            <router-link to="/home" class="my_header_link">
+              <img class="moudle_image_header" src="@/assets/img/development_test.png">
+              <span>EryDB v1.00: Erythroid Database</span>
+            </router-link>
           </div>
           <div class="layout-nav">
             <!--         @click="analClick(item)"
@@ -181,6 +183,10 @@ export default{
     margin-left: 20px;
     margin-right: 10px;
     padding-top: 10px;
+  }
+  .my_header_link{
+    color: #8c0c0b;
+    text-decoration:none;
   }
 
   .layout-nav {
